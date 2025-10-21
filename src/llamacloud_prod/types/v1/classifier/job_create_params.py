@@ -1,0 +1,27 @@
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from __future__ import annotations
+
+from typing import Iterable, Optional
+from typing_extensions import Required, TypedDict
+
+from ...._types import SequenceNotStr
+from .classifier_rule_param import ClassifierRuleParam
+from .classify_parsing_configuration_param import ClassifyParsingConfigurationParam
+
+__all__ = ["JobCreateParams"]
+
+
+class JobCreateParams(TypedDict, total=False):
+    file_ids: Required[SequenceNotStr[str]]
+    """The IDs of the files to classify"""
+
+    rules: Required[Iterable[ClassifierRuleParam]]
+    """The rules to classify the files"""
+
+    organization_id: Optional[str]
+
+    project_id: Optional[str]
+
+    parsing_configuration: ClassifyParsingConfigurationParam
+    """The configuration for the parsing job"""

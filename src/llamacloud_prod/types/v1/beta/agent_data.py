@@ -1,0 +1,22 @@
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from typing import Dict, Optional
+from datetime import datetime
+
+from ...._models import BaseModel
+
+__all__ = ["AgentData"]
+
+
+class AgentData(BaseModel):
+    data: Dict[str, object]
+
+    deployment_name: str
+
+    id: Optional[str] = None
+
+    collection: Optional[str] = None
+
+    created_at: Optional[datetime] = None
+
+    updated_at: Optional[datetime] = None

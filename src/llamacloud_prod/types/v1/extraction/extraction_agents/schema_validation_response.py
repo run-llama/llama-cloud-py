@@ -1,0 +1,11 @@
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from typing import Dict, List, Union
+
+from ....._models import BaseModel
+
+__all__ = ["SchemaValidationResponse"]
+
+
+class SchemaValidationResponse(BaseModel):
+    data_schema: Dict[str, Union[Dict[str, object], List[object], str, float, bool, None]]

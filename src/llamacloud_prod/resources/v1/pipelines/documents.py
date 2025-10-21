@@ -1,0 +1,960 @@
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from __future__ import annotations
+
+from typing import Iterable, Optional
+from typing_extensions import Literal
+
+import httpx
+
+from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
+from ...._utils import maybe_transform, async_maybe_transform
+from ...._compat import cached_property
+from ...._resource import SyncAPIResource, AsyncAPIResource
+from ...._response import (
+    to_raw_response_wrapper,
+    to_streamed_response_wrapper,
+    async_to_raw_response_wrapper,
+    async_to_streamed_response_wrapper,
+)
+from ...._base_client import make_request_options
+from ....types.v1.pipelines import (
+    document_list_params,
+    document_force_sync_all_params,
+    document_retrieve_paginated_params,
+)
+from ....types.v1.pipelines.cloud_document import CloudDocument
+from ....types.v1.pipelines.document_list_response import DocumentListResponse
+from ....types.v1.managed_ingestion_status_response import ManagedIngestionStatusResponse
+from ....types.v1.pipelines.document_create_response import DocumentCreateResponse
+from ....types.v1.pipelines.cloud_document_create_param import CloudDocumentCreateParam
+from ....types.v1.pipelines.document_retrieve_chunks_response import DocumentRetrieveChunksResponse
+from ....types.v1.pipelines.document_retrieve_paginated_response import DocumentRetrievePaginatedResponse
+
+__all__ = ["DocumentsResource", "AsyncDocumentsResource"]
+
+
+class DocumentsResource(SyncAPIResource):
+    @cached_property
+    def with_raw_response(self) -> DocumentsResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/stainless-sdks/llamacloud-prod-python#accessing-raw-response-data-eg-headers
+        """
+        return DocumentsResourceWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> DocumentsResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/stainless-sdks/llamacloud-prod-python#with_streaming_response
+        """
+        return DocumentsResourceWithStreamingResponse(self)
+
+    def create(
+        self,
+        pipeline_id: str,
+        *,
+        body: Iterable[CloudDocumentCreateParam],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentCreateResponse:
+        """
+        Batch create or update a document for a pipeline.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        return self._put(
+            f"/api/v1/pipelines/{pipeline_id}/documents",
+            body=maybe_transform(body, Iterable[CloudDocumentCreateParam]),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentCreateResponse,
+        )
+
+    def retrieve(
+        self,
+        document_id: str,
+        *,
+        pipeline_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> CloudDocument:
+        """
+        Return a single document for a pipeline.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        if not document_id:
+            raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
+        return self._get(
+            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CloudDocument,
+        )
+
+    def list(
+        self,
+        pipeline_id: str,
+        *,
+        file_id: Optional[str] | Omit = omit,
+        limit: int | Omit = omit,
+        only_api_data_source_documents: Optional[bool] | Omit = omit,
+        only_direct_upload: Optional[bool] | Omit = omit,
+        skip: int | Omit = omit,
+        status_refresh_policy: Literal["cached", "ttl"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentListResponse:
+        """
+        Return a list of documents for a pipeline.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        return self._get(
+            f"/api/v1/pipelines/{pipeline_id}/documents",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "file_id": file_id,
+                        "limit": limit,
+                        "only_api_data_source_documents": only_api_data_source_documents,
+                        "only_direct_upload": only_direct_upload,
+                        "skip": skip,
+                        "status_refresh_policy": status_refresh_policy,
+                    },
+                    document_list_params.DocumentListParams,
+                ),
+            ),
+            cast_to=DocumentListResponse,
+        )
+
+    def delete(
+        self,
+        document_id: str,
+        *,
+        pipeline_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> None:
+        """Delete a document from a pipeline.
+
+        Initiates an async job that will:
+
+        1. Delete vectors from the vector store
+        2. Delete the document from MongoDB after vectors are successfully deleted
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        if not document_id:
+            raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return self._delete(
+            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NoneType,
+        )
+
+    def force_sync_all(
+        self,
+        pipeline_id: str,
+        *,
+        batch_size: int | Omit = omit,
+        only_failed: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """
+        Force sync all documents in a pipeline by batching document ingestion jobs.
+
+        - Iterates all document refs for the pipeline
+        - Enqueues document ingestion jobs in batches of `batch_size`
+
+        Args:
+          only_failed: Only sync retriable documents (failed/cancelled/not-started/stalled-in-progress)
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        return self._post(
+            f"/api/v1/pipelines/{pipeline_id}/documents/force-sync-all",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "batch_size": batch_size,
+                        "only_failed": only_failed,
+                    },
+                    document_force_sync_all_params.DocumentForceSyncAllParams,
+                ),
+            ),
+            cast_to=object,
+        )
+
+    def retrieve_chunks(
+        self,
+        document_id: str,
+        *,
+        pipeline_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentRetrieveChunksResponse:
+        """
+        Return a list of chunks for a pipeline document.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        if not document_id:
+            raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
+        return self._get(
+            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}/chunks",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentRetrieveChunksResponse,
+        )
+
+    def retrieve_paginated(
+        self,
+        pipeline_id: str,
+        *,
+        file_id: Optional[str] | Omit = omit,
+        limit: int | Omit = omit,
+        only_api_data_source_documents: Optional[bool] | Omit = omit,
+        only_direct_upload: Optional[bool] | Omit = omit,
+        skip: int | Omit = omit,
+        status_refresh_policy: Literal["cached", "ttl"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentRetrievePaginatedResponse:
+        """
+        Return a list of documents for a pipeline.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        return self._get(
+            f"/api/v1/pipelines/{pipeline_id}/documents/paginated",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "file_id": file_id,
+                        "limit": limit,
+                        "only_api_data_source_documents": only_api_data_source_documents,
+                        "only_direct_upload": only_direct_upload,
+                        "skip": skip,
+                        "status_refresh_policy": status_refresh_policy,
+                    },
+                    document_retrieve_paginated_params.DocumentRetrievePaginatedParams,
+                ),
+            ),
+            cast_to=DocumentRetrievePaginatedResponse,
+        )
+
+    def retrieve_status(
+        self,
+        document_id: str,
+        *,
+        pipeline_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ManagedIngestionStatusResponse:
+        """
+        Return a single document for a pipeline.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        if not document_id:
+            raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
+        return self._get(
+            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}/status",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ManagedIngestionStatusResponse,
+        )
+
+    def sync(
+        self,
+        document_id: str,
+        *,
+        pipeline_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """
+        Sync a specific document for a pipeline.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        if not document_id:
+            raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
+        return self._post(
+            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}/sync",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=object,
+        )
+
+
+class AsyncDocumentsResource(AsyncAPIResource):
+    @cached_property
+    def with_raw_response(self) -> AsyncDocumentsResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/stainless-sdks/llamacloud-prod-python#accessing-raw-response-data-eg-headers
+        """
+        return AsyncDocumentsResourceWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncDocumentsResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/stainless-sdks/llamacloud-prod-python#with_streaming_response
+        """
+        return AsyncDocumentsResourceWithStreamingResponse(self)
+
+    async def create(
+        self,
+        pipeline_id: str,
+        *,
+        body: Iterable[CloudDocumentCreateParam],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentCreateResponse:
+        """
+        Batch create or update a document for a pipeline.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        return await self._put(
+            f"/api/v1/pipelines/{pipeline_id}/documents",
+            body=await async_maybe_transform(body, Iterable[CloudDocumentCreateParam]),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentCreateResponse,
+        )
+
+    async def retrieve(
+        self,
+        document_id: str,
+        *,
+        pipeline_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> CloudDocument:
+        """
+        Return a single document for a pipeline.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        if not document_id:
+            raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
+        return await self._get(
+            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CloudDocument,
+        )
+
+    async def list(
+        self,
+        pipeline_id: str,
+        *,
+        file_id: Optional[str] | Omit = omit,
+        limit: int | Omit = omit,
+        only_api_data_source_documents: Optional[bool] | Omit = omit,
+        only_direct_upload: Optional[bool] | Omit = omit,
+        skip: int | Omit = omit,
+        status_refresh_policy: Literal["cached", "ttl"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentListResponse:
+        """
+        Return a list of documents for a pipeline.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        return await self._get(
+            f"/api/v1/pipelines/{pipeline_id}/documents",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "file_id": file_id,
+                        "limit": limit,
+                        "only_api_data_source_documents": only_api_data_source_documents,
+                        "only_direct_upload": only_direct_upload,
+                        "skip": skip,
+                        "status_refresh_policy": status_refresh_policy,
+                    },
+                    document_list_params.DocumentListParams,
+                ),
+            ),
+            cast_to=DocumentListResponse,
+        )
+
+    async def delete(
+        self,
+        document_id: str,
+        *,
+        pipeline_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> None:
+        """Delete a document from a pipeline.
+
+        Initiates an async job that will:
+
+        1. Delete vectors from the vector store
+        2. Delete the document from MongoDB after vectors are successfully deleted
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        if not document_id:
+            raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return await self._delete(
+            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NoneType,
+        )
+
+    async def force_sync_all(
+        self,
+        pipeline_id: str,
+        *,
+        batch_size: int | Omit = omit,
+        only_failed: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """
+        Force sync all documents in a pipeline by batching document ingestion jobs.
+
+        - Iterates all document refs for the pipeline
+        - Enqueues document ingestion jobs in batches of `batch_size`
+
+        Args:
+          only_failed: Only sync retriable documents (failed/cancelled/not-started/stalled-in-progress)
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        return await self._post(
+            f"/api/v1/pipelines/{pipeline_id}/documents/force-sync-all",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "batch_size": batch_size,
+                        "only_failed": only_failed,
+                    },
+                    document_force_sync_all_params.DocumentForceSyncAllParams,
+                ),
+            ),
+            cast_to=object,
+        )
+
+    async def retrieve_chunks(
+        self,
+        document_id: str,
+        *,
+        pipeline_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentRetrieveChunksResponse:
+        """
+        Return a list of chunks for a pipeline document.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        if not document_id:
+            raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
+        return await self._get(
+            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}/chunks",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentRetrieveChunksResponse,
+        )
+
+    async def retrieve_paginated(
+        self,
+        pipeline_id: str,
+        *,
+        file_id: Optional[str] | Omit = omit,
+        limit: int | Omit = omit,
+        only_api_data_source_documents: Optional[bool] | Omit = omit,
+        only_direct_upload: Optional[bool] | Omit = omit,
+        skip: int | Omit = omit,
+        status_refresh_policy: Literal["cached", "ttl"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentRetrievePaginatedResponse:
+        """
+        Return a list of documents for a pipeline.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        return await self._get(
+            f"/api/v1/pipelines/{pipeline_id}/documents/paginated",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "file_id": file_id,
+                        "limit": limit,
+                        "only_api_data_source_documents": only_api_data_source_documents,
+                        "only_direct_upload": only_direct_upload,
+                        "skip": skip,
+                        "status_refresh_policy": status_refresh_policy,
+                    },
+                    document_retrieve_paginated_params.DocumentRetrievePaginatedParams,
+                ),
+            ),
+            cast_to=DocumentRetrievePaginatedResponse,
+        )
+
+    async def retrieve_status(
+        self,
+        document_id: str,
+        *,
+        pipeline_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ManagedIngestionStatusResponse:
+        """
+        Return a single document for a pipeline.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        if not document_id:
+            raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
+        return await self._get(
+            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}/status",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ManagedIngestionStatusResponse,
+        )
+
+    async def sync(
+        self,
+        document_id: str,
+        *,
+        pipeline_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """
+        Sync a specific document for a pipeline.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        if not document_id:
+            raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
+        return await self._post(
+            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}/sync",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=object,
+        )
+
+
+class DocumentsResourceWithRawResponse:
+    def __init__(self, documents: DocumentsResource) -> None:
+        self._documents = documents
+
+        self.create = to_raw_response_wrapper(
+            documents.create,
+        )
+        self.retrieve = to_raw_response_wrapper(
+            documents.retrieve,
+        )
+        self.list = to_raw_response_wrapper(
+            documents.list,
+        )
+        self.delete = to_raw_response_wrapper(
+            documents.delete,
+        )
+        self.force_sync_all = to_raw_response_wrapper(
+            documents.force_sync_all,
+        )
+        self.retrieve_chunks = to_raw_response_wrapper(
+            documents.retrieve_chunks,
+        )
+        self.retrieve_paginated = to_raw_response_wrapper(
+            documents.retrieve_paginated,
+        )
+        self.retrieve_status = to_raw_response_wrapper(
+            documents.retrieve_status,
+        )
+        self.sync = to_raw_response_wrapper(
+            documents.sync,
+        )
+
+
+class AsyncDocumentsResourceWithRawResponse:
+    def __init__(self, documents: AsyncDocumentsResource) -> None:
+        self._documents = documents
+
+        self.create = async_to_raw_response_wrapper(
+            documents.create,
+        )
+        self.retrieve = async_to_raw_response_wrapper(
+            documents.retrieve,
+        )
+        self.list = async_to_raw_response_wrapper(
+            documents.list,
+        )
+        self.delete = async_to_raw_response_wrapper(
+            documents.delete,
+        )
+        self.force_sync_all = async_to_raw_response_wrapper(
+            documents.force_sync_all,
+        )
+        self.retrieve_chunks = async_to_raw_response_wrapper(
+            documents.retrieve_chunks,
+        )
+        self.retrieve_paginated = async_to_raw_response_wrapper(
+            documents.retrieve_paginated,
+        )
+        self.retrieve_status = async_to_raw_response_wrapper(
+            documents.retrieve_status,
+        )
+        self.sync = async_to_raw_response_wrapper(
+            documents.sync,
+        )
+
+
+class DocumentsResourceWithStreamingResponse:
+    def __init__(self, documents: DocumentsResource) -> None:
+        self._documents = documents
+
+        self.create = to_streamed_response_wrapper(
+            documents.create,
+        )
+        self.retrieve = to_streamed_response_wrapper(
+            documents.retrieve,
+        )
+        self.list = to_streamed_response_wrapper(
+            documents.list,
+        )
+        self.delete = to_streamed_response_wrapper(
+            documents.delete,
+        )
+        self.force_sync_all = to_streamed_response_wrapper(
+            documents.force_sync_all,
+        )
+        self.retrieve_chunks = to_streamed_response_wrapper(
+            documents.retrieve_chunks,
+        )
+        self.retrieve_paginated = to_streamed_response_wrapper(
+            documents.retrieve_paginated,
+        )
+        self.retrieve_status = to_streamed_response_wrapper(
+            documents.retrieve_status,
+        )
+        self.sync = to_streamed_response_wrapper(
+            documents.sync,
+        )
+
+
+class AsyncDocumentsResourceWithStreamingResponse:
+    def __init__(self, documents: AsyncDocumentsResource) -> None:
+        self._documents = documents
+
+        self.create = async_to_streamed_response_wrapper(
+            documents.create,
+        )
+        self.retrieve = async_to_streamed_response_wrapper(
+            documents.retrieve,
+        )
+        self.list = async_to_streamed_response_wrapper(
+            documents.list,
+        )
+        self.delete = async_to_streamed_response_wrapper(
+            documents.delete,
+        )
+        self.force_sync_all = async_to_streamed_response_wrapper(
+            documents.force_sync_all,
+        )
+        self.retrieve_chunks = async_to_streamed_response_wrapper(
+            documents.retrieve_chunks,
+        )
+        self.retrieve_paginated = async_to_streamed_response_wrapper(
+            documents.retrieve_paginated,
+        )
+        self.retrieve_status = async_to_streamed_response_wrapper(
+            documents.retrieve_status,
+        )
+        self.sync = async_to_streamed_response_wrapper(
+            documents.sync,
+        )

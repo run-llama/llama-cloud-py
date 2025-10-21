@@ -1,0 +1,1011 @@
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from __future__ import annotations
+
+import os
+from typing import Any, cast
+
+import pytest
+
+from tests.utils import assert_matches_type
+from llamacloud_prod import LlamacloudProd, AsyncLlamacloudProd
+from llamacloud_prod.types.v1 import ManagedIngestionStatusResponse
+from llamacloud_prod.types.v1.pipelines import (
+    CloudDocument,
+    DocumentListResponse,
+    DocumentCreateResponse,
+    DocumentRetrieveChunksResponse,
+    DocumentRetrievePaginatedResponse,
+)
+
+base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
+
+
+class TestDocuments:
+    parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_create(self, client: LlamacloudProd) -> None:
+        document = client.v1.pipelines.documents.create(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            body=[
+                {
+                    "metadata": {"foo": "bar"},
+                    "text": "text",
+                }
+            ],
+        )
+        assert_matches_type(DocumentCreateResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_create(self, client: LlamacloudProd) -> None:
+        response = client.v1.pipelines.documents.with_raw_response.create(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            body=[
+                {
+                    "metadata": {"foo": "bar"},
+                    "text": "text",
+                }
+            ],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = response.parse()
+        assert_matches_type(DocumentCreateResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_create(self, client: LlamacloudProd) -> None:
+        with client.v1.pipelines.documents.with_streaming_response.create(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            body=[
+                {
+                    "metadata": {"foo": "bar"},
+                    "text": "text",
+                }
+            ],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = response.parse()
+            assert_matches_type(DocumentCreateResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_create(self, client: LlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            client.v1.pipelines.documents.with_raw_response.create(
+                pipeline_id="",
+                body=[
+                    {
+                        "metadata": {"foo": "bar"},
+                        "text": "text",
+                    }
+                ],
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_retrieve(self, client: LlamacloudProd) -> None:
+        document = client.v1.pipelines.documents.retrieve(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(CloudDocument, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve(self, client: LlamacloudProd) -> None:
+        response = client.v1.pipelines.documents.with_raw_response.retrieve(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = response.parse()
+        assert_matches_type(CloudDocument, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve(self, client: LlamacloudProd) -> None:
+        with client.v1.pipelines.documents.with_streaming_response.retrieve(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = response.parse()
+            assert_matches_type(CloudDocument, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_retrieve(self, client: LlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            client.v1.pipelines.documents.with_raw_response.retrieve(
+                document_id="document_id",
+                pipeline_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_id` but received ''"):
+            client.v1.pipelines.documents.with_raw_response.retrieve(
+                document_id="",
+                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_list(self, client: LlamacloudProd) -> None:
+        document = client.v1.pipelines.documents.list(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(DocumentListResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_list_with_all_params(self, client: LlamacloudProd) -> None:
+        document = client.v1.pipelines.documents.list(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            limit=0,
+            only_api_data_source_documents=True,
+            only_direct_upload=True,
+            skip=0,
+            status_refresh_policy="cached",
+        )
+        assert_matches_type(DocumentListResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_list(self, client: LlamacloudProd) -> None:
+        response = client.v1.pipelines.documents.with_raw_response.list(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = response.parse()
+        assert_matches_type(DocumentListResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_list(self, client: LlamacloudProd) -> None:
+        with client.v1.pipelines.documents.with_streaming_response.list(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = response.parse()
+            assert_matches_type(DocumentListResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_list(self, client: LlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            client.v1.pipelines.documents.with_raw_response.list(
+                pipeline_id="",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_delete(self, client: LlamacloudProd) -> None:
+        document = client.v1.pipelines.documents.delete(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert document is None
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_delete(self, client: LlamacloudProd) -> None:
+        response = client.v1.pipelines.documents.with_raw_response.delete(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = response.parse()
+        assert document is None
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_delete(self, client: LlamacloudProd) -> None:
+        with client.v1.pipelines.documents.with_streaming_response.delete(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = response.parse()
+            assert document is None
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_delete(self, client: LlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            client.v1.pipelines.documents.with_raw_response.delete(
+                document_id="document_id",
+                pipeline_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_id` but received ''"):
+            client.v1.pipelines.documents.with_raw_response.delete(
+                document_id="",
+                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_force_sync_all(self, client: LlamacloudProd) -> None:
+        document = client.v1.pipelines.documents.force_sync_all(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_force_sync_all_with_all_params(self, client: LlamacloudProd) -> None:
+        document = client.v1.pipelines.documents.force_sync_all(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            batch_size=1,
+            only_failed=True,
+        )
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_force_sync_all(self, client: LlamacloudProd) -> None:
+        response = client.v1.pipelines.documents.with_raw_response.force_sync_all(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = response.parse()
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_force_sync_all(self, client: LlamacloudProd) -> None:
+        with client.v1.pipelines.documents.with_streaming_response.force_sync_all(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = response.parse()
+            assert_matches_type(object, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_force_sync_all(self, client: LlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            client.v1.pipelines.documents.with_raw_response.force_sync_all(
+                pipeline_id="",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_retrieve_chunks(self, client: LlamacloudProd) -> None:
+        document = client.v1.pipelines.documents.retrieve_chunks(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(DocumentRetrieveChunksResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve_chunks(self, client: LlamacloudProd) -> None:
+        response = client.v1.pipelines.documents.with_raw_response.retrieve_chunks(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = response.parse()
+        assert_matches_type(DocumentRetrieveChunksResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve_chunks(self, client: LlamacloudProd) -> None:
+        with client.v1.pipelines.documents.with_streaming_response.retrieve_chunks(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = response.parse()
+            assert_matches_type(DocumentRetrieveChunksResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_retrieve_chunks(self, client: LlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            client.v1.pipelines.documents.with_raw_response.retrieve_chunks(
+                document_id="document_id",
+                pipeline_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_id` but received ''"):
+            client.v1.pipelines.documents.with_raw_response.retrieve_chunks(
+                document_id="",
+                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_retrieve_paginated(self, client: LlamacloudProd) -> None:
+        document = client.v1.pipelines.documents.retrieve_paginated(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(DocumentRetrievePaginatedResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_retrieve_paginated_with_all_params(self, client: LlamacloudProd) -> None:
+        document = client.v1.pipelines.documents.retrieve_paginated(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            limit=0,
+            only_api_data_source_documents=True,
+            only_direct_upload=True,
+            skip=0,
+            status_refresh_policy="cached",
+        )
+        assert_matches_type(DocumentRetrievePaginatedResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve_paginated(self, client: LlamacloudProd) -> None:
+        response = client.v1.pipelines.documents.with_raw_response.retrieve_paginated(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = response.parse()
+        assert_matches_type(DocumentRetrievePaginatedResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve_paginated(self, client: LlamacloudProd) -> None:
+        with client.v1.pipelines.documents.with_streaming_response.retrieve_paginated(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = response.parse()
+            assert_matches_type(DocumentRetrievePaginatedResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_retrieve_paginated(self, client: LlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            client.v1.pipelines.documents.with_raw_response.retrieve_paginated(
+                pipeline_id="",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_retrieve_status(self, client: LlamacloudProd) -> None:
+        document = client.v1.pipelines.documents.retrieve_status(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(ManagedIngestionStatusResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve_status(self, client: LlamacloudProd) -> None:
+        response = client.v1.pipelines.documents.with_raw_response.retrieve_status(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = response.parse()
+        assert_matches_type(ManagedIngestionStatusResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve_status(self, client: LlamacloudProd) -> None:
+        with client.v1.pipelines.documents.with_streaming_response.retrieve_status(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = response.parse()
+            assert_matches_type(ManagedIngestionStatusResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_retrieve_status(self, client: LlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            client.v1.pipelines.documents.with_raw_response.retrieve_status(
+                document_id="document_id",
+                pipeline_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_id` but received ''"):
+            client.v1.pipelines.documents.with_raw_response.retrieve_status(
+                document_id="",
+                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_sync(self, client: LlamacloudProd) -> None:
+        document = client.v1.pipelines.documents.sync(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_sync(self, client: LlamacloudProd) -> None:
+        response = client.v1.pipelines.documents.with_raw_response.sync(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = response.parse()
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_sync(self, client: LlamacloudProd) -> None:
+        with client.v1.pipelines.documents.with_streaming_response.sync(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = response.parse()
+            assert_matches_type(object, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_sync(self, client: LlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            client.v1.pipelines.documents.with_raw_response.sync(
+                document_id="document_id",
+                pipeline_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_id` but received ''"):
+            client.v1.pipelines.documents.with_raw_response.sync(
+                document_id="",
+                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            )
+
+
+class TestAsyncDocuments:
+    parametrize = pytest.mark.parametrize(
+        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
+    )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_create(self, async_client: AsyncLlamacloudProd) -> None:
+        document = await async_client.v1.pipelines.documents.create(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            body=[
+                {
+                    "metadata": {"foo": "bar"},
+                    "text": "text",
+                }
+            ],
+        )
+        assert_matches_type(DocumentCreateResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_create(self, async_client: AsyncLlamacloudProd) -> None:
+        response = await async_client.v1.pipelines.documents.with_raw_response.create(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            body=[
+                {
+                    "metadata": {"foo": "bar"},
+                    "text": "text",
+                }
+            ],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = await response.parse()
+        assert_matches_type(DocumentCreateResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_create(self, async_client: AsyncLlamacloudProd) -> None:
+        async with async_client.v1.pipelines.documents.with_streaming_response.create(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            body=[
+                {
+                    "metadata": {"foo": "bar"},
+                    "text": "text",
+                }
+            ],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = await response.parse()
+            assert_matches_type(DocumentCreateResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_create(self, async_client: AsyncLlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            await async_client.v1.pipelines.documents.with_raw_response.create(
+                pipeline_id="",
+                body=[
+                    {
+                        "metadata": {"foo": "bar"},
+                        "text": "text",
+                    }
+                ],
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_retrieve(self, async_client: AsyncLlamacloudProd) -> None:
+        document = await async_client.v1.pipelines.documents.retrieve(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(CloudDocument, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve(self, async_client: AsyncLlamacloudProd) -> None:
+        response = await async_client.v1.pipelines.documents.with_raw_response.retrieve(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = await response.parse()
+        assert_matches_type(CloudDocument, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve(self, async_client: AsyncLlamacloudProd) -> None:
+        async with async_client.v1.pipelines.documents.with_streaming_response.retrieve(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = await response.parse()
+            assert_matches_type(CloudDocument, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_retrieve(self, async_client: AsyncLlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            await async_client.v1.pipelines.documents.with_raw_response.retrieve(
+                document_id="document_id",
+                pipeline_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_id` but received ''"):
+            await async_client.v1.pipelines.documents.with_raw_response.retrieve(
+                document_id="",
+                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_list(self, async_client: AsyncLlamacloudProd) -> None:
+        document = await async_client.v1.pipelines.documents.list(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(DocumentListResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_list_with_all_params(self, async_client: AsyncLlamacloudProd) -> None:
+        document = await async_client.v1.pipelines.documents.list(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            limit=0,
+            only_api_data_source_documents=True,
+            only_direct_upload=True,
+            skip=0,
+            status_refresh_policy="cached",
+        )
+        assert_matches_type(DocumentListResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_list(self, async_client: AsyncLlamacloudProd) -> None:
+        response = await async_client.v1.pipelines.documents.with_raw_response.list(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = await response.parse()
+        assert_matches_type(DocumentListResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_list(self, async_client: AsyncLlamacloudProd) -> None:
+        async with async_client.v1.pipelines.documents.with_streaming_response.list(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = await response.parse()
+            assert_matches_type(DocumentListResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_list(self, async_client: AsyncLlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            await async_client.v1.pipelines.documents.with_raw_response.list(
+                pipeline_id="",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_delete(self, async_client: AsyncLlamacloudProd) -> None:
+        document = await async_client.v1.pipelines.documents.delete(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert document is None
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_delete(self, async_client: AsyncLlamacloudProd) -> None:
+        response = await async_client.v1.pipelines.documents.with_raw_response.delete(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = await response.parse()
+        assert document is None
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_delete(self, async_client: AsyncLlamacloudProd) -> None:
+        async with async_client.v1.pipelines.documents.with_streaming_response.delete(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = await response.parse()
+            assert document is None
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_delete(self, async_client: AsyncLlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            await async_client.v1.pipelines.documents.with_raw_response.delete(
+                document_id="document_id",
+                pipeline_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_id` but received ''"):
+            await async_client.v1.pipelines.documents.with_raw_response.delete(
+                document_id="",
+                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_force_sync_all(self, async_client: AsyncLlamacloudProd) -> None:
+        document = await async_client.v1.pipelines.documents.force_sync_all(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_force_sync_all_with_all_params(self, async_client: AsyncLlamacloudProd) -> None:
+        document = await async_client.v1.pipelines.documents.force_sync_all(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            batch_size=1,
+            only_failed=True,
+        )
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_force_sync_all(self, async_client: AsyncLlamacloudProd) -> None:
+        response = await async_client.v1.pipelines.documents.with_raw_response.force_sync_all(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = await response.parse()
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_force_sync_all(self, async_client: AsyncLlamacloudProd) -> None:
+        async with async_client.v1.pipelines.documents.with_streaming_response.force_sync_all(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = await response.parse()
+            assert_matches_type(object, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_force_sync_all(self, async_client: AsyncLlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            await async_client.v1.pipelines.documents.with_raw_response.force_sync_all(
+                pipeline_id="",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_retrieve_chunks(self, async_client: AsyncLlamacloudProd) -> None:
+        document = await async_client.v1.pipelines.documents.retrieve_chunks(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(DocumentRetrieveChunksResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve_chunks(self, async_client: AsyncLlamacloudProd) -> None:
+        response = await async_client.v1.pipelines.documents.with_raw_response.retrieve_chunks(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = await response.parse()
+        assert_matches_type(DocumentRetrieveChunksResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve_chunks(self, async_client: AsyncLlamacloudProd) -> None:
+        async with async_client.v1.pipelines.documents.with_streaming_response.retrieve_chunks(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = await response.parse()
+            assert_matches_type(DocumentRetrieveChunksResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_retrieve_chunks(self, async_client: AsyncLlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            await async_client.v1.pipelines.documents.with_raw_response.retrieve_chunks(
+                document_id="document_id",
+                pipeline_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_id` but received ''"):
+            await async_client.v1.pipelines.documents.with_raw_response.retrieve_chunks(
+                document_id="",
+                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_retrieve_paginated(self, async_client: AsyncLlamacloudProd) -> None:
+        document = await async_client.v1.pipelines.documents.retrieve_paginated(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(DocumentRetrievePaginatedResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_retrieve_paginated_with_all_params(self, async_client: AsyncLlamacloudProd) -> None:
+        document = await async_client.v1.pipelines.documents.retrieve_paginated(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            limit=0,
+            only_api_data_source_documents=True,
+            only_direct_upload=True,
+            skip=0,
+            status_refresh_policy="cached",
+        )
+        assert_matches_type(DocumentRetrievePaginatedResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve_paginated(self, async_client: AsyncLlamacloudProd) -> None:
+        response = await async_client.v1.pipelines.documents.with_raw_response.retrieve_paginated(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = await response.parse()
+        assert_matches_type(DocumentRetrievePaginatedResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve_paginated(self, async_client: AsyncLlamacloudProd) -> None:
+        async with async_client.v1.pipelines.documents.with_streaming_response.retrieve_paginated(
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = await response.parse()
+            assert_matches_type(DocumentRetrievePaginatedResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_retrieve_paginated(self, async_client: AsyncLlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            await async_client.v1.pipelines.documents.with_raw_response.retrieve_paginated(
+                pipeline_id="",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_retrieve_status(self, async_client: AsyncLlamacloudProd) -> None:
+        document = await async_client.v1.pipelines.documents.retrieve_status(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(ManagedIngestionStatusResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve_status(self, async_client: AsyncLlamacloudProd) -> None:
+        response = await async_client.v1.pipelines.documents.with_raw_response.retrieve_status(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = await response.parse()
+        assert_matches_type(ManagedIngestionStatusResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve_status(self, async_client: AsyncLlamacloudProd) -> None:
+        async with async_client.v1.pipelines.documents.with_streaming_response.retrieve_status(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = await response.parse()
+            assert_matches_type(ManagedIngestionStatusResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_retrieve_status(self, async_client: AsyncLlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            await async_client.v1.pipelines.documents.with_raw_response.retrieve_status(
+                document_id="document_id",
+                pipeline_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_id` but received ''"):
+            await async_client.v1.pipelines.documents.with_raw_response.retrieve_status(
+                document_id="",
+                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_sync(self, async_client: AsyncLlamacloudProd) -> None:
+        document = await async_client.v1.pipelines.documents.sync(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_sync(self, async_client: AsyncLlamacloudProd) -> None:
+        response = await async_client.v1.pipelines.documents.with_raw_response.sync(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = await response.parse()
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_sync(self, async_client: AsyncLlamacloudProd) -> None:
+        async with async_client.v1.pipelines.documents.with_streaming_response.sync(
+            document_id="document_id",
+            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = await response.parse()
+            assert_matches_type(object, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_sync(self, async_client: AsyncLlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
+            await async_client.v1.pipelines.documents.with_raw_response.sync(
+                document_id="document_id",
+                pipeline_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_id` but received ''"):
+            await async_client.v1.pipelines.documents.with_raw_response.sync(
+                document_id="",
+                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            )
