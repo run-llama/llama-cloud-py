@@ -181,7 +181,6 @@ Methods:
 
 Methods:
 
-- <code title="put /api/v1/organizations/default">client.v1.organizations.default.<a href="./src/llamacloud_prod/resources/v1/organizations/default.py">create</a>(\*\*<a href="src/llamacloud_prod/types/v1/organizations/default_create_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/organization.py">Organization</a></code>
 - <code title="get /api/v1/organizations/default">client.v1.organizations.default.<a href="./src/llamacloud_prod/resources/v1/organizations/default.py">list</a>() -> <a href="./src/llamacloud_prod/types/v1/organization.py">Organization</a></code>
 
 ### Users
@@ -201,7 +200,6 @@ Methods:
 - <code title="put /api/v1/organizations/{organization_id}/users">client.v1.organizations.users.<a href="./src/llamacloud_prod/resources/v1/organizations/users/users.py">create</a>(organization_id, \*\*<a href="src/llamacloud_prod/types/v1/organizations/user_create_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/organizations/user_create_response.py">UserCreateResponse</a></code>
 - <code title="get /api/v1/organizations/{organization_id}/users">client.v1.organizations.users.<a href="./src/llamacloud_prod/resources/v1/organizations/users/users.py">list</a>(organization_id) -> <a href="./src/llamacloud_prod/types/v1/organizations/user_list_response.py">UserListResponse</a></code>
 - <code title="delete /api/v1/organizations/{organization_id}/users/{member_user_id}">client.v1.organizations.users.<a href="./src/llamacloud_prod/resources/v1/organizations/users/users.py">delete</a>(member_user_id, \*, organization_id, \*\*<a href="src/llamacloud_prod/types/v1/organizations/user_delete_params.py">params</a>) -> None</code>
-- <code title="put /api/v1/organizations/{organization_id}/users/remove">client.v1.organizations.users.<a href="./src/llamacloud_prod/resources/v1/organizations/users/users.py">update_remove</a>(organization_id, \*\*<a href="src/llamacloud_prod/types/v1/organizations/user_update_remove_params.py">params</a>) -> None</code>
 
 #### Roles
 

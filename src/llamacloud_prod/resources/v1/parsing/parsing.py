@@ -195,6 +195,7 @@ class ParsingResource(SyncAPIResource):
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         adaptive_long_table: bool | Omit = omit,
+        aggressive_table_extraction: bool | Omit = omit,
         annotate_links: bool | Omit = omit,
         auto_mode: bool | Omit = omit,
         auto_mode_configuration_json: str | Omit = omit,
@@ -244,6 +245,7 @@ class ParsingResource(SyncAPIResource):
         is_formatting_instruction: bool | Omit = omit,
         job_timeout_extra_time_per_page_in_seconds: float | Omit = omit,
         job_timeout_in_seconds: float | Omit = omit,
+        keep_page_separator_when_merging_tables: bool | Omit = omit,
         language: List[ParserLanguages] | Omit = omit,
         layout_aware: bool | Omit = omit,
         markdown_table_multiline_header_separator: str | Omit = omit,
@@ -325,6 +327,7 @@ class ParsingResource(SyncAPIResource):
         body = deepcopy_minimal(
             {
                 "adaptive_long_table": adaptive_long_table,
+                "aggressive_table_extraction": aggressive_table_extraction,
                 "annotate_links": annotate_links,
                 "auto_mode": auto_mode,
                 "auto_mode_configuration_json": auto_mode_configuration_json,
@@ -374,6 +377,7 @@ class ParsingResource(SyncAPIResource):
                 "is_formatting_instruction": is_formatting_instruction,
                 "job_timeout_extra_time_per_page_in_seconds": job_timeout_extra_time_per_page_in_seconds,
                 "job_timeout_in_seconds": job_timeout_in_seconds,
+                "keep_page_separator_when_merging_tables": keep_page_separator_when_merging_tables,
                 "language": language,
                 "layout_aware": layout_aware,
                 "markdown_table_multiline_header_separator": markdown_table_multiline_header_separator,
@@ -615,6 +619,7 @@ class AsyncParsingResource(AsyncAPIResource):
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         adaptive_long_table: bool | Omit = omit,
+        aggressive_table_extraction: bool | Omit = omit,
         annotate_links: bool | Omit = omit,
         auto_mode: bool | Omit = omit,
         auto_mode_configuration_json: str | Omit = omit,
@@ -664,6 +669,7 @@ class AsyncParsingResource(AsyncAPIResource):
         is_formatting_instruction: bool | Omit = omit,
         job_timeout_extra_time_per_page_in_seconds: float | Omit = omit,
         job_timeout_in_seconds: float | Omit = omit,
+        keep_page_separator_when_merging_tables: bool | Omit = omit,
         language: List[ParserLanguages] | Omit = omit,
         layout_aware: bool | Omit = omit,
         markdown_table_multiline_header_separator: str | Omit = omit,
@@ -745,6 +751,7 @@ class AsyncParsingResource(AsyncAPIResource):
         body = deepcopy_minimal(
             {
                 "adaptive_long_table": adaptive_long_table,
+                "aggressive_table_extraction": aggressive_table_extraction,
                 "annotate_links": annotate_links,
                 "auto_mode": auto_mode,
                 "auto_mode_configuration_json": auto_mode_configuration_json,
@@ -794,6 +801,7 @@ class AsyncParsingResource(AsyncAPIResource):
                 "is_formatting_instruction": is_formatting_instruction,
                 "job_timeout_extra_time_per_page_in_seconds": job_timeout_extra_time_per_page_in_seconds,
                 "job_timeout_in_seconds": job_timeout_in_seconds,
+                "keep_page_separator_when_merging_tables": keep_page_separator_when_merging_tables,
                 "language": language,
                 "layout_aware": layout_aware,
                 "markdown_table_multiline_header_separator": markdown_table_multiline_header_separator,

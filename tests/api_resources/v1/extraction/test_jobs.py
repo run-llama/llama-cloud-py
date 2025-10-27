@@ -206,6 +206,14 @@ class TestJobs:
                 "use_reasoning": True,
             },
             data_schema_override={"foo": {"foo": "bar"}},
+            webhook_configurations=[
+                {
+                    "webhook_events": ["extract.pending"],
+                    "webhook_headers": {"foo": "string"},
+                    "webhook_output_format": "webhook_output_format",
+                    "webhook_url": "webhook_url",
+                }
+            ],
         )
         assert_matches_type(JobBatchResponse, job, path=["response"])
 
@@ -528,6 +536,14 @@ class TestAsyncJobs:
                 "use_reasoning": True,
             },
             data_schema_override={"foo": {"foo": "bar"}},
+            webhook_configurations=[
+                {
+                    "webhook_events": ["extract.pending"],
+                    "webhook_headers": {"foo": "string"},
+                    "webhook_output_format": "webhook_output_format",
+                    "webhook_url": "webhook_url",
+                }
+            ],
         )
         assert_matches_type(JobBatchResponse, job, path=["response"])
 

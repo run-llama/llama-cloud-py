@@ -7,6 +7,7 @@ from typing_extensions import Required, TypedDict
 
 from ...._types import SequenceNotStr
 from .extract_config_param import ExtractConfigParam
+from .webhook_configuration_param import WebhookConfigurationParam
 
 __all__ = ["JobBatchParams"]
 
@@ -27,3 +28,6 @@ class JobBatchParams(TypedDict, total=False):
         Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str, None
     ]
     """The data schema to override the extraction agent's data schema with"""
+
+    webhook_configurations: Optional[Iterable[WebhookConfigurationParam]]
+    """The outbound webhook configurations"""

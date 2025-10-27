@@ -30,6 +30,7 @@ class Item(BaseModel):
         "rate_limit_concurrent_jobs_in_execution_default",
         "rate_limit_concurrent_jobs_in_execution_doc_ingest",
         "limit_embedding_character",
+        "limit_files_per_index",
     ]
     """The quota configuration type"""
 

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import typing_extensions
 from typing import Iterable, Optional
 
 import httpx
@@ -34,7 +33,7 @@ from ....._response import (
     async_to_streamed_response_wrapper,
 )
 from ....._base_client import make_request_options
-from .....types.v1.organizations import user_create_params, user_update_remove_params
+from .....types.v1.organizations import user_create_params
 from .....types.v1.organizations.user_list_response import UserListResponse
 from .....types.v1.organizations.user_create_response import UserCreateResponse
 
@@ -170,43 +169,6 @@ class UsersResource(SyncAPIResource):
         return self._delete(
             f"/api/v1/organizations/{organization_id}/users/{member_user_id}",
             body=maybe_transform(body, Optional[SequenceNotStr[str]]),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
-    @typing_extensions.deprecated("deprecated")
-    def update_remove(
-        self,
-        organization_id: str,
-        *,
-        body: Iterable[user_update_remove_params.Body],
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
-        """
-        Remove a batch of users from an organization.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return self._put(
-            f"/api/v1/organizations/{organization_id}/users/remove",
-            body=maybe_transform(body, Iterable[user_update_remove_params.Body]),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -349,43 +311,6 @@ class AsyncUsersResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
-    @typing_extensions.deprecated("deprecated")
-    async def update_remove(
-        self,
-        organization_id: str,
-        *,
-        body: Iterable[user_update_remove_params.Body],
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
-        """
-        Remove a batch of users from an organization.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return await self._put(
-            f"/api/v1/organizations/{organization_id}/users/remove",
-            body=await async_maybe_transform(body, Iterable[user_update_remove_params.Body]),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
 
 class UsersResourceWithRawResponse:
     def __init__(self, users: UsersResource) -> None:
@@ -399,11 +324,6 @@ class UsersResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             users.delete,
-        )
-        self.update_remove = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                users.update_remove,  # pyright: ignore[reportDeprecated],
-            )
         )
 
     @cached_property
@@ -428,11 +348,6 @@ class AsyncUsersResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             users.delete,
         )
-        self.update_remove = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                users.update_remove,  # pyright: ignore[reportDeprecated],
-            )
-        )
 
     @cached_property
     def roles(self) -> AsyncRolesResourceWithRawResponse:
@@ -456,11 +371,6 @@ class UsersResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             users.delete,
         )
-        self.update_remove = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                users.update_remove,  # pyright: ignore[reportDeprecated],
-            )
-        )
 
     @cached_property
     def roles(self) -> RolesResourceWithStreamingResponse:
@@ -483,11 +393,6 @@ class AsyncUsersResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             users.delete,
-        )
-        self.update_remove = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                users.update_remove,  # pyright: ignore[reportDeprecated],
-            )
         )
 
     @cached_property

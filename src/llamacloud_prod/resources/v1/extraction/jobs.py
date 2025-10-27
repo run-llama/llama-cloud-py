@@ -212,6 +212,7 @@ class JobsResource(SyncAPIResource):
             Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str, None
         ]
         | Omit = omit,
+        webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -231,6 +232,8 @@ class JobsResource(SyncAPIResource):
 
           data_schema_override: The data schema to override the extraction agent's data schema with
 
+          webhook_configurations: The outbound webhook configurations
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -247,6 +250,7 @@ class JobsResource(SyncAPIResource):
                     "file_ids": file_ids,
                     "config_override": config_override,
                     "data_schema_override": data_schema_override,
+                    "webhook_configurations": webhook_configurations,
                 },
                 job_batch_params.JobBatchParams,
             ),
@@ -538,6 +542,7 @@ class AsyncJobsResource(AsyncAPIResource):
             Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str, None
         ]
         | Omit = omit,
+        webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -557,6 +562,8 @@ class AsyncJobsResource(AsyncAPIResource):
 
           data_schema_override: The data schema to override the extraction agent's data schema with
 
+          webhook_configurations: The outbound webhook configurations
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -573,6 +580,7 @@ class AsyncJobsResource(AsyncAPIResource):
                     "file_ids": file_ids,
                     "config_override": config_override,
                     "data_schema_override": data_schema_override,
+                    "webhook_configurations": webhook_configurations,
                 },
                 job_batch_params.JobBatchParams,
             ),

@@ -21,6 +21,8 @@ class ParsingUploadFileParams(TypedDict, total=False):
 
     adaptive_long_table: bool
 
+    aggressive_table_extraction: bool
+
     annotate_links: bool
 
     auto_mode: bool
@@ -118,6 +120,8 @@ class ParsingUploadFileParams(TypedDict, total=False):
     job_timeout_extra_time_per_page_in_seconds: float
 
     job_timeout_in_seconds: float
+
+    keep_page_separator_when_merging_tables: bool
 
     language: List[ParserLanguages]
 
