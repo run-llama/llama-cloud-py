@@ -70,6 +70,7 @@ class TestPipelines:
             embedding_model_config_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             llama_parse_parameters={
                 "adaptive_long_table": True,
+                "aggressive_table_extraction": True,
                 "annotate_links": True,
                 "auto_mode": True,
                 "auto_mode_configuration_json": "auto_mode_configuration_json",
@@ -119,6 +120,7 @@ class TestPipelines:
                 "is_formatting_instruction": True,
                 "job_timeout_extra_time_per_page_in_seconds": 0,
                 "job_timeout_in_seconds": 0,
+                "keep_page_separator_when_merging_tables": True,
                 "languages": ["af"],
                 "layout_aware": True,
                 "markdown_table_multiline_header_separator": "markdown_table_multiline_header_separator",
@@ -377,6 +379,7 @@ class TestPipelines:
             embedding_model_config_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             llama_parse_parameters={
                 "adaptive_long_table": True,
+                "aggressive_table_extraction": True,
                 "annotate_links": True,
                 "auto_mode": True,
                 "auto_mode_configuration_json": "auto_mode_configuration_json",
@@ -426,6 +429,7 @@ class TestPipelines:
                 "is_formatting_instruction": True,
                 "job_timeout_extra_time_per_page_in_seconds": 0,
                 "job_timeout_in_seconds": 0,
+                "keep_page_separator_when_merging_tables": True,
                 "languages": ["af"],
                 "layout_aware": True,
                 "markdown_table_multiline_header_separator": "markdown_table_multiline_header_separator",
@@ -1038,6 +1042,7 @@ class TestAsyncPipelines:
             embedding_model_config_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             llama_parse_parameters={
                 "adaptive_long_table": True,
+                "aggressive_table_extraction": True,
                 "annotate_links": True,
                 "auto_mode": True,
                 "auto_mode_configuration_json": "auto_mode_configuration_json",
@@ -1087,6 +1092,7 @@ class TestAsyncPipelines:
                 "is_formatting_instruction": True,
                 "job_timeout_extra_time_per_page_in_seconds": 0,
                 "job_timeout_in_seconds": 0,
+                "keep_page_separator_when_merging_tables": True,
                 "languages": ["af"],
                 "layout_aware": True,
                 "markdown_table_multiline_header_separator": "markdown_table_multiline_header_separator",
@@ -1345,6 +1351,7 @@ class TestAsyncPipelines:
             embedding_model_config_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             llama_parse_parameters={
                 "adaptive_long_table": True,
+                "aggressive_table_extraction": True,
                 "annotate_links": True,
                 "auto_mode": True,
                 "auto_mode_configuration_json": "auto_mode_configuration_json",
@@ -1394,6 +1401,7 @@ class TestAsyncPipelines:
                 "is_formatting_instruction": True,
                 "job_timeout_extra_time_per_page_in_seconds": 0,
                 "job_timeout_in_seconds": 0,
+                "keep_page_separator_when_merging_tables": True,
                 "languages": ["af"],
                 "layout_aware": True,
                 "markdown_table_multiline_header_separator": "markdown_table_multiline_header_separator",

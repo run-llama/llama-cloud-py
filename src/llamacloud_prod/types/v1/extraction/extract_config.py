@@ -41,7 +41,7 @@ class ExtractConfig(BaseModel):
     extraction_mode: Optional[Literal["FAST", "BALANCED", "PREMIUM", "MULTIMODAL"]] = None
     """The extraction mode specified (FAST, BALANCED, MULTIMODAL, PREMIUM)."""
 
-    extraction_target: Optional[Literal["PER_DOC", "PER_PAGE"]] = None
+    extraction_target: Optional[Literal["PER_DOC", "PER_PAGE", "PER_TABLE_ROW"]] = None
     """The extraction target specified."""
 
     high_resolution_mode: Optional[bool] = None
@@ -80,6 +80,7 @@ class ExtractConfig(BaseModel):
             "anthropic-sonnet-3.7",
             "anthropic-sonnet-4.0",
             "anthropic-sonnet-4.5",
+            "anthropic-haiku-4.5",
             "gemini-2.5-flash",
             "gemini-2.5-pro",
             "gemini-2.0-flash",

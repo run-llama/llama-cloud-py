@@ -24,16 +24,8 @@ class TestBilling:
     @parametrize
     def test_method_create_customer_portal_session(self, client: LlamacloudProd) -> None:
         billing = client.v1.billing.create_customer_portal_session(
-            return_url="https://example.com",
-        )
-        assert_matches_type(str, billing, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_create_customer_portal_session_with_all_params(self, client: LlamacloudProd) -> None:
-        billing = client.v1.billing.create_customer_portal_session(
-            return_url="https://example.com",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            return_url="https://example.com",
         )
         assert_matches_type(str, billing, path=["response"])
 
@@ -41,6 +33,7 @@ class TestBilling:
     @parametrize
     def test_raw_response_create_customer_portal_session(self, client: LlamacloudProd) -> None:
         response = client.v1.billing.with_raw_response.create_customer_portal_session(
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             return_url="https://example.com",
         )
 
@@ -53,6 +46,7 @@ class TestBilling:
     @parametrize
     def test_streaming_response_create_customer_portal_session(self, client: LlamacloudProd) -> None:
         with client.v1.billing.with_streaming_response.create_customer_portal_session(
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             return_url="https://example.com",
         ) as response:
             assert not response.is_closed
@@ -67,16 +61,8 @@ class TestBilling:
     @parametrize
     def test_method_create_intent_and_customer_session(self, client: LlamacloudProd) -> None:
         billing = client.v1.billing.create_intent_and_customer_session(
-            plan_name="free",
-        )
-        assert_matches_type(BillingCreateIntentAndCustomerSessionResponse, billing, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_create_intent_and_customer_session_with_all_params(self, client: LlamacloudProd) -> None:
-        billing = client.v1.billing.create_intent_and_customer_session(
-            plan_name="free",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            plan_name="free",
         )
         assert_matches_type(BillingCreateIntentAndCustomerSessionResponse, billing, path=["response"])
 
@@ -84,6 +70,7 @@ class TestBilling:
     @parametrize
     def test_raw_response_create_intent_and_customer_session(self, client: LlamacloudProd) -> None:
         response = client.v1.billing.with_raw_response.create_intent_and_customer_session(
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             plan_name="free",
         )
 
@@ -96,6 +83,7 @@ class TestBilling:
     @parametrize
     def test_streaming_response_create_intent_and_customer_session(self, client: LlamacloudProd) -> None:
         with client.v1.billing.with_streaming_response.create_intent_and_customer_session(
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             plan_name="free",
         ) as response:
             assert not response.is_closed
@@ -150,18 +138,8 @@ class TestAsyncBilling:
     @parametrize
     async def test_method_create_customer_portal_session(self, async_client: AsyncLlamacloudProd) -> None:
         billing = await async_client.v1.billing.create_customer_portal_session(
-            return_url="https://example.com",
-        )
-        assert_matches_type(str, billing, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_create_customer_portal_session_with_all_params(
-        self, async_client: AsyncLlamacloudProd
-    ) -> None:
-        billing = await async_client.v1.billing.create_customer_portal_session(
-            return_url="https://example.com",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            return_url="https://example.com",
         )
         assert_matches_type(str, billing, path=["response"])
 
@@ -169,6 +147,7 @@ class TestAsyncBilling:
     @parametrize
     async def test_raw_response_create_customer_portal_session(self, async_client: AsyncLlamacloudProd) -> None:
         response = await async_client.v1.billing.with_raw_response.create_customer_portal_session(
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             return_url="https://example.com",
         )
 
@@ -181,6 +160,7 @@ class TestAsyncBilling:
     @parametrize
     async def test_streaming_response_create_customer_portal_session(self, async_client: AsyncLlamacloudProd) -> None:
         async with async_client.v1.billing.with_streaming_response.create_customer_portal_session(
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             return_url="https://example.com",
         ) as response:
             assert not response.is_closed
@@ -195,18 +175,8 @@ class TestAsyncBilling:
     @parametrize
     async def test_method_create_intent_and_customer_session(self, async_client: AsyncLlamacloudProd) -> None:
         billing = await async_client.v1.billing.create_intent_and_customer_session(
-            plan_name="free",
-        )
-        assert_matches_type(BillingCreateIntentAndCustomerSessionResponse, billing, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_create_intent_and_customer_session_with_all_params(
-        self, async_client: AsyncLlamacloudProd
-    ) -> None:
-        billing = await async_client.v1.billing.create_intent_and_customer_session(
-            plan_name="free",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            plan_name="free",
         )
         assert_matches_type(BillingCreateIntentAndCustomerSessionResponse, billing, path=["response"])
 
@@ -214,6 +184,7 @@ class TestAsyncBilling:
     @parametrize
     async def test_raw_response_create_intent_and_customer_session(self, async_client: AsyncLlamacloudProd) -> None:
         response = await async_client.v1.billing.with_raw_response.create_intent_and_customer_session(
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             plan_name="free",
         )
 
@@ -228,6 +199,7 @@ class TestAsyncBilling:
         self, async_client: AsyncLlamacloudProd
     ) -> None:
         async with async_client.v1.billing.with_streaming_response.create_intent_and_customer_session(
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             plan_name="free",
         ) as response:
             assert not response.is_closed

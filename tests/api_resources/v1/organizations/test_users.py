@@ -14,8 +14,6 @@ from llamacloud_prod.types.v1.organizations import (
     UserCreateResponse,
 )
 
-# pyright: reportDeprecated=false
-
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
@@ -172,57 +170,6 @@ class TestUsers:
                 organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_update_remove(self, client: LlamacloudProd) -> None:
-        with pytest.warns(DeprecationWarning):
-            user = client.v1.organizations.users.update_remove(
-                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-                body=[{}],
-            )
-
-        assert user is None
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_update_remove(self, client: LlamacloudProd) -> None:
-        with pytest.warns(DeprecationWarning):
-            response = client.v1.organizations.users.with_raw_response.update_remove(
-                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-                body=[{}],
-            )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = response.parse()
-        assert user is None
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_update_remove(self, client: LlamacloudProd) -> None:
-        with pytest.warns(DeprecationWarning):
-            with client.v1.organizations.users.with_streaming_response.update_remove(
-                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-                body=[{}],
-            ) as response:
-                assert not response.is_closed
-                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-                user = response.parse()
-                assert user is None
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_update_remove(self, client: LlamacloudProd) -> None:
-        with pytest.warns(DeprecationWarning):
-            with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-                client.v1.organizations.users.with_raw_response.update_remove(
-                    organization_id="",
-                    body=[{}],
-                )
-
 
 class TestAsyncUsers:
     parametrize = pytest.mark.parametrize(
@@ -378,54 +325,3 @@ class TestAsyncUsers:
                 member_user_id="",
                 organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_update_remove(self, async_client: AsyncLlamacloudProd) -> None:
-        with pytest.warns(DeprecationWarning):
-            user = await async_client.v1.organizations.users.update_remove(
-                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-                body=[{}],
-            )
-
-        assert user is None
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_update_remove(self, async_client: AsyncLlamacloudProd) -> None:
-        with pytest.warns(DeprecationWarning):
-            response = await async_client.v1.organizations.users.with_raw_response.update_remove(
-                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-                body=[{}],
-            )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = await response.parse()
-        assert user is None
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_update_remove(self, async_client: AsyncLlamacloudProd) -> None:
-        with pytest.warns(DeprecationWarning):
-            async with async_client.v1.organizations.users.with_streaming_response.update_remove(
-                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-                body=[{}],
-            ) as response:
-                assert not response.is_closed
-                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-                user = await response.parse()
-                assert user is None
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_update_remove(self, async_client: AsyncLlamacloudProd) -> None:
-        with pytest.warns(DeprecationWarning):
-            with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-                await async_client.v1.organizations.users.with_raw_response.update_remove(
-                    organization_id="",
-                    body=[{}],
-                )

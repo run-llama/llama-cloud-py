@@ -49,6 +49,7 @@ class TestBatches:
             output_type="output_type",
             tool_data={
                 "adaptive_long_table": True,
+                "aggressive_table_extraction": True,
                 "annotate_links": True,
                 "auto_mode": True,
                 "auto_mode_configuration_json": "auto_mode_configuration_json",
@@ -98,6 +99,7 @@ class TestBatches:
                 "is_formatting_instruction": True,
                 "job_timeout_extra_time_per_page_in_seconds": 0,
                 "job_timeout_in_seconds": 0,
+                "keep_page_separator_when_merging_tables": True,
                 "languages": ["af"],
                 "layout_aware": True,
                 "markdown_table_multiline_header_separator": "markdown_table_multiline_header_separator",
@@ -325,6 +327,7 @@ class TestAsyncBatches:
             output_type="output_type",
             tool_data={
                 "adaptive_long_table": True,
+                "aggressive_table_extraction": True,
                 "annotate_links": True,
                 "auto_mode": True,
                 "auto_mode_configuration_json": "auto_mode_configuration_json",
@@ -374,6 +377,7 @@ class TestAsyncBatches:
                 "is_formatting_instruction": True,
                 "job_timeout_extra_time_per_page_in_seconds": 0,
                 "job_timeout_in_seconds": 0,
+                "keep_page_separator_when_merging_tables": True,
                 "languages": ["af"],
                 "layout_aware": True,
                 "markdown_table_multiline_header_separator": "markdown_table_multiline_header_separator",

@@ -17,6 +17,8 @@ __all__ = ["LlamaParseParametersParam"]
 class LlamaParseParametersParam(TypedDict, total=False):
     adaptive_long_table: Optional[bool]
 
+    aggressive_table_extraction: Optional[bool]
+
     annotate_links: Optional[bool]
 
     auto_mode: Optional[bool]
@@ -114,6 +116,8 @@ class LlamaParseParametersParam(TypedDict, total=False):
     job_timeout_extra_time_per_page_in_seconds: Optional[float]
 
     job_timeout_in_seconds: Optional[float]
+
+    keep_page_separator_when_merging_tables: Optional[bool]
 
     languages: List[ParserLanguages]
 

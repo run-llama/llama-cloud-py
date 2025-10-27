@@ -30,6 +30,14 @@ class ClassifyJob(BaseModel):
     created_at: Optional[datetime] = None
     """Creation datetime"""
 
+    effective_at: Optional[datetime] = None
+
+    error_message: Optional[str] = None
+    """Error message for the latest job attempt, if any."""
+
+    job_record_id: Optional[str] = None
+    """The job record ID associated with this status, if any."""
+
     parsing_configuration: Optional[ClassifyParsingConfiguration] = None
     """The configuration for the parsing job"""
 

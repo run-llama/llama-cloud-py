@@ -19,4 +19,6 @@ class AgentData(BaseModel):
 
     created_at: Optional[datetime] = None
 
+    project_id: Optional[str] = None
+
     updated_at: Optional[datetime] = None

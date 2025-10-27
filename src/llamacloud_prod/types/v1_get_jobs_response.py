@@ -48,6 +48,8 @@ class JobJobRecordParametersParseJobConfig(BaseModel):
 
     adaptive_long_table: Optional[bool] = None
 
+    aggressive_table_extraction: Optional[bool] = None
+
     annotate_links: Optional[bool] = None
 
     auto_mode: Optional[bool] = None
@@ -156,6 +158,8 @@ class JobJobRecordParametersParseJobConfig(BaseModel):
     job_timeout_extra_time_per_page_in_seconds: Optional[float] = None
 
     job_timeout_in_seconds: Optional[float] = None
+
+    keep_page_separator_when_merging_tables: Optional[bool] = None
 
     languages: Optional[List[ParserLanguages]] = None
 

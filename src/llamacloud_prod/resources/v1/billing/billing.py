@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Optional
 from typing_extensions import Literal
 
 import httpx
 
-from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ...._types import Body, Query, Headers, NotGiven, not_given
 from ...._utils import maybe_transform, async_maybe_transform
 from .metronome import (
     MetronomeResource,
@@ -66,8 +65,8 @@ class BillingResource(SyncAPIResource):
     def create_customer_portal_session(
         self,
         *,
+        organization_id: str,
         return_url: str,
-        organization_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -109,6 +108,7 @@ class BillingResource(SyncAPIResource):
     def create_intent_and_customer_session(
         self,
         *,
+        organization_id: str,
         plan_name: Literal[
             "free",
             "llama_parse",
@@ -122,7 +122,6 @@ class BillingResource(SyncAPIResource):
             "starter_v1",
             "pro_v1",
         ],
-        organization_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -153,8 +152,8 @@ class BillingResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "plan_name": plan_name,
                         "organization_id": organization_id,
+                        "plan_name": plan_name,
                     },
                     billing_create_intent_and_customer_session_params.BillingCreateIntentAndCustomerSessionParams,
                 ),
@@ -227,8 +226,8 @@ class AsyncBillingResource(AsyncAPIResource):
     async def create_customer_portal_session(
         self,
         *,
+        organization_id: str,
         return_url: str,
-        organization_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -270,6 +269,7 @@ class AsyncBillingResource(AsyncAPIResource):
     async def create_intent_and_customer_session(
         self,
         *,
+        organization_id: str,
         plan_name: Literal[
             "free",
             "llama_parse",
@@ -283,7 +283,6 @@ class AsyncBillingResource(AsyncAPIResource):
             "starter_v1",
             "pro_v1",
         ],
-        organization_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -314,8 +313,8 @@ class AsyncBillingResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
-                        "plan_name": plan_name,
                         "organization_id": organization_id,
+                        "plan_name": plan_name,
                     },
                     billing_create_intent_and_customer_session_params.BillingCreateIntentAndCustomerSessionParams,
                 ),

@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Optional
 from typing_extensions import Literal, Required, TypedDict
 
 __all__ = ["BillingCreateIntentAndCustomerSessionParams"]
 
 
 class BillingCreateIntentAndCustomerSessionParams(TypedDict, total=False):
+    organization_id: Required[str]
+
     plan_name: Required[
         Literal[
             "free",
@@ -24,5 +25,3 @@ class BillingCreateIntentAndCustomerSessionParams(TypedDict, total=False):
             "pro_v1",
         ]
     ]
-
-    organization_id: Optional[str]
