@@ -1,8 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict
 from typing_extensions import TypeAlias
 
-__all__ = ["AgentDataDeleteResponse"]
+__all__ = ["TestStreamResponse"]
 
-AgentDataDeleteResponse: TypeAlias = Dict[str, str]
+TestStreamResponse: TypeAlias = str

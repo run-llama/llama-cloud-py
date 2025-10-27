@@ -102,52 +102,42 @@ class TestRetrievers:
     def test_method_retrieve(self, client: LlamacloudProd) -> None:
         retriever = client.v1.retrievers.retrieve(
             retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
         )
-        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+        assert_matches_type(Retriever, retriever, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve_with_all_params(self, client: LlamacloudProd) -> None:
         retriever = client.v1.retrievers.retrieve(
             retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            mode="routing",
-            rerank_config={
-                "top_n": 0,
-                "type": "system_default",
-            },
-            rerank_top_n=0,
         )
-        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+        assert_matches_type(Retriever, retriever, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: LlamacloudProd) -> None:
         response = client.v1.retrievers.with_raw_response.retrieve(
             retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         retriever = response.parse()
-        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+        assert_matches_type(Retriever, retriever, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: LlamacloudProd) -> None:
         with client.v1.retrievers.with_streaming_response.retrieve(
             retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             retriever = response.parse()
-            assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+            assert_matches_type(Retriever, retriever, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -157,7 +147,6 @@ class TestRetrievers:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `retriever_id` but received ''"):
             client.v1.retrievers.with_raw_response.retrieve(
                 retriever_id="",
-                query="x",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -596,52 +585,42 @@ class TestAsyncRetrievers:
     async def test_method_retrieve(self, async_client: AsyncLlamacloudProd) -> None:
         retriever = await async_client.v1.retrievers.retrieve(
             retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
         )
-        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+        assert_matches_type(Retriever, retriever, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve_with_all_params(self, async_client: AsyncLlamacloudProd) -> None:
         retriever = await async_client.v1.retrievers.retrieve(
             retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            mode="routing",
-            rerank_config={
-                "top_n": 0,
-                "type": "system_default",
-            },
-            rerank_top_n=0,
         )
-        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+        assert_matches_type(Retriever, retriever, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncLlamacloudProd) -> None:
         response = await async_client.v1.retrievers.with_raw_response.retrieve(
             retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         retriever = await response.parse()
-        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+        assert_matches_type(Retriever, retriever, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncLlamacloudProd) -> None:
         async with async_client.v1.retrievers.with_streaming_response.retrieve(
             retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             retriever = await response.parse()
-            assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+            assert_matches_type(Retriever, retriever, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -651,7 +630,6 @@ class TestAsyncRetrievers:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `retriever_id` but received ''"):
             await async_client.v1.retrievers.with_raw_response.retrieve(
                 retriever_id="",
-                query="x",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")

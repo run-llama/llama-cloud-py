@@ -27,6 +27,7 @@ from ....._response import (
 from ....._base_client import make_request_options
 from .....types.v1.extraction import (
     extraction_agent_update_params,
+    extraction_agent_retrieve_by_name_params,
     extraction_agent_retrieve_default_params,
     extraction_agent_extraction_agents_params,
     extraction_agent_retrieve_extraction_agents_params,
@@ -236,6 +237,51 @@ class ExtractionAgentsResource(SyncAPIResource):
                         "project_id": project_id,
                     },
                     extraction_agent_extraction_agents_params.ExtractionAgentExtractionAgentsParams,
+                ),
+            ),
+            cast_to=ExtractAgent,
+        )
+
+    def retrieve_by_name(
+        self,
+        name: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ExtractAgent:
+        """
+        Get Extraction Agent By Name
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not name:
+            raise ValueError(f"Expected a non-empty value for `name` but received {name!r}")
+        return self._get(
+            f"/api/v1/extraction/extraction-agents/by-name/{name}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    extraction_agent_retrieve_by_name_params.ExtractionAgentRetrieveByNameParams,
                 ),
             ),
             cast_to=ExtractAgent,
@@ -533,6 +579,51 @@ class AsyncExtractionAgentsResource(AsyncAPIResource):
             cast_to=ExtractAgent,
         )
 
+    async def retrieve_by_name(
+        self,
+        name: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ExtractAgent:
+        """
+        Get Extraction Agent By Name
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not name:
+            raise ValueError(f"Expected a non-empty value for `name` but received {name!r}")
+        return await self._get(
+            f"/api/v1/extraction/extraction-agents/by-name/{name}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    extraction_agent_retrieve_by_name_params.ExtractionAgentRetrieveByNameParams,
+                ),
+            ),
+            cast_to=ExtractAgent,
+        )
+
     async def retrieve_default(
         self,
         *,
@@ -640,6 +731,9 @@ class ExtractionAgentsResourceWithRawResponse:
         self.extraction_agents = to_raw_response_wrapper(
             extraction_agents.extraction_agents,
         )
+        self.retrieve_by_name = to_raw_response_wrapper(
+            extraction_agents.retrieve_by_name,
+        )
         self.retrieve_default = to_raw_response_wrapper(
             extraction_agents.retrieve_default,
         )
@@ -667,6 +761,9 @@ class AsyncExtractionAgentsResourceWithRawResponse:
         )
         self.extraction_agents = async_to_raw_response_wrapper(
             extraction_agents.extraction_agents,
+        )
+        self.retrieve_by_name = async_to_raw_response_wrapper(
+            extraction_agents.retrieve_by_name,
         )
         self.retrieve_default = async_to_raw_response_wrapper(
             extraction_agents.retrieve_default,
@@ -696,6 +793,9 @@ class ExtractionAgentsResourceWithStreamingResponse:
         self.extraction_agents = to_streamed_response_wrapper(
             extraction_agents.extraction_agents,
         )
+        self.retrieve_by_name = to_streamed_response_wrapper(
+            extraction_agents.retrieve_by_name,
+        )
         self.retrieve_default = to_streamed_response_wrapper(
             extraction_agents.retrieve_default,
         )
@@ -723,6 +823,9 @@ class AsyncExtractionAgentsResourceWithStreamingResponse:
         )
         self.extraction_agents = async_to_streamed_response_wrapper(
             extraction_agents.extraction_agents,
+        )
+        self.retrieve_by_name = async_to_streamed_response_wrapper(
+            extraction_agents.retrieve_by_name,
         )
         self.retrieve_default = async_to_streamed_response_wrapper(
             extraction_agents.retrieve_default,

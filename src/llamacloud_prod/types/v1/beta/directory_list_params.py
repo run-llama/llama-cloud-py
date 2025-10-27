@@ -5,10 +5,20 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import TypedDict
 
-__all__ = ["PageFigureListParams"]
+__all__ = ["DirectoryListParams"]
 
 
-class PageFigureListParams(TypedDict, total=False):
+class DirectoryListParams(TypedDict, total=False):
+    data_source_id: Optional[str]
+
+    include_deleted: bool
+
+    name: Optional[str]
+
     organization_id: Optional[str]
+
+    page_size: Optional[int]
+
+    page_token: Optional[str]
 
     project_id: Optional[str]

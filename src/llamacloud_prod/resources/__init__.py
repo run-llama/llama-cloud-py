@@ -8,14 +8,6 @@ from .v1 import (
     V1ResourceWithStreamingResponse,
     AsyncV1ResourceWithStreamingResponse,
 )
-from .parsing import (
-    ParsingResource,
-    AsyncParsingResource,
-    ParsingResourceWithRawResponse,
-    AsyncParsingResourceWithRawResponse,
-    ParsingResourceWithStreamingResponse,
-    AsyncParsingResourceWithStreamingResponse,
-)
 from .v2alpha1 import (
     V2alpha1Resource,
     AsyncV2alpha1Resource,
@@ -38,10 +30,4 @@ __all__ = [
     "AsyncV2alpha1ResourceWithRawResponse",
     "V2alpha1ResourceWithStreamingResponse",
     "AsyncV2alpha1ResourceWithStreamingResponse",
-    "ParsingResource",
-    "AsyncParsingResource",
-    "ParsingResourceWithRawResponse",
-    "AsyncParsingResourceWithRawResponse",
-    "ParsingResourceWithStreamingResponse",
-    "AsyncParsingResourceWithStreamingResponse",
 ]

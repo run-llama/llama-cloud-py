@@ -7,12 +7,6 @@ from .. import _compat
 from .delete_params import DeleteParams as DeleteParams
 from .v1_get_jobs_params import V1GetJobsParams as V1GetJobsParams
 from .v1_get_jobs_response import V1GetJobsResponse as V1GetJobsResponse
-from .parsing_screenshot_params import ParsingScreenshotParams as ParsingScreenshotParams
-from .parsing_upload_file_params import ParsingUploadFileParams as ParsingUploadFileParams
-from .parsing_get_parsing_history_response import ParsingGetParsingHistoryResponse as ParsingGetParsingHistoryResponse
-from .parsing_get_supported_file_extensions_response import (
-    ParsingGetSupportedFileExtensionsResponse as ParsingGetSupportedFileExtensionsResponse,
-)
 
 # Rebuild cyclical models only after all modules are imported.
 # This ensures that, when building the deferred (due to cyclical references) model schema,
@@ -22,7 +16,6 @@ if _compat.PYDANTIC_V1:
     v1.metadata_filters.MetadataFilters.update_forward_refs()  # type: ignore
     v1.pipeline.Pipeline.update_forward_refs()  # type: ignore
     v1.preset_retrieval_params.PresetRetrievalParams.update_forward_refs()  # type: ignore
-    v1.pipeline_retrieve_response.PipelineRetrieveResponse.update_forward_refs()  # type: ignore
     v1.pipeline_retrieve_playground_session_response.PipelineRetrievePlaygroundSessionResponse.update_forward_refs()  # type: ignore
     v1.retriever.Retriever.update_forward_refs()  # type: ignore
     v1.retriever_pipeline.RetrieverPipeline.update_forward_refs()  # type: ignore
@@ -30,7 +23,6 @@ else:
     v1.metadata_filters.MetadataFilters.model_rebuild(_parent_namespace_depth=0)
     v1.pipeline.Pipeline.model_rebuild(_parent_namespace_depth=0)
     v1.preset_retrieval_params.PresetRetrievalParams.model_rebuild(_parent_namespace_depth=0)
-    v1.pipeline_retrieve_response.PipelineRetrieveResponse.model_rebuild(_parent_namespace_depth=0)
     v1.pipeline_retrieve_playground_session_response.PipelineRetrievePlaygroundSessionResponse.model_rebuild(
         _parent_namespace_depth=0
     )

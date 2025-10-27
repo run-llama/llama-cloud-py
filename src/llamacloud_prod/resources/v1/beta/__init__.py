@@ -40,6 +40,14 @@ from .agent_data import (
     AgentDataResourceWithStreamingResponse,
     AsyncAgentDataResourceWithStreamingResponse,
 )
+from .directories import (
+    DirectoriesResource,
+    AsyncDirectoriesResource,
+    DirectoriesResourceWithRawResponse,
+    AsyncDirectoriesResourceWithRawResponse,
+    DirectoriesResourceWithStreamingResponse,
+    AsyncDirectoriesResourceWithStreamingResponse,
+)
 from .spreadsheet import (
     SpreadsheetResource,
     AsyncSpreadsheetResource,
@@ -94,6 +102,12 @@ __all__ = [
     "AsyncSpreadsheetResourceWithRawResponse",
     "SpreadsheetResourceWithStreamingResponse",
     "AsyncSpreadsheetResourceWithStreamingResponse",
+    "DirectoriesResource",
+    "AsyncDirectoriesResource",
+    "DirectoriesResourceWithRawResponse",
+    "AsyncDirectoriesResourceWithRawResponse",
+    "DirectoriesResourceWithStreamingResponse",
+    "AsyncDirectoriesResourceWithStreamingResponse",
     "BetaResource",
     "AsyncBetaResource",
     "BetaResourceWithRawResponse",

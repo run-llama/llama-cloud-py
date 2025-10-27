@@ -19,10 +19,14 @@ from .run_retrieve_params import RunRetrieveParams as RunRetrieveParams
 from .extract_config_param import ExtractConfigParam as ExtractConfigParam
 from .webhook_configuration import WebhookConfiguration as WebhookConfiguration
 from .job_retrieve_result_params import JobRetrieveResultParams as JobRetrieveResultParams
+from .run_retrieve_by_job_params import RunRetrieveByJobParams as RunRetrieveByJobParams
 from .webhook_configuration_param import WebhookConfigurationParam as WebhookConfigurationParam
 from .job_retrieve_result_response import JobRetrieveResultResponse as JobRetrieveResultResponse
 from .extraction_agent_update_params import ExtractionAgentUpdateParams as ExtractionAgentUpdateParams
 from .run_retrieve_latest_from_ui_params import RunRetrieveLatestFromUiParams as RunRetrieveLatestFromUiParams
+from .extraction_agent_retrieve_by_name_params import (
+    ExtractionAgentRetrieveByNameParams as ExtractionAgentRetrieveByNameParams,
+)
 from .extraction_agent_retrieve_default_params import (
     ExtractionAgentRetrieveDefaultParams as ExtractionAgentRetrieveDefaultParams,
 )

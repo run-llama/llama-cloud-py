@@ -41,6 +41,7 @@ from .parsing_history_item import ParsingHistoryItem as ParsingHistoryItem
 from .pipeline_chat_params import PipelineChatParams as PipelineChatParams
 from .pipeline_list_params import PipelineListParams as PipelineListParams
 from .re_rank_config_param import ReRankConfigParam as ReRankConfigParam
+from .test_stream_response import TestStreamResponse as TestStreamResponse
 from .agent_deployment_list import AgentDeploymentList as AgentDeploymentList
 from .api_key_create_params import APIKeyCreateParams as APIKeyCreateParams
 from .api_key_list_response import APIKeyListResponse as APIKeyListResponse
@@ -82,7 +83,6 @@ from .bedrock_embedding_config import BedrockEmbeddingConfig as BedrockEmbedding
 from .composite_retrieval_mode import CompositeRetrievalMode as CompositeRetrievalMode
 from .file_read_content_params import FileReadContentParams as FileReadContentParams
 from .pipeline_metadata_config import PipelineMetadataConfig as PipelineMetadataConfig
-from .pipeline_retrieve_params import PipelineRetrieveParams as PipelineRetrieveParams
 from .project_get_usage_params import ProjectGetUsageParams as ProjectGetUsageParams
 from .retriever_pipeline_param import RetrieverPipelineParam as RetrieverPipelineParam
 from .cloud_jira_data_source_v2 import CloudJiraDataSourceV2 as CloudJiraDataSourceV2
@@ -101,7 +101,6 @@ from .organization_create_params import OrganizationCreateParams as Organization
 from .organization_list_response import OrganizationListResponse as OrganizationListResponse
 from .organization_update_params import OrganizationUpdateParams as OrganizationUpdateParams
 from .parsing_upload_file_params import ParsingUploadFileParams as ParsingUploadFileParams
-from .pipeline_retrieve_response import PipelineRetrieveResponse as PipelineRetrieveResponse
 from .project_get_current_params import ProjectGetCurrentParams as ProjectGetCurrentParams
 from .vertex_ai_embedding_config import VertexAIEmbeddingConfig as VertexAIEmbeddingConfig
 from .auto_transform_config_param import AutoTransformConfigParam as AutoTransformConfigParam
