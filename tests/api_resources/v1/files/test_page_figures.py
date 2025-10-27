@@ -93,7 +93,6 @@ class TestPageFigures:
     @parametrize
     def test_method_list(self, client: LlamacloudProd) -> None:
         page_figure = client.v1.files.page_figures.list(
-            page_index=0,
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(PageFigureListResponse, page_figure, path=["response"])
@@ -102,7 +101,6 @@ class TestPageFigures:
     @parametrize
     def test_method_list_with_all_params(self, client: LlamacloudProd) -> None:
         page_figure = client.v1.files.page_figures.list(
-            page_index=0,
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -113,7 +111,6 @@ class TestPageFigures:
     @parametrize
     def test_raw_response_list(self, client: LlamacloudProd) -> None:
         response = client.v1.files.page_figures.with_raw_response.list(
-            page_index=0,
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
@@ -126,7 +123,6 @@ class TestPageFigures:
     @parametrize
     def test_streaming_response_list(self, client: LlamacloudProd) -> None:
         with client.v1.files.page_figures.with_streaming_response.list(
-            page_index=0,
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
@@ -142,7 +138,6 @@ class TestPageFigures:
     def test_path_params_list(self, client: LlamacloudProd) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
             client.v1.files.page_figures.with_raw_response.list(
-                page_index=0,
                 id="",
             )
 
@@ -294,7 +289,6 @@ class TestAsyncPageFigures:
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamacloudProd) -> None:
         page_figure = await async_client.v1.files.page_figures.list(
-            page_index=0,
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(PageFigureListResponse, page_figure, path=["response"])
@@ -303,7 +297,6 @@ class TestAsyncPageFigures:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLlamacloudProd) -> None:
         page_figure = await async_client.v1.files.page_figures.list(
-            page_index=0,
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -314,7 +307,6 @@ class TestAsyncPageFigures:
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncLlamacloudProd) -> None:
         response = await async_client.v1.files.page_figures.with_raw_response.list(
-            page_index=0,
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
@@ -327,7 +319,6 @@ class TestAsyncPageFigures:
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncLlamacloudProd) -> None:
         async with async_client.v1.files.page_figures.with_streaming_response.list(
-            page_index=0,
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
@@ -343,7 +334,6 @@ class TestAsyncPageFigures:
     async def test_path_params_list(self, async_client: AsyncLlamacloudProd) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
             await async_client.v1.files.page_figures.with_raw_response.list(
-                page_index=0,
                 id="",
             )
 

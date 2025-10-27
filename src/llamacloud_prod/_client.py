@@ -29,7 +29,6 @@ from ._base_client import (
     AsyncAPIClient,
 )
 from .resources.v1 import v1
-from .resources.parsing import parsing
 from .resources.v2alpha1 import v2alpha1
 
 __all__ = [
@@ -47,7 +46,6 @@ __all__ = [
 class LlamacloudProd(SyncAPIClient):
     v1: v1.V1Resource
     v2alpha1: v2alpha1.V2alpha1Resource
-    parsing: parsing.ParsingResource
     with_raw_response: LlamacloudProdWithRawResponse
     with_streaming_response: LlamacloudProdWithStreamedResponse
 
@@ -107,7 +105,6 @@ class LlamacloudProd(SyncAPIClient):
 
         self.v1 = v1.V1Resource(self)
         self.v2alpha1 = v2alpha1.V2alpha1Resource(self)
-        self.parsing = parsing.ParsingResource(self)
         self.with_raw_response = LlamacloudProdWithRawResponse(self)
         self.with_streaming_response = LlamacloudProdWithStreamedResponse(self)
 
@@ -219,7 +216,6 @@ class LlamacloudProd(SyncAPIClient):
 class AsyncLlamacloudProd(AsyncAPIClient):
     v1: v1.AsyncV1Resource
     v2alpha1: v2alpha1.AsyncV2alpha1Resource
-    parsing: parsing.AsyncParsingResource
     with_raw_response: AsyncLlamacloudProdWithRawResponse
     with_streaming_response: AsyncLlamacloudProdWithStreamedResponse
 
@@ -279,7 +275,6 @@ class AsyncLlamacloudProd(AsyncAPIClient):
 
         self.v1 = v1.AsyncV1Resource(self)
         self.v2alpha1 = v2alpha1.AsyncV2alpha1Resource(self)
-        self.parsing = parsing.AsyncParsingResource(self)
         self.with_raw_response = AsyncLlamacloudProdWithRawResponse(self)
         self.with_streaming_response = AsyncLlamacloudProdWithStreamedResponse(self)
 
@@ -392,28 +387,24 @@ class LlamacloudProdWithRawResponse:
     def __init__(self, client: LlamacloudProd) -> None:
         self.v1 = v1.V1ResourceWithRawResponse(client.v1)
         self.v2alpha1 = v2alpha1.V2alpha1ResourceWithRawResponse(client.v2alpha1)
-        self.parsing = parsing.ParsingResourceWithRawResponse(client.parsing)
 
 
 class AsyncLlamacloudProdWithRawResponse:
     def __init__(self, client: AsyncLlamacloudProd) -> None:
         self.v1 = v1.AsyncV1ResourceWithRawResponse(client.v1)
         self.v2alpha1 = v2alpha1.AsyncV2alpha1ResourceWithRawResponse(client.v2alpha1)
-        self.parsing = parsing.AsyncParsingResourceWithRawResponse(client.parsing)
 
 
 class LlamacloudProdWithStreamedResponse:
     def __init__(self, client: LlamacloudProd) -> None:
         self.v1 = v1.V1ResourceWithStreamingResponse(client.v1)
         self.v2alpha1 = v2alpha1.V2alpha1ResourceWithStreamingResponse(client.v2alpha1)
-        self.parsing = parsing.ParsingResourceWithStreamingResponse(client.parsing)
 
 
 class AsyncLlamacloudProdWithStreamedResponse:
     def __init__(self, client: AsyncLlamacloudProd) -> None:
         self.v1 = v1.AsyncV1ResourceWithStreamingResponse(client.v1)
         self.v2alpha1 = v2alpha1.AsyncV2alpha1ResourceWithStreamingResponse(client.v2alpha1)
-        self.parsing = parsing.AsyncParsingResourceWithStreamingResponse(client.parsing)
 
 
 Client = LlamacloudProd

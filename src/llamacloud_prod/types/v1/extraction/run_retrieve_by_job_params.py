@@ -5,8 +5,10 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import TypedDict
 
-__all__ = ["ResultGetJsonParams"]
+__all__ = ["RunRetrieveByJobParams"]
 
 
-class ResultGetJsonParams(TypedDict, total=False):
+class RunRetrieveByJobParams(TypedDict, total=False):
     organization_id: Optional[str]
+
+    project_id: Optional[str]

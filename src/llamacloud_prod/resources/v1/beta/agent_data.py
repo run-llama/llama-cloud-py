@@ -147,12 +147,10 @@ class AgentDataResource(SyncAPIResource):
 
     def delete(
         self,
+        item_id: str,
         *,
-        deployment_name: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        collection: str | Omit = omit,
-        filter: Optional[Dict[str, agent_data_delete_params.Filter]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -161,15 +159,9 @@ class AgentDataResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AgentDataDeleteResponse:
         """
-        Bulk delete agent data by query (deployment_name, collection, optional filters).
+        Delete agent data by ID.
 
         Args:
-          deployment_name: The agent deployment's name to delete data for
-
-          collection: The logical agent data collection to delete from
-
-          filter: Optional filters to select which items to delete
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -178,16 +170,10 @@ class AgentDataResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._post(
-            "/api/v1/beta/agent-data/:delete",
-            body=maybe_transform(
-                {
-                    "deployment_name": deployment_name,
-                    "collection": collection,
-                    "filter": filter,
-                },
-                agent_data_delete_params.AgentDataDeleteParams,
-            ),
+        if not item_id:
+            raise ValueError(f"Expected a non-empty value for `item_id` but received {item_id!r}")
+        return self._delete(
+            f"/api/v1/beta/agent-data/{item_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -547,12 +533,10 @@ class AsyncAgentDataResource(AsyncAPIResource):
 
     async def delete(
         self,
+        item_id: str,
         *,
-        deployment_name: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        collection: str | Omit = omit,
-        filter: Optional[Dict[str, agent_data_delete_params.Filter]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -561,15 +545,9 @@ class AsyncAgentDataResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AgentDataDeleteResponse:
         """
-        Bulk delete agent data by query (deployment_name, collection, optional filters).
+        Delete agent data by ID.
 
         Args:
-          deployment_name: The agent deployment's name to delete data for
-
-          collection: The logical agent data collection to delete from
-
-          filter: Optional filters to select which items to delete
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -578,16 +556,10 @@ class AsyncAgentDataResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._post(
-            "/api/v1/beta/agent-data/:delete",
-            body=await async_maybe_transform(
-                {
-                    "deployment_name": deployment_name,
-                    "collection": collection,
-                    "filter": filter,
-                },
-                agent_data_delete_params.AgentDataDeleteParams,
-            ),
+        if not item_id:
+            raise ValueError(f"Expected a non-empty value for `item_id` but received {item_id!r}")
+        return await self._delete(
+            f"/api/v1/beta/agent-data/{item_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

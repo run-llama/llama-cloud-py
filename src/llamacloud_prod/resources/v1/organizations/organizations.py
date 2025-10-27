@@ -82,7 +82,7 @@ class OrganizationsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Organization:
         """
-        Upsert a new organization.
+        Create a new organization.
 
         Args:
           name: A name for the organization.
@@ -95,7 +95,7 @@ class OrganizationsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._put(
+        return self._post(
             "/api/v1/organizations",
             body=maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
             options=make_request_options(
@@ -351,7 +351,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Organization:
         """
-        Upsert a new organization.
+        Create a new organization.
 
         Args:
           name: A name for the organization.
@@ -364,7 +364,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._put(
+        return await self._post(
             "/api/v1/organizations",
             body=await async_maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
             options=make_request_options(

@@ -67,12 +67,12 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> File:
         """
-        Upsert a file (create or update if exists) in the project.
+        Create a new file in the project.
 
-        Args: file_create: File creation/update data project: Validated project from
-        dependency db: Database session
+        Args: file_create: File creation data project: Validated project from dependency
+        db: Database session
 
-        Returns: The upserted file
+        Returns: The created file
 
         Args:
           name: Name that will be used for created file. If possible, always include the file
@@ -98,7 +98,7 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._put(
+        return self._post(
             "/api/v1/beta/files",
             body=maybe_transform(
                 {
@@ -294,12 +294,12 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> File:
         """
-        Upsert a file (create or update if exists) in the project.
+        Create a new file in the project.
 
-        Args: file_create: File creation/update data project: Validated project from
-        dependency db: Database session
+        Args: file_create: File creation data project: Validated project from dependency
+        db: Database session
 
-        Returns: The upserted file
+        Returns: The created file
 
         Args:
           name: Name that will be used for created file. If possible, always include the file
@@ -325,7 +325,7 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._put(
+        return await self._post(
             "/api/v1/beta/files",
             body=await async_maybe_transform(
                 {

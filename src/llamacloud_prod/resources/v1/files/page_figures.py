@@ -99,9 +99,8 @@ class PageFiguresResource(SyncAPIResource):
 
     def list(
         self,
-        page_index: int,
-        *,
         id: str,
+        *,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -112,7 +111,7 @@ class PageFiguresResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PageFigureListResponse:
         """
-        List File Page Figures
+        List File Pages Figures
 
         Args:
           extra_headers: Send extra headers
@@ -126,7 +125,7 @@ class PageFiguresResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._get(
-            f"/api/v1/files/{id}/page-figures/{page_index}",
+            f"/api/v1/files/{id}/page-figures",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -268,9 +267,8 @@ class AsyncPageFiguresResource(AsyncAPIResource):
 
     async def list(
         self,
-        page_index: int,
-        *,
         id: str,
+        *,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -281,7 +279,7 @@ class AsyncPageFiguresResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PageFigureListResponse:
         """
-        List File Page Figures
+        List File Pages Figures
 
         Args:
           extra_headers: Send extra headers
@@ -295,7 +293,7 @@ class AsyncPageFiguresResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._get(
-            f"/api/v1/files/{id}/page-figures/{page_index}",
+            f"/api/v1/files/{id}/page-figures",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

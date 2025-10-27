@@ -12,7 +12,6 @@ from llamacloud_prod import LlamacloudProd, AsyncLlamacloudProd
 from llamacloud_prod.types.v1 import (
     Pipeline,
     PipelineListResponse,
-    PipelineRetrieveResponse,
     ManagedIngestionStatusResponse,
     PipelineRetrieveFiles2Response,
     PipelineRetrievePlaygroundSessionResponse,
@@ -261,70 +260,33 @@ class TestPipelines:
     @parametrize
     def test_method_retrieve(self, client: LlamacloudProd) -> None:
         pipeline = client.v1.pipelines.retrieve(
-            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(PipelineRetrieveResponse, pipeline, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_retrieve_with_all_params(self, client: LlamacloudProd) -> None:
-        pipeline = client.v1.pipelines.retrieve(
-            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            alpha=0,
-            class_name="class_name",
-            dense_similarity_cutoff=0,
-            dense_similarity_top_k=1,
-            enable_reranking=True,
-            files_top_k=1,
-            rerank_top_n=1,
-            retrieval_mode="chunks",
-            retrieve_image_nodes=True,
-            retrieve_page_figure_nodes=True,
-            retrieve_page_screenshot_nodes=True,
-            search_filters={
-                "filters": [
-                    {
-                        "key": "key",
-                        "value": 0,
-                        "operator": "==",
-                    }
-                ],
-                "condition": "and",
-            },
-            search_filters_inference_schema={"foo": {"foo": "bar"}},
-            sparse_similarity_top_k=1,
-        )
-        assert_matches_type(PipelineRetrieveResponse, pipeline, path=["response"])
+        assert_matches_type(Pipeline, pipeline, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: LlamacloudProd) -> None:
         response = client.v1.pipelines.with_raw_response.retrieve(
-            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         pipeline = response.parse()
-        assert_matches_type(PipelineRetrieveResponse, pipeline, path=["response"])
+        assert_matches_type(Pipeline, pipeline, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: LlamacloudProd) -> None:
         with client.v1.pipelines.with_streaming_response.retrieve(
-            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             pipeline = response.parse()
-            assert_matches_type(PipelineRetrieveResponse, pipeline, path=["response"])
+            assert_matches_type(Pipeline, pipeline, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -333,8 +295,7 @@ class TestPipelines:
     def test_path_params_retrieve(self, client: LlamacloudProd) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
             client.v1.pipelines.with_raw_response.retrieve(
-                pipeline_id="",
-                query="x",
+                "",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -1233,70 +1194,33 @@ class TestAsyncPipelines:
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncLlamacloudProd) -> None:
         pipeline = await async_client.v1.pipelines.retrieve(
-            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(PipelineRetrieveResponse, pipeline, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_retrieve_with_all_params(self, async_client: AsyncLlamacloudProd) -> None:
-        pipeline = await async_client.v1.pipelines.retrieve(
-            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            alpha=0,
-            class_name="class_name",
-            dense_similarity_cutoff=0,
-            dense_similarity_top_k=1,
-            enable_reranking=True,
-            files_top_k=1,
-            rerank_top_n=1,
-            retrieval_mode="chunks",
-            retrieve_image_nodes=True,
-            retrieve_page_figure_nodes=True,
-            retrieve_page_screenshot_nodes=True,
-            search_filters={
-                "filters": [
-                    {
-                        "key": "key",
-                        "value": 0,
-                        "operator": "==",
-                    }
-                ],
-                "condition": "and",
-            },
-            search_filters_inference_schema={"foo": {"foo": "bar"}},
-            sparse_similarity_top_k=1,
-        )
-        assert_matches_type(PipelineRetrieveResponse, pipeline, path=["response"])
+        assert_matches_type(Pipeline, pipeline, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncLlamacloudProd) -> None:
         response = await async_client.v1.pipelines.with_raw_response.retrieve(
-            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         pipeline = await response.parse()
-        assert_matches_type(PipelineRetrieveResponse, pipeline, path=["response"])
+        assert_matches_type(Pipeline, pipeline, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncLlamacloudProd) -> None:
         async with async_client.v1.pipelines.with_streaming_response.retrieve(
-            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            query="x",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             pipeline = await response.parse()
-            assert_matches_type(PipelineRetrieveResponse, pipeline, path=["response"])
+            assert_matches_type(Pipeline, pipeline, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -1305,8 +1229,7 @@ class TestAsyncPipelines:
     async def test_path_params_retrieve(self, async_client: AsyncLlamacloudProd) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
             await async_client.v1.pipelines.with_raw_response.retrieve(
-                pipeline_id="",
-                query="x",
+                "",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")

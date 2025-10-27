@@ -14,6 +14,14 @@ from .auth import (
     AuthResourceWithStreamingResponse,
     AsyncAuthResourceWithStreamingResponse,
 )
+from .test import (
+    TestResource,
+    AsyncTestResource,
+    TestResourceWithRawResponse,
+    AsyncTestResourceWithRawResponse,
+    TestResourceWithStreamingResponse,
+    AsyncTestResourceWithStreamingResponse,
+)
 from .evals import (
     EvalsResource,
     AsyncEvalsResource,
@@ -229,6 +237,10 @@ class V1Resource(SyncAPIResource):
         return BetaResource(self._client)
 
     @cached_property
+    def test(self) -> TestResource:
+        return TestResource(self._client)
+
+    @cached_property
     def with_raw_response(self) -> V1ResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
@@ -370,6 +382,10 @@ class AsyncV1Resource(AsyncAPIResource):
     @cached_property
     def beta(self) -> AsyncBetaResource:
         return AsyncBetaResource(self._client)
+
+    @cached_property
+    def test(self) -> AsyncTestResource:
+        return AsyncTestResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncV1ResourceWithRawResponse:
@@ -521,6 +537,10 @@ class V1ResourceWithRawResponse:
     def beta(self) -> BetaResourceWithRawResponse:
         return BetaResourceWithRawResponse(self._v1.beta)
 
+    @cached_property
+    def test(self) -> TestResourceWithRawResponse:
+        return TestResourceWithRawResponse(self._v1.test)
+
 
 class AsyncV1ResourceWithRawResponse:
     def __init__(self, v1: AsyncV1Resource) -> None:
@@ -597,6 +617,10 @@ class AsyncV1ResourceWithRawResponse:
     @cached_property
     def beta(self) -> AsyncBetaResourceWithRawResponse:
         return AsyncBetaResourceWithRawResponse(self._v1.beta)
+
+    @cached_property
+    def test(self) -> AsyncTestResourceWithRawResponse:
+        return AsyncTestResourceWithRawResponse(self._v1.test)
 
 
 class V1ResourceWithStreamingResponse:
@@ -675,6 +699,10 @@ class V1ResourceWithStreamingResponse:
     def beta(self) -> BetaResourceWithStreamingResponse:
         return BetaResourceWithStreamingResponse(self._v1.beta)
 
+    @cached_property
+    def test(self) -> TestResourceWithStreamingResponse:
+        return TestResourceWithStreamingResponse(self._v1.test)
+
 
 class AsyncV1ResourceWithStreamingResponse:
     def __init__(self, v1: AsyncV1Resource) -> None:
@@ -751,3 +779,7 @@ class AsyncV1ResourceWithStreamingResponse:
     @cached_property
     def beta(self) -> AsyncBetaResourceWithStreamingResponse:
         return AsyncBetaResourceWithStreamingResponse(self._v1.beta)
+
+    @cached_property
+    def test(self) -> AsyncTestResourceWithStreamingResponse:
+        return AsyncTestResourceWithStreamingResponse(self._v1.test)

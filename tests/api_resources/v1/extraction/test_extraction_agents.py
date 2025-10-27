@@ -250,6 +250,58 @@ class TestExtractionAgents:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
+    def test_method_retrieve_by_name(self, client: LlamacloudProd) -> None:
+        extraction_agent = client.v1.extraction.extraction_agents.retrieve_by_name(
+            name="name",
+        )
+        assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_retrieve_by_name_with_all_params(self, client: LlamacloudProd) -> None:
+        extraction_agent = client.v1.extraction.extraction_agents.retrieve_by_name(
+            name="name",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve_by_name(self, client: LlamacloudProd) -> None:
+        response = client.v1.extraction.extraction_agents.with_raw_response.retrieve_by_name(
+            name="name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        extraction_agent = response.parse()
+        assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve_by_name(self, client: LlamacloudProd) -> None:
+        with client.v1.extraction.extraction_agents.with_streaming_response.retrieve_by_name(
+            name="name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            extraction_agent = response.parse()
+            assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_retrieve_by_name(self, client: LlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `name` but received ''"):
+            client.v1.extraction.extraction_agents.with_raw_response.retrieve_by_name(
+                name="",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
     def test_method_retrieve_default(self, client: LlamacloudProd) -> None:
         extraction_agent = client.v1.extraction.extraction_agents.retrieve_default()
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
@@ -556,6 +608,58 @@ class TestAsyncExtractionAgents:
             assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_retrieve_by_name(self, async_client: AsyncLlamacloudProd) -> None:
+        extraction_agent = await async_client.v1.extraction.extraction_agents.retrieve_by_name(
+            name="name",
+        )
+        assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_retrieve_by_name_with_all_params(self, async_client: AsyncLlamacloudProd) -> None:
+        extraction_agent = await async_client.v1.extraction.extraction_agents.retrieve_by_name(
+            name="name",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve_by_name(self, async_client: AsyncLlamacloudProd) -> None:
+        response = await async_client.v1.extraction.extraction_agents.with_raw_response.retrieve_by_name(
+            name="name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        extraction_agent = await response.parse()
+        assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve_by_name(self, async_client: AsyncLlamacloudProd) -> None:
+        async with async_client.v1.extraction.extraction_agents.with_streaming_response.retrieve_by_name(
+            name="name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            extraction_agent = await response.parse()
+            assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_retrieve_by_name(self, async_client: AsyncLlamacloudProd) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `name` but received ''"):
+            await async_client.v1.extraction.extraction_agents.with_raw_response.retrieve_by_name(
+                name="",
+            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize

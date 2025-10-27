@@ -117,32 +117,19 @@ class RetrieversResource(SyncAPIResource):
         self,
         retriever_id: str,
         *,
-        query: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        mode: CompositeRetrievalMode | Omit = omit,
-        rerank_config: ReRankConfigParam | Omit = omit,
-        rerank_top_n: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CompositeRetrievalResult:
+    ) -> Retriever:
         """
-        Retrieve data using a Retriever.
+        Get a Retriever by ID.
 
         Args:
-          query: The query to retrieve against.
-
-          mode: The mode of composite retrieval.
-
-          rerank_config: The rerank configuration for composite retrieval.
-
-          rerank_top_n: (use rerank_config.top_n instead) The number of nodes to retrieve after
-              reranking over retrieved nodes from all retrieval tools.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -153,17 +140,8 @@ class RetrieversResource(SyncAPIResource):
         """
         if not retriever_id:
             raise ValueError(f"Expected a non-empty value for `retriever_id` but received {retriever_id!r}")
-        return self._post(
-            f"/api/v1/retrievers/{retriever_id}/retrieve",
-            body=maybe_transform(
-                {
-                    "query": query,
-                    "mode": mode,
-                    "rerank_config": rerank_config,
-                    "rerank_top_n": rerank_top_n,
-                },
-                retriever_retrieve_params.RetrieverRetrieveParams,
-            ),
+        return self._get(
+            f"/api/v1/retrievers/{retriever_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -177,7 +155,7 @@ class RetrieversResource(SyncAPIResource):
                     retriever_retrieve_params.RetrieverRetrieveParams,
                 ),
             ),
-            cast_to=CompositeRetrievalResult,
+            cast_to=Retriever,
         )
 
     def update(
@@ -511,32 +489,19 @@ class AsyncRetrieversResource(AsyncAPIResource):
         self,
         retriever_id: str,
         *,
-        query: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        mode: CompositeRetrievalMode | Omit = omit,
-        rerank_config: ReRankConfigParam | Omit = omit,
-        rerank_top_n: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CompositeRetrievalResult:
+    ) -> Retriever:
         """
-        Retrieve data using a Retriever.
+        Get a Retriever by ID.
 
         Args:
-          query: The query to retrieve against.
-
-          mode: The mode of composite retrieval.
-
-          rerank_config: The rerank configuration for composite retrieval.
-
-          rerank_top_n: (use rerank_config.top_n instead) The number of nodes to retrieve after
-              reranking over retrieved nodes from all retrieval tools.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -547,17 +512,8 @@ class AsyncRetrieversResource(AsyncAPIResource):
         """
         if not retriever_id:
             raise ValueError(f"Expected a non-empty value for `retriever_id` but received {retriever_id!r}")
-        return await self._post(
-            f"/api/v1/retrievers/{retriever_id}/retrieve",
-            body=await async_maybe_transform(
-                {
-                    "query": query,
-                    "mode": mode,
-                    "rerank_config": rerank_config,
-                    "rerank_top_n": rerank_top_n,
-                },
-                retriever_retrieve_params.RetrieverRetrieveParams,
-            ),
+        return await self._get(
+            f"/api/v1/retrievers/{retriever_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -571,7 +527,7 @@ class AsyncRetrieversResource(AsyncAPIResource):
                     retriever_retrieve_params.RetrieverRetrieveParams,
                 ),
             ),
-            cast_to=CompositeRetrievalResult,
+            cast_to=Retriever,
         )
 
     async def update(

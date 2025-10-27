@@ -24,6 +24,14 @@ from .beta import (
     BetaResourceWithStreamingResponse,
     AsyncBetaResourceWithStreamingResponse,
 )
+from .test import (
+    TestResource,
+    AsyncTestResource,
+    TestResourceWithRawResponse,
+    AsyncTestResourceWithRawResponse,
+    TestResourceWithStreamingResponse,
+    AsyncTestResourceWithStreamingResponse,
+)
 from .evals import (
     EvalsResource,
     AsyncEvalsResource,
@@ -248,6 +256,12 @@ __all__ = [
     "AsyncBetaResourceWithRawResponse",
     "BetaResourceWithStreamingResponse",
     "AsyncBetaResourceWithStreamingResponse",
+    "TestResource",
+    "AsyncTestResource",
+    "TestResourceWithRawResponse",
+    "AsyncTestResourceWithRawResponse",
+    "TestResourceWithStreamingResponse",
+    "AsyncTestResourceWithStreamingResponse",
     "V1Resource",
     "AsyncV1Resource",
     "V1ResourceWithRawResponse",

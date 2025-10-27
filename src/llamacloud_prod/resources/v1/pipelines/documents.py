@@ -67,7 +67,7 @@ class DocumentsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentCreateResponse:
         """
-        Batch create or update a document for a pipeline.
+        Batch create documents for a pipeline.
 
         Args:
           extra_headers: Send extra headers
@@ -80,7 +80,7 @@ class DocumentsResource(SyncAPIResource):
         """
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._put(
+        return self._post(
             f"/api/v1/pipelines/{pipeline_id}/documents",
             body=maybe_transform(body, Iterable[CloudDocumentCreateParam]),
             options=make_request_options(
@@ -464,7 +464,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentCreateResponse:
         """
-        Batch create or update a document for a pipeline.
+        Batch create documents for a pipeline.
 
         Args:
           extra_headers: Send extra headers
@@ -477,7 +477,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
         """
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return await self._put(
+        return await self._post(
             f"/api/v1/pipelines/{pipeline_id}/documents",
             body=await async_maybe_transform(body, Iterable[CloudDocumentCreateParam]),
             options=make_request_options(
