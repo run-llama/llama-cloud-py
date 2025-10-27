@@ -11,5 +11,17 @@ __all__ = ["SpreadsheetParsingConfigParam"]
 
 
 class SpreadsheetParsingConfigParam(TypedDict, total=False):
+    extraction_range: Optional[str]
+    """A1 notation of the range to extract a single table from.
+
+    If None, the entire sheet is used.
+    """
+
+    include_hidden_cells: bool
+    """Whether to include hidden cells when extracting tables from the spreadsheet."""
+
     sheet_names: Optional[SequenceNotStr[str]]
-    """The names of the sheets to parse. If empty, all sheets will be parsed."""
+    """The names of the sheets to extract tables from.
+
+    If empty, the default sheet is extracted.
+    """

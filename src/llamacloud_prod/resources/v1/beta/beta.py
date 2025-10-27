@@ -14,14 +14,6 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
-from .batches import (
-    BatchesResource,
-    AsyncBatchesResource,
-    BatchesResourceWithRawResponse,
-    AsyncBatchesResourceWithRawResponse,
-    BatchesResourceWithStreamingResponse,
-    AsyncBatchesResourceWithStreamingResponse,
-)
 from .api_keys import (
     APIKeysResource,
     AsyncAPIKeysResource,
@@ -83,10 +75,6 @@ class BetaResource(SyncAPIResource):
     @cached_property
     def api_keys(self) -> APIKeysResource:
         return APIKeysResource(self._client)
-
-    @cached_property
-    def batches(self) -> BatchesResource:
-        return BatchesResource(self._client)
 
     @cached_property
     def agent_data(self) -> AgentDataResource:
@@ -178,10 +166,6 @@ class AsyncBetaResource(AsyncAPIResource):
     @cached_property
     def api_keys(self) -> AsyncAPIKeysResource:
         return AsyncAPIKeysResource(self._client)
-
-    @cached_property
-    def batches(self) -> AsyncBatchesResource:
-        return AsyncBatchesResource(self._client)
 
     @cached_property
     def agent_data(self) -> AsyncAgentDataResource:
@@ -282,10 +266,6 @@ class BetaResourceWithRawResponse:
         return APIKeysResourceWithRawResponse(self._beta.api_keys)
 
     @cached_property
-    def batches(self) -> BatchesResourceWithRawResponse:
-        return BatchesResourceWithRawResponse(self._beta.batches)
-
-    @cached_property
     def agent_data(self) -> AgentDataResourceWithRawResponse:
         return AgentDataResourceWithRawResponse(self._beta.agent_data)
 
@@ -317,10 +297,6 @@ class AsyncBetaResourceWithRawResponse:
     @cached_property
     def api_keys(self) -> AsyncAPIKeysResourceWithRawResponse:
         return AsyncAPIKeysResourceWithRawResponse(self._beta.api_keys)
-
-    @cached_property
-    def batches(self) -> AsyncBatchesResourceWithRawResponse:
-        return AsyncBatchesResourceWithRawResponse(self._beta.batches)
 
     @cached_property
     def agent_data(self) -> AsyncAgentDataResourceWithRawResponse:
@@ -356,10 +332,6 @@ class BetaResourceWithStreamingResponse:
         return APIKeysResourceWithStreamingResponse(self._beta.api_keys)
 
     @cached_property
-    def batches(self) -> BatchesResourceWithStreamingResponse:
-        return BatchesResourceWithStreamingResponse(self._beta.batches)
-
-    @cached_property
     def agent_data(self) -> AgentDataResourceWithStreamingResponse:
         return AgentDataResourceWithStreamingResponse(self._beta.agent_data)
 
@@ -391,10 +363,6 @@ class AsyncBetaResourceWithStreamingResponse:
     @cached_property
     def api_keys(self) -> AsyncAPIKeysResourceWithStreamingResponse:
         return AsyncAPIKeysResourceWithStreamingResponse(self._beta.api_keys)
-
-    @cached_property
-    def batches(self) -> AsyncBatchesResourceWithStreamingResponse:
-        return AsyncBatchesResourceWithStreamingResponse(self._beta.batches)
 
     @cached_property
     def agent_data(self) -> AsyncAgentDataResourceWithStreamingResponse:

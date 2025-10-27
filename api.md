@@ -237,20 +237,16 @@ from llamacloud_prod.types.v1 import (
     File,
     FileCreate,
     PresignedURL,
-    FileListResponse,
     FileGeneratePresignedURLResponse,
-    FileSyncResponse,
 )
 ```
 
 Methods:
 
 - <code title="get /api/v1/files/{id}">client.v1.files.<a href="./src/llamacloud_prod/resources/v1/files/files.py">retrieve</a>(id, \*\*<a href="src/llamacloud_prod/types/v1/file_retrieve_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/file.py">File</a></code>
-- <code title="get /api/v1/files">client.v1.files.<a href="./src/llamacloud_prod/resources/v1/files/files.py">list</a>(\*\*<a href="src/llamacloud_prod/types/v1/file_list_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/file_list_response.py">FileListResponse</a></code>
 - <code title="delete /api/v1/files/{id}">client.v1.files.<a href="./src/llamacloud_prod/resources/v1/files/files.py">delete</a>(id, \*\*<a href="src/llamacloud_prod/types/v1/file_delete_params.py">params</a>) -> None</code>
 - <code title="put /api/v1/files">client.v1.files.<a href="./src/llamacloud_prod/resources/v1/files/files.py">generate_presigned_url</a>(\*\*<a href="src/llamacloud_prod/types/v1/file_generate_presigned_url_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/file_generate_presigned_url_response.py">FileGeneratePresignedURLResponse</a></code>
 - <code title="get /api/v1/files/{id}/content">client.v1.files.<a href="./src/llamacloud_prod/resources/v1/files/files.py">read_content</a>(id, \*\*<a href="src/llamacloud_prod/types/v1/file_read_content_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/presigned_url.py">PresignedURL</a></code>
-- <code title="put /api/v1/files/sync">client.v1.files.<a href="./src/llamacloud_prod/resources/v1/files/files.py">sync</a>(\*\*<a href="src/llamacloud_prod/types/v1/file_sync_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/file_sync_response.py">FileSyncResponse</a></code>
 - <code title="post /api/v1/files">client.v1.files.<a href="./src/llamacloud_prod/resources/v1/files/files.py">upload</a>(\*\*<a href="src/llamacloud_prod/types/v1/file_upload_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/file.py">File</a></code>
 - <code title="put /api/v1/files/upload_from_url">client.v1.files.<a href="./src/llamacloud_prod/resources/v1/files/files.py">upload_from_url</a>(\*\*<a href="src/llamacloud_prod/types/v1/file_upload_from_url_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/file.py">File</a></code>
 
@@ -693,20 +689,6 @@ Methods:
 - <code title="delete /api/v1/beta/api-keys/{api_key_id}">client.v1.beta.api_keys.<a href="./src/llamacloud_prod/resources/v1/beta/api_keys.py">delete</a>(api_key_id) -> None</code>
 - <code title="post /api/v1/beta/api-keys">client.v1.beta.api_keys.<a href="./src/llamacloud_prod/resources/v1/beta/api_keys.py">api_keys</a>(\*\*<a href="src/llamacloud_prod/types/v1/beta/api_key_api_keys_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/api_key.py">APIKey</a></code>
 - <code title="get /api/v1/beta/api-keys">client.v1.beta.api_keys.<a href="./src/llamacloud_prod/resources/v1/beta/api_keys.py">retrieve_api_keys</a>(\*\*<a href="src/llamacloud_prod/types/v1/beta/api_key_retrieve_api_keys_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/beta/api_key_retrieve_api_keys_response.py">APIKeyRetrieveAPIKeysResponse</a></code>
-
-### Batches
-
-Types:
-
-```python
-from llamacloud_prod.types.v1.beta import Batch, BatchRetrieveResponse, BatchListResponse
-```
-
-Methods:
-
-- <code title="post /api/v1/beta/batches">client.v1.beta.batches.<a href="./src/llamacloud_prod/resources/v1/beta/batches.py">create</a>(\*\*<a href="src/llamacloud_prod/types/v1/beta/batch_create_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/beta/batch.py">Batch</a></code>
-- <code title="get /api/v1/beta/batches/{batch_id}">client.v1.beta.batches.<a href="./src/llamacloud_prod/resources/v1/beta/batches.py">retrieve</a>(batch_id, \*\*<a href="src/llamacloud_prod/types/v1/beta/batch_retrieve_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/beta/batch_retrieve_response.py">BatchRetrieveResponse</a></code>
-- <code title="get /api/v1/beta/batches">client.v1.beta.batches.<a href="./src/llamacloud_prod/resources/v1/beta/batches.py">list</a>(\*\*<a href="src/llamacloud_prod/types/v1/beta/batch_list_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/beta/batch_list_response.py">BatchListResponse</a></code>
 
 ### AgentData
 

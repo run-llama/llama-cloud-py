@@ -35,7 +35,11 @@ class TestJobs:
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            config={"sheet_names": ["string"]},
+            config={
+                "extraction_range": "extraction_range",
+                "include_hidden_cells": True,
+                "sheet_names": ["string"],
+            },
         )
         assert_matches_type(SpreadsheetJob, job, path=["response"])
 
@@ -179,7 +183,11 @@ class TestAsyncJobs:
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            config={"sheet_names": ["string"]},
+            config={
+                "extraction_range": "extraction_range",
+                "include_hidden_cells": True,
+                "sheet_names": ["string"],
+            },
         )
         assert_matches_type(SpreadsheetJob, job, path=["response"])
 

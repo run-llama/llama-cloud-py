@@ -13,8 +13,6 @@ from llamacloud_prod._utils import parse_datetime
 from llamacloud_prod.types.v1 import (
     File,
     PresignedURL,
-    FileListResponse,
-    FileSyncResponse,
     FileGeneratePresignedURLResponse,
 )
 
@@ -75,43 +73,6 @@ class TestFiles:
             client.v1.files.with_raw_response.retrieve(
                 id="",
             )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_list(self, client: LlamacloudProd) -> None:
-        file = client.v1.files.list()
-        assert_matches_type(FileListResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_list_with_all_params(self, client: LlamacloudProd) -> None:
-        file = client.v1.files.list(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(FileListResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_list(self, client: LlamacloudProd) -> None:
-        response = client.v1.files.with_raw_response.list()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        file = response.parse()
-        assert_matches_type(FileListResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_list(self, client: LlamacloudProd) -> None:
-        with client.v1.files.with_streaming_response.list() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            file = response.parse()
-            assert_matches_type(FileListResponse, file, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -271,43 +232,6 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_sync(self, client: LlamacloudProd) -> None:
-        file = client.v1.files.sync()
-        assert_matches_type(FileSyncResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_sync_with_all_params(self, client: LlamacloudProd) -> None:
-        file = client.v1.files.sync(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(FileSyncResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_sync(self, client: LlamacloudProd) -> None:
-        response = client.v1.files.with_raw_response.sync()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        file = response.parse()
-        assert_matches_type(FileSyncResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_sync(self, client: LlamacloudProd) -> None:
-        with client.v1.files.with_streaming_response.sync() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            file = response.parse()
-            assert_matches_type(FileSyncResponse, file, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     def test_method_upload(self, client: LlamacloudProd) -> None:
         file = client.v1.files.upload(
             upload_file=b"raw file contents",
@@ -458,43 +382,6 @@ class TestAsyncFiles:
             await async_client.v1.files.with_raw_response.retrieve(
                 id="",
             )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_list(self, async_client: AsyncLlamacloudProd) -> None:
-        file = await async_client.v1.files.list()
-        assert_matches_type(FileListResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_list_with_all_params(self, async_client: AsyncLlamacloudProd) -> None:
-        file = await async_client.v1.files.list(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(FileListResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_list(self, async_client: AsyncLlamacloudProd) -> None:
-        response = await async_client.v1.files.with_raw_response.list()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        file = await response.parse()
-        assert_matches_type(FileListResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_list(self, async_client: AsyncLlamacloudProd) -> None:
-        async with async_client.v1.files.with_streaming_response.list() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            file = await response.parse()
-            assert_matches_type(FileListResponse, file, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -651,43 +538,6 @@ class TestAsyncFiles:
             await async_client.v1.files.with_raw_response.read_content(
                 id="",
             )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_sync(self, async_client: AsyncLlamacloudProd) -> None:
-        file = await async_client.v1.files.sync()
-        assert_matches_type(FileSyncResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_sync_with_all_params(self, async_client: AsyncLlamacloudProd) -> None:
-        file = await async_client.v1.files.sync(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(FileSyncResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_sync(self, async_client: AsyncLlamacloudProd) -> None:
-        response = await async_client.v1.files.with_raw_response.sync()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        file = await response.parse()
-        assert_matches_type(FileSyncResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_sync(self, async_client: AsyncLlamacloudProd) -> None:
-        async with async_client.v1.files.with_streaming_response.sync() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            file = await response.parse()
-            assert_matches_type(FileSyncResponse, file, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
