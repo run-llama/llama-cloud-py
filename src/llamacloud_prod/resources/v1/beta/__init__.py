@@ -16,14 +16,6 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
-from .batches import (
-    BatchesResource,
-    AsyncBatchesResource,
-    BatchesResourceWithRawResponse,
-    AsyncBatchesResourceWithRawResponse,
-    BatchesResourceWithStreamingResponse,
-    AsyncBatchesResourceWithStreamingResponse,
-)
 from .api_keys import (
     APIKeysResource,
     AsyncAPIKeysResource,
@@ -72,12 +64,6 @@ __all__ = [
     "AsyncAPIKeysResourceWithRawResponse",
     "APIKeysResourceWithStreamingResponse",
     "AsyncAPIKeysResourceWithStreamingResponse",
-    "BatchesResource",
-    "AsyncBatchesResource",
-    "BatchesResourceWithRawResponse",
-    "AsyncBatchesResourceWithRawResponse",
-    "BatchesResourceWithStreamingResponse",
-    "AsyncBatchesResourceWithStreamingResponse",
     "AgentDataResource",
     "AsyncAgentDataResource",
     "AgentDataResourceWithRawResponse",

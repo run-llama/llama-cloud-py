@@ -11,8 +11,6 @@ from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, FileTypes
 from ...._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from ...._compat import cached_property
 from ....types.v1 import (
-    file_list_params,
-    file_sync_params,
     file_delete_params,
     file_upload_params,
     file_retrieve_params,
@@ -46,8 +44,6 @@ from .page_screenshots import (
     AsyncPageScreenshotsResourceWithStreamingResponse,
 )
 from ....types.v1.presigned_url import PresignedURL
-from ....types.v1.file_list_response import FileListResponse
-from ....types.v1.file_sync_response import FileSyncResponse
 from ....types.v1.file_generate_presigned_url_response import FileGeneratePresignedURLResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
@@ -124,48 +120,6 @@ class FilesResource(SyncAPIResource):
                 ),
             ),
             cast_to=File,
-        )
-
-    def list(
-        self,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListResponse:
-        """
-        Read File metadata objects.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._get(
-            "/api/v1/files",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_list_params.FileListParams,
-                ),
-            ),
-            cast_to=FileListResponse,
         )
 
     def delete(
@@ -343,48 +297,6 @@ class FilesResource(SyncAPIResource):
                 ),
             ),
             cast_to=PresignedURL,
-        )
-
-    def sync(
-        self,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileSyncResponse:
-        """
-        Sync Files API against file contents uploaded via S3 presigned urls.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._put(
-            "/api/v1/files/sync",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_sync_params.FileSyncParams,
-                ),
-            ),
-            cast_to=FileSyncResponse,
         )
 
     def upload(
@@ -598,48 +510,6 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=File,
         )
 
-    async def list(
-        self,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListResponse:
-        """
-        Read File metadata objects.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._get(
-            "/api/v1/files",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_list_params.FileListParams,
-                ),
-            ),
-            cast_to=FileListResponse,
-        )
-
     async def delete(
         self,
         id: str,
@@ -817,48 +687,6 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=PresignedURL,
         )
 
-    async def sync(
-        self,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileSyncResponse:
-        """
-        Sync Files API against file contents uploaded via S3 presigned urls.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._put(
-            "/api/v1/files/sync",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_sync_params.FileSyncParams,
-                ),
-            ),
-            cast_to=FileSyncResponse,
-        )
-
     async def upload(
         self,
         *,
@@ -1004,9 +832,6 @@ class FilesResourceWithRawResponse:
         self.retrieve = to_raw_response_wrapper(
             files.retrieve,
         )
-        self.list = to_raw_response_wrapper(
-            files.list,
-        )
         self.delete = to_raw_response_wrapper(
             files.delete,
         )
@@ -1015,9 +840,6 @@ class FilesResourceWithRawResponse:
         )
         self.read_content = to_raw_response_wrapper(
             files.read_content,
-        )
-        self.sync = to_raw_response_wrapper(
-            files.sync,
         )
         self.upload = to_raw_response_wrapper(
             files.upload,
@@ -1042,9 +864,6 @@ class AsyncFilesResourceWithRawResponse:
         self.retrieve = async_to_raw_response_wrapper(
             files.retrieve,
         )
-        self.list = async_to_raw_response_wrapper(
-            files.list,
-        )
         self.delete = async_to_raw_response_wrapper(
             files.delete,
         )
@@ -1053,9 +872,6 @@ class AsyncFilesResourceWithRawResponse:
         )
         self.read_content = async_to_raw_response_wrapper(
             files.read_content,
-        )
-        self.sync = async_to_raw_response_wrapper(
-            files.sync,
         )
         self.upload = async_to_raw_response_wrapper(
             files.upload,
@@ -1080,9 +896,6 @@ class FilesResourceWithStreamingResponse:
         self.retrieve = to_streamed_response_wrapper(
             files.retrieve,
         )
-        self.list = to_streamed_response_wrapper(
-            files.list,
-        )
         self.delete = to_streamed_response_wrapper(
             files.delete,
         )
@@ -1091,9 +904,6 @@ class FilesResourceWithStreamingResponse:
         )
         self.read_content = to_streamed_response_wrapper(
             files.read_content,
-        )
-        self.sync = to_streamed_response_wrapper(
-            files.sync,
         )
         self.upload = to_streamed_response_wrapper(
             files.upload,
@@ -1118,9 +928,6 @@ class AsyncFilesResourceWithStreamingResponse:
         self.retrieve = async_to_streamed_response_wrapper(
             files.retrieve,
         )
-        self.list = async_to_streamed_response_wrapper(
-            files.list,
-        )
         self.delete = async_to_streamed_response_wrapper(
             files.delete,
         )
@@ -1129,9 +936,6 @@ class AsyncFilesResourceWithStreamingResponse:
         )
         self.read_content = async_to_streamed_response_wrapper(
             files.read_content,
-        )
-        self.sync = async_to_streamed_response_wrapper(
-            files.sync,
         )
         self.upload = async_to_streamed_response_wrapper(
             files.upload,

@@ -64,7 +64,7 @@ class PageFiguresResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
-        Get File Page Figure
+        Get a specific figure from a page of a file.
 
         Args:
           extra_headers: Send extra headers
@@ -111,7 +111,7 @@ class PageFiguresResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PageFigureListResponse:
         """
-        List File Pages Figures
+        List metadata for all figures from all pages of a file.
 
         Args:
           extra_headers: Send extra headers
@@ -232,7 +232,7 @@ class AsyncPageFiguresResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
-        Get File Page Figure
+        Get a specific figure from a page of a file.
 
         Args:
           extra_headers: Send extra headers
@@ -279,7 +279,7 @@ class AsyncPageFiguresResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PageFigureListResponse:
         """
-        List File Pages Figures
+        List metadata for all figures from all pages of a file.
 
         Args:
           extra_headers: Send extra headers
