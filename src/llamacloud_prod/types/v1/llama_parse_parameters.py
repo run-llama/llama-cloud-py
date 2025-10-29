@@ -168,6 +168,8 @@ class LlamaParseParameters(BaseModel):
 
     premium_mode: Optional[bool] = None
 
+    presentation_out_of_bounds_content: Optional[bool] = None
+
     preserve_layout_alignment_across_pages: Optional[bool] = None
 
     preserve_very_small_text: Optional[bool] = None

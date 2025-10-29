@@ -168,6 +168,8 @@ class LlamaParseParametersParam(TypedDict, total=False):
 
     premium_mode: Optional[bool]
 
+    presentation_out_of_bounds_content: Optional[bool]
+
     preserve_layout_alignment_across_pages: Optional[bool]
 
     preserve_very_small_text: Optional[bool]

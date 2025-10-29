@@ -17,6 +17,12 @@ class SpreadsheetParsingConfigParam(TypedDict, total=False):
     If None, the entire sheet is used.
     """
 
+    generate_additional_metadata: bool
+    """
+    Whether to generate additional metadata (title, description) for each extracted
+    table.
+    """
+
     include_hidden_cells: bool
     """Whether to include hidden cells when extracting tables from the spreadsheet."""
 
