@@ -170,6 +170,8 @@ class ParsingUploadFileParams(TypedDict, total=False):
 
     premium_mode: bool
 
+    presentation_out_of_bounds_content: bool
+
     preserve_layout_alignment_across_pages: bool
 
     preserve_very_small_text: bool

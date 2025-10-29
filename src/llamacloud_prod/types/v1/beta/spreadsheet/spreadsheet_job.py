@@ -6,7 +6,7 @@ from ....._models import BaseModel
 from ...status_enum import StatusEnum
 from .spreadsheet_parsing_config import SpreadsheetParsingConfig
 
-__all__ = ["SpreadsheetJob", "Table"]
+__all__ = ["SpreadsheetJob", "Table", "WorksheetMetadata"]
 
 
 class Table(BaseModel):
@@ -21,6 +21,17 @@ class Table(BaseModel):
 
     table_id: Optional[str] = None
     """Unique identifier for this table within the file"""
+
+
+class WorksheetMetadata(BaseModel):
+    sheet_name: str
+    """Name of the worksheet"""
+
+    description: Optional[str] = None
+    """Generated description of the worksheet"""
+
+    title: Optional[str] = None
+    """Generated title for the worksheet"""
 
 
 class SpreadsheetJob(BaseModel):
@@ -56,3 +67,6 @@ class SpreadsheetJob(BaseModel):
 
     tables: Optional[List[Table]] = None
     """All extracted tables (populated when job is complete)"""
+
+    worksheet_metadata: Optional[List[WorksheetMetadata]] = None
+    """Metadata for each processed worksheet (populated when job is complete)"""

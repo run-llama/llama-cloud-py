@@ -221,6 +221,8 @@ class JobJobRecordParametersParseJobConfig(BaseModel):
 
     premium_mode: Optional[bool] = None
 
+    presentation_out_of_bounds_content: Optional[bool] = None
+
     preserve_layout_alignment_across_pages: Optional[bool] = None
 
     preserve_very_small_text: Optional[bool] = None
@@ -586,6 +588,9 @@ class JobJobRecordParametersLegacyParseJobConfig(BaseModel):
 
     premium_mode: Optional[bool] = FieldInfo(alias="premiumMode", default=None)
     """Whether to use premiumMode pipeline."""
+
+    presentation_out_of_bounds_content: Optional[bool] = FieldInfo(alias="presentationOutOfBoundsContent", default=None)
+    """If true, LlamaParse will extract out of bounds content in presentation slides."""
 
     preserve_layout_alignment_across_pages: Optional[bool] = FieldInfo(
         alias="preserveLayoutAlignmentAcrossPages", default=None

@@ -26,6 +26,7 @@ class LlmParameters(BaseModel):
             "AZURE_OPENAI_GPT_4_1_MINI",
             "AZURE_OPENAI_GPT_4_1_NANO",
             "CLAUDE_3_5_SONNET",
+            "CLAUDE_4_5_SONNET",
             "BEDROCK_CLAUDE_3_5_SONNET_V1",
             "BEDROCK_CLAUDE_3_5_SONNET_V2",
             "VERTEX_AI_CLAUDE_3_5_SONNET_V2",

@@ -37,6 +37,7 @@ class TestJobs:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             config={
                 "extraction_range": "extraction_range",
+                "generate_additional_metadata": True,
                 "include_hidden_cells": True,
                 "sheet_names": ["string"],
             },
@@ -185,6 +186,7 @@ class TestAsyncJobs:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             config={
                 "extraction_range": "extraction_range",
+                "generate_additional_metadata": True,
                 "include_hidden_cells": True,
                 "sheet_names": ["string"],
             },
