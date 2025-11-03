@@ -30,10 +30,10 @@ class EmbeddingModelConfigUpsertParams(TypedDict, total=False):
 
 EmbeddingConfig: TypeAlias = Union[
     AzureOpenAIEmbeddingConfigParam,
+    BedrockEmbeddingConfigParam,
     CohereEmbeddingConfigParam,
     GeminiEmbeddingConfigParam,
     HuggingFaceInferenceAPIEmbeddingConfigParam,
     OpenAIEmbeddingConfigParam,
     VertexAIEmbeddingConfigParam,
-    BedrockEmbeddingConfigParam,
 ]
