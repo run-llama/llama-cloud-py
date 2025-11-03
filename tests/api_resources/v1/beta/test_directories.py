@@ -72,17 +72,7 @@ class TestDirectories:
     @parametrize
     def test_method_retrieve(self, client: LlamacloudProd) -> None:
         directory = client.v1.beta.directories.retrieve(
-            directory_id="directory_id",
-        )
-        assert_matches_type(DirectoryRetrieveResponse, directory, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_retrieve_with_all_params(self, client: LlamacloudProd) -> None:
-        directory = client.v1.beta.directories.retrieve(
-            directory_id="directory_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            "directory_id",
         )
         assert_matches_type(DirectoryRetrieveResponse, directory, path=["response"])
 
@@ -90,7 +80,7 @@ class TestDirectories:
     @parametrize
     def test_raw_response_retrieve(self, client: LlamacloudProd) -> None:
         response = client.v1.beta.directories.with_raw_response.retrieve(
-            directory_id="directory_id",
+            "directory_id",
         )
 
         assert response.is_closed is True
@@ -102,7 +92,7 @@ class TestDirectories:
     @parametrize
     def test_streaming_response_retrieve(self, client: LlamacloudProd) -> None:
         with client.v1.beta.directories.with_streaming_response.retrieve(
-            directory_id="directory_id",
+            "directory_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -117,7 +107,7 @@ class TestDirectories:
     def test_path_params_retrieve(self, client: LlamacloudProd) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
             client.v1.beta.directories.with_raw_response.retrieve(
-                directory_id="",
+                "",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -133,8 +123,6 @@ class TestDirectories:
     def test_method_update_with_all_params(self, client: LlamacloudProd) -> None:
         directory = client.v1.beta.directories.update(
             directory_id="directory_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             description="description",
             name="x",
         )
@@ -220,17 +208,7 @@ class TestDirectories:
     @parametrize
     def test_method_delete(self, client: LlamacloudProd) -> None:
         directory = client.v1.beta.directories.delete(
-            directory_id="directory_id",
-        )
-        assert directory is None
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_delete_with_all_params(self, client: LlamacloudProd) -> None:
-        directory = client.v1.beta.directories.delete(
-            directory_id="directory_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            "directory_id",
         )
         assert directory is None
 
@@ -238,7 +216,7 @@ class TestDirectories:
     @parametrize
     def test_raw_response_delete(self, client: LlamacloudProd) -> None:
         response = client.v1.beta.directories.with_raw_response.delete(
-            directory_id="directory_id",
+            "directory_id",
         )
 
         assert response.is_closed is True
@@ -250,7 +228,7 @@ class TestDirectories:
     @parametrize
     def test_streaming_response_delete(self, client: LlamacloudProd) -> None:
         with client.v1.beta.directories.with_streaming_response.delete(
-            directory_id="directory_id",
+            "directory_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -265,7 +243,7 @@ class TestDirectories:
     def test_path_params_delete(self, client: LlamacloudProd) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
             client.v1.beta.directories.with_raw_response.delete(
-                directory_id="",
+                "",
             )
 
 
@@ -324,17 +302,7 @@ class TestAsyncDirectories:
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncLlamacloudProd) -> None:
         directory = await async_client.v1.beta.directories.retrieve(
-            directory_id="directory_id",
-        )
-        assert_matches_type(DirectoryRetrieveResponse, directory, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_retrieve_with_all_params(self, async_client: AsyncLlamacloudProd) -> None:
-        directory = await async_client.v1.beta.directories.retrieve(
-            directory_id="directory_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            "directory_id",
         )
         assert_matches_type(DirectoryRetrieveResponse, directory, path=["response"])
 
@@ -342,7 +310,7 @@ class TestAsyncDirectories:
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncLlamacloudProd) -> None:
         response = await async_client.v1.beta.directories.with_raw_response.retrieve(
-            directory_id="directory_id",
+            "directory_id",
         )
 
         assert response.is_closed is True
@@ -354,7 +322,7 @@ class TestAsyncDirectories:
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncLlamacloudProd) -> None:
         async with async_client.v1.beta.directories.with_streaming_response.retrieve(
-            directory_id="directory_id",
+            "directory_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -369,7 +337,7 @@ class TestAsyncDirectories:
     async def test_path_params_retrieve(self, async_client: AsyncLlamacloudProd) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
             await async_client.v1.beta.directories.with_raw_response.retrieve(
-                directory_id="",
+                "",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -385,8 +353,6 @@ class TestAsyncDirectories:
     async def test_method_update_with_all_params(self, async_client: AsyncLlamacloudProd) -> None:
         directory = await async_client.v1.beta.directories.update(
             directory_id="directory_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             description="description",
             name="x",
         )
@@ -472,17 +438,7 @@ class TestAsyncDirectories:
     @parametrize
     async def test_method_delete(self, async_client: AsyncLlamacloudProd) -> None:
         directory = await async_client.v1.beta.directories.delete(
-            directory_id="directory_id",
-        )
-        assert directory is None
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_delete_with_all_params(self, async_client: AsyncLlamacloudProd) -> None:
-        directory = await async_client.v1.beta.directories.delete(
-            directory_id="directory_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            "directory_id",
         )
         assert directory is None
 
@@ -490,7 +446,7 @@ class TestAsyncDirectories:
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncLlamacloudProd) -> None:
         response = await async_client.v1.beta.directories.with_raw_response.delete(
-            directory_id="directory_id",
+            "directory_id",
         )
 
         assert response.is_closed is True
@@ -502,7 +458,7 @@ class TestAsyncDirectories:
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncLlamacloudProd) -> None:
         async with async_client.v1.beta.directories.with_streaming_response.delete(
-            directory_id="directory_id",
+            "directory_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -517,5 +473,5 @@ class TestAsyncDirectories:
     async def test_path_params_delete(self, async_client: AsyncLlamacloudProd) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
             await async_client.v1.beta.directories.with_raw_response.delete(
-                directory_id="",
+                "",
             )

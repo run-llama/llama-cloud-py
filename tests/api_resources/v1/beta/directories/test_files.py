@@ -33,17 +33,6 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve_with_all_params(self, client: LlamacloudProd) -> None:
-        file = client.v1.beta.directories.files.retrieve(
-            directory_file_id="directory_file_id",
-            directory_id="directory_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(FileRetrieveResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     def test_raw_response_retrieve(self, client: LlamacloudProd) -> None:
         response = client.v1.beta.directories.files.with_raw_response.retrieve(
             directory_file_id="directory_file_id",
@@ -100,8 +89,6 @@ class TestFiles:
         file = client.v1.beta.directories.files.update(
             directory_file_id="directory_file_id",
             directory_id="directory_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             display_name="display_name",
             unique_id="x",
         )
@@ -167,10 +154,8 @@ class TestFiles:
             display_name_contains="display_name_contains",
             file_id="file_id",
             include_deleted=True,
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=0,
             page_token="page_token",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             unique_id="unique_id",
         )
         assert_matches_type(FileListResponse, file, path=["response"])
@@ -215,17 +200,6 @@ class TestFiles:
         file = client.v1.beta.directories.files.delete(
             directory_file_id="directory_file_id",
             directory_id="directory_id",
-        )
-        assert file is None
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_delete_with_all_params(self, client: LlamacloudProd) -> None:
-        file = client.v1.beta.directories.files.delete(
-            directory_file_id="directory_file_id",
-            directory_id="directory_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert file is None
 
@@ -287,8 +261,6 @@ class TestFiles:
         file = client.v1.beta.directories.files.add(
             directory_id="directory_id",
             file_id="file_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             display_name="display_name",
             unique_id="unique_id",
         )
@@ -343,17 +315,6 @@ class TestAsyncFiles:
         file = await async_client.v1.beta.directories.files.retrieve(
             directory_file_id="directory_file_id",
             directory_id="directory_id",
-        )
-        assert_matches_type(FileRetrieveResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_retrieve_with_all_params(self, async_client: AsyncLlamacloudProd) -> None:
-        file = await async_client.v1.beta.directories.files.retrieve(
-            directory_file_id="directory_file_id",
-            directory_id="directory_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(FileRetrieveResponse, file, path=["response"])
 
@@ -415,8 +376,6 @@ class TestAsyncFiles:
         file = await async_client.v1.beta.directories.files.update(
             directory_file_id="directory_file_id",
             directory_id="directory_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             display_name="display_name",
             unique_id="x",
         )
@@ -482,10 +441,8 @@ class TestAsyncFiles:
             display_name_contains="display_name_contains",
             file_id="file_id",
             include_deleted=True,
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=0,
             page_token="page_token",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             unique_id="unique_id",
         )
         assert_matches_type(FileListResponse, file, path=["response"])
@@ -530,17 +487,6 @@ class TestAsyncFiles:
         file = await async_client.v1.beta.directories.files.delete(
             directory_file_id="directory_file_id",
             directory_id="directory_id",
-        )
-        assert file is None
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_delete_with_all_params(self, async_client: AsyncLlamacloudProd) -> None:
-        file = await async_client.v1.beta.directories.files.delete(
-            directory_file_id="directory_file_id",
-            directory_id="directory_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert file is None
 
@@ -602,8 +548,6 @@ class TestAsyncFiles:
         file = await async_client.v1.beta.directories.files.add(
             directory_id="directory_id",
             file_id="file_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             display_name="display_name",
             unique_id="unique_id",
         )

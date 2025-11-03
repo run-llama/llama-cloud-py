@@ -2,63 +2,65 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing_extensions import Literal
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
-from ..._compat import cached_property
-from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
+from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ...._utils import maybe_transform, async_maybe_transform
+from ...._compat import cached_property
+from ...._resource import SyncAPIResource, AsyncAPIResource
+from ...._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
-from ...types.v2alpha1 import parse_upload_file_params
-from ...types.v1.parsing_job import ParsingJob
+from ...._base_client import make_request_options
+from ....types.v1.billing import metronome_get_dashboard_params
+from ....types.v1.billing.metronome_get_dashboard_response import MetronomeGetDashboardResponse
 
-__all__ = ["ParseResource", "AsyncParseResource"]
+__all__ = ["MetronomeResource", "AsyncMetronomeResource"]
 
 
-class ParseResource(SyncAPIResource):
+class MetronomeResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> ParseResourceWithRawResponse:
+    def with_raw_response(self) -> MetronomeResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/stainless-sdks/llamacloud-prod-python#accessing-raw-response-data-eg-headers
         """
-        return ParseResourceWithRawResponse(self)
+        return MetronomeResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> ParseResourceWithStreamingResponse:
+    def with_streaming_response(self) -> MetronomeResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/stainless-sdks/llamacloud-prod-python#with_streaming_response
         """
-        return ParseResourceWithStreamingResponse(self)
+        return MetronomeResourceWithStreamingResponse(self)
 
-    def upload_file(
+    def get_dashboard(
         self,
         *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
+        organization_id: str,
+        dashboard_type: Literal["invoices", "usage"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ParsingJob:
+    ) -> MetronomeGetDashboardResponse:
         """
-        Upload File V2
+        Get the invoices for a given organization.
 
         Args:
+          dashboard_type: The type of dashboard to get
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -67,8 +69,8 @@ class ParseResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._post(
-            "/api/v2alpha1/parse/upload",
+        return self._get(
+            "/api/v1/billing/metronome/dashboard",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -77,51 +79,53 @@ class ParseResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "organization_id": organization_id,
-                        "project_id": project_id,
+                        "dashboard_type": dashboard_type,
                     },
-                    parse_upload_file_params.ParseUploadFileParams,
+                    metronome_get_dashboard_params.MetronomeGetDashboardParams,
                 ),
             ),
-            cast_to=ParsingJob,
+            cast_to=MetronomeGetDashboardResponse,
         )
 
 
-class AsyncParseResource(AsyncAPIResource):
+class AsyncMetronomeResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncParseResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncMetronomeResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/stainless-sdks/llamacloud-prod-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncParseResourceWithRawResponse(self)
+        return AsyncMetronomeResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncParseResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncMetronomeResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/stainless-sdks/llamacloud-prod-python#with_streaming_response
         """
-        return AsyncParseResourceWithStreamingResponse(self)
+        return AsyncMetronomeResourceWithStreamingResponse(self)
 
-    async def upload_file(
+    async def get_dashboard(
         self,
         *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
+        organization_id: str,
+        dashboard_type: Literal["invoices", "usage"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ParsingJob:
+    ) -> MetronomeGetDashboardResponse:
         """
-        Upload File V2
+        Get the invoices for a given organization.
 
         Args:
+          dashboard_type: The type of dashboard to get
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -130,8 +134,8 @@ class AsyncParseResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._post(
-            "/api/v2alpha1/parse/upload",
+        return await self._get(
+            "/api/v1/billing/metronome/dashboard",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -140,46 +144,46 @@ class AsyncParseResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "organization_id": organization_id,
-                        "project_id": project_id,
+                        "dashboard_type": dashboard_type,
                     },
-                    parse_upload_file_params.ParseUploadFileParams,
+                    metronome_get_dashboard_params.MetronomeGetDashboardParams,
                 ),
             ),
-            cast_to=ParsingJob,
+            cast_to=MetronomeGetDashboardResponse,
         )
 
 
-class ParseResourceWithRawResponse:
-    def __init__(self, parse: ParseResource) -> None:
-        self._parse = parse
+class MetronomeResourceWithRawResponse:
+    def __init__(self, metronome: MetronomeResource) -> None:
+        self._metronome = metronome
 
-        self.upload_file = to_raw_response_wrapper(
-            parse.upload_file,
+        self.get_dashboard = to_raw_response_wrapper(
+            metronome.get_dashboard,
         )
 
 
-class AsyncParseResourceWithRawResponse:
-    def __init__(self, parse: AsyncParseResource) -> None:
-        self._parse = parse
+class AsyncMetronomeResourceWithRawResponse:
+    def __init__(self, metronome: AsyncMetronomeResource) -> None:
+        self._metronome = metronome
 
-        self.upload_file = async_to_raw_response_wrapper(
-            parse.upload_file,
+        self.get_dashboard = async_to_raw_response_wrapper(
+            metronome.get_dashboard,
         )
 
 
-class ParseResourceWithStreamingResponse:
-    def __init__(self, parse: ParseResource) -> None:
-        self._parse = parse
+class MetronomeResourceWithStreamingResponse:
+    def __init__(self, metronome: MetronomeResource) -> None:
+        self._metronome = metronome
 
-        self.upload_file = to_streamed_response_wrapper(
-            parse.upload_file,
+        self.get_dashboard = to_streamed_response_wrapper(
+            metronome.get_dashboard,
         )
 
 
-class AsyncParseResourceWithStreamingResponse:
-    def __init__(self, parse: AsyncParseResource) -> None:
-        self._parse = parse
+class AsyncMetronomeResourceWithStreamingResponse:
+    def __init__(self, metronome: AsyncMetronomeResource) -> None:
+        self._metronome = metronome
 
-        self.upload_file = async_to_streamed_response_wrapper(
-            parse.upload_file,
+        self.get_dashboard = async_to_streamed_response_wrapper(
+            metronome.get_dashboard,
         )
