@@ -17,13 +17,7 @@ from ....._response import (
     async_to_streamed_response_wrapper,
 )
 from ....._base_client import make_request_options
-from .....types.v1.beta.directories import (
-    file_add_params,
-    file_list_params,
-    file_delete_params,
-    file_update_params,
-    file_retrieve_params,
-)
+from .....types.v1.beta.directories import file_add_params, file_list_params, file_update_params
 from .....types.v1.beta.directories.file_add_response import FileAddResponse
 from .....types.v1.beta.directories.file_list_response import FileListResponse
 from .....types.v1.beta.directories.file_update_response import FileUpdateResponse
@@ -57,8 +51,6 @@ class FilesResource(SyncAPIResource):
         directory_file_id: str,
         *,
         directory_id: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -88,17 +80,7 @@ class FilesResource(SyncAPIResource):
         return self._get(
             f"/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_retrieve_params.FileRetrieveParams,
-                ),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=FileRetrieveResponse,
         )
@@ -108,8 +90,6 @@ class FilesResource(SyncAPIResource):
         directory_file_id: str,
         *,
         directory_id: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
         display_name: Optional[str] | Omit = omit,
         unique_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -153,17 +133,7 @@ class FilesResource(SyncAPIResource):
                 file_update_params.FileUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_update_params.FileUpdateParams,
-                ),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=FileUpdateResponse,
         )
@@ -176,10 +146,8 @@ class FilesResource(SyncAPIResource):
         display_name_contains: Optional[str] | Omit = omit,
         file_id: Optional[str] | Omit = omit,
         include_deleted: bool | Omit = omit,
-        organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
         unique_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -216,10 +184,8 @@ class FilesResource(SyncAPIResource):
                         "display_name_contains": display_name_contains,
                         "file_id": file_id,
                         "include_deleted": include_deleted,
-                        "organization_id": organization_id,
                         "page_size": page_size,
                         "page_token": page_token,
-                        "project_id": project_id,
                         "unique_id": unique_id,
                     },
                     file_list_params.FileListParams,
@@ -233,8 +199,6 @@ class FilesResource(SyncAPIResource):
         directory_file_id: str,
         *,
         directory_id: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -266,17 +230,7 @@ class FilesResource(SyncAPIResource):
         return self._delete(
             f"/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_delete_params.FileDeleteParams,
-                ),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -286,8 +240,6 @@ class FilesResource(SyncAPIResource):
         directory_id: str,
         *,
         file_id: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
         display_name: Optional[str] | Omit = omit,
         unique_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -300,8 +252,8 @@ class FilesResource(SyncAPIResource):
         """
         Create a new file within the specified directory.
 
-        The directory must exist and belong to the project passed in. The file_id must
-        be provided and exist in the project.
+        The directory must exist and the user must have access to the parent project.
+        The file_id must be provided and exist in the project.
 
         Args:
           file_id: File ID for the storage location (required).
@@ -332,17 +284,7 @@ class FilesResource(SyncAPIResource):
                 file_add_params.FileAddParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_add_params.FileAddParams,
-                ),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=FileAddResponse,
         )
@@ -373,8 +315,6 @@ class AsyncFilesResource(AsyncAPIResource):
         directory_file_id: str,
         *,
         directory_id: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -404,17 +344,7 @@ class AsyncFilesResource(AsyncAPIResource):
         return await self._get(
             f"/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_retrieve_params.FileRetrieveParams,
-                ),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=FileRetrieveResponse,
         )
@@ -424,8 +354,6 @@ class AsyncFilesResource(AsyncAPIResource):
         directory_file_id: str,
         *,
         directory_id: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
         display_name: Optional[str] | Omit = omit,
         unique_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -469,17 +397,7 @@ class AsyncFilesResource(AsyncAPIResource):
                 file_update_params.FileUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_update_params.FileUpdateParams,
-                ),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=FileUpdateResponse,
         )
@@ -492,10 +410,8 @@ class AsyncFilesResource(AsyncAPIResource):
         display_name_contains: Optional[str] | Omit = omit,
         file_id: Optional[str] | Omit = omit,
         include_deleted: bool | Omit = omit,
-        organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
         unique_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -532,10 +448,8 @@ class AsyncFilesResource(AsyncAPIResource):
                         "display_name_contains": display_name_contains,
                         "file_id": file_id,
                         "include_deleted": include_deleted,
-                        "organization_id": organization_id,
                         "page_size": page_size,
                         "page_token": page_token,
-                        "project_id": project_id,
                         "unique_id": unique_id,
                     },
                     file_list_params.FileListParams,
@@ -549,8 +463,6 @@ class AsyncFilesResource(AsyncAPIResource):
         directory_file_id: str,
         *,
         directory_id: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -582,17 +494,7 @@ class AsyncFilesResource(AsyncAPIResource):
         return await self._delete(
             f"/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_delete_params.FileDeleteParams,
-                ),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
         )
@@ -602,8 +504,6 @@ class AsyncFilesResource(AsyncAPIResource):
         directory_id: str,
         *,
         file_id: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
         display_name: Optional[str] | Omit = omit,
         unique_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -616,8 +516,8 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         Create a new file within the specified directory.
 
-        The directory must exist and belong to the project passed in. The file_id must
-        be provided and exist in the project.
+        The directory must exist and the user must have access to the parent project.
+        The file_id must be provided and exist in the project.
 
         Args:
           file_id: File ID for the storage location (required).
@@ -648,17 +548,7 @@ class AsyncFilesResource(AsyncAPIResource):
                 file_add_params.FileAddParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_add_params.FileAddParams,
-                ),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=FileAddResponse,
         )

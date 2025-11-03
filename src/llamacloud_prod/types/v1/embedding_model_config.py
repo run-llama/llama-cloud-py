@@ -19,12 +19,12 @@ __all__ = ["EmbeddingModelConfig", "EmbeddingConfig"]
 EmbeddingConfig: TypeAlias = Annotated[
     Union[
         AzureOpenAIEmbeddingConfig,
-        BedrockEmbeddingConfig,
         CohereEmbeddingConfig,
         GeminiEmbeddingConfig,
         HuggingFaceInferenceAPIEmbeddingConfig,
         OpenAIEmbeddingConfig,
         VertexAIEmbeddingConfig,
+        BedrockEmbeddingConfig,
     ],
     PropertyInfo(discriminator="type"),
 ]

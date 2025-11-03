@@ -17,12 +17,8 @@ class FileListParams(TypedDict, total=False):
 
     include_deleted: bool
 
-    organization_id: Optional[str]
-
     page_size: Optional[int]
 
     page_token: Optional[str]
-
-    project_id: Optional[str]
 
     unique_id: Optional[str]

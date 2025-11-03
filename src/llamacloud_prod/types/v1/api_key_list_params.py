@@ -5,10 +5,12 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import TypedDict
 
-__all__ = ["DirectoryRetrieveParams"]
+from .api_key_type import APIKeyType
+
+__all__ = ["APIKeyListParams"]
 
 
-class DirectoryRetrieveParams(TypedDict, total=False):
-    organization_id: Optional[str]
+class APIKeyListParams(TypedDict, total=False):
+    key_type: APIKeyType
 
     project_id: Optional[str]

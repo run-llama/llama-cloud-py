@@ -11,10 +11,6 @@ __all__ = ["FileUpdateParams"]
 class FileUpdateParams(TypedDict, total=False):
     directory_id: Required[str]
 
-    organization_id: Optional[str]
-
-    project_id: Optional[str]
-
     display_name: Optional[str]
     """Updated display name."""
 
