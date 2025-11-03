@@ -123,10 +123,15 @@ from llamacloud_prod import LlamacloudProd
 
 client = LlamacloudProd()
 
-base_connection_validation = client.v1.validate_integrations.validate_embedding_connection(
-    component={},
+pipeline = client.v1.pipelines.create(
+    name="x",
+    data_sink={
+        "component": {"foo": "bar"},
+        "name": "name",
+        "sink_type": "PINECONE",
+    },
 )
-print(base_connection_validation.component)
+print(pipeline.data_sink)
 ```
 
 ## File uploads

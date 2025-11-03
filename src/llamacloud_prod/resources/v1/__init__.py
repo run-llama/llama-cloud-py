@@ -8,14 +8,6 @@ from .v1 import (
     V1ResourceWithStreamingResponse,
     AsyncV1ResourceWithStreamingResponse,
 )
-from .auth import (
-    AuthResource,
-    AsyncAuthResource,
-    AuthResourceWithRawResponse,
-    AsyncAuthResourceWithRawResponse,
-    AuthResourceWithStreamingResponse,
-    AsyncAuthResourceWithStreamingResponse,
-)
 from .beta import (
     BetaResource,
     AsyncBetaResource,
@@ -48,14 +40,6 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
-from .billing import (
-    BillingResource,
-    AsyncBillingResource,
-    BillingResourceWithRawResponse,
-    AsyncBillingResourceWithRawResponse,
-    BillingResourceWithStreamingResponse,
-    AsyncBillingResourceWithStreamingResponse,
-)
 from .parsing import (
     ParsingResource,
     AsyncParsingResource,
@@ -63,14 +47,6 @@ from .parsing import (
     AsyncParsingResourceWithRawResponse,
     ParsingResourceWithStreamingResponse,
     AsyncParsingResourceWithStreamingResponse,
-)
-from .api_keys import (
-    APIKeysResource,
-    AsyncAPIKeysResource,
-    APIKeysResourceWithRawResponse,
-    AsyncAPIKeysResourceWithRawResponse,
-    APIKeysResourceWithStreamingResponse,
-    AsyncAPIKeysResourceWithStreamingResponse,
 )
 from .projects import (
     ProjectsResource,
@@ -136,14 +112,6 @@ from .organizations import (
     OrganizationsResourceWithStreamingResponse,
     AsyncOrganizationsResourceWithStreamingResponse,
 )
-from .validate_integrations import (
-    ValidateIntegrationsResource,
-    AsyncValidateIntegrationsResource,
-    ValidateIntegrationsResourceWithRawResponse,
-    AsyncValidateIntegrationsResourceWithRawResponse,
-    ValidateIntegrationsResourceWithStreamingResponse,
-    AsyncValidateIntegrationsResourceWithStreamingResponse,
-)
 from .embedding_model_configs import (
     EmbeddingModelConfigsResource,
     AsyncEmbeddingModelConfigsResource,
@@ -160,18 +128,6 @@ __all__ = [
     "AsyncProjectsResourceWithRawResponse",
     "ProjectsResourceWithStreamingResponse",
     "AsyncProjectsResourceWithStreamingResponse",
-    "APIKeysResource",
-    "AsyncAPIKeysResource",
-    "APIKeysResourceWithRawResponse",
-    "AsyncAPIKeysResourceWithRawResponse",
-    "APIKeysResourceWithStreamingResponse",
-    "AsyncAPIKeysResourceWithStreamingResponse",
-    "ValidateIntegrationsResource",
-    "AsyncValidateIntegrationsResource",
-    "ValidateIntegrationsResourceWithRawResponse",
-    "AsyncValidateIntegrationsResourceWithRawResponse",
-    "ValidateIntegrationsResourceWithStreamingResponse",
-    "AsyncValidateIntegrationsResourceWithStreamingResponse",
     "DataSinksResource",
     "AsyncDataSinksResource",
     "DataSinksResourceWithRawResponse",
@@ -232,18 +188,6 @@ __all__ = [
     "AsyncClassifierResourceWithRawResponse",
     "ClassifierResourceWithStreamingResponse",
     "AsyncClassifierResourceWithStreamingResponse",
-    "AuthResource",
-    "AsyncAuthResource",
-    "AuthResourceWithRawResponse",
-    "AsyncAuthResourceWithRawResponse",
-    "AuthResourceWithStreamingResponse",
-    "AsyncAuthResourceWithStreamingResponse",
-    "BillingResource",
-    "AsyncBillingResource",
-    "BillingResourceWithRawResponse",
-    "AsyncBillingResourceWithRawResponse",
-    "BillingResourceWithStreamingResponse",
-    "AsyncBillingResourceWithStreamingResponse",
     "ExtractionResource",
     "AsyncExtractionResource",
     "ExtractionResourceWithRawResponse",

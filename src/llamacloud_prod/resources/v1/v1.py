@@ -6,14 +6,6 @@ from typing import Optional
 
 import httpx
 
-from .auth import (
-    AuthResource,
-    AsyncAuthResource,
-    AuthResourceWithRawResponse,
-    AsyncAuthResourceWithRawResponse,
-    AuthResourceWithStreamingResponse,
-    AsyncAuthResourceWithStreamingResponse,
-)
 from .test import (
     TestResource,
     AsyncTestResource,
@@ -33,14 +25,6 @@ from .evals import (
 from ...types import v1_get_jobs_params
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
-from .api_keys import (
-    APIKeysResource,
-    AsyncAPIKeysResource,
-    APIKeysResourceWithRawResponse,
-    AsyncAPIKeysResourceWithRawResponse,
-    APIKeysResourceWithStreamingResponse,
-    AsyncAPIKeysResourceWithStreamingResponse,
-)
 from .projects import (
     ProjectsResource,
     AsyncProjectsResource,
@@ -98,14 +82,6 @@ from .data_sources import (
     AsyncDataSourcesResourceWithStreamingResponse,
 )
 from ..._base_client import make_request_options
-from .billing.billing import (
-    BillingResource,
-    AsyncBillingResource,
-    BillingResourceWithRawResponse,
-    AsyncBillingResourceWithRawResponse,
-    BillingResourceWithStreamingResponse,
-    AsyncBillingResourceWithStreamingResponse,
-)
 from .parsing.parsing import (
     ParsingResource,
     AsyncParsingResource,
@@ -138,14 +114,6 @@ from .extraction.extraction import (
     ExtractionResourceWithStreamingResponse,
     AsyncExtractionResourceWithStreamingResponse,
 )
-from .validate_integrations import (
-    ValidateIntegrationsResource,
-    AsyncValidateIntegrationsResource,
-    ValidateIntegrationsResourceWithRawResponse,
-    AsyncValidateIntegrationsResourceWithRawResponse,
-    ValidateIntegrationsResourceWithStreamingResponse,
-    AsyncValidateIntegrationsResourceWithStreamingResponse,
-)
 from .embedding_model_configs import (
     EmbeddingModelConfigsResource,
     AsyncEmbeddingModelConfigsResource,
@@ -171,14 +139,6 @@ class V1Resource(SyncAPIResource):
     @cached_property
     def projects(self) -> ProjectsResource:
         return ProjectsResource(self._client)
-
-    @cached_property
-    def api_keys(self) -> APIKeysResource:
-        return APIKeysResource(self._client)
-
-    @cached_property
-    def validate_integrations(self) -> ValidateIntegrationsResource:
-        return ValidateIntegrationsResource(self._client)
 
     @cached_property
     def data_sinks(self) -> DataSinksResource:
@@ -219,14 +179,6 @@ class V1Resource(SyncAPIResource):
     @cached_property
     def classifier(self) -> ClassifierResource:
         return ClassifierResource(self._client)
-
-    @cached_property
-    def auth(self) -> AuthResource:
-        return AuthResource(self._client)
-
-    @cached_property
-    def billing(self) -> BillingResource:
-        return BillingResource(self._client)
 
     @cached_property
     def extraction(self) -> ExtractionResource:
@@ -320,14 +272,6 @@ class AsyncV1Resource(AsyncAPIResource):
         return AsyncProjectsResource(self._client)
 
     @cached_property
-    def api_keys(self) -> AsyncAPIKeysResource:
-        return AsyncAPIKeysResource(self._client)
-
-    @cached_property
-    def validate_integrations(self) -> AsyncValidateIntegrationsResource:
-        return AsyncValidateIntegrationsResource(self._client)
-
-    @cached_property
     def data_sinks(self) -> AsyncDataSinksResource:
         return AsyncDataSinksResource(self._client)
 
@@ -366,14 +310,6 @@ class AsyncV1Resource(AsyncAPIResource):
     @cached_property
     def classifier(self) -> AsyncClassifierResource:
         return AsyncClassifierResource(self._client)
-
-    @cached_property
-    def auth(self) -> AsyncAuthResource:
-        return AsyncAuthResource(self._client)
-
-    @cached_property
-    def billing(self) -> AsyncBillingResource:
-        return AsyncBillingResource(self._client)
 
     @cached_property
     def extraction(self) -> AsyncExtractionResource:
@@ -474,14 +410,6 @@ class V1ResourceWithRawResponse:
         return ProjectsResourceWithRawResponse(self._v1.projects)
 
     @cached_property
-    def api_keys(self) -> APIKeysResourceWithRawResponse:
-        return APIKeysResourceWithRawResponse(self._v1.api_keys)
-
-    @cached_property
-    def validate_integrations(self) -> ValidateIntegrationsResourceWithRawResponse:
-        return ValidateIntegrationsResourceWithRawResponse(self._v1.validate_integrations)
-
-    @cached_property
     def data_sinks(self) -> DataSinksResourceWithRawResponse:
         return DataSinksResourceWithRawResponse(self._v1.data_sinks)
 
@@ -522,14 +450,6 @@ class V1ResourceWithRawResponse:
         return ClassifierResourceWithRawResponse(self._v1.classifier)
 
     @cached_property
-    def auth(self) -> AuthResourceWithRawResponse:
-        return AuthResourceWithRawResponse(self._v1.auth)
-
-    @cached_property
-    def billing(self) -> BillingResourceWithRawResponse:
-        return BillingResourceWithRawResponse(self._v1.billing)
-
-    @cached_property
     def extraction(self) -> ExtractionResourceWithRawResponse:
         return ExtractionResourceWithRawResponse(self._v1.extraction)
 
@@ -553,14 +473,6 @@ class AsyncV1ResourceWithRawResponse:
     @cached_property
     def projects(self) -> AsyncProjectsResourceWithRawResponse:
         return AsyncProjectsResourceWithRawResponse(self._v1.projects)
-
-    @cached_property
-    def api_keys(self) -> AsyncAPIKeysResourceWithRawResponse:
-        return AsyncAPIKeysResourceWithRawResponse(self._v1.api_keys)
-
-    @cached_property
-    def validate_integrations(self) -> AsyncValidateIntegrationsResourceWithRawResponse:
-        return AsyncValidateIntegrationsResourceWithRawResponse(self._v1.validate_integrations)
 
     @cached_property
     def data_sinks(self) -> AsyncDataSinksResourceWithRawResponse:
@@ -603,14 +515,6 @@ class AsyncV1ResourceWithRawResponse:
         return AsyncClassifierResourceWithRawResponse(self._v1.classifier)
 
     @cached_property
-    def auth(self) -> AsyncAuthResourceWithRawResponse:
-        return AsyncAuthResourceWithRawResponse(self._v1.auth)
-
-    @cached_property
-    def billing(self) -> AsyncBillingResourceWithRawResponse:
-        return AsyncBillingResourceWithRawResponse(self._v1.billing)
-
-    @cached_property
     def extraction(self) -> AsyncExtractionResourceWithRawResponse:
         return AsyncExtractionResourceWithRawResponse(self._v1.extraction)
 
@@ -634,14 +538,6 @@ class V1ResourceWithStreamingResponse:
     @cached_property
     def projects(self) -> ProjectsResourceWithStreamingResponse:
         return ProjectsResourceWithStreamingResponse(self._v1.projects)
-
-    @cached_property
-    def api_keys(self) -> APIKeysResourceWithStreamingResponse:
-        return APIKeysResourceWithStreamingResponse(self._v1.api_keys)
-
-    @cached_property
-    def validate_integrations(self) -> ValidateIntegrationsResourceWithStreamingResponse:
-        return ValidateIntegrationsResourceWithStreamingResponse(self._v1.validate_integrations)
 
     @cached_property
     def data_sinks(self) -> DataSinksResourceWithStreamingResponse:
@@ -684,14 +580,6 @@ class V1ResourceWithStreamingResponse:
         return ClassifierResourceWithStreamingResponse(self._v1.classifier)
 
     @cached_property
-    def auth(self) -> AuthResourceWithStreamingResponse:
-        return AuthResourceWithStreamingResponse(self._v1.auth)
-
-    @cached_property
-    def billing(self) -> BillingResourceWithStreamingResponse:
-        return BillingResourceWithStreamingResponse(self._v1.billing)
-
-    @cached_property
     def extraction(self) -> ExtractionResourceWithStreamingResponse:
         return ExtractionResourceWithStreamingResponse(self._v1.extraction)
 
@@ -715,14 +603,6 @@ class AsyncV1ResourceWithStreamingResponse:
     @cached_property
     def projects(self) -> AsyncProjectsResourceWithStreamingResponse:
         return AsyncProjectsResourceWithStreamingResponse(self._v1.projects)
-
-    @cached_property
-    def api_keys(self) -> AsyncAPIKeysResourceWithStreamingResponse:
-        return AsyncAPIKeysResourceWithStreamingResponse(self._v1.api_keys)
-
-    @cached_property
-    def validate_integrations(self) -> AsyncValidateIntegrationsResourceWithStreamingResponse:
-        return AsyncValidateIntegrationsResourceWithStreamingResponse(self._v1.validate_integrations)
 
     @cached_property
     def data_sinks(self) -> AsyncDataSinksResourceWithStreamingResponse:
@@ -763,14 +643,6 @@ class AsyncV1ResourceWithStreamingResponse:
     @cached_property
     def classifier(self) -> AsyncClassifierResourceWithStreamingResponse:
         return AsyncClassifierResourceWithStreamingResponse(self._v1.classifier)
-
-    @cached_property
-    def auth(self) -> AsyncAuthResourceWithStreamingResponse:
-        return AsyncAuthResourceWithStreamingResponse(self._v1.auth)
-
-    @cached_property
-    def billing(self) -> AsyncBillingResourceWithStreamingResponse:
-        return AsyncBillingResourceWithStreamingResponse(self._v1.billing)
 
     @cached_property
     def extraction(self) -> AsyncExtractionResourceWithStreamingResponse:

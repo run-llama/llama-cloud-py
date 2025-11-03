@@ -56,7 +56,7 @@ class ParseResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParsingJob:
         """
-        Upload File V2
+        Upload File Multipart
 
         Args:
           extra_headers: Send extra headers
@@ -119,7 +119,7 @@ class AsyncParseResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParsingJob:
         """
-        Upload File V2
+        Upload File Multipart
 
         Args:
           extra_headers: Send extra headers
