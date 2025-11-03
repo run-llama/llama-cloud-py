@@ -5,18 +5,12 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import Required, TypedDict
 
-__all__ = ["FileUpdateParams"]
+__all__ = ["FileRetrieveParams"]
 
 
-class FileUpdateParams(TypedDict, total=False):
+class FileRetrieveParams(TypedDict, total=False):
     directory_id: Required[str]
 
     organization_id: Optional[str]
 
     project_id: Optional[str]
-
-    display_name: Optional[str]
-    """Updated display name."""
-
-    unique_id: Optional[str]
-    """Updated unique identifier."""

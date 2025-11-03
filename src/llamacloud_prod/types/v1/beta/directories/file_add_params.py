@@ -12,6 +12,10 @@ class FileAddParams(TypedDict, total=False):
     file_id: Required[str]
     """File ID for the storage location (required)."""
 
+    organization_id: Optional[str]
+
+    project_id: Optional[str]
+
     display_name: Optional[str]
     """Display name for the file. If not provided, will use the file's name."""
 

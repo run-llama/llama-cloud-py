@@ -791,10 +791,10 @@ from llamacloud_prod.types.v1.beta import (
 Methods:
 
 - <code title="post /api/v1/beta/directories">client.v1.beta.directories.<a href="./src/llamacloud_prod/resources/v1/beta/directories/directories.py">create</a>(\*\*<a href="src/llamacloud_prod/types/v1/beta/directory_create_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/beta/directory_create_response.py">DirectoryCreateResponse</a></code>
-- <code title="get /api/v1/beta/directories/{directory_id}">client.v1.beta.directories.<a href="./src/llamacloud_prod/resources/v1/beta/directories/directories.py">retrieve</a>(directory_id) -> <a href="./src/llamacloud_prod/types/v1/beta/directory_retrieve_response.py">DirectoryRetrieveResponse</a></code>
+- <code title="get /api/v1/beta/directories/{directory_id}">client.v1.beta.directories.<a href="./src/llamacloud_prod/resources/v1/beta/directories/directories.py">retrieve</a>(directory_id, \*\*<a href="src/llamacloud_prod/types/v1/beta/directory_retrieve_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/beta/directory_retrieve_response.py">DirectoryRetrieveResponse</a></code>
 - <code title="patch /api/v1/beta/directories/{directory_id}">client.v1.beta.directories.<a href="./src/llamacloud_prod/resources/v1/beta/directories/directories.py">update</a>(directory_id, \*\*<a href="src/llamacloud_prod/types/v1/beta/directory_update_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/beta/directory_update_response.py">DirectoryUpdateResponse</a></code>
 - <code title="get /api/v1/beta/directories">client.v1.beta.directories.<a href="./src/llamacloud_prod/resources/v1/beta/directories/directories.py">list</a>(\*\*<a href="src/llamacloud_prod/types/v1/beta/directory_list_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/beta/directory_list_response.py">DirectoryListResponse</a></code>
-- <code title="delete /api/v1/beta/directories/{directory_id}">client.v1.beta.directories.<a href="./src/llamacloud_prod/resources/v1/beta/directories/directories.py">delete</a>(directory_id) -> None</code>
+- <code title="delete /api/v1/beta/directories/{directory_id}">client.v1.beta.directories.<a href="./src/llamacloud_prod/resources/v1/beta/directories/directories.py">delete</a>(directory_id, \*\*<a href="src/llamacloud_prod/types/v1/beta/directory_delete_params.py">params</a>) -> None</code>
 
 #### Files
 
@@ -811,10 +811,10 @@ from llamacloud_prod.types.v1.beta.directories import (
 
 Methods:
 
-- <code title="get /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.v1.beta.directories.files.<a href="./src/llamacloud_prod/resources/v1/beta/directories/files.py">retrieve</a>(directory_file_id, \*, directory_id) -> <a href="./src/llamacloud_prod/types/v1/beta/directories/file_retrieve_response.py">FileRetrieveResponse</a></code>
+- <code title="get /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.v1.beta.directories.files.<a href="./src/llamacloud_prod/resources/v1/beta/directories/files.py">retrieve</a>(directory_file_id, \*, directory_id, \*\*<a href="src/llamacloud_prod/types/v1/beta/directories/file_retrieve_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/beta/directories/file_retrieve_response.py">FileRetrieveResponse</a></code>
 - <code title="patch /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.v1.beta.directories.files.<a href="./src/llamacloud_prod/resources/v1/beta/directories/files.py">update</a>(directory_file_id, \*, directory_id, \*\*<a href="src/llamacloud_prod/types/v1/beta/directories/file_update_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/beta/directories/file_update_response.py">FileUpdateResponse</a></code>
 - <code title="get /api/v1/beta/directories/{directory_id}/files">client.v1.beta.directories.files.<a href="./src/llamacloud_prod/resources/v1/beta/directories/files.py">list</a>(directory_id, \*\*<a href="src/llamacloud_prod/types/v1/beta/directories/file_list_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/beta/directories/file_list_response.py">FileListResponse</a></code>
-- <code title="delete /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.v1.beta.directories.files.<a href="./src/llamacloud_prod/resources/v1/beta/directories/files.py">delete</a>(directory_file_id, \*, directory_id) -> None</code>
+- <code title="delete /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.v1.beta.directories.files.<a href="./src/llamacloud_prod/resources/v1/beta/directories/files.py">delete</a>(directory_file_id, \*, directory_id, \*\*<a href="src/llamacloud_prod/types/v1/beta/directories/file_delete_params.py">params</a>) -> None</code>
 - <code title="post /api/v1/beta/directories/{directory_id}/files">client.v1.beta.directories.files.<a href="./src/llamacloud_prod/resources/v1/beta/directories/files.py">add</a>(directory_id, \*\*<a href="src/llamacloud_prod/types/v1/beta/directories/file_add_params.py">params</a>) -> <a href="./src/llamacloud_prod/types/v1/beta/directories/file_add_response.py">FileAddResponse</a></code>
 
 ## Test
