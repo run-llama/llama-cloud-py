@@ -4,8 +4,8 @@ from typing import Sequence
 
 import pytest
 
-from llamacloud_prod._types import FileTypes
-from llamacloud_prod._utils import extract_files
+from llama_cloud._types import FileTypes
+from llama_cloud._utils import extract_files
 
 
 def test_removes_files_from_input() -> None:
