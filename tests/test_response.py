@@ -6,8 +6,8 @@ import httpx
 import pytest
 import pydantic
 
-from llamacloud_prod import BaseModel, LlamacloudProd, AsyncLlamacloudProd
-from llamacloud_prod._response import (
+from llama_cloud import BaseModel, LlamaCloud, AsyncLlamaCloud
+from llama_cloud._response import (
     APIResponse,
     BaseAPIResponse,
     AsyncAPIResponse,
@@ -15,8 +15,8 @@ from llamacloud_prod._response import (
     AsyncBinaryAPIResponse,
     extract_response_type,
 )
-from llamacloud_prod._streaming import Stream
-from llamacloud_prod._base_client import FinalRequestOptions
+from llama_cloud._streaming import Stream
+from llama_cloud._base_client import FinalRequestOptions
 
 
 class ConcreteBaseAPIResponse(APIResponse[bytes]): ...
@@ -37,7 +37,7 @@ def test_extract_response_type_direct_classes() -> None:
 def test_extract_response_type_direct_class_missing_type_arg() -> None:
     with pytest.raises(
         RuntimeError,
-        match="Expected type <class 'llamacloud_prod._response.AsyncAPIResponse'> to have a type argument at index 0 but it did not",
+        match="Expected type <class 'llama_cloud._response.AsyncAPIResponse'> to have a type argument at index 0 but it did not",
     ):
         extract_response_type(AsyncAPIResponse)
 
@@ -56,7 +56,7 @@ def test_extract_response_type_binary_response() -> None:
 class PydanticModel(pydantic.BaseModel): ...
 
 
-def test_response_parse_mismatched_basemodel(client: LlamacloudProd) -> None:
+def test_response_parse_mismatched_basemodel(client: LlamaCloud) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=client,
@@ -68,13 +68,13 @@ def test_response_parse_mismatched_basemodel(client: LlamacloudProd) -> None:
 
     with pytest.raises(
         TypeError,
-        match="Pydantic models must subclass our base model type, e.g. `from llamacloud_prod import BaseModel`",
+        match="Pydantic models must subclass our base model type, e.g. `from llama_cloud import BaseModel`",
     ):
         response.parse(to=PydanticModel)
 
 
 @pytest.mark.asyncio
-async def test_async_response_parse_mismatched_basemodel(async_client: AsyncLlamacloudProd) -> None:
+async def test_async_response_parse_mismatched_basemodel(async_client: AsyncLlamaCloud) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=async_client,
@@ -86,12 +86,12 @@ async def test_async_response_parse_mismatched_basemodel(async_client: AsyncLlam
 
     with pytest.raises(
         TypeError,
-        match="Pydantic models must subclass our base model type, e.g. `from llamacloud_prod import BaseModel`",
+        match="Pydantic models must subclass our base model type, e.g. `from llama_cloud import BaseModel`",
     ):
         await response.parse(to=PydanticModel)
 
 
-def test_response_parse_custom_stream(client: LlamacloudProd) -> None:
+def test_response_parse_custom_stream(client: LlamaCloud) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=client,
@@ -106,7 +106,7 @@ def test_response_parse_custom_stream(client: LlamacloudProd) -> None:
 
 
 @pytest.mark.asyncio
-async def test_async_response_parse_custom_stream(async_client: AsyncLlamacloudProd) -> None:
+async def test_async_response_parse_custom_stream(async_client: AsyncLlamaCloud) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=async_client,
@@ -125,7 +125,7 @@ class CustomModel(BaseModel):
     bar: int
 
 
-def test_response_parse_custom_model(client: LlamacloudProd) -> None:
+def test_response_parse_custom_model(client: LlamaCloud) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=client,
@@ -141,7 +141,7 @@ def test_response_parse_custom_model(client: LlamacloudProd) -> None:
 
 
 @pytest.mark.asyncio
-async def test_async_response_parse_custom_model(async_client: AsyncLlamacloudProd) -> None:
+async def test_async_response_parse_custom_model(async_client: AsyncLlamaCloud) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=async_client,
@@ -156,7 +156,7 @@ async def test_async_response_parse_custom_model(async_client: AsyncLlamacloudPr
     assert obj.bar == 2
 
 
-def test_response_parse_annotated_type(client: LlamacloudProd) -> None:
+def test_response_parse_annotated_type(client: LlamaCloud) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=client,
@@ -173,7 +173,7 @@ def test_response_parse_annotated_type(client: LlamacloudProd) -> None:
     assert obj.bar == 2
 
 
-async def test_async_response_parse_annotated_type(async_client: AsyncLlamacloudProd) -> None:
+async def test_async_response_parse_annotated_type(async_client: AsyncLlamaCloud) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=async_client,
@@ -201,7 +201,7 @@ async def test_async_response_parse_annotated_type(async_client: AsyncLlamacloud
         ("FalSe", False),
     ],
 )
-def test_response_parse_bool(client: LlamacloudProd, content: str, expected: bool) -> None:
+def test_response_parse_bool(client: LlamaCloud, content: str, expected: bool) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=content),
         client=client,
@@ -226,7 +226,7 @@ def test_response_parse_bool(client: LlamacloudProd, content: str, expected: boo
         ("FalSe", False),
     ],
 )
-async def test_async_response_parse_bool(client: AsyncLlamacloudProd, content: str, expected: bool) -> None:
+async def test_async_response_parse_bool(client: AsyncLlamaCloud, content: str, expected: bool) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=content),
         client=client,
@@ -245,7 +245,7 @@ class OtherModel(BaseModel):
 
 
 @pytest.mark.parametrize("client", [False], indirect=True)  # loose validation
-def test_response_parse_expect_model_union_non_json_content(client: LlamacloudProd) -> None:
+def test_response_parse_expect_model_union_non_json_content(client: LlamaCloud) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=b"foo", headers={"Content-Type": "application/text"}),
         client=client,
@@ -262,7 +262,7 @@ def test_response_parse_expect_model_union_non_json_content(client: LlamacloudPr
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("async_client", [False], indirect=True)  # loose validation
-async def test_async_response_parse_expect_model_union_non_json_content(async_client: AsyncLlamacloudProd) -> None:
+async def test_async_response_parse_expect_model_union_non_json_content(async_client: AsyncLlamaCloud) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=b"foo", headers={"Content-Type": "application/text"}),
         client=async_client,

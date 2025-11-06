@@ -18,12 +18,12 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from llamacloud_prod import LlamacloudProd, AsyncLlamacloudProd, APIResponseValidationError
-from llamacloud_prod._types import Omit
-from llamacloud_prod._utils import asyncify
-from llamacloud_prod._models import BaseModel, FinalRequestOptions
-from llamacloud_prod._exceptions import APIStatusError, APITimeoutError, LlamacloudProdError, APIResponseValidationError
-from llamacloud_prod._base_client import (
+from llama_cloud import LlamaCloud, AsyncLlamaCloud, APIResponseValidationError
+from llama_cloud._types import Omit
+from llama_cloud._utils import asyncify
+from llama_cloud._models import BaseModel, FinalRequestOptions
+from llama_cloud._exceptions import APIStatusError, APITimeoutError, LlamaCloudError, APIResponseValidationError
+from llama_cloud._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
     BaseClient,
@@ -50,7 +50,7 @@ def _low_retry_timeout(*_args: Any, **_kwargs: Any) -> float:
     return 0.1
 
 
-def _get_open_connections(client: LlamacloudProd | AsyncLlamacloudProd) -> int:
+def _get_open_connections(client: LlamaCloud | AsyncLlamaCloud) -> int:
     transport = client._client._transport
     assert isinstance(transport, httpx.HTTPTransport) or isinstance(transport, httpx.AsyncHTTPTransport)
 
@@ -58,9 +58,9 @@ def _get_open_connections(client: LlamacloudProd | AsyncLlamacloudProd) -> int:
     return len(pool._requests)
 
 
-class TestLlamacloudProd:
+class TestLlamaCloud:
     @pytest.mark.respx(base_url=base_url)
-    def test_raw_response(self, respx_mock: MockRouter, client: LlamacloudProd) -> None:
+    def test_raw_response(self, respx_mock: MockRouter, client: LlamaCloud) -> None:
         respx_mock.post("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
         response = client.post("/foo", cast_to=httpx.Response)
@@ -69,7 +69,7 @@ class TestLlamacloudProd:
         assert response.json() == {"foo": "bar"}
 
     @pytest.mark.respx(base_url=base_url)
-    def test_raw_response_for_binary(self, respx_mock: MockRouter, client: LlamacloudProd) -> None:
+    def test_raw_response_for_binary(self, respx_mock: MockRouter, client: LlamaCloud) -> None:
         respx_mock.post("/foo").mock(
             return_value=httpx.Response(200, headers={"Content-Type": "application/binary"}, content='{"foo": "bar"}')
         )
@@ -79,7 +79,7 @@ class TestLlamacloudProd:
         assert isinstance(response, httpx.Response)
         assert response.json() == {"foo": "bar"}
 
-    def test_copy(self, client: LlamacloudProd) -> None:
+    def test_copy(self, client: LlamaCloud) -> None:
         copied = client.copy()
         assert id(copied) != id(client)
 
@@ -87,7 +87,7 @@ class TestLlamacloudProd:
         assert copied.api_key == "another My API Key"
         assert client.api_key == "My API Key"
 
-    def test_copy_default_options(self, client: LlamacloudProd) -> None:
+    def test_copy_default_options(self, client: LlamaCloud) -> None:
         # options that have a default are overridden correctly
         copied = client.copy(max_retries=7)
         assert copied.max_retries == 7
@@ -104,7 +104,7 @@ class TestLlamacloudProd:
         assert isinstance(client.timeout, httpx.Timeout)
 
     def test_copy_default_headers(self) -> None:
-        client = LlamacloudProd(
+        client = LlamaCloud(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         assert client.default_headers["X-Foo"] == "bar"
@@ -139,7 +139,7 @@ class TestLlamacloudProd:
         client.close()
 
     def test_copy_default_query(self) -> None:
-        client = LlamacloudProd(
+        client = LlamaCloud(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"foo": "bar"}
         )
         assert _get_params(client)["foo"] == "bar"
@@ -176,7 +176,7 @@ class TestLlamacloudProd:
 
         client.close()
 
-    def test_copy_signature(self, client: LlamacloudProd) -> None:
+    def test_copy_signature(self, client: LlamaCloud) -> None:
         # ensure the same parameters that can be passed to the client are defined in the `.copy()` method
         init_signature = inspect.signature(
             # mypy doesn't like that we access the `__init__` property.
@@ -193,7 +193,7 @@ class TestLlamacloudProd:
             assert copy_param is not None, f"copy() signature is missing the {name} param"
 
     @pytest.mark.skipif(sys.version_info >= (3, 10), reason="fails because of a memory leak that started from 3.12")
-    def test_copy_build_request(self, client: LlamacloudProd) -> None:
+    def test_copy_build_request(self, client: LlamaCloud) -> None:
         options = FinalRequestOptions(method="get", url="/foo")
 
         def build_request(options: FinalRequestOptions) -> None:
@@ -233,10 +233,10 @@ class TestLlamacloudProd:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "llamacloud_prod/_legacy_response.py",
-                        "llamacloud_prod/_response.py",
+                        "llama_cloud/_legacy_response.py",
+                        "llama_cloud/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "llamacloud_prod/_compat.py",
+                        "llama_cloud/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -255,7 +255,7 @@ class TestLlamacloudProd:
                     print(frame)
             raise AssertionError()
 
-    def test_request_timeout(self, client: LlamacloudProd) -> None:
+    def test_request_timeout(self, client: LlamaCloud) -> None:
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
         assert timeout == DEFAULT_TIMEOUT
@@ -265,7 +265,7 @@ class TestLlamacloudProd:
         assert timeout == httpx.Timeout(100.0)
 
     def test_client_timeout_option(self) -> None:
-        client = LlamacloudProd(
+        client = LlamaCloud(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
         )
 
@@ -278,7 +278,7 @@ class TestLlamacloudProd:
     def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         with httpx.Client(timeout=None) as http_client:
-            client = LlamacloudProd(
+            client = LlamaCloud(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -290,7 +290,7 @@ class TestLlamacloudProd:
 
         # no timeout given to the httpx client should not use the httpx default
         with httpx.Client() as http_client:
-            client = LlamacloudProd(
+            client = LlamaCloud(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -302,7 +302,7 @@ class TestLlamacloudProd:
 
         # explicitly passing the default timeout currently results in it being ignored
         with httpx.Client(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = LlamacloudProd(
+            client = LlamaCloud(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -315,7 +315,7 @@ class TestLlamacloudProd:
     async def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             async with httpx.AsyncClient() as http_client:
-                LlamacloudProd(
+                LlamaCloud(
                     base_url=base_url,
                     api_key=api_key,
                     _strict_response_validation=True,
@@ -323,14 +323,14 @@ class TestLlamacloudProd:
                 )
 
     def test_default_headers_option(self) -> None:
-        test_client = LlamacloudProd(
+        test_client = LlamaCloud(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         request = test_client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        test_client2 = LlamacloudProd(
+        test_client2 = LlamaCloud(
             base_url=base_url,
             api_key=api_key,
             _strict_response_validation=True,
@@ -347,17 +347,17 @@ class TestLlamacloudProd:
         test_client2.close()
 
     def test_validate_headers(self) -> None:
-        client = LlamacloudProd(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = LlamaCloud(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
-        with pytest.raises(LlamacloudProdError):
-            with update_env(**{"LLAMACLOUD_PROD_API_KEY": Omit()}):
-                client2 = LlamacloudProd(base_url=base_url, api_key=None, _strict_response_validation=True)
+        with pytest.raises(LlamaCloudError):
+            with update_env(**{"LLAMACLOUD_API_KEY": Omit()}):
+                client2 = LlamaCloud(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
     def test_default_query_option(self) -> None:
-        client = LlamacloudProd(
+        client = LlamaCloud(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -376,7 +376,7 @@ class TestLlamacloudProd:
 
         client.close()
 
-    def test_request_extra_json(self, client: LlamacloudProd) -> None:
+    def test_request_extra_json(self, client: LlamaCloud) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -410,7 +410,7 @@ class TestLlamacloudProd:
         data = json.loads(request.content.decode("utf-8"))
         assert data == {"foo": "bar", "baz": None}
 
-    def test_request_extra_headers(self, client: LlamacloudProd) -> None:
+    def test_request_extra_headers(self, client: LlamaCloud) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -432,7 +432,7 @@ class TestLlamacloudProd:
         )
         assert request.headers.get("X-Bar") == "false"
 
-    def test_request_extra_query(self, client: LlamacloudProd) -> None:
+    def test_request_extra_query(self, client: LlamaCloud) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -473,7 +473,7 @@ class TestLlamacloudProd:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, client: LlamacloudProd) -> None:
+    def test_multipart_repeating_array(self, client: LlamaCloud) -> None:
         request = client._build_request(
             FinalRequestOptions.construct(
                 method="post",
@@ -503,7 +503,7 @@ class TestLlamacloudProd:
         ]
 
     @pytest.mark.respx(base_url=base_url)
-    def test_basic_union_response(self, respx_mock: MockRouter, client: LlamacloudProd) -> None:
+    def test_basic_union_response(self, respx_mock: MockRouter, client: LlamaCloud) -> None:
         class Model1(BaseModel):
             name: str
 
@@ -517,7 +517,7 @@ class TestLlamacloudProd:
         assert response.foo == "bar"
 
     @pytest.mark.respx(base_url=base_url)
-    def test_union_response_different_types(self, respx_mock: MockRouter, client: LlamacloudProd) -> None:
+    def test_union_response_different_types(self, respx_mock: MockRouter, client: LlamaCloud) -> None:
         """Union of objects with the same field name using a different type"""
 
         class Model1(BaseModel):
@@ -539,9 +539,7 @@ class TestLlamacloudProd:
         assert response.foo == 1
 
     @pytest.mark.respx(base_url=base_url)
-    def test_non_application_json_content_type_for_json_data(
-        self, respx_mock: MockRouter, client: LlamacloudProd
-    ) -> None:
+    def test_non_application_json_content_type_for_json_data(self, respx_mock: MockRouter, client: LlamaCloud) -> None:
         """
         Response that sets Content-Type to something other than application/json but returns json data
         """
@@ -562,9 +560,7 @@ class TestLlamacloudProd:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = LlamacloudProd(
-            base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True
-        )
+        client = LlamaCloud(base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True)
         assert client.base_url == "https://example.com/from_init/"
 
         client.base_url = "https://example.com/from_setter"  # type: ignore[assignment]
@@ -574,17 +570,29 @@ class TestLlamacloudProd:
         client.close()
 
     def test_base_url_env(self) -> None:
-        with update_env(LLAMACLOUD_PROD_BASE_URL="http://localhost:5000/from/env"):
-            client = LlamacloudProd(api_key=api_key, _strict_response_validation=True)
+        with update_env(LLAMA_CLOUD_BASE_URL="http://localhost:5000/from/env"):
+            client = LlamaCloud(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
+        # explicit environment arg requires explicitness
+        with update_env(LLAMA_CLOUD_BASE_URL="http://localhost:5000/from/env"):
+            with pytest.raises(ValueError, match=r"you must pass base_url=None"):
+                LlamaCloud(api_key=api_key, _strict_response_validation=True, environment="production")
+
+            client = LlamaCloud(
+                base_url=None, api_key=api_key, _strict_response_validation=True, environment="production"
+            )
+            assert str(client.base_url).startswith("https://api.cloud.llamaindex.ai")
+
+            client.close()
+
     @pytest.mark.parametrize(
         "client",
         [
-            LlamacloudProd(
+            LlamaCloud(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            LlamacloudProd(
+            LlamaCloud(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -593,7 +601,7 @@ class TestLlamacloudProd:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_trailing_slash(self, client: LlamacloudProd) -> None:
+    def test_base_url_trailing_slash(self, client: LlamaCloud) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -607,10 +615,10 @@ class TestLlamacloudProd:
     @pytest.mark.parametrize(
         "client",
         [
-            LlamacloudProd(
+            LlamaCloud(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            LlamacloudProd(
+            LlamaCloud(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -619,7 +627,7 @@ class TestLlamacloudProd:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_no_trailing_slash(self, client: LlamacloudProd) -> None:
+    def test_base_url_no_trailing_slash(self, client: LlamaCloud) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -633,10 +641,10 @@ class TestLlamacloudProd:
     @pytest.mark.parametrize(
         "client",
         [
-            LlamacloudProd(
+            LlamaCloud(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            LlamacloudProd(
+            LlamaCloud(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -645,7 +653,7 @@ class TestLlamacloudProd:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_absolute_request_url(self, client: LlamacloudProd) -> None:
+    def test_absolute_request_url(self, client: LlamaCloud) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -657,7 +665,7 @@ class TestLlamacloudProd:
         client.close()
 
     def test_copied_client_does_not_close_http(self) -> None:
-        test_client = LlamacloudProd(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        test_client = LlamaCloud(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         assert not test_client.is_closed()
 
         copied = test_client.copy()
@@ -668,7 +676,7 @@ class TestLlamacloudProd:
         assert not test_client.is_closed()
 
     def test_client_context_manager(self) -> None:
-        test_client = LlamacloudProd(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        test_client = LlamaCloud(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         with test_client as c2:
             assert c2 is test_client
             assert not c2.is_closed()
@@ -676,7 +684,7 @@ class TestLlamacloudProd:
         assert test_client.is_closed()
 
     @pytest.mark.respx(base_url=base_url)
-    def test_client_response_validation_error(self, respx_mock: MockRouter, client: LlamacloudProd) -> None:
+    def test_client_response_validation_error(self, respx_mock: MockRouter, client: LlamaCloud) -> None:
         class Model(BaseModel):
             foo: str
 
@@ -689,7 +697,7 @@ class TestLlamacloudProd:
 
     def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            LlamacloudProd(
+            LlamaCloud(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None)
             )
 
@@ -700,12 +708,12 @@ class TestLlamacloudProd:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = LlamacloudProd(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        strict_client = LlamaCloud(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         with pytest.raises(APIResponseValidationError):
             strict_client.get("/foo", cast_to=Model)
 
-        non_strict_client = LlamacloudProd(base_url=base_url, api_key=api_key, _strict_response_validation=False)
+        non_strict_client = LlamaCloud(base_url=base_url, api_key=api_key, _strict_response_validation=False)
 
         response = non_strict_client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -736,43 +744,43 @@ class TestLlamacloudProd:
     )
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     def test_parse_retry_after_header(
-        self, remaining_retries: int, retry_after: str, timeout: float, client: LlamacloudProd
+        self, remaining_retries: int, retry_after: str, timeout: float, client: LlamaCloud
     ) -> None:
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("llamacloud_prod._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("llama_cloud._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: LlamacloudProd) -> None:
+    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: LlamaCloud) -> None:
         respx_mock.get("/api/v1/projects/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/agents").mock(
             side_effect=httpx.TimeoutException("Test timeout error")
         )
 
         with pytest.raises(APITimeoutError):
-            client.v1.projects.with_streaming_response.list_agents("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e").__enter__()
+            client.projects.with_streaming_response.list_agents("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e").__enter__()
 
         assert _get_open_connections(client) == 0
 
-    @mock.patch("llamacloud_prod._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("llama_cloud._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: LlamacloudProd) -> None:
+    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: LlamaCloud) -> None:
         respx_mock.get("/api/v1/projects/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/agents").mock(
             return_value=httpx.Response(500)
         )
 
         with pytest.raises(APIStatusError):
-            client.v1.projects.with_streaming_response.list_agents("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e").__enter__()
+            client.projects.with_streaming_response.list_agents("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e").__enter__()
         assert _get_open_connections(client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("llamacloud_prod._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("llama_cloud._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     def test_retries_taken(
         self,
-        client: LlamacloudProd,
+        client: LlamaCloud,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -792,16 +800,16 @@ class TestLlamacloudProd:
 
         respx_mock.get("/api/v1/projects/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/agents").mock(side_effect=retry_handler)
 
-        response = client.v1.projects.with_raw_response.list_agents("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        response = client.projects.with_raw_response.list_agents("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("llamacloud_prod._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("llama_cloud._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_omit_retry_count_header(
-        self, client: LlamacloudProd, failures_before_success: int, respx_mock: MockRouter
+        self, client: LlamaCloud, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -816,17 +824,17 @@ class TestLlamacloudProd:
 
         respx_mock.get("/api/v1/projects/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/agents").mock(side_effect=retry_handler)
 
-        response = client.v1.projects.with_raw_response.list_agents(
+        response = client.projects.with_raw_response.list_agents(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("llamacloud_prod._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("llama_cloud._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_overwrite_retry_count_header(
-        self, client: LlamacloudProd, failures_before_success: int, respx_mock: MockRouter
+        self, client: LlamaCloud, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -841,7 +849,7 @@ class TestLlamacloudProd:
 
         respx_mock.get("/api/v1/projects/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/agents").mock(side_effect=retry_handler)
 
-        response = client.v1.projects.with_raw_response.list_agents(
+        response = client.projects.with_raw_response.list_agents(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", extra_headers={"x-stainless-retry-count": "42"}
         )
 
@@ -870,7 +878,7 @@ class TestLlamacloudProd:
         )
 
     @pytest.mark.respx(base_url=base_url)
-    def test_follow_redirects(self, respx_mock: MockRouter, client: LlamacloudProd) -> None:
+    def test_follow_redirects(self, respx_mock: MockRouter, client: LlamaCloud) -> None:
         # Test that the default follow_redirects=True allows following redirects
         respx_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})
@@ -882,7 +890,7 @@ class TestLlamacloudProd:
         assert response.json() == {"status": "ok"}
 
     @pytest.mark.respx(base_url=base_url)
-    def test_follow_redirects_disabled(self, respx_mock: MockRouter, client: LlamacloudProd) -> None:
+    def test_follow_redirects_disabled(self, respx_mock: MockRouter, client: LlamaCloud) -> None:
         # Test that follow_redirects=False prevents following redirects
         respx_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})
@@ -895,9 +903,9 @@ class TestLlamacloudProd:
         assert exc_info.value.response.headers["Location"] == f"{base_url}/redirected"
 
 
-class TestAsyncLlamacloudProd:
+class TestAsyncLlamaCloud:
     @pytest.mark.respx(base_url=base_url)
-    async def test_raw_response(self, respx_mock: MockRouter, async_client: AsyncLlamacloudProd) -> None:
+    async def test_raw_response(self, respx_mock: MockRouter, async_client: AsyncLlamaCloud) -> None:
         respx_mock.post("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
         response = await async_client.post("/foo", cast_to=httpx.Response)
@@ -906,7 +914,7 @@ class TestAsyncLlamacloudProd:
         assert response.json() == {"foo": "bar"}
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_raw_response_for_binary(self, respx_mock: MockRouter, async_client: AsyncLlamacloudProd) -> None:
+    async def test_raw_response_for_binary(self, respx_mock: MockRouter, async_client: AsyncLlamaCloud) -> None:
         respx_mock.post("/foo").mock(
             return_value=httpx.Response(200, headers={"Content-Type": "application/binary"}, content='{"foo": "bar"}')
         )
@@ -916,7 +924,7 @@ class TestAsyncLlamacloudProd:
         assert isinstance(response, httpx.Response)
         assert response.json() == {"foo": "bar"}
 
-    def test_copy(self, async_client: AsyncLlamacloudProd) -> None:
+    def test_copy(self, async_client: AsyncLlamaCloud) -> None:
         copied = async_client.copy()
         assert id(copied) != id(async_client)
 
@@ -924,7 +932,7 @@ class TestAsyncLlamacloudProd:
         assert copied.api_key == "another My API Key"
         assert async_client.api_key == "My API Key"
 
-    def test_copy_default_options(self, async_client: AsyncLlamacloudProd) -> None:
+    def test_copy_default_options(self, async_client: AsyncLlamaCloud) -> None:
         # options that have a default are overridden correctly
         copied = async_client.copy(max_retries=7)
         assert copied.max_retries == 7
@@ -941,7 +949,7 @@ class TestAsyncLlamacloudProd:
         assert isinstance(async_client.timeout, httpx.Timeout)
 
     async def test_copy_default_headers(self) -> None:
-        client = AsyncLlamacloudProd(
+        client = AsyncLlamaCloud(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         assert client.default_headers["X-Foo"] == "bar"
@@ -976,7 +984,7 @@ class TestAsyncLlamacloudProd:
         await client.close()
 
     async def test_copy_default_query(self) -> None:
-        client = AsyncLlamacloudProd(
+        client = AsyncLlamaCloud(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"foo": "bar"}
         )
         assert _get_params(client)["foo"] == "bar"
@@ -1013,7 +1021,7 @@ class TestAsyncLlamacloudProd:
 
         await client.close()
 
-    def test_copy_signature(self, async_client: AsyncLlamacloudProd) -> None:
+    def test_copy_signature(self, async_client: AsyncLlamaCloud) -> None:
         # ensure the same parameters that can be passed to the client are defined in the `.copy()` method
         init_signature = inspect.signature(
             # mypy doesn't like that we access the `__init__` property.
@@ -1030,7 +1038,7 @@ class TestAsyncLlamacloudProd:
             assert copy_param is not None, f"copy() signature is missing the {name} param"
 
     @pytest.mark.skipif(sys.version_info >= (3, 10), reason="fails because of a memory leak that started from 3.12")
-    def test_copy_build_request(self, async_client: AsyncLlamacloudProd) -> None:
+    def test_copy_build_request(self, async_client: AsyncLlamaCloud) -> None:
         options = FinalRequestOptions(method="get", url="/foo")
 
         def build_request(options: FinalRequestOptions) -> None:
@@ -1070,10 +1078,10 @@ class TestAsyncLlamacloudProd:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "llamacloud_prod/_legacy_response.py",
-                        "llamacloud_prod/_response.py",
+                        "llama_cloud/_legacy_response.py",
+                        "llama_cloud/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "llamacloud_prod/_compat.py",
+                        "llama_cloud/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -1092,7 +1100,7 @@ class TestAsyncLlamacloudProd:
                     print(frame)
             raise AssertionError()
 
-    async def test_request_timeout(self, async_client: AsyncLlamacloudProd) -> None:
+    async def test_request_timeout(self, async_client: AsyncLlamaCloud) -> None:
         request = async_client._build_request(FinalRequestOptions(method="get", url="/foo"))
         timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
         assert timeout == DEFAULT_TIMEOUT
@@ -1104,7 +1112,7 @@ class TestAsyncLlamacloudProd:
         assert timeout == httpx.Timeout(100.0)
 
     async def test_client_timeout_option(self) -> None:
-        client = AsyncLlamacloudProd(
+        client = AsyncLlamaCloud(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
         )
 
@@ -1117,7 +1125,7 @@ class TestAsyncLlamacloudProd:
     async def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         async with httpx.AsyncClient(timeout=None) as http_client:
-            client = AsyncLlamacloudProd(
+            client = AsyncLlamaCloud(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -1129,7 +1137,7 @@ class TestAsyncLlamacloudProd:
 
         # no timeout given to the httpx client should not use the httpx default
         async with httpx.AsyncClient() as http_client:
-            client = AsyncLlamacloudProd(
+            client = AsyncLlamaCloud(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -1141,7 +1149,7 @@ class TestAsyncLlamacloudProd:
 
         # explicitly passing the default timeout currently results in it being ignored
         async with httpx.AsyncClient(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = AsyncLlamacloudProd(
+            client = AsyncLlamaCloud(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -1154,7 +1162,7 @@ class TestAsyncLlamacloudProd:
     def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             with httpx.Client() as http_client:
-                AsyncLlamacloudProd(
+                AsyncLlamaCloud(
                     base_url=base_url,
                     api_key=api_key,
                     _strict_response_validation=True,
@@ -1162,14 +1170,14 @@ class TestAsyncLlamacloudProd:
                 )
 
     async def test_default_headers_option(self) -> None:
-        test_client = AsyncLlamacloudProd(
+        test_client = AsyncLlamaCloud(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         request = test_client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        test_client2 = AsyncLlamacloudProd(
+        test_client2 = AsyncLlamaCloud(
             base_url=base_url,
             api_key=api_key,
             _strict_response_validation=True,
@@ -1186,17 +1194,17 @@ class TestAsyncLlamacloudProd:
         await test_client2.close()
 
     def test_validate_headers(self) -> None:
-        client = AsyncLlamacloudProd(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncLlamaCloud(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
-        with pytest.raises(LlamacloudProdError):
-            with update_env(**{"LLAMACLOUD_PROD_API_KEY": Omit()}):
-                client2 = AsyncLlamacloudProd(base_url=base_url, api_key=None, _strict_response_validation=True)
+        with pytest.raises(LlamaCloudError):
+            with update_env(**{"LLAMACLOUD_API_KEY": Omit()}):
+                client2 = AsyncLlamaCloud(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
     async def test_default_query_option(self) -> None:
-        client = AsyncLlamacloudProd(
+        client = AsyncLlamaCloud(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -1215,7 +1223,7 @@ class TestAsyncLlamacloudProd:
 
         await client.close()
 
-    def test_request_extra_json(self, client: LlamacloudProd) -> None:
+    def test_request_extra_json(self, client: LlamaCloud) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1249,7 +1257,7 @@ class TestAsyncLlamacloudProd:
         data = json.loads(request.content.decode("utf-8"))
         assert data == {"foo": "bar", "baz": None}
 
-    def test_request_extra_headers(self, client: LlamacloudProd) -> None:
+    def test_request_extra_headers(self, client: LlamaCloud) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1271,7 +1279,7 @@ class TestAsyncLlamacloudProd:
         )
         assert request.headers.get("X-Bar") == "false"
 
-    def test_request_extra_query(self, client: LlamacloudProd) -> None:
+    def test_request_extra_query(self, client: LlamaCloud) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1312,7 +1320,7 @@ class TestAsyncLlamacloudProd:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, async_client: AsyncLlamacloudProd) -> None:
+    def test_multipart_repeating_array(self, async_client: AsyncLlamaCloud) -> None:
         request = async_client._build_request(
             FinalRequestOptions.construct(
                 method="post",
@@ -1342,7 +1350,7 @@ class TestAsyncLlamacloudProd:
         ]
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_basic_union_response(self, respx_mock: MockRouter, async_client: AsyncLlamacloudProd) -> None:
+    async def test_basic_union_response(self, respx_mock: MockRouter, async_client: AsyncLlamaCloud) -> None:
         class Model1(BaseModel):
             name: str
 
@@ -1356,9 +1364,7 @@ class TestAsyncLlamacloudProd:
         assert response.foo == "bar"
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_union_response_different_types(
-        self, respx_mock: MockRouter, async_client: AsyncLlamacloudProd
-    ) -> None:
+    async def test_union_response_different_types(self, respx_mock: MockRouter, async_client: AsyncLlamaCloud) -> None:
         """Union of objects with the same field name using a different type"""
 
         class Model1(BaseModel):
@@ -1381,7 +1387,7 @@ class TestAsyncLlamacloudProd:
 
     @pytest.mark.respx(base_url=base_url)
     async def test_non_application_json_content_type_for_json_data(
-        self, respx_mock: MockRouter, async_client: AsyncLlamacloudProd
+        self, respx_mock: MockRouter, async_client: AsyncLlamaCloud
     ) -> None:
         """
         Response that sets Content-Type to something other than application/json but returns json data
@@ -1403,7 +1409,7 @@ class TestAsyncLlamacloudProd:
         assert response.foo == 2
 
     async def test_base_url_setter(self) -> None:
-        client = AsyncLlamacloudProd(
+        client = AsyncLlamaCloud(
             base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True
         )
         assert client.base_url == "https://example.com/from_init/"
@@ -1415,17 +1421,29 @@ class TestAsyncLlamacloudProd:
         await client.close()
 
     async def test_base_url_env(self) -> None:
-        with update_env(LLAMACLOUD_PROD_BASE_URL="http://localhost:5000/from/env"):
-            client = AsyncLlamacloudProd(api_key=api_key, _strict_response_validation=True)
+        with update_env(LLAMA_CLOUD_BASE_URL="http://localhost:5000/from/env"):
+            client = AsyncLlamaCloud(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
+        # explicit environment arg requires explicitness
+        with update_env(LLAMA_CLOUD_BASE_URL="http://localhost:5000/from/env"):
+            with pytest.raises(ValueError, match=r"you must pass base_url=None"):
+                AsyncLlamaCloud(api_key=api_key, _strict_response_validation=True, environment="production")
+
+            client = AsyncLlamaCloud(
+                base_url=None, api_key=api_key, _strict_response_validation=True, environment="production"
+            )
+            assert str(client.base_url).startswith("https://api.cloud.llamaindex.ai")
+
+            await client.close()
+
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncLlamacloudProd(
+            AsyncLlamaCloud(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            AsyncLlamacloudProd(
+            AsyncLlamaCloud(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -1434,7 +1452,7 @@ class TestAsyncLlamacloudProd:
         ],
         ids=["standard", "custom http client"],
     )
-    async def test_base_url_trailing_slash(self, client: AsyncLlamacloudProd) -> None:
+    async def test_base_url_trailing_slash(self, client: AsyncLlamaCloud) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1448,10 +1466,10 @@ class TestAsyncLlamacloudProd:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncLlamacloudProd(
+            AsyncLlamaCloud(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            AsyncLlamacloudProd(
+            AsyncLlamaCloud(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -1460,7 +1478,7 @@ class TestAsyncLlamacloudProd:
         ],
         ids=["standard", "custom http client"],
     )
-    async def test_base_url_no_trailing_slash(self, client: AsyncLlamacloudProd) -> None:
+    async def test_base_url_no_trailing_slash(self, client: AsyncLlamaCloud) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1474,10 +1492,10 @@ class TestAsyncLlamacloudProd:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncLlamacloudProd(
+            AsyncLlamaCloud(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            AsyncLlamacloudProd(
+            AsyncLlamaCloud(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -1486,7 +1504,7 @@ class TestAsyncLlamacloudProd:
         ],
         ids=["standard", "custom http client"],
     )
-    async def test_absolute_request_url(self, client: AsyncLlamacloudProd) -> None:
+    async def test_absolute_request_url(self, client: AsyncLlamaCloud) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1498,7 +1516,7 @@ class TestAsyncLlamacloudProd:
         await client.close()
 
     async def test_copied_client_does_not_close_http(self) -> None:
-        test_client = AsyncLlamacloudProd(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        test_client = AsyncLlamaCloud(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         assert not test_client.is_closed()
 
         copied = test_client.copy()
@@ -1510,7 +1528,7 @@ class TestAsyncLlamacloudProd:
         assert not test_client.is_closed()
 
     async def test_client_context_manager(self) -> None:
-        test_client = AsyncLlamacloudProd(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        test_client = AsyncLlamaCloud(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         async with test_client as c2:
             assert c2 is test_client
             assert not c2.is_closed()
@@ -1519,7 +1537,7 @@ class TestAsyncLlamacloudProd:
 
     @pytest.mark.respx(base_url=base_url)
     async def test_client_response_validation_error(
-        self, respx_mock: MockRouter, async_client: AsyncLlamacloudProd
+        self, respx_mock: MockRouter, async_client: AsyncLlamaCloud
     ) -> None:
         class Model(BaseModel):
             foo: str
@@ -1533,7 +1551,7 @@ class TestAsyncLlamacloudProd:
 
     async def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            AsyncLlamacloudProd(
+            AsyncLlamaCloud(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None)
             )
 
@@ -1544,12 +1562,12 @@ class TestAsyncLlamacloudProd:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = AsyncLlamacloudProd(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        strict_client = AsyncLlamaCloud(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         with pytest.raises(APIResponseValidationError):
             await strict_client.get("/foo", cast_to=Model)
 
-        non_strict_client = AsyncLlamacloudProd(base_url=base_url, api_key=api_key, _strict_response_validation=False)
+        non_strict_client = AsyncLlamaCloud(base_url=base_url, api_key=api_key, _strict_response_validation=False)
 
         response = await non_strict_client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -1580,51 +1598,51 @@ class TestAsyncLlamacloudProd:
     )
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     async def test_parse_retry_after_header(
-        self, remaining_retries: int, retry_after: str, timeout: float, async_client: AsyncLlamacloudProd
+        self, remaining_retries: int, retry_after: str, timeout: float, async_client: AsyncLlamaCloud
     ) -> None:
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
         calculated = async_client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("llamacloud_prod._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("llama_cloud._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(
-        self, respx_mock: MockRouter, async_client: AsyncLlamacloudProd
+        self, respx_mock: MockRouter, async_client: AsyncLlamaCloud
     ) -> None:
         respx_mock.get("/api/v1/projects/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/agents").mock(
             side_effect=httpx.TimeoutException("Test timeout error")
         )
 
         with pytest.raises(APITimeoutError):
-            await async_client.v1.projects.with_streaming_response.list_agents(
+            await async_client.projects.with_streaming_response.list_agents(
                 "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"
             ).__aenter__()
 
         assert _get_open_connections(async_client) == 0
 
-    @mock.patch("llamacloud_prod._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("llama_cloud._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(
-        self, respx_mock: MockRouter, async_client: AsyncLlamacloudProd
+        self, respx_mock: MockRouter, async_client: AsyncLlamaCloud
     ) -> None:
         respx_mock.get("/api/v1/projects/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/agents").mock(
             return_value=httpx.Response(500)
         )
 
         with pytest.raises(APIStatusError):
-            await async_client.v1.projects.with_streaming_response.list_agents(
+            await async_client.projects.with_streaming_response.list_agents(
                 "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"
             ).__aenter__()
         assert _get_open_connections(async_client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("llamacloud_prod._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("llama_cloud._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     async def test_retries_taken(
         self,
-        async_client: AsyncLlamacloudProd,
+        async_client: AsyncLlamaCloud,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -1644,16 +1662,16 @@ class TestAsyncLlamacloudProd:
 
         respx_mock.get("/api/v1/projects/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/agents").mock(side_effect=retry_handler)
 
-        response = await client.v1.projects.with_raw_response.list_agents("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        response = await client.projects.with_raw_response.list_agents("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("llamacloud_prod._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("llama_cloud._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_omit_retry_count_header(
-        self, async_client: AsyncLlamacloudProd, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncLlamaCloud, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1668,17 +1686,17 @@ class TestAsyncLlamacloudProd:
 
         respx_mock.get("/api/v1/projects/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/agents").mock(side_effect=retry_handler)
 
-        response = await client.v1.projects.with_raw_response.list_agents(
+        response = await client.projects.with_raw_response.list_agents(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("llamacloud_prod._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("llama_cloud._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_overwrite_retry_count_header(
-        self, async_client: AsyncLlamacloudProd, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncLlamaCloud, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1693,7 +1711,7 @@ class TestAsyncLlamacloudProd:
 
         respx_mock.get("/api/v1/projects/182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e/agents").mock(side_effect=retry_handler)
 
-        response = await client.v1.projects.with_raw_response.list_agents(
+        response = await client.projects.with_raw_response.list_agents(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", extra_headers={"x-stainless-retry-count": "42"}
         )
 
@@ -1726,7 +1744,7 @@ class TestAsyncLlamacloudProd:
         )
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_follow_redirects(self, respx_mock: MockRouter, async_client: AsyncLlamacloudProd) -> None:
+    async def test_follow_redirects(self, respx_mock: MockRouter, async_client: AsyncLlamaCloud) -> None:
         # Test that the default follow_redirects=True allows following redirects
         respx_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})
@@ -1738,7 +1756,7 @@ class TestAsyncLlamacloudProd:
         assert response.json() == {"status": "ok"}
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_follow_redirects_disabled(self, respx_mock: MockRouter, async_client: AsyncLlamacloudProd) -> None:
+    async def test_follow_redirects_disabled(self, respx_mock: MockRouter, async_client: AsyncLlamaCloud) -> None:
         # Test that follow_redirects=False prevents following redirects
         respx_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})

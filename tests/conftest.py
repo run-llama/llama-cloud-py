@@ -10,15 +10,15 @@ import httpx
 import pytest
 from pytest_asyncio import is_async_test
 
-from llamacloud_prod import LlamacloudProd, AsyncLlamacloudProd, DefaultAioHttpClient
-from llamacloud_prod._utils import is_dict
+from llama_cloud import LlamaCloud, AsyncLlamaCloud, DefaultAioHttpClient
+from llama_cloud._utils import is_dict
 
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest  # pyright: ignore[reportPrivateImportUsage]
 
 pytest.register_assert_rewrite("tests.utils")
 
-logging.getLogger("llamacloud_prod").setLevel(logging.DEBUG)
+logging.getLogger("llama_cloud").setLevel(logging.DEBUG)
 
 
 # automatically add `pytest.mark.asyncio()` to all of our async tests
@@ -49,17 +49,17 @@ api_key = "My API Key"
 
 
 @pytest.fixture(scope="session")
-def client(request: FixtureRequest) -> Iterator[LlamacloudProd]:
+def client(request: FixtureRequest) -> Iterator[LlamaCloud]:
     strict = getattr(request, "param", True)
     if not isinstance(strict, bool):
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
-    with LlamacloudProd(base_url=base_url, api_key=api_key, _strict_response_validation=strict) as client:
+    with LlamaCloud(base_url=base_url, api_key=api_key, _strict_response_validation=strict) as client:
         yield client
 
 
 @pytest.fixture(scope="session")
-async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncLlamacloudProd]:
+async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncLlamaCloud]:
     param = getattr(request, "param", True)
 
     # defaults
@@ -78,7 +78,7 @@ async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncLlamacloud
     else:
         raise TypeError(f"Unexpected fixture parameter type {type(param)}, expected bool or dict")
 
-    async with AsyncLlamacloudProd(
+    async with AsyncLlamaCloud(
         base_url=base_url, api_key=api_key, _strict_response_validation=strict, http_client=http_client
     ) as client:
         yield client

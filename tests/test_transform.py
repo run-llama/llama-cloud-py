@@ -8,15 +8,15 @@ from typing_extensions import Required, Annotated, TypedDict
 
 import pytest
 
-from llamacloud_prod._types import Base64FileInput, omit, not_given
-from llamacloud_prod._utils import (
+from llama_cloud._types import Base64FileInput, omit, not_given
+from llama_cloud._utils import (
     PropertyInfo,
     transform as _transform,
     parse_datetime,
     async_transform as _async_transform,
 )
-from llamacloud_prod._compat import PYDANTIC_V1
-from llamacloud_prod._models import BaseModel
+from llama_cloud._compat import PYDANTIC_V1
+from llama_cloud._models import BaseModel
 
 _T = TypeVar("_T")
 

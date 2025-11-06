@@ -7,9 +7,9 @@ import pytest
 import pydantic
 from pydantic import Field
 
-from llamacloud_prod._utils import PropertyInfo
-from llamacloud_prod._compat import PYDANTIC_V1, parse_obj, model_dump, model_json
-from llamacloud_prod._models import BaseModel, construct_type
+from llama_cloud._utils import PropertyInfo
+from llama_cloud._compat import PYDANTIC_V1, parse_obj, model_dump, model_json
+from llama_cloud._models import BaseModel, construct_type
 
 
 class BasicModel(BaseModel):

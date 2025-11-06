@@ -1,9 +1,9 @@
-# Llamacloud Prod Python API library
+# Llama Cloud Python API library
 
 <!-- prettier-ignore -->
-[![PyPI version](https://img.shields.io/pypi/v/llamacloud_prod.svg?label=pypi%20(stable))](https://pypi.org/project/llamacloud_prod/)
+[![PyPI version](https://img.shields.io/pypi/v/llama_cloud.svg?label=pypi%20(stable))](https://pypi.org/project/llama_cloud/)
 
-The Llamacloud Prod Python library provides convenient access to the Llamacloud Prod REST API from any Python 3.8+
+The Llama Cloud Python library provides convenient access to the Llama Cloud REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -11,17 +11,17 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Documentation
 
-The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [developers.llamaindex.ai](https://developers.llamaindex.ai/). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
 ```sh
-# install from this staging repo
-pip install git+ssh://git@github.com/stainless-sdks/llamacloud-prod-python.git
+# install from the production repo
+pip install git+ssh://git@github.com/run-llama/llama-cloud-py.git
 ```
 
 > [!NOTE]
-> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install llamacloud_prod`
+> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install llama_cloud`
 
 ## Usage
 
@@ -29,13 +29,15 @@ The full API of this library can be found in [api.md](api.md).
 
 ```python
 import os
-from llamacloud_prod import LlamacloudProd
+from llama_cloud import LlamaCloud
 
-client = LlamacloudProd(
-    api_key=os.environ.get("LLAMACLOUD_PROD_API_KEY"),  # This is the default and can be omitted
+client = LlamaCloud(
+    api_key=os.environ.get("LLAMACLOUD_API_KEY"),  # This is the default and can be omitted
+    # or 'production' | 'staging'; defaults to "production".
+    environment="sandbox",
 )
 
-agent_deployment_list = client.v1.projects.list_agents(
+agent_deployment_list = client.projects.list_agents(
     "REPLACE_ME",
 )
 print(agent_deployment_list.deployments)
@@ -43,25 +45,27 @@ print(agent_deployment_list.deployments)
 
 While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `LLAMACLOUD_PROD_API_KEY="My API Key"` to your `.env` file
+to add `LLAMACLOUD_API_KEY="My API Key"` to your `.env` file
 so that your API Key is not stored in source control.
 
 ## Async usage
 
-Simply import `AsyncLlamacloudProd` instead of `LlamacloudProd` and use `await` with each API call:
+Simply import `AsyncLlamaCloud` instead of `LlamaCloud` and use `await` with each API call:
 
 ```python
 import os
 import asyncio
-from llamacloud_prod import AsyncLlamacloudProd
+from llama_cloud import AsyncLlamaCloud
 
-client = AsyncLlamacloudProd(
-    api_key=os.environ.get("LLAMACLOUD_PROD_API_KEY"),  # This is the default and can be omitted
+client = AsyncLlamaCloud(
+    api_key=os.environ.get("LLAMACLOUD_API_KEY"),  # This is the default and can be omitted
+    # or 'production' | 'staging'; defaults to "production".
+    environment="sandbox",
 )
 
 
 async def main() -> None:
-    agent_deployment_list = await client.v1.projects.list_agents(
+    agent_deployment_list = await client.projects.list_agents(
         "REPLACE_ME",
     )
     print(agent_deployment_list.deployments)
@@ -79,24 +83,24 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from this staging repo
-pip install 'llamacloud_prod[aiohttp] @ git+ssh://git@github.com/stainless-sdks/llamacloud-prod-python.git'
+# install from the production repo
+pip install 'llama_cloud[aiohttp] @ git+ssh://git@github.com/run-llama/llama-cloud-py.git'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
 import asyncio
-from llamacloud_prod import DefaultAioHttpClient
-from llamacloud_prod import AsyncLlamacloudProd
+from llama_cloud import DefaultAioHttpClient
+from llama_cloud import AsyncLlamaCloud
 
 
 async def main() -> None:
-    async with AsyncLlamacloudProd(
+    async with AsyncLlamaCloud(
         api_key="My API Key",
         http_client=DefaultAioHttpClient(),
     ) as client:
-        agent_deployment_list = await client.v1.projects.list_agents(
+        agent_deployment_list = await client.projects.list_agents(
             "REPLACE_ME",
         )
         print(agent_deployment_list.deployments)
@@ -119,11 +123,11 @@ Typed requests and responses provide autocomplete and documentation within your 
 Nested parameters are dictionaries, typed using `TypedDict`, for example:
 
 ```python
-from llamacloud_prod import LlamacloudProd
+from llama_cloud import LlamaCloud
 
-client = LlamacloudProd()
+client = LlamaCloud()
 
-base_connection_validation = client.v1.validate_integrations.validate_embedding_connection(
+base_connection_validation = client.validate_integrations.validate_embedding_connection(
     component={},
 )
 print(base_connection_validation.component)
@@ -135,11 +139,11 @@ Request parameters that correspond to file uploads can be passed as `bytes`, or 
 
 ```python
 from pathlib import Path
-from llamacloud_prod import LlamacloudProd
+from llama_cloud import LlamaCloud
 
-client = LlamacloudProd()
+client = LlamaCloud()
 
-client.v1.files.upload(
+client.files.upload(
     upload_file=Path("/path/to/file"),
 )
 ```
@@ -148,29 +152,29 @@ The async client uses the exact same interface. If you pass a [`PathLike`](https
 
 ## Handling errors
 
-When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `llamacloud_prod.APIConnectionError` is raised.
+When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `llama_cloud.APIConnectionError` is raised.
 
 When the API returns a non-success status code (that is, 4xx or 5xx
-response), a subclass of `llamacloud_prod.APIStatusError` is raised, containing `status_code` and `response` properties.
+response), a subclass of `llama_cloud.APIStatusError` is raised, containing `status_code` and `response` properties.
 
-All errors inherit from `llamacloud_prod.APIError`.
+All errors inherit from `llama_cloud.APIError`.
 
 ```python
-import llamacloud_prod
-from llamacloud_prod import LlamacloudProd
+import llama_cloud
+from llama_cloud import LlamaCloud
 
-client = LlamacloudProd()
+client = LlamaCloud()
 
 try:
-    client.v1.projects.list_agents(
+    client.projects.list_agents(
         "REPLACE_ME",
     )
-except llamacloud_prod.APIConnectionError as e:
+except llama_cloud.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
-except llamacloud_prod.RateLimitError as e:
+except llama_cloud.RateLimitError as e:
     print("A 429 status code was received; we should back off a bit.")
-except llamacloud_prod.APIStatusError as e:
+except llama_cloud.APIStatusError as e:
     print("Another non-200-range status code was received")
     print(e.status_code)
     print(e.response)
@@ -198,16 +202,16 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from llamacloud_prod import LlamacloudProd
+from llama_cloud import LlamaCloud
 
 # Configure the default for all requests:
-client = LlamacloudProd(
+client = LlamaCloud(
     # default is 2
     max_retries=0,
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).v1.projects.list_agents(
+client.with_options(max_retries=5).projects.list_agents(
     "REPLACE_ME",
 )
 ```
@@ -218,21 +222,21 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 ```python
-from llamacloud_prod import LlamacloudProd
+from llama_cloud import LlamaCloud
 
 # Configure the default for all requests:
-client = LlamacloudProd(
+client = LlamaCloud(
     # 20 seconds (default is 1 minute)
     timeout=20.0,
 )
 
 # More granular control:
-client = LlamacloudProd(
+client = LlamaCloud(
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).v1.projects.list_agents(
+client.with_options(timeout=5.0).projects.list_agents(
     "REPLACE_ME",
 )
 ```
@@ -247,10 +251,10 @@ Note that requests that time out are [retried twice by default](#retries).
 
 We use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.
 
-You can enable logging by setting the environment variable `LLAMACLOUD_PROD_LOG` to `info`.
+You can enable logging by setting the environment variable `LLAMA_CLOUD_LOG` to `info`.
 
 ```shell
-$ export LLAMACLOUD_PROD_LOG=info
+$ export LLAMA_CLOUD_LOG=info
 ```
 
 Or to `debug` for more verbose logging.
@@ -272,21 +276,21 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from llamacloud_prod import LlamacloudProd
+from llama_cloud import LlamaCloud
 
-client = LlamacloudProd()
-response = client.v1.projects.with_raw_response.list_agents(
+client = LlamaCloud()
+response = client.projects.with_raw_response.list_agents(
     "REPLACE_ME",
 )
 print(response.headers.get('X-My-Header'))
 
-project = response.parse()  # get the object that `v1.projects.list_agents()` would have returned
+project = response.parse()  # get the object that `projects.list_agents()` would have returned
 print(project.deployments)
 ```
 
-These methods return an [`APIResponse`](https://github.com/stainless-sdks/llamacloud-prod-python/tree/main/src/llamacloud_prod/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/run-llama/llama-cloud-py/tree/main/src/llama_cloud/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/llamacloud-prod-python/tree/main/src/llamacloud_prod/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/run-llama/llama-cloud-py/tree/main/src/llama_cloud/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -295,7 +299,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.v1.projects.with_streaming_response.list_agents(
+with client.projects.with_streaming_response.list_agents(
     "REPLACE_ME",
 ) as response:
     print(response.headers.get("X-My-Header"))
@@ -350,10 +354,10 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 
 ```python
 import httpx
-from llamacloud_prod import LlamacloudProd, DefaultHttpxClient
+from llama_cloud import LlamaCloud, DefaultHttpxClient
 
-client = LlamacloudProd(
-    # Or use the `LLAMACLOUD_PROD_BASE_URL` env var
+client = LlamaCloud(
+    # Or use the `LLAMA_CLOUD_BASE_URL` env var
     base_url="http://my.test.server.example.com:8083",
     http_client=DefaultHttpxClient(
         proxy="http://my.test.proxy.example.com",
@@ -373,9 +377,9 @@ client.with_options(http_client=DefaultHttpxClient(...))
 By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
 
 ```py
-from llamacloud_prod import LlamacloudProd
+from llama_cloud import LlamaCloud
 
-with LlamacloudProd() as client:
+with LlamaCloud() as client:
   # make requests here
   ...
 
@@ -392,7 +396,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/llamacloud-prod-python/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/run-llama/llama-cloud-py/issues) with questions, bugs, or suggestions.
 
 ### Determining the installed version
 
@@ -401,8 +405,8 @@ If you've upgraded to the latest version but aren't seeing any new features you 
 You can determine the version that is being used at runtime with:
 
 ```py
-import llamacloud_prod
-print(llamacloud_prod.__version__)
+import llama_cloud
+print(llama_cloud.__version__)
 ```
 
 ## Requirements

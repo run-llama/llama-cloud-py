@@ -1,11 +1,11 @@
 [project]
-name = "llamacloud_prod"
+name = "llama_cloud"
 version = "0.0.1"
-description = "The official Python library for the llamacloud-prod API"
+description = "The official Python library for the llama-cloud API"
 dynamic = ["readme"]
-license = "Apache-2.0"
+license = "MIT"
 authors = [
-{ name = "Llamacloud Prod", email = "" },
+{ name = "Llama Cloud", email = "" },
 ]
 dependencies = [
     "httpx>=0.23.0, <1",
@@ -31,12 +31,12 @@ classifiers = [
   "Operating System :: POSIX :: Linux",
   "Operating System :: Microsoft :: Windows",
   "Topic :: Software Development :: Libraries :: Python Modules",
-  "License :: OSI Approved :: Apache Software License"
+  "License :: OSI Approved :: MIT License"
 ]
 
 [project.urls]
-Homepage = "https://github.com/stainless-sdks/llamacloud-prod-python"
-Repository = "https://github.com/stainless-sdks/llamacloud-prod-python"
+Homepage = "https://github.com/run-llama/llama-cloud-py"
+Repository = "https://github.com/run-llama/llama-cloud-py"
 
 [project.optional-dependencies]
 aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.9"]
@@ -78,14 +78,14 @@ format = { chain = [
 "check:ruff" = "ruff check ."
 "fix:ruff" = "ruff check --fix ."
 
-"check:importable" = "python -c 'import llamacloud_prod'"
+"check:importable" = "python -c 'import llama_cloud'"
 
 typecheck = { chain = [
   "typecheck:pyright",
   "typecheck:mypy"
 ]}
 "typecheck:pyright" = "pyright"
-"typecheck:verify-types" = "pyright --verifytypes llamacloud_prod --ignoreexternal"
+"typecheck:verify-types" = "pyright --verifytypes llama_cloud --ignoreexternal"
 "typecheck:mypy" = "mypy ."
 
 [build-system]
@@ -98,7 +98,7 @@ include = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/llamacloud_prod"]
+packages = ["src/llama_cloud"]
 
 [tool.hatch.build.targets.sdist]
 # Basically everything except hidden files/directories (such as .github, .devcontainers, .python-version, etc)
@@ -124,7 +124,7 @@ path = "README.md"
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 # replace relative links with absolute links
 pattern = '\[(.+?)\]\(((?!https?://)\S+?)\)'
-replacement = '[\1](https://github.com/stainless-sdks/llamacloud-prod-python/tree/main/\g<2>)'
+replacement = '[\1](https://github.com/run-llama/llama-cloud-py/tree/main/\g<2>)'
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -166,7 +166,7 @@ show_error_codes = true
 #
 # We also exclude our `tests` as mypy doesn't always infer
 # types correctly and Pyright will still catch any type errors.
-exclude = ['src/llamacloud_prod/_files.py', '_dev/.*.py', 'tests/.*']
+exclude = ['src/llama_cloud/_files.py', '_dev/.*.py', 'tests/.*']
 
 strict_equality = true
 implicit_reexport = true
@@ -258,7 +258,7 @@ length-sort = true
 length-sort-straight = true
 combine-as-imports = true
 extra-standard-library = ["typing_extensions"]
-known-first-party = ["llamacloud_prod", "tests"]
+known-first-party = ["llama_cloud", "tests"]
 
 [tool.ruff.lint.per-file-ignores]
 "bin/**.py" = ["T201", "T203"]
