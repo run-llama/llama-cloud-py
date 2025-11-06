@@ -33,8 +33,6 @@ from llama_cloud import LlamaCloud
 
 client = LlamaCloud(
     api_key=os.environ.get("LLAMACLOUD_API_KEY"),  # This is the default and can be omitted
-    # or 'production' | 'staging'; defaults to "production".
-    environment="sandbox",
 )
 
 agent_deployment_list = client.projects.list_agents(
@@ -59,8 +57,6 @@ from llama_cloud import AsyncLlamaCloud
 
 client = AsyncLlamaCloud(
     api_key=os.environ.get("LLAMACLOUD_API_KEY"),  # This is the default and can be omitted
-    # or 'production' | 'staging'; defaults to "production".
-    environment="sandbox",
 )
 
 
