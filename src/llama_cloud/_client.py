@@ -21,7 +21,7 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
-from .resources import evals, projects, data_sinks, retrievers, data_sources, embedding_model_configs
+from .resources import evals, projects, data_sinks, retrievers, data_sources
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, LlamaCloudError
 from ._base_client import (
@@ -53,7 +53,6 @@ class LlamaCloud(SyncAPIClient):
     projects: projects.ProjectsResource
     data_sinks: data_sinks.DataSinksResource
     data_sources: data_sources.DataSourcesResource
-    embedding_model_configs: embedding_model_configs.EmbeddingModelConfigsResource
     organizations: organizations.OrganizationsResource
     files: files.FilesResource
     pipelines: pipelines.PipelinesResource
@@ -123,7 +122,6 @@ class LlamaCloud(SyncAPIClient):
         self.projects = projects.ProjectsResource(self)
         self.data_sinks = data_sinks.DataSinksResource(self)
         self.data_sources = data_sources.DataSourcesResource(self)
-        self.embedding_model_configs = embedding_model_configs.EmbeddingModelConfigsResource(self)
         self.organizations = organizations.OrganizationsResource(self)
         self.files = files.FilesResource(self)
         self.pipelines = pipelines.PipelinesResource(self)
@@ -245,7 +243,6 @@ class AsyncLlamaCloud(AsyncAPIClient):
     projects: projects.AsyncProjectsResource
     data_sinks: data_sinks.AsyncDataSinksResource
     data_sources: data_sources.AsyncDataSourcesResource
-    embedding_model_configs: embedding_model_configs.AsyncEmbeddingModelConfigsResource
     organizations: organizations.AsyncOrganizationsResource
     files: files.AsyncFilesResource
     pipelines: pipelines.AsyncPipelinesResource
@@ -315,7 +312,6 @@ class AsyncLlamaCloud(AsyncAPIClient):
         self.projects = projects.AsyncProjectsResource(self)
         self.data_sinks = data_sinks.AsyncDataSinksResource(self)
         self.data_sources = data_sources.AsyncDataSourcesResource(self)
-        self.embedding_model_configs = embedding_model_configs.AsyncEmbeddingModelConfigsResource(self)
         self.organizations = organizations.AsyncOrganizationsResource(self)
         self.files = files.AsyncFilesResource(self)
         self.pipelines = pipelines.AsyncPipelinesResource(self)
@@ -438,9 +434,6 @@ class LlamaCloudWithRawResponse:
         self.projects = projects.ProjectsResourceWithRawResponse(client.projects)
         self.data_sinks = data_sinks.DataSinksResourceWithRawResponse(client.data_sinks)
         self.data_sources = data_sources.DataSourcesResourceWithRawResponse(client.data_sources)
-        self.embedding_model_configs = embedding_model_configs.EmbeddingModelConfigsResourceWithRawResponse(
-            client.embedding_model_configs
-        )
         self.organizations = organizations.OrganizationsResourceWithRawResponse(client.organizations)
         self.files = files.FilesResourceWithRawResponse(client.files)
         self.pipelines = pipelines.PipelinesResourceWithRawResponse(client.pipelines)
@@ -457,9 +450,6 @@ class AsyncLlamaCloudWithRawResponse:
         self.projects = projects.AsyncProjectsResourceWithRawResponse(client.projects)
         self.data_sinks = data_sinks.AsyncDataSinksResourceWithRawResponse(client.data_sinks)
         self.data_sources = data_sources.AsyncDataSourcesResourceWithRawResponse(client.data_sources)
-        self.embedding_model_configs = embedding_model_configs.AsyncEmbeddingModelConfigsResourceWithRawResponse(
-            client.embedding_model_configs
-        )
         self.organizations = organizations.AsyncOrganizationsResourceWithRawResponse(client.organizations)
         self.files = files.AsyncFilesResourceWithRawResponse(client.files)
         self.pipelines = pipelines.AsyncPipelinesResourceWithRawResponse(client.pipelines)
@@ -476,9 +466,6 @@ class LlamaCloudWithStreamedResponse:
         self.projects = projects.ProjectsResourceWithStreamingResponse(client.projects)
         self.data_sinks = data_sinks.DataSinksResourceWithStreamingResponse(client.data_sinks)
         self.data_sources = data_sources.DataSourcesResourceWithStreamingResponse(client.data_sources)
-        self.embedding_model_configs = embedding_model_configs.EmbeddingModelConfigsResourceWithStreamingResponse(
-            client.embedding_model_configs
-        )
         self.organizations = organizations.OrganizationsResourceWithStreamingResponse(client.organizations)
         self.files = files.FilesResourceWithStreamingResponse(client.files)
         self.pipelines = pipelines.PipelinesResourceWithStreamingResponse(client.pipelines)
@@ -495,9 +482,6 @@ class AsyncLlamaCloudWithStreamedResponse:
         self.projects = projects.AsyncProjectsResourceWithStreamingResponse(client.projects)
         self.data_sinks = data_sinks.AsyncDataSinksResourceWithStreamingResponse(client.data_sinks)
         self.data_sources = data_sources.AsyncDataSourcesResourceWithStreamingResponse(client.data_sources)
-        self.embedding_model_configs = embedding_model_configs.AsyncEmbeddingModelConfigsResourceWithStreamingResponse(
-            client.embedding_model_configs
-        )
         self.organizations = organizations.AsyncOrganizationsResourceWithStreamingResponse(client.organizations)
         self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
         self.pipelines = pipelines.AsyncPipelinesResourceWithStreamingResponse(client.pipelines)

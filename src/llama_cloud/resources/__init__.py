@@ -96,14 +96,6 @@ from .organizations import (
     OrganizationsResourceWithStreamingResponse,
     AsyncOrganizationsResourceWithStreamingResponse,
 )
-from .embedding_model_configs import (
-    EmbeddingModelConfigsResource,
-    AsyncEmbeddingModelConfigsResource,
-    EmbeddingModelConfigsResourceWithRawResponse,
-    AsyncEmbeddingModelConfigsResourceWithRawResponse,
-    EmbeddingModelConfigsResourceWithStreamingResponse,
-    AsyncEmbeddingModelConfigsResourceWithStreamingResponse,
-)
 
 __all__ = [
     "ProjectsResource",
@@ -124,12 +116,6 @@ __all__ = [
     "AsyncDataSourcesResourceWithRawResponse",
     "DataSourcesResourceWithStreamingResponse",
     "AsyncDataSourcesResourceWithStreamingResponse",
-    "EmbeddingModelConfigsResource",
-    "AsyncEmbeddingModelConfigsResource",
-    "EmbeddingModelConfigsResourceWithRawResponse",
-    "AsyncEmbeddingModelConfigsResourceWithRawResponse",
-    "EmbeddingModelConfigsResourceWithStreamingResponse",
-    "AsyncEmbeddingModelConfigsResourceWithStreamingResponse",
     "OrganizationsResource",
     "AsyncOrganizationsResource",
     "OrganizationsResourceWithRawResponse",
