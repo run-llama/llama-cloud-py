@@ -16,7 +16,8 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
+from ...pagination import SyncPaginatedExtractRuns, AsyncPaginatedExtractRuns
+from ..._base_client import AsyncPaginator, make_request_options
 from ...types.extraction import (
     run_list_params,
     run_delete_params,
@@ -25,7 +26,6 @@ from ...types.extraction import (
     run_retrieve_latest_from_ui_params,
 )
 from ...types.extraction.extract_run import ExtractRun
-from ...types.extraction.run_list_response import RunListResponse
 
 __all__ = ["RunsResource", "AsyncRunsResource"]
 
@@ -107,7 +107,7 @@ class RunsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RunListResponse:
+    ) -> SyncPaginatedExtractRuns[ExtractRun]:
         """
         List Extract Runs
 
@@ -120,8 +120,9 @@ class RunsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/api/v1/extraction/runs",
+            page=SyncPaginatedExtractRuns[ExtractRun],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -136,7 +137,7 @@ class RunsResource(SyncAPIResource):
                     run_list_params.RunListParams,
                 ),
             ),
-            cast_to=RunListResponse,
+            model=ExtractRun,
         )
 
     def delete(
@@ -333,7 +334,7 @@ class AsyncRunsResource(AsyncAPIResource):
             cast_to=ExtractRun,
         )
 
-    async def list(
+    def list(
         self,
         *,
         extraction_agent_id: str,
@@ -345,7 +346,7 @@ class AsyncRunsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RunListResponse:
+    ) -> AsyncPaginator[ExtractRun, AsyncPaginatedExtractRuns[ExtractRun]]:
         """
         List Extract Runs
 
@@ -358,14 +359,15 @@ class AsyncRunsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/api/v1/extraction/runs",
+            page=AsyncPaginatedExtractRuns[ExtractRun],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "extraction_agent_id": extraction_agent_id,
                         "limit": limit,
@@ -374,7 +376,7 @@ class AsyncRunsResource(AsyncAPIResource):
                     run_list_params.RunListParams,
                 ),
             ),
-            cast_to=RunListResponse,
+            model=ExtractRun,
         )
 
     async def delete(

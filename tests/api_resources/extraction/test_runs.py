@@ -9,9 +9,9 @@ import pytest
 
 from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
+from llama_cloud.pagination import SyncPaginatedExtractRuns, AsyncPaginatedExtractRuns
 from llama_cloud.types.extraction import (
     ExtractRun,
-    RunListResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -78,7 +78,7 @@ class TestRuns:
         run = client.extraction.runs.list(
             extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(RunListResponse, run, path=["response"])
+        assert_matches_type(SyncPaginatedExtractRuns[ExtractRun], run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -88,7 +88,7 @@ class TestRuns:
             limit=0,
             skip=0,
         )
-        assert_matches_type(RunListResponse, run, path=["response"])
+        assert_matches_type(SyncPaginatedExtractRuns[ExtractRun], run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -100,7 +100,7 @@ class TestRuns:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         run = response.parse()
-        assert_matches_type(RunListResponse, run, path=["response"])
+        assert_matches_type(SyncPaginatedExtractRuns[ExtractRun], run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -112,7 +112,7 @@ class TestRuns:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             run = response.parse()
-            assert_matches_type(RunListResponse, run, path=["response"])
+            assert_matches_type(SyncPaginatedExtractRuns[ExtractRun], run, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -318,7 +318,7 @@ class TestAsyncRuns:
         run = await async_client.extraction.runs.list(
             extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(RunListResponse, run, path=["response"])
+        assert_matches_type(AsyncPaginatedExtractRuns[ExtractRun], run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -328,7 +328,7 @@ class TestAsyncRuns:
             limit=0,
             skip=0,
         )
-        assert_matches_type(RunListResponse, run, path=["response"])
+        assert_matches_type(AsyncPaginatedExtractRuns[ExtractRun], run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -340,7 +340,7 @@ class TestAsyncRuns:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         run = await response.parse()
-        assert_matches_type(RunListResponse, run, path=["response"])
+        assert_matches_type(AsyncPaginatedExtractRuns[ExtractRun], run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -352,7 +352,7 @@ class TestAsyncRuns:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             run = await response.parse()
-            assert_matches_type(RunListResponse, run, path=["response"])
+            assert_matches_type(AsyncPaginatedExtractRuns[ExtractRun], run, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

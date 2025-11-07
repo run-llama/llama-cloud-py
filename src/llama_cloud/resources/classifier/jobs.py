@@ -16,7 +16,8 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
+from ...pagination import SyncPaginatedClassifyJobs, AsyncPaginatedClassifyJobs
+from ..._base_client import AsyncPaginator, make_request_options
 from ...types.classifier import (
     job_list_params,
     job_create_params,
@@ -24,7 +25,6 @@ from ...types.classifier import (
     job_get_results_params,
 )
 from ...types.classifier.classify_job import ClassifyJob
-from ...types.classifier.job_list_response import JobListResponse
 from ...types.classifier.classifier_rule_param import ClassifierRuleParam
 from ...types.classifier.job_get_results_response import JobGetResultsResponse
 from ...types.classifier.classify_parsing_configuration_param import ClassifyParsingConfigurationParam
@@ -173,7 +173,7 @@ class JobsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> JobListResponse:
+    ) -> SyncPaginatedClassifyJobs[ClassifyJob]:
         """List classify jobs.
 
         Experimental: This endpoint is not yet ready for production
@@ -188,8 +188,9 @@ class JobsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/api/v1/classifier/jobs",
+            page=SyncPaginatedClassifyJobs[ClassifyJob],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -205,7 +206,7 @@ class JobsResource(SyncAPIResource):
                     job_list_params.JobListParams,
                 ),
             ),
-            cast_to=JobListResponse,
+            model=ClassifyJob,
         )
 
     def get_results(
@@ -384,7 +385,7 @@ class AsyncJobsResource(AsyncAPIResource):
             cast_to=ClassifyJob,
         )
 
-    async def list(
+    def list(
         self,
         *,
         organization_id: Optional[str] | Omit = omit,
@@ -397,7 +398,7 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> JobListResponse:
+    ) -> AsyncPaginator[ClassifyJob, AsyncPaginatedClassifyJobs[ClassifyJob]]:
         """List classify jobs.
 
         Experimental: This endpoint is not yet ready for production
@@ -412,14 +413,15 @@ class AsyncJobsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/api/v1/classifier/jobs",
+            page=AsyncPaginatedClassifyJobs[ClassifyJob],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "organization_id": organization_id,
                         "page_size": page_size,
@@ -429,7 +431,7 @@ class AsyncJobsResource(AsyncAPIResource):
                     job_list_params.JobListParams,
                 ),
             ),
-            cast_to=JobListResponse,
+            model=ClassifyJob,
         )
 
     async def get_results(

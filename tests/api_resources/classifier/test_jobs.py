@@ -9,9 +9,9 @@ import pytest
 
 from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
+from llama_cloud.pagination import SyncPaginatedClassifyJobs, AsyncPaginatedClassifyJobs
 from llama_cloud.types.classifier import (
     ClassifyJob,
-    JobListResponse,
     JobGetResultsResponse,
 )
 
@@ -150,7 +150,7 @@ class TestJobs:
     @parametrize
     def test_method_list(self, client: LlamaCloud) -> None:
         job = client.classifier.jobs.list()
-        assert_matches_type(JobListResponse, job, path=["response"])
+        assert_matches_type(SyncPaginatedClassifyJobs[ClassifyJob], job, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -161,7 +161,7 @@ class TestJobs:
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(JobListResponse, job, path=["response"])
+        assert_matches_type(SyncPaginatedClassifyJobs[ClassifyJob], job, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -171,7 +171,7 @@ class TestJobs:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         job = response.parse()
-        assert_matches_type(JobListResponse, job, path=["response"])
+        assert_matches_type(SyncPaginatedClassifyJobs[ClassifyJob], job, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -181,7 +181,7 @@ class TestJobs:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             job = response.parse()
-            assert_matches_type(JobListResponse, job, path=["response"])
+            assert_matches_type(SyncPaginatedClassifyJobs[ClassifyJob], job, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -372,7 +372,7 @@ class TestAsyncJobs:
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloud) -> None:
         job = await async_client.classifier.jobs.list()
-        assert_matches_type(JobListResponse, job, path=["response"])
+        assert_matches_type(AsyncPaginatedClassifyJobs[ClassifyJob], job, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -383,7 +383,7 @@ class TestAsyncJobs:
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(JobListResponse, job, path=["response"])
+        assert_matches_type(AsyncPaginatedClassifyJobs[ClassifyJob], job, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -393,7 +393,7 @@ class TestAsyncJobs:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         job = await response.parse()
-        assert_matches_type(JobListResponse, job, path=["response"])
+        assert_matches_type(AsyncPaginatedClassifyJobs[ClassifyJob], job, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -403,7 +403,7 @@ class TestAsyncJobs:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             job = await response.parse()
-            assert_matches_type(JobListResponse, job, path=["response"])
+            assert_matches_type(AsyncPaginatedClassifyJobs[ClassifyJob], job, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
