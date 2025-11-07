@@ -31,3 +31,6 @@ class SpreadsheetParsingConfigParam(TypedDict, total=False):
 
     If empty, the default sheet is extracted.
     """
+
+    use_experimental_processing: bool
+    """Enables experimental processing. Accuracy may be impacted."""

@@ -2,6 +2,7 @@
 
 from typing import List, Optional
 
+from ...file import File
 from ...._models import BaseModel
 from ...status_enum import StatusEnum
 from .spreadsheet_parsing_config import SpreadsheetParsingConfig
@@ -44,8 +45,8 @@ class SpreadsheetJob(BaseModel):
     created_at: str
     """When the job was created"""
 
-    file_id: str
-    """The ID of the file to parse"""
+    file: File
+    """The file to process"""
 
     project_id: str
     """The ID of the project"""

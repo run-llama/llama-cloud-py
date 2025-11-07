@@ -28,3 +28,6 @@ class SpreadsheetParsingConfig(BaseModel):
 
     If empty, the default sheet is extracted.
     """
+
+    use_experimental_processing: Optional[bool] = None
+    """Enables experimental processing. Accuracy may be impacted."""
