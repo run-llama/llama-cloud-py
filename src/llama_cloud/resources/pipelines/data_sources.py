@@ -25,8 +25,8 @@ from ...types.pipelines import (
 )
 from ...types.pipelines.pipeline_data_source import PipelineDataSource
 from ...types.managed_ingestion_status_response import ManagedIngestionStatusResponse
+from ...types.pipelines.data_source_get_data_sources_response import DataSourceGetDataSourcesResponse
 from ...types.pipelines.data_source_update_data_sources_response import DataSourceUpdateDataSourcesResponse
-from ...types.pipelines.data_source_retrieve_data_sources_response import DataSourceRetrieveDataSourcesResponse
 
 __all__ = ["DataSourcesResource", "AsyncDataSourcesResource"]
 
@@ -91,7 +91,7 @@ class DataSourcesResource(SyncAPIResource):
             cast_to=PipelineDataSource,
         )
 
-    def retrieve_data_sources(
+    def get_data_sources(
         self,
         pipeline_id: str,
         *,
@@ -101,7 +101,7 @@ class DataSourcesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DataSourceRetrieveDataSourcesResponse:
+    ) -> DataSourceGetDataSourcesResponse:
         """
         Get data sources for a pipeline.
 
@@ -121,10 +121,10 @@ class DataSourcesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DataSourceRetrieveDataSourcesResponse,
+            cast_to=DataSourceGetDataSourcesResponse,
         )
 
-    def retrieve_status(
+    def get_status(
         self,
         data_source_id: str,
         *,
@@ -299,7 +299,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
             cast_to=PipelineDataSource,
         )
 
-    async def retrieve_data_sources(
+    async def get_data_sources(
         self,
         pipeline_id: str,
         *,
@@ -309,7 +309,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DataSourceRetrieveDataSourcesResponse:
+    ) -> DataSourceGetDataSourcesResponse:
         """
         Get data sources for a pipeline.
 
@@ -329,10 +329,10 @@ class AsyncDataSourcesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DataSourceRetrieveDataSourcesResponse,
+            cast_to=DataSourceGetDataSourcesResponse,
         )
 
-    async def retrieve_status(
+    async def get_status(
         self,
         data_source_id: str,
         *,
@@ -452,11 +452,11 @@ class DataSourcesResourceWithRawResponse:
         self.update = to_raw_response_wrapper(
             data_sources.update,
         )
-        self.retrieve_data_sources = to_raw_response_wrapper(
-            data_sources.retrieve_data_sources,
+        self.get_data_sources = to_raw_response_wrapper(
+            data_sources.get_data_sources,
         )
-        self.retrieve_status = to_raw_response_wrapper(
-            data_sources.retrieve_status,
+        self.get_status = to_raw_response_wrapper(
+            data_sources.get_status,
         )
         self.sync = to_raw_response_wrapper(
             data_sources.sync,
@@ -473,11 +473,11 @@ class AsyncDataSourcesResourceWithRawResponse:
         self.update = async_to_raw_response_wrapper(
             data_sources.update,
         )
-        self.retrieve_data_sources = async_to_raw_response_wrapper(
-            data_sources.retrieve_data_sources,
+        self.get_data_sources = async_to_raw_response_wrapper(
+            data_sources.get_data_sources,
         )
-        self.retrieve_status = async_to_raw_response_wrapper(
-            data_sources.retrieve_status,
+        self.get_status = async_to_raw_response_wrapper(
+            data_sources.get_status,
         )
         self.sync = async_to_raw_response_wrapper(
             data_sources.sync,
@@ -494,11 +494,11 @@ class DataSourcesResourceWithStreamingResponse:
         self.update = to_streamed_response_wrapper(
             data_sources.update,
         )
-        self.retrieve_data_sources = to_streamed_response_wrapper(
-            data_sources.retrieve_data_sources,
+        self.get_data_sources = to_streamed_response_wrapper(
+            data_sources.get_data_sources,
         )
-        self.retrieve_status = to_streamed_response_wrapper(
-            data_sources.retrieve_status,
+        self.get_status = to_streamed_response_wrapper(
+            data_sources.get_status,
         )
         self.sync = to_streamed_response_wrapper(
             data_sources.sync,
@@ -515,11 +515,11 @@ class AsyncDataSourcesResourceWithStreamingResponse:
         self.update = async_to_streamed_response_wrapper(
             data_sources.update,
         )
-        self.retrieve_data_sources = async_to_streamed_response_wrapper(
-            data_sources.retrieve_data_sources,
+        self.get_data_sources = async_to_streamed_response_wrapper(
+            data_sources.get_data_sources,
         )
-        self.retrieve_status = async_to_streamed_response_wrapper(
-            data_sources.retrieve_status,
+        self.get_status = async_to_streamed_response_wrapper(
+            data_sources.get_status,
         )
         self.sync = async_to_streamed_response_wrapper(
             data_sources.sync,

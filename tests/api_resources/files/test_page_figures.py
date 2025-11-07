@@ -22,75 +22,6 @@ class TestPageFigures:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: LlamaCloud) -> None:
-        page_figure = client.files.page_figures.retrieve(
-            figure_name="figure_name",
-            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            page_index=0,
-        )
-        assert_matches_type(object, page_figure, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_retrieve_with_all_params(self, client: LlamaCloud) -> None:
-        page_figure = client.files.page_figures.retrieve(
-            figure_name="figure_name",
-            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            page_index=0,
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(object, page_figure, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve(self, client: LlamaCloud) -> None:
-        response = client.files.page_figures.with_raw_response.retrieve(
-            figure_name="figure_name",
-            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            page_index=0,
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        page_figure = response.parse()
-        assert_matches_type(object, page_figure, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve(self, client: LlamaCloud) -> None:
-        with client.files.page_figures.with_streaming_response.retrieve(
-            figure_name="figure_name",
-            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            page_index=0,
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            page_figure = response.parse()
-            assert_matches_type(object, page_figure, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_retrieve(self, client: LlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            client.files.page_figures.with_raw_response.retrieve(
-                figure_name="figure_name",
-                id="",
-                page_index=0,
-            )
-
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `figure_name` but received ''"):
-            client.files.page_figures.with_raw_response.retrieve(
-                figure_name="",
-                id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-                page_index=0,
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     def test_method_list(self, client: LlamaCloud) -> None:
         page_figure = client.files.page_figures.list(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -210,16 +141,10 @@ class TestPageFigures:
                 page_index=0,
             )
 
-
-class TestAsyncPageFigures:
-    parametrize = pytest.mark.parametrize(
-        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
-    )
-
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        page_figure = await async_client.files.page_figures.retrieve(
+    def test_method_get(self, client: LlamaCloud) -> None:
+        page_figure = client.files.page_figures.get(
             figure_name="figure_name",
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_index=0,
@@ -228,8 +153,8 @@ class TestAsyncPageFigures:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        page_figure = await async_client.files.page_figures.retrieve(
+    def test_method_get_with_all_params(self, client: LlamaCloud) -> None:
+        page_figure = client.files.page_figures.get(
             figure_name="figure_name",
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_index=0,
@@ -240,8 +165,8 @@ class TestAsyncPageFigures:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.files.page_figures.with_raw_response.retrieve(
+    def test_raw_response_get(self, client: LlamaCloud) -> None:
+        response = client.files.page_figures.with_raw_response.get(
             figure_name="figure_name",
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_index=0,
@@ -249,13 +174,13 @@ class TestAsyncPageFigures:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        page_figure = await response.parse()
+        page_figure = response.parse()
         assert_matches_type(object, page_figure, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.files.page_figures.with_streaming_response.retrieve(
+    def test_streaming_response_get(self, client: LlamaCloud) -> None:
+        with client.files.page_figures.with_streaming_response.get(
             figure_name="figure_name",
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_index=0,
@@ -263,27 +188,33 @@ class TestAsyncPageFigures:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            page_figure = await response.parse()
+            page_figure = response.parse()
             assert_matches_type(object, page_figure, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncLlamaCloud) -> None:
+    def test_path_params_get(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            await async_client.files.page_figures.with_raw_response.retrieve(
+            client.files.page_figures.with_raw_response.get(
                 figure_name="figure_name",
                 id="",
                 page_index=0,
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `figure_name` but received ''"):
-            await async_client.files.page_figures.with_raw_response.retrieve(
+            client.files.page_figures.with_raw_response.get(
                 figure_name="",
                 id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
                 page_index=0,
             )
+
+
+class TestAsyncPageFigures:
+    parametrize = pytest.mark.parametrize(
+        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
+    )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -401,6 +332,75 @@ class TestAsyncPageFigures:
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `figure_name` but received ''"):
             await async_client.files.page_figures.with_raw_response.generate_presigned_url(
+                figure_name="",
+                id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                page_index=0,
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_get(self, async_client: AsyncLlamaCloud) -> None:
+        page_figure = await async_client.files.page_figures.get(
+            figure_name="figure_name",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            page_index=0,
+        )
+        assert_matches_type(object, page_figure, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_get_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        page_figure = await async_client.files.page_figures.get(
+            figure_name="figure_name",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            page_index=0,
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(object, page_figure, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_get(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.files.page_figures.with_raw_response.get(
+            figure_name="figure_name",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            page_index=0,
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        page_figure = await response.parse()
+        assert_matches_type(object, page_figure, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_get(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.files.page_figures.with_streaming_response.get(
+            figure_name="figure_name",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            page_index=0,
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            page_figure = await response.parse()
+            assert_matches_type(object, page_figure, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_get(self, async_client: AsyncLlamaCloud) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
+            await async_client.files.page_figures.with_raw_response.get(
+                figure_name="figure_name",
+                id="",
+                page_index=0,
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `figure_name` but received ''"):
+            await async_client.files.page_figures.with_raw_response.get(
                 figure_name="",
                 id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
                 page_index=0,

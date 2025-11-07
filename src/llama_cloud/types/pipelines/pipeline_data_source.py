@@ -5,33 +5,311 @@ from datetime import datetime
 from typing_extensions import Literal, TypeAlias
 
 from ..._models import BaseModel
-from ..cloud_s3_data_source import CloudS3DataSource
-from ..cloud_box_data_source import CloudBoxDataSource
-from ..cloud_jira_data_source import CloudJiraDataSource
-from ..cloud_slack_data_source import CloudSlackDataSource
-from ..cloud_jira_data_source_v2 import CloudJiraDataSourceV2
-from ..cloud_one_drive_data_source import CloudOneDriveDataSource
-from ..cloud_confluence_data_source import CloudConfluenceDataSource
-from ..cloud_sharepoint_data_source import CloudSharepointDataSource
-from ..cloud_notion_page_data_source import CloudNotionPageDataSource
-from ..configurable_data_source_names import ConfigurableDataSourceNames
-from ..cloud_az_storage_blob_data_source import CloudAzStorageBlobDataSource
 from ..data_source_reader_version_metadata import DataSourceReaderVersionMetadata
 
-__all__ = ["PipelineDataSource", "Component"]
+__all__ = [
+    "PipelineDataSource",
+    "Component",
+    "ComponentCloudS3DataSource",
+    "ComponentCloudAzStorageBlobDataSource",
+    "ComponentCloudOneDriveDataSource",
+    "ComponentCloudSharepointDataSource",
+    "ComponentCloudSlackDataSource",
+    "ComponentCloudNotionPageDataSource",
+    "ComponentCloudConfluenceDataSource",
+    "ComponentCloudConfluenceDataSourceFailureHandling",
+    "ComponentCloudJiraDataSource",
+    "ComponentCloudJiraDataSourceV2",
+    "ComponentCloudBoxDataSource",
+]
+
+
+class ComponentCloudS3DataSource(BaseModel):
+    bucket: str
+    """The name of the S3 bucket to read from."""
+
+    aws_access_id: Optional[str] = None
+    """The AWS access ID to use for authentication."""
+
+    class_name: Optional[str] = None
+
+    prefix: Optional[str] = None
+    """The prefix of the S3 objects to read from."""
+
+    regex_pattern: Optional[str] = None
+    """The regex pattern to filter S3 objects. Must be a valid regex pattern."""
+
+    s3_endpoint_url: Optional[str] = None
+    """The S3 endpoint URL to use for authentication."""
+
+    supports_access_control: Optional[bool] = None
+
+
+class ComponentCloudAzStorageBlobDataSource(BaseModel):
+    account_url: str
+    """The Azure Storage Blob account URL to use for authentication."""
+
+    container_name: str
+    """The name of the Azure Storage Blob container to read from."""
+
+    account_name: Optional[str] = None
+    """The Azure Storage Blob account name to use for authentication."""
+
+    blob: Optional[str] = None
+    """The blob name to read from."""
+
+    class_name: Optional[str] = None
+
+    client_id: Optional[str] = None
+    """The Azure AD client ID to use for authentication."""
+
+    prefix: Optional[str] = None
+    """The prefix of the Azure Storage Blob objects to read from."""
+
+    supports_access_control: Optional[bool] = None
+
+    tenant_id: Optional[str] = None
+    """The Azure AD tenant ID to use for authentication."""
+
+
+class ComponentCloudOneDriveDataSource(BaseModel):
+    client_id: str
+    """The client ID to use for authentication."""
+
+    tenant_id: str
+    """The tenant ID to use for authentication."""
+
+    user_principal_name: str
+    """The user principal name to use for authentication."""
+
+    class_name: Optional[str] = None
+
+    folder_id: Optional[str] = None
+    """The ID of the OneDrive folder to read from."""
+
+    folder_path: Optional[str] = None
+    """The path of the OneDrive folder to read from."""
+
+    required_exts: Optional[List[str]] = None
+    """The list of required file extensions."""
+
+    supports_access_control: Optional[Literal[True]] = None
+
+
+class ComponentCloudSharepointDataSource(BaseModel):
+    client_id: str
+    """The client ID to use for authentication."""
+
+    tenant_id: str
+    """The tenant ID to use for authentication."""
+
+    class_name: Optional[str] = None
+
+    drive_name: Optional[str] = None
+    """The name of the Sharepoint drive to read from."""
+
+    folder_id: Optional[str] = None
+    """The ID of the Sharepoint folder to read from."""
+
+    folder_path: Optional[str] = None
+    """The path of the Sharepoint folder to read from."""
+
+    get_permissions: Optional[bool] = None
+    """Whether to get permissions for the sharepoint site."""
+
+    required_exts: Optional[List[str]] = None
+    """The list of required file extensions."""
+
+    site_id: Optional[str] = None
+    """The ID of the SharePoint site to download from."""
+
+    site_name: Optional[str] = None
+    """The name of the SharePoint site to download from."""
+
+    supports_access_control: Optional[Literal[True]] = None
+
+
+class ComponentCloudSlackDataSource(BaseModel):
+    channel_ids: Optional[str] = None
+    """Slack Channel."""
+
+    channel_patterns: Optional[str] = None
+    """Slack Channel name pattern."""
+
+    class_name: Optional[str] = None
+
+    earliest_date: Optional[str] = None
+    """Earliest date."""
+
+    earliest_date_timestamp: Optional[float] = None
+    """Earliest date timestamp."""
+
+    latest_date: Optional[str] = None
+    """Latest date."""
+
+    latest_date_timestamp: Optional[float] = None
+    """Latest date timestamp."""
+
+    supports_access_control: Optional[bool] = None
+
+
+class ComponentCloudNotionPageDataSource(BaseModel):
+    class_name: Optional[str] = None
+
+    database_ids: Optional[str] = None
+    """The Notion Database Id to read content from."""
+
+    page_ids: Optional[str] = None
+    """The Page ID's of the Notion to read from."""
+
+    supports_access_control: Optional[bool] = None
+
+
+class ComponentCloudConfluenceDataSourceFailureHandling(BaseModel):
+    skip_list_failures: Optional[bool] = None
+    """Whether to skip failed batches/lists and continue processing"""
+
+
+class ComponentCloudConfluenceDataSource(BaseModel):
+    authentication_mechanism: str
+    """Type of Authentication for connecting to Confluence APIs."""
+
+    server_url: str
+    """The server URL of the Confluence instance."""
+
+    class_name: Optional[str] = None
+
+    cql: Optional[str] = None
+    """The CQL query to use for fetching pages."""
+
+    failure_handling: Optional[ComponentCloudConfluenceDataSourceFailureHandling] = None
+    """Configuration for handling failures during processing.
+
+    Key-value object controlling failure handling behaviors.
+
+    Example: { "skip_list_failures": true }
+
+    Currently supports:
+
+    - skip_list_failures: Skip failed batches/lists and continue processing
+    """
+
+    index_restricted_pages: Optional[bool] = None
+    """Whether to index restricted pages."""
+
+    keep_markdown_format: Optional[bool] = None
+    """Whether to keep the markdown format."""
+
+    label: Optional[str] = None
+    """The label to use for fetching pages."""
+
+    page_ids: Optional[str] = None
+    """The page IDs of the Confluence to read from."""
+
+    space_key: Optional[str] = None
+    """The space key to read from."""
+
+    supports_access_control: Optional[bool] = None
+
+    user_name: Optional[str] = None
+    """The username to use for authentication."""
+
+
+class ComponentCloudJiraDataSource(BaseModel):
+    authentication_mechanism: str
+    """Type of Authentication for connecting to Jira APIs."""
+
+    query: str
+    """JQL (Jira Query Language) query to search."""
+
+    class_name: Optional[str] = None
+
+    cloud_id: Optional[str] = None
+    """The cloud ID, used in case of OAuth2."""
+
+    email: Optional[str] = None
+    """The email address to use for authentication."""
+
+    server_url: Optional[str] = None
+    """The server url for Jira Cloud."""
+
+    supports_access_control: Optional[bool] = None
+
+
+class ComponentCloudJiraDataSourceV2(BaseModel):
+    authentication_mechanism: str
+    """Type of Authentication for connecting to Jira APIs."""
+
+    query: str
+    """JQL (Jira Query Language) query to search."""
+
+    server_url: str
+    """The server url for Jira Cloud."""
+
+    api_version: Optional[Literal["2", "3"]] = None
+    """Jira REST API version to use (2 or 3).
+
+    3 supports Atlassian Document Format (ADF).
+    """
+
+    class_name: Optional[str] = None
+
+    cloud_id: Optional[str] = None
+    """The cloud ID, used in case of OAuth2."""
+
+    email: Optional[str] = None
+    """The email address to use for authentication."""
+
+    expand: Optional[str] = None
+    """Fields to expand in the response."""
+
+    fields: Optional[List[str]] = None
+    """List of fields to retrieve from Jira. If None, retrieves all fields."""
+
+    get_permissions: Optional[bool] = None
+    """Whether to fetch project role permissions and issue-level security"""
+
+    requests_per_minute: Optional[int] = None
+    """Rate limit for Jira API requests per minute."""
+
+    supports_access_control: Optional[bool] = None
+
+
+class ComponentCloudBoxDataSource(BaseModel):
+    authentication_mechanism: Literal["developer_token", "ccg"]
+    """The type of authentication to use (Developer Token or CCG)"""
+
+    class_name: Optional[str] = None
+
+    client_id: Optional[str] = None
+    """
+    Box API key used for identifying the application the user is authenticating with
+    """
+
+    enterprise_id: Optional[str] = None
+    """Box Enterprise ID, if provided authenticates as service."""
+
+    folder_id: Optional[str] = None
+    """The ID of the Box folder to read from."""
+
+    supports_access_control: Optional[bool] = None
+
+    user_id: Optional[str] = None
+    """Box User ID, if provided authenticates as user."""
+
 
 Component: TypeAlias = Union[
     Dict[str, object],
-    CloudS3DataSource,
-    CloudAzStorageBlobDataSource,
-    CloudOneDriveDataSource,
-    CloudSharepointDataSource,
-    CloudSlackDataSource,
-    CloudNotionPageDataSource,
-    CloudConfluenceDataSource,
-    CloudJiraDataSource,
-    CloudJiraDataSourceV2,
-    CloudBoxDataSource,
+    ComponentCloudS3DataSource,
+    ComponentCloudAzStorageBlobDataSource,
+    ComponentCloudOneDriveDataSource,
+    ComponentCloudSharepointDataSource,
+    ComponentCloudSlackDataSource,
+    ComponentCloudNotionPageDataSource,
+    ComponentCloudConfluenceDataSource,
+    ComponentCloudJiraDataSource,
+    ComponentCloudJiraDataSourceV2,
+    ComponentCloudBoxDataSource,
 ]
 
 
@@ -56,7 +334,19 @@ class PipelineDataSource(BaseModel):
 
     project_id: str
 
-    source_type: ConfigurableDataSourceNames
+    source_type: Literal[
+        "S3",
+        "AZURE_STORAGE_BLOB",
+        "GOOGLE_DRIVE",
+        "MICROSOFT_ONEDRIVE",
+        "MICROSOFT_SHAREPOINT",
+        "SLACK",
+        "NOTION_PAGE",
+        "CONFLUENCE",
+        "JIRA",
+        "JIRA_V2",
+        "BOX",
+    ]
 
     created_at: Optional[datetime] = None
     """Creation datetime"""

@@ -3,16 +3,11 @@
 from __future__ import annotations
 
 from typing import Optional
+from typing_extensions import Literal
 
 import httpx
 
-from ..types import (
-    ConfigurableDataSinkNames,
-    data_sink_list_params,
-    data_sink_create_params,
-    data_sink_update_params,
-    data_sink_upsert_params,
-)
+from ..types import data_sink_list_params, data_sink_create_params, data_sink_update_params, data_sink_upsert_params
 from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -26,7 +21,6 @@ from .._response import (
 from .._base_client import make_request_options
 from ..types.data_sink import DataSink
 from ..types.data_sink_list_response import DataSinkListResponse
-from ..types.configurable_data_sink_names import ConfigurableDataSinkNames
 
 __all__ = ["DataSinksResource", "AsyncDataSinksResource"]
 
@@ -56,7 +50,7 @@ class DataSinksResource(SyncAPIResource):
         *,
         component: data_sink_create_params.Component,
         name: str,
-        sink_type: ConfigurableDataSinkNames,
+        sink_type: Literal["PINECONE", "POSTGRES", "QDRANT", "AZUREAI_SEARCH", "MONGODB_ATLAS", "MILVUS", "ASTRA_DB"],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -108,44 +102,11 @@ class DataSinksResource(SyncAPIResource):
             cast_to=DataSink,
         )
 
-    def retrieve(
-        self,
-        data_sink_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DataSink:
-        """
-        Get a data sink by ID.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not data_sink_id:
-            raise ValueError(f"Expected a non-empty value for `data_sink_id` but received {data_sink_id!r}")
-        return self._get(
-            f"/api/v1/data-sinks/{data_sink_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=DataSink,
-        )
-
     def update(
         self,
         data_sink_id: str,
         *,
-        sink_type: ConfigurableDataSinkNames,
+        sink_type: Literal["PINECONE", "POSTGRES", "QDRANT", "AZUREAI_SEARCH", "MONGODB_ATLAS", "MILVUS", "ASTRA_DB"],
         component: Optional[data_sink_update_params.Component] | Omit = omit,
         name: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -265,12 +226,45 @@ class DataSinksResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
+    def get(
+        self,
+        data_sink_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DataSink:
+        """
+        Get a data sink by ID.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not data_sink_id:
+            raise ValueError(f"Expected a non-empty value for `data_sink_id` but received {data_sink_id!r}")
+        return self._get(
+            f"/api/v1/data-sinks/{data_sink_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DataSink,
+        )
+
     def upsert(
         self,
         *,
         component: data_sink_upsert_params.Component,
         name: str,
-        sink_type: ConfigurableDataSinkNames,
+        sink_type: Literal["PINECONE", "POSTGRES", "QDRANT", "AZUREAI_SEARCH", "MONGODB_ATLAS", "MILVUS", "ASTRA_DB"],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -350,7 +344,7 @@ class AsyncDataSinksResource(AsyncAPIResource):
         *,
         component: data_sink_create_params.Component,
         name: str,
-        sink_type: ConfigurableDataSinkNames,
+        sink_type: Literal["PINECONE", "POSTGRES", "QDRANT", "AZUREAI_SEARCH", "MONGODB_ATLAS", "MILVUS", "ASTRA_DB"],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -402,44 +396,11 @@ class AsyncDataSinksResource(AsyncAPIResource):
             cast_to=DataSink,
         )
 
-    async def retrieve(
-        self,
-        data_sink_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DataSink:
-        """
-        Get a data sink by ID.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not data_sink_id:
-            raise ValueError(f"Expected a non-empty value for `data_sink_id` but received {data_sink_id!r}")
-        return await self._get(
-            f"/api/v1/data-sinks/{data_sink_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=DataSink,
-        )
-
     async def update(
         self,
         data_sink_id: str,
         *,
-        sink_type: ConfigurableDataSinkNames,
+        sink_type: Literal["PINECONE", "POSTGRES", "QDRANT", "AZUREAI_SEARCH", "MONGODB_ATLAS", "MILVUS", "ASTRA_DB"],
         component: Optional[data_sink_update_params.Component] | Omit = omit,
         name: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -559,12 +520,45 @@ class AsyncDataSinksResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
+    async def get(
+        self,
+        data_sink_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DataSink:
+        """
+        Get a data sink by ID.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not data_sink_id:
+            raise ValueError(f"Expected a non-empty value for `data_sink_id` but received {data_sink_id!r}")
+        return await self._get(
+            f"/api/v1/data-sinks/{data_sink_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DataSink,
+        )
+
     async def upsert(
         self,
         *,
         component: data_sink_upsert_params.Component,
         name: str,
-        sink_type: ConfigurableDataSinkNames,
+        sink_type: Literal["PINECONE", "POSTGRES", "QDRANT", "AZUREAI_SEARCH", "MONGODB_ATLAS", "MILVUS", "ASTRA_DB"],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -626,9 +620,6 @@ class DataSinksResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             data_sinks.create,
         )
-        self.retrieve = to_raw_response_wrapper(
-            data_sinks.retrieve,
-        )
         self.update = to_raw_response_wrapper(
             data_sinks.update,
         )
@@ -637,6 +628,9 @@ class DataSinksResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             data_sinks.delete,
+        )
+        self.get = to_raw_response_wrapper(
+            data_sinks.get,
         )
         self.upsert = to_raw_response_wrapper(
             data_sinks.upsert,
@@ -650,9 +644,6 @@ class AsyncDataSinksResourceWithRawResponse:
         self.create = async_to_raw_response_wrapper(
             data_sinks.create,
         )
-        self.retrieve = async_to_raw_response_wrapper(
-            data_sinks.retrieve,
-        )
         self.update = async_to_raw_response_wrapper(
             data_sinks.update,
         )
@@ -661,6 +652,9 @@ class AsyncDataSinksResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             data_sinks.delete,
+        )
+        self.get = async_to_raw_response_wrapper(
+            data_sinks.get,
         )
         self.upsert = async_to_raw_response_wrapper(
             data_sinks.upsert,
@@ -674,9 +668,6 @@ class DataSinksResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             data_sinks.create,
         )
-        self.retrieve = to_streamed_response_wrapper(
-            data_sinks.retrieve,
-        )
         self.update = to_streamed_response_wrapper(
             data_sinks.update,
         )
@@ -685,6 +676,9 @@ class DataSinksResourceWithStreamingResponse:
         )
         self.delete = to_streamed_response_wrapper(
             data_sinks.delete,
+        )
+        self.get = to_streamed_response_wrapper(
+            data_sinks.get,
         )
         self.upsert = to_streamed_response_wrapper(
             data_sinks.upsert,
@@ -698,9 +692,6 @@ class AsyncDataSinksResourceWithStreamingResponse:
         self.create = async_to_streamed_response_wrapper(
             data_sinks.create,
         )
-        self.retrieve = async_to_streamed_response_wrapper(
-            data_sinks.retrieve,
-        )
         self.update = async_to_streamed_response_wrapper(
             data_sinks.update,
         )
@@ -709,6 +700,9 @@ class AsyncDataSinksResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             data_sinks.delete,
+        )
+        self.get = async_to_streamed_response_wrapper(
+            data_sinks.get,
         )
         self.upsert = async_to_streamed_response_wrapper(
             data_sinks.upsert,

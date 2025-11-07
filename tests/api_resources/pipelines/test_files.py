@@ -14,7 +14,7 @@ from llama_cloud.types.pipelines import (
     PipelineFile,
     FileListResponse,
     FileCreateResponse,
-    FileRetrieveStatusCountsResponse,
+    FileGetStatusCountsResponse,
 )
 
 # pyright: reportDeprecated=false
@@ -246,8 +246,8 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve_status(self, client: LlamaCloud) -> None:
-        file = client.pipelines.files.retrieve_status(
+    def test_method_get_status(self, client: LlamaCloud) -> None:
+        file = client.pipelines.files.get_status(
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -255,8 +255,8 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_retrieve_status(self, client: LlamaCloud) -> None:
-        response = client.pipelines.files.with_raw_response.retrieve_status(
+    def test_raw_response_get_status(self, client: LlamaCloud) -> None:
+        response = client.pipelines.files.with_raw_response.get_status(
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -268,8 +268,8 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve_status(self, client: LlamaCloud) -> None:
-        with client.pipelines.files.with_streaming_response.retrieve_status(
+    def test_streaming_response_get_status(self, client: LlamaCloud) -> None:
+        with client.pipelines.files.with_streaming_response.get_status(
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
@@ -283,68 +283,68 @@ class TestFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_retrieve_status(self, client: LlamaCloud) -> None:
+    def test_path_params_get_status(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
-            client.pipelines.files.with_raw_response.retrieve_status(
+            client.pipelines.files.with_raw_response.get_status(
                 file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
                 pipeline_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
-            client.pipelines.files.with_raw_response.retrieve_status(
+            client.pipelines.files.with_raw_response.get_status(
                 file_id="",
                 pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve_status_counts(self, client: LlamaCloud) -> None:
-        file = client.pipelines.files.retrieve_status_counts(
+    def test_method_get_status_counts(self, client: LlamaCloud) -> None:
+        file = client.pipelines.files.get_status_counts(
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(FileRetrieveStatusCountsResponse, file, path=["response"])
+        assert_matches_type(FileGetStatusCountsResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve_status_counts_with_all_params(self, client: LlamaCloud) -> None:
-        file = client.pipelines.files.retrieve_status_counts(
+    def test_method_get_status_counts_with_all_params(self, client: LlamaCloud) -> None:
+        file = client.pipelines.files.get_status_counts(
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             only_manually_uploaded=True,
         )
-        assert_matches_type(FileRetrieveStatusCountsResponse, file, path=["response"])
+        assert_matches_type(FileGetStatusCountsResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_retrieve_status_counts(self, client: LlamaCloud) -> None:
-        response = client.pipelines.files.with_raw_response.retrieve_status_counts(
+    def test_raw_response_get_status_counts(self, client: LlamaCloud) -> None:
+        response = client.pipelines.files.with_raw_response.get_status_counts(
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = response.parse()
-        assert_matches_type(FileRetrieveStatusCountsResponse, file, path=["response"])
+        assert_matches_type(FileGetStatusCountsResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve_status_counts(self, client: LlamaCloud) -> None:
-        with client.pipelines.files.with_streaming_response.retrieve_status_counts(
+    def test_streaming_response_get_status_counts(self, client: LlamaCloud) -> None:
+        with client.pipelines.files.with_streaming_response.get_status_counts(
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = response.parse()
-            assert_matches_type(FileRetrieveStatusCountsResponse, file, path=["response"])
+            assert_matches_type(FileGetStatusCountsResponse, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_retrieve_status_counts(self, client: LlamaCloud) -> None:
+    def test_path_params_get_status_counts(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
-            client.pipelines.files.with_raw_response.retrieve_status_counts(
+            client.pipelines.files.with_raw_response.get_status_counts(
                 pipeline_id="",
             )
 
@@ -575,8 +575,8 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve_status(self, async_client: AsyncLlamaCloud) -> None:
-        file = await async_client.pipelines.files.retrieve_status(
+    async def test_method_get_status(self, async_client: AsyncLlamaCloud) -> None:
+        file = await async_client.pipelines.files.get_status(
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -584,8 +584,8 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve_status(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.pipelines.files.with_raw_response.retrieve_status(
+    async def test_raw_response_get_status(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.pipelines.files.with_raw_response.get_status(
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -597,8 +597,8 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve_status(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.pipelines.files.with_streaming_response.retrieve_status(
+    async def test_streaming_response_get_status(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.pipelines.files.with_streaming_response.get_status(
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
@@ -612,67 +612,67 @@ class TestAsyncFiles:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_retrieve_status(self, async_client: AsyncLlamaCloud) -> None:
+    async def test_path_params_get_status(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
-            await async_client.pipelines.files.with_raw_response.retrieve_status(
+            await async_client.pipelines.files.with_raw_response.get_status(
                 file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
                 pipeline_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
-            await async_client.pipelines.files.with_raw_response.retrieve_status(
+            await async_client.pipelines.files.with_raw_response.get_status(
                 file_id="",
                 pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve_status_counts(self, async_client: AsyncLlamaCloud) -> None:
-        file = await async_client.pipelines.files.retrieve_status_counts(
+    async def test_method_get_status_counts(self, async_client: AsyncLlamaCloud) -> None:
+        file = await async_client.pipelines.files.get_status_counts(
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(FileRetrieveStatusCountsResponse, file, path=["response"])
+        assert_matches_type(FileGetStatusCountsResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve_status_counts_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        file = await async_client.pipelines.files.retrieve_status_counts(
+    async def test_method_get_status_counts_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        file = await async_client.pipelines.files.get_status_counts(
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             only_manually_uploaded=True,
         )
-        assert_matches_type(FileRetrieveStatusCountsResponse, file, path=["response"])
+        assert_matches_type(FileGetStatusCountsResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve_status_counts(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.pipelines.files.with_raw_response.retrieve_status_counts(
+    async def test_raw_response_get_status_counts(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.pipelines.files.with_raw_response.get_status_counts(
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = await response.parse()
-        assert_matches_type(FileRetrieveStatusCountsResponse, file, path=["response"])
+        assert_matches_type(FileGetStatusCountsResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve_status_counts(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.pipelines.files.with_streaming_response.retrieve_status_counts(
+    async def test_streaming_response_get_status_counts(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.pipelines.files.with_streaming_response.get_status_counts(
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = await response.parse()
-            assert_matches_type(FileRetrieveStatusCountsResponse, file, path=["response"])
+            assert_matches_type(FileGetStatusCountsResponse, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_retrieve_status_counts(self, async_client: AsyncLlamaCloud) -> None:
+    async def test_path_params_get_status_counts(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
-            await async_client.pipelines.files.with_raw_response.retrieve_status_counts(
+            await async_client.pipelines.files.with_raw_response.get_status_counts(
                 pipeline_id="",
             )

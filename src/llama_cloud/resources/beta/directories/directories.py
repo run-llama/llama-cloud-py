@@ -26,17 +26,17 @@ from ...._response import (
 )
 from ....pagination import SyncPaginatedClassifyJobs, AsyncPaginatedClassifyJobs
 from ....types.beta import (
+    directory_get_params,
     directory_list_params,
     directory_create_params,
     directory_delete_params,
     directory_update_params,
-    directory_retrieve_params,
 )
 from ...._base_client import AsyncPaginator, make_request_options
+from ....types.beta.directory_get_response import DirectoryGetResponse
 from ....types.beta.directory_list_response import DirectoryListResponse
 from ....types.beta.directory_create_response import DirectoryCreateResponse
 from ....types.beta.directory_update_response import DirectoryUpdateResponse
-from ....types.beta.directory_retrieve_response import DirectoryRetrieveResponse
 
 __all__ = ["DirectoriesResource", "AsyncDirectoriesResource"]
 
@@ -125,51 +125,6 @@ class DirectoriesResource(SyncAPIResource):
                 ),
             ),
             cast_to=DirectoryCreateResponse,
-        )
-
-    def retrieve(
-        self,
-        directory_id: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DirectoryRetrieveResponse:
-        """
-        Retrieve a directory by its identifier.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not directory_id:
-            raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
-        return self._get(
-            f"/api/v1/beta/directories/{directory_id}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    directory_retrieve_params.DirectoryRetrieveParams,
-                ),
-            ),
-            cast_to=DirectoryRetrieveResponse,
         )
 
     def update(
@@ -329,6 +284,51 @@ class DirectoriesResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
+    def get(
+        self,
+        directory_id: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DirectoryGetResponse:
+        """
+        Retrieve a directory by its identifier.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not directory_id:
+            raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
+        return self._get(
+            f"/api/v1/beta/directories/{directory_id}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    directory_get_params.DirectoryGetParams,
+                ),
+            ),
+            cast_to=DirectoryGetResponse,
+        )
+
 
 class AsyncDirectoriesResource(AsyncAPIResource):
     @cached_property
@@ -414,51 +414,6 @@ class AsyncDirectoriesResource(AsyncAPIResource):
                 ),
             ),
             cast_to=DirectoryCreateResponse,
-        )
-
-    async def retrieve(
-        self,
-        directory_id: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DirectoryRetrieveResponse:
-        """
-        Retrieve a directory by its identifier.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not directory_id:
-            raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
-        return await self._get(
-            f"/api/v1/beta/directories/{directory_id}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    directory_retrieve_params.DirectoryRetrieveParams,
-                ),
-            ),
-            cast_to=DirectoryRetrieveResponse,
         )
 
     async def update(
@@ -618,6 +573,51 @@ class AsyncDirectoriesResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
+    async def get(
+        self,
+        directory_id: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DirectoryGetResponse:
+        """
+        Retrieve a directory by its identifier.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not directory_id:
+            raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
+        return await self._get(
+            f"/api/v1/beta/directories/{directory_id}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    directory_get_params.DirectoryGetParams,
+                ),
+            ),
+            cast_to=DirectoryGetResponse,
+        )
+
 
 class DirectoriesResourceWithRawResponse:
     def __init__(self, directories: DirectoriesResource) -> None:
@@ -625,9 +625,6 @@ class DirectoriesResourceWithRawResponse:
 
         self.create = to_raw_response_wrapper(
             directories.create,
-        )
-        self.retrieve = to_raw_response_wrapper(
-            directories.retrieve,
         )
         self.update = to_raw_response_wrapper(
             directories.update,
@@ -637,6 +634,9 @@ class DirectoriesResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             directories.delete,
+        )
+        self.get = to_raw_response_wrapper(
+            directories.get,
         )
 
     @cached_property
@@ -651,9 +651,6 @@ class AsyncDirectoriesResourceWithRawResponse:
         self.create = async_to_raw_response_wrapper(
             directories.create,
         )
-        self.retrieve = async_to_raw_response_wrapper(
-            directories.retrieve,
-        )
         self.update = async_to_raw_response_wrapper(
             directories.update,
         )
@@ -662,6 +659,9 @@ class AsyncDirectoriesResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             directories.delete,
+        )
+        self.get = async_to_raw_response_wrapper(
+            directories.get,
         )
 
     @cached_property
@@ -676,9 +676,6 @@ class DirectoriesResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             directories.create,
         )
-        self.retrieve = to_streamed_response_wrapper(
-            directories.retrieve,
-        )
         self.update = to_streamed_response_wrapper(
             directories.update,
         )
@@ -687,6 +684,9 @@ class DirectoriesResourceWithStreamingResponse:
         )
         self.delete = to_streamed_response_wrapper(
             directories.delete,
+        )
+        self.get = to_streamed_response_wrapper(
+            directories.get,
         )
 
     @cached_property
@@ -701,9 +701,6 @@ class AsyncDirectoriesResourceWithStreamingResponse:
         self.create = async_to_streamed_response_wrapper(
             directories.create,
         )
-        self.retrieve = async_to_streamed_response_wrapper(
-            directories.retrieve,
-        )
         self.update = async_to_streamed_response_wrapper(
             directories.update,
         )
@@ -712,6 +709,9 @@ class AsyncDirectoriesResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             directories.delete,
+        )
+        self.get = async_to_streamed_response_wrapper(
+            directories.get,
         )
 
     @cached_property

@@ -6,7 +6,7 @@ from typing import Dict, Optional
 
 import httpx
 
-from ...types import organization_create_params, organization_update_params, organization_retrieve_usage_params
+from ...types import organization_create_params, organization_update_params, organization_get_usage_params
 from .default import (
     DefaultResource,
     AsyncDefaultResource,
@@ -37,7 +37,7 @@ from ..._base_client import make_request_options
 from ...types.organization import Organization
 from ...types.usage_and_plan import UsageAndPlan
 from ...types.organization_list_response import OrganizationListResponse
-from ...types.organization_retrieve_roles_response import OrganizationRetrieveRolesResponse
+from ...types.organization_get_roles_response import OrganizationGetRolesResponse
 
 __all__ = ["OrganizationsResource", "AsyncOrganizationsResource"]
 
@@ -98,39 +98,6 @@ class OrganizationsResource(SyncAPIResource):
         return self._post(
             "/api/v1/organizations",
             body=maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Organization,
-        )
-
-    def retrieve(
-        self,
-        organization_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Organization:
-        """
-        Get an organization by ID.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        return self._get(
-            f"/api/v1/organizations/{organization_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -236,7 +203,7 @@ class OrganizationsResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
-    def retrieve_roles(
+    def get(
         self,
         organization_id: str,
         *,
@@ -246,7 +213,40 @@ class OrganizationsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationRetrieveRolesResponse:
+    ) -> Organization:
+        """
+        Get an organization by ID.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not organization_id:
+            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+        return self._get(
+            f"/api/v1/organizations/{organization_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Organization,
+        )
+
+    def get_roles(
+        self,
+        organization_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> OrganizationGetRolesResponse:
         """
         List all roles in an organization.
 
@@ -266,10 +266,10 @@ class OrganizationsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=OrganizationRetrieveRolesResponse,
+            cast_to=OrganizationGetRolesResponse,
         )
 
-    def retrieve_usage(
+    def get_usage(
         self,
         organization_id: str,
         *,
@@ -304,7 +304,7 @@ class OrganizationsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {"get_current_invoice_total": get_current_invoice_total},
-                    organization_retrieve_usage_params.OrganizationRetrieveUsageParams,
+                    organization_get_usage_params.OrganizationGetUsageParams,
                 ),
             ),
             cast_to=UsageAndPlan,
@@ -367,39 +367,6 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         return await self._post(
             "/api/v1/organizations",
             body=await async_maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Organization,
-        )
-
-    async def retrieve(
-        self,
-        organization_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Organization:
-        """
-        Get an organization by ID.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        return await self._get(
-            f"/api/v1/organizations/{organization_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -505,7 +472,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
-    async def retrieve_roles(
+    async def get(
         self,
         organization_id: str,
         *,
@@ -515,7 +482,40 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationRetrieveRolesResponse:
+    ) -> Organization:
+        """
+        Get an organization by ID.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not organization_id:
+            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+        return await self._get(
+            f"/api/v1/organizations/{organization_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Organization,
+        )
+
+    async def get_roles(
+        self,
+        organization_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> OrganizationGetRolesResponse:
         """
         List all roles in an organization.
 
@@ -535,10 +535,10 @@ class AsyncOrganizationsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=OrganizationRetrieveRolesResponse,
+            cast_to=OrganizationGetRolesResponse,
         )
 
-    async def retrieve_usage(
+    async def get_usage(
         self,
         organization_id: str,
         *,
@@ -573,7 +573,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {"get_current_invoice_total": get_current_invoice_total},
-                    organization_retrieve_usage_params.OrganizationRetrieveUsageParams,
+                    organization_get_usage_params.OrganizationGetUsageParams,
                 ),
             ),
             cast_to=UsageAndPlan,
@@ -587,9 +587,6 @@ class OrganizationsResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             organizations.create,
         )
-        self.retrieve = to_raw_response_wrapper(
-            organizations.retrieve,
-        )
         self.update = to_raw_response_wrapper(
             organizations.update,
         )
@@ -599,11 +596,14 @@ class OrganizationsResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             organizations.delete,
         )
-        self.retrieve_roles = to_raw_response_wrapper(
-            organizations.retrieve_roles,
+        self.get = to_raw_response_wrapper(
+            organizations.get,
         )
-        self.retrieve_usage = to_raw_response_wrapper(
-            organizations.retrieve_usage,
+        self.get_roles = to_raw_response_wrapper(
+            organizations.get_roles,
+        )
+        self.get_usage = to_raw_response_wrapper(
+            organizations.get_usage,
         )
 
     @cached_property
@@ -622,9 +622,6 @@ class AsyncOrganizationsResourceWithRawResponse:
         self.create = async_to_raw_response_wrapper(
             organizations.create,
         )
-        self.retrieve = async_to_raw_response_wrapper(
-            organizations.retrieve,
-        )
         self.update = async_to_raw_response_wrapper(
             organizations.update,
         )
@@ -634,11 +631,14 @@ class AsyncOrganizationsResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             organizations.delete,
         )
-        self.retrieve_roles = async_to_raw_response_wrapper(
-            organizations.retrieve_roles,
+        self.get = async_to_raw_response_wrapper(
+            organizations.get,
         )
-        self.retrieve_usage = async_to_raw_response_wrapper(
-            organizations.retrieve_usage,
+        self.get_roles = async_to_raw_response_wrapper(
+            organizations.get_roles,
+        )
+        self.get_usage = async_to_raw_response_wrapper(
+            organizations.get_usage,
         )
 
     @cached_property
@@ -657,9 +657,6 @@ class OrganizationsResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             organizations.create,
         )
-        self.retrieve = to_streamed_response_wrapper(
-            organizations.retrieve,
-        )
         self.update = to_streamed_response_wrapper(
             organizations.update,
         )
@@ -669,11 +666,14 @@ class OrganizationsResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             organizations.delete,
         )
-        self.retrieve_roles = to_streamed_response_wrapper(
-            organizations.retrieve_roles,
+        self.get = to_streamed_response_wrapper(
+            organizations.get,
         )
-        self.retrieve_usage = to_streamed_response_wrapper(
-            organizations.retrieve_usage,
+        self.get_roles = to_streamed_response_wrapper(
+            organizations.get_roles,
+        )
+        self.get_usage = to_streamed_response_wrapper(
+            organizations.get_usage,
         )
 
     @cached_property
@@ -692,9 +692,6 @@ class AsyncOrganizationsResourceWithStreamingResponse:
         self.create = async_to_streamed_response_wrapper(
             organizations.create,
         )
-        self.retrieve = async_to_streamed_response_wrapper(
-            organizations.retrieve,
-        )
         self.update = async_to_streamed_response_wrapper(
             organizations.update,
         )
@@ -704,11 +701,14 @@ class AsyncOrganizationsResourceWithStreamingResponse:
         self.delete = async_to_streamed_response_wrapper(
             organizations.delete,
         )
-        self.retrieve_roles = async_to_streamed_response_wrapper(
-            organizations.retrieve_roles,
+        self.get = async_to_streamed_response_wrapper(
+            organizations.get,
         )
-        self.retrieve_usage = async_to_streamed_response_wrapper(
-            organizations.retrieve_usage,
+        self.get_roles = async_to_streamed_response_wrapper(
+            organizations.get_roles,
+        )
+        self.get_usage = async_to_streamed_response_wrapper(
+            organizations.get_usage,
         )
 
     @cached_property

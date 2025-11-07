@@ -17,10 +17,10 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ...types.beta import (
+    agent_data_get_params,
     agent_data_delete_params,
     agent_data_search_params,
     agent_data_update_params,
-    agent_data_retrieve_params,
     agent_data_aggregate_params,
     agent_data_agent_data_params,
 )
@@ -52,51 +52,6 @@ class AgentDataResource(SyncAPIResource):
         For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
         """
         return AgentDataResourceWithStreamingResponse(self)
-
-    def retrieve(
-        self,
-        item_id: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentData:
-        """
-        Get agent data by ID.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not item_id:
-            raise ValueError(f"Expected a non-empty value for `item_id` but received {item_id!r}")
-        return self._get(
-            f"/api/v1/beta/agent-data/{item_id}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    agent_data_retrieve_params.AgentDataRetrieveParams,
-                ),
-            ),
-            cast_to=AgentData,
-        )
 
     def update(
         self,
@@ -335,6 +290,51 @@ class AgentDataResource(SyncAPIResource):
             cast_to=AgentDataAggregateResponse,
         )
 
+    def get(
+        self,
+        item_id: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AgentData:
+        """
+        Get agent data by ID.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not item_id:
+            raise ValueError(f"Expected a non-empty value for `item_id` but received {item_id!r}")
+        return self._get(
+            f"/api/v1/beta/agent-data/{item_id}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    agent_data_get_params.AgentDataGetParams,
+                ),
+            ),
+            cast_to=AgentData,
+        )
+
     def search(
         self,
         *,
@@ -438,51 +438,6 @@ class AsyncAgentDataResource(AsyncAPIResource):
         For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
         """
         return AsyncAgentDataResourceWithStreamingResponse(self)
-
-    async def retrieve(
-        self,
-        item_id: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentData:
-        """
-        Get agent data by ID.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not item_id:
-            raise ValueError(f"Expected a non-empty value for `item_id` but received {item_id!r}")
-        return await self._get(
-            f"/api/v1/beta/agent-data/{item_id}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    agent_data_retrieve_params.AgentDataRetrieveParams,
-                ),
-            ),
-            cast_to=AgentData,
-        )
 
     async def update(
         self,
@@ -721,6 +676,51 @@ class AsyncAgentDataResource(AsyncAPIResource):
             cast_to=AgentDataAggregateResponse,
         )
 
+    async def get(
+        self,
+        item_id: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AgentData:
+        """
+        Get agent data by ID.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not item_id:
+            raise ValueError(f"Expected a non-empty value for `item_id` but received {item_id!r}")
+        return await self._get(
+            f"/api/v1/beta/agent-data/{item_id}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    agent_data_get_params.AgentDataGetParams,
+                ),
+            ),
+            cast_to=AgentData,
+        )
+
     async def search(
         self,
         *,
@@ -809,9 +809,6 @@ class AgentDataResourceWithRawResponse:
     def __init__(self, agent_data: AgentDataResource) -> None:
         self._agent_data = agent_data
 
-        self.retrieve = to_raw_response_wrapper(
-            agent_data.retrieve,
-        )
         self.update = to_raw_response_wrapper(
             agent_data.update,
         )
@@ -824,6 +821,9 @@ class AgentDataResourceWithRawResponse:
         self.aggregate = to_raw_response_wrapper(
             agent_data.aggregate,
         )
+        self.get = to_raw_response_wrapper(
+            agent_data.get,
+        )
         self.search = to_raw_response_wrapper(
             agent_data.search,
         )
@@ -833,9 +833,6 @@ class AsyncAgentDataResourceWithRawResponse:
     def __init__(self, agent_data: AsyncAgentDataResource) -> None:
         self._agent_data = agent_data
 
-        self.retrieve = async_to_raw_response_wrapper(
-            agent_data.retrieve,
-        )
         self.update = async_to_raw_response_wrapper(
             agent_data.update,
         )
@@ -848,6 +845,9 @@ class AsyncAgentDataResourceWithRawResponse:
         self.aggregate = async_to_raw_response_wrapper(
             agent_data.aggregate,
         )
+        self.get = async_to_raw_response_wrapper(
+            agent_data.get,
+        )
         self.search = async_to_raw_response_wrapper(
             agent_data.search,
         )
@@ -857,9 +857,6 @@ class AgentDataResourceWithStreamingResponse:
     def __init__(self, agent_data: AgentDataResource) -> None:
         self._agent_data = agent_data
 
-        self.retrieve = to_streamed_response_wrapper(
-            agent_data.retrieve,
-        )
         self.update = to_streamed_response_wrapper(
             agent_data.update,
         )
@@ -872,6 +869,9 @@ class AgentDataResourceWithStreamingResponse:
         self.aggregate = to_streamed_response_wrapper(
             agent_data.aggregate,
         )
+        self.get = to_streamed_response_wrapper(
+            agent_data.get,
+        )
         self.search = to_streamed_response_wrapper(
             agent_data.search,
         )
@@ -881,9 +881,6 @@ class AsyncAgentDataResourceWithStreamingResponse:
     def __init__(self, agent_data: AsyncAgentDataResource) -> None:
         self._agent_data = agent_data
 
-        self.retrieve = async_to_streamed_response_wrapper(
-            agent_data.retrieve,
-        )
         self.update = async_to_streamed_response_wrapper(
             agent_data.update,
         )
@@ -895,6 +892,9 @@ class AsyncAgentDataResourceWithStreamingResponse:
         )
         self.aggregate = async_to_streamed_response_wrapper(
             agent_data.aggregate,
+        )
+        self.get = async_to_streamed_response_wrapper(
+            agent_data.get,
         )
         self.search = async_to_streamed_response_wrapper(
             agent_data.search,

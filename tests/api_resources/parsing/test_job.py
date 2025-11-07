@@ -19,48 +19,6 @@ class TestJob:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: LlamaCloud) -> None:
-        job = client.parsing.job.retrieve(
-            "job_id",
-        )
-        assert_matches_type(ParsingJob, job, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve(self, client: LlamaCloud) -> None:
-        response = client.parsing.job.with_raw_response.retrieve(
-            "job_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        job = response.parse()
-        assert_matches_type(ParsingJob, job, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve(self, client: LlamaCloud) -> None:
-        with client.parsing.job.with_streaming_response.retrieve(
-            "job_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            job = response.parse()
-            assert_matches_type(ParsingJob, job, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_retrieve(self, client: LlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `job_id` but received ''"):
-            client.parsing.job.with_raw_response.retrieve(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     def test_method_generate_presigned_url(self, client: LlamaCloud) -> None:
         job = client.parsing.job.generate_presigned_url(
             filename="filename",
@@ -109,6 +67,48 @@ class TestJob:
             client.parsing.job.with_raw_response.generate_presigned_url(
                 filename="",
                 job_id="job_id",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_get(self, client: LlamaCloud) -> None:
+        job = client.parsing.job.get(
+            "job_id",
+        )
+        assert_matches_type(ParsingJob, job, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_get(self, client: LlamaCloud) -> None:
+        response = client.parsing.job.with_raw_response.get(
+            "job_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        job = response.parse()
+        assert_matches_type(ParsingJob, job, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_get(self, client: LlamaCloud) -> None:
+        with client.parsing.job.with_streaming_response.get(
+            "job_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            job = response.parse()
+            assert_matches_type(ParsingJob, job, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_get(self, client: LlamaCloud) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `job_id` but received ''"):
+            client.parsing.job.with_raw_response.get(
+                "",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -203,48 +203,6 @@ class TestAsyncJob:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        job = await async_client.parsing.job.retrieve(
-            "job_id",
-        )
-        assert_matches_type(ParsingJob, job, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.parsing.job.with_raw_response.retrieve(
-            "job_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        job = await response.parse()
-        assert_matches_type(ParsingJob, job, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.parsing.job.with_streaming_response.retrieve(
-            "job_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            job = await response.parse()
-            assert_matches_type(ParsingJob, job, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `job_id` but received ''"):
-            await async_client.parsing.job.with_raw_response.retrieve(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     async def test_method_generate_presigned_url(self, async_client: AsyncLlamaCloud) -> None:
         job = await async_client.parsing.job.generate_presigned_url(
             filename="filename",
@@ -293,6 +251,48 @@ class TestAsyncJob:
             await async_client.parsing.job.with_raw_response.generate_presigned_url(
                 filename="",
                 job_id="job_id",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_get(self, async_client: AsyncLlamaCloud) -> None:
+        job = await async_client.parsing.job.get(
+            "job_id",
+        )
+        assert_matches_type(ParsingJob, job, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_get(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.parsing.job.with_raw_response.get(
+            "job_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        job = await response.parse()
+        assert_matches_type(ParsingJob, job, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_get(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.parsing.job.with_streaming_response.get(
+            "job_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            job = await response.parse()
+            assert_matches_type(ParsingJob, job, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_get(self, async_client: AsyncLlamaCloud) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `job_id` but received ''"):
+            await async_client.parsing.job.with_raw_response.get(
+                "",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")

@@ -8,12 +8,12 @@ import httpx
 
 from ..types import (
     CompositeRetrievalMode,
+    retriever_get_params,
     retriever_list_params,
     retriever_create_params,
     retriever_update_params,
     retriever_upsert_params,
     retriever_retrieve_params,
-    retriever_retrieve_direct_params,
 )
 from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
@@ -115,21 +115,36 @@ class RetrieversResource(SyncAPIResource):
 
     def retrieve(
         self,
-        retriever_id: str,
         *,
+        query: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
+        mode: CompositeRetrievalMode | Omit = omit,
+        pipelines: Iterable[RetrieverPipelineParam] | Omit = omit,
+        rerank_config: ReRankConfigParam | Omit = omit,
+        rerank_top_n: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Retriever:
+    ) -> CompositeRetrievalResult:
         """
-        Get a Retriever by ID.
+        Retrieve data using specified pipelines without creating a persistent retriever.
 
         Args:
+          query: The query to retrieve against.
+
+          mode: The mode of composite retrieval.
+
+          pipelines: The pipelines to use for retrieval.
+
+          rerank_config: The rerank configuration for composite retrieval.
+
+          rerank_top_n: (use rerank_config.top_n instead) The number of nodes to retrieve after
+              reranking over retrieved nodes from all retrieval tools.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -138,10 +153,18 @@ class RetrieversResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not retriever_id:
-            raise ValueError(f"Expected a non-empty value for `retriever_id` but received {retriever_id!r}")
-        return self._get(
-            f"/api/v1/retrievers/{retriever_id}",
+        return self._post(
+            "/api/v1/retrievers/retrieve",
+            body=maybe_transform(
+                {
+                    "query": query,
+                    "mode": mode,
+                    "pipelines": pipelines,
+                    "rerank_config": rerank_config,
+                    "rerank_top_n": rerank_top_n,
+                },
+                retriever_retrieve_params.RetrieverRetrieveParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -155,7 +178,7 @@ class RetrieversResource(SyncAPIResource):
                     retriever_retrieve_params.RetrieverRetrieveParams,
                 ),
             ),
-            cast_to=Retriever,
+            cast_to=CompositeRetrievalResult,
         )
 
     def update(
@@ -282,38 +305,23 @@ class RetrieversResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
-    def retrieve_direct(
+    def get(
         self,
+        retriever_id: str,
         *,
-        query: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        mode: CompositeRetrievalMode | Omit = omit,
-        pipelines: Iterable[RetrieverPipelineParam] | Omit = omit,
-        rerank_config: ReRankConfigParam | Omit = omit,
-        rerank_top_n: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CompositeRetrievalResult:
+    ) -> Retriever:
         """
-        Retrieve data using specified pipelines without creating a persistent retriever.
+        Get a Retriever by ID.
 
         Args:
-          query: The query to retrieve against.
-
-          mode: The mode of composite retrieval.
-
-          pipelines: The pipelines to use for retrieval.
-
-          rerank_config: The rerank configuration for composite retrieval.
-
-          rerank_top_n: (use rerank_config.top_n instead) The number of nodes to retrieve after
-              reranking over retrieved nodes from all retrieval tools.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -322,18 +330,10 @@ class RetrieversResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._post(
-            "/api/v1/retrievers/retrieve",
-            body=maybe_transform(
-                {
-                    "query": query,
-                    "mode": mode,
-                    "pipelines": pipelines,
-                    "rerank_config": rerank_config,
-                    "rerank_top_n": rerank_top_n,
-                },
-                retriever_retrieve_direct_params.RetrieverRetrieveDirectParams,
-            ),
+        if not retriever_id:
+            raise ValueError(f"Expected a non-empty value for `retriever_id` but received {retriever_id!r}")
+        return self._get(
+            f"/api/v1/retrievers/{retriever_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -344,10 +344,10 @@ class RetrieversResource(SyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    retriever_retrieve_direct_params.RetrieverRetrieveDirectParams,
+                    retriever_get_params.RetrieverGetParams,
                 ),
             ),
-            cast_to=CompositeRetrievalResult,
+            cast_to=Retriever,
         )
 
     def upsert(
@@ -487,21 +487,36 @@ class AsyncRetrieversResource(AsyncAPIResource):
 
     async def retrieve(
         self,
-        retriever_id: str,
         *,
+        query: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
+        mode: CompositeRetrievalMode | Omit = omit,
+        pipelines: Iterable[RetrieverPipelineParam] | Omit = omit,
+        rerank_config: ReRankConfigParam | Omit = omit,
+        rerank_top_n: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Retriever:
+    ) -> CompositeRetrievalResult:
         """
-        Get a Retriever by ID.
+        Retrieve data using specified pipelines without creating a persistent retriever.
 
         Args:
+          query: The query to retrieve against.
+
+          mode: The mode of composite retrieval.
+
+          pipelines: The pipelines to use for retrieval.
+
+          rerank_config: The rerank configuration for composite retrieval.
+
+          rerank_top_n: (use rerank_config.top_n instead) The number of nodes to retrieve after
+              reranking over retrieved nodes from all retrieval tools.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -510,10 +525,18 @@ class AsyncRetrieversResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not retriever_id:
-            raise ValueError(f"Expected a non-empty value for `retriever_id` but received {retriever_id!r}")
-        return await self._get(
-            f"/api/v1/retrievers/{retriever_id}",
+        return await self._post(
+            "/api/v1/retrievers/retrieve",
+            body=await async_maybe_transform(
+                {
+                    "query": query,
+                    "mode": mode,
+                    "pipelines": pipelines,
+                    "rerank_config": rerank_config,
+                    "rerank_top_n": rerank_top_n,
+                },
+                retriever_retrieve_params.RetrieverRetrieveParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -527,7 +550,7 @@ class AsyncRetrieversResource(AsyncAPIResource):
                     retriever_retrieve_params.RetrieverRetrieveParams,
                 ),
             ),
-            cast_to=Retriever,
+            cast_to=CompositeRetrievalResult,
         )
 
     async def update(
@@ -654,38 +677,23 @@ class AsyncRetrieversResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
-    async def retrieve_direct(
+    async def get(
         self,
+        retriever_id: str,
         *,
-        query: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        mode: CompositeRetrievalMode | Omit = omit,
-        pipelines: Iterable[RetrieverPipelineParam] | Omit = omit,
-        rerank_config: ReRankConfigParam | Omit = omit,
-        rerank_top_n: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CompositeRetrievalResult:
+    ) -> Retriever:
         """
-        Retrieve data using specified pipelines without creating a persistent retriever.
+        Get a Retriever by ID.
 
         Args:
-          query: The query to retrieve against.
-
-          mode: The mode of composite retrieval.
-
-          pipelines: The pipelines to use for retrieval.
-
-          rerank_config: The rerank configuration for composite retrieval.
-
-          rerank_top_n: (use rerank_config.top_n instead) The number of nodes to retrieve after
-              reranking over retrieved nodes from all retrieval tools.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -694,18 +702,10 @@ class AsyncRetrieversResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._post(
-            "/api/v1/retrievers/retrieve",
-            body=await async_maybe_transform(
-                {
-                    "query": query,
-                    "mode": mode,
-                    "pipelines": pipelines,
-                    "rerank_config": rerank_config,
-                    "rerank_top_n": rerank_top_n,
-                },
-                retriever_retrieve_direct_params.RetrieverRetrieveDirectParams,
-            ),
+        if not retriever_id:
+            raise ValueError(f"Expected a non-empty value for `retriever_id` but received {retriever_id!r}")
+        return await self._get(
+            f"/api/v1/retrievers/{retriever_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -716,10 +716,10 @@ class AsyncRetrieversResource(AsyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    retriever_retrieve_direct_params.RetrieverRetrieveDirectParams,
+                    retriever_get_params.RetrieverGetParams,
                 ),
             ),
-            cast_to=CompositeRetrievalResult,
+            cast_to=Retriever,
         )
 
     async def upsert(
@@ -799,8 +799,8 @@ class RetrieversResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             retrievers.delete,
         )
-        self.retrieve_direct = to_raw_response_wrapper(
-            retrievers.retrieve_direct,
+        self.get = to_raw_response_wrapper(
+            retrievers.get,
         )
         self.upsert = to_raw_response_wrapper(
             retrievers.upsert,
@@ -826,8 +826,8 @@ class AsyncRetrieversResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             retrievers.delete,
         )
-        self.retrieve_direct = async_to_raw_response_wrapper(
-            retrievers.retrieve_direct,
+        self.get = async_to_raw_response_wrapper(
+            retrievers.get,
         )
         self.upsert = async_to_raw_response_wrapper(
             retrievers.upsert,
@@ -853,8 +853,8 @@ class RetrieversResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             retrievers.delete,
         )
-        self.retrieve_direct = to_streamed_response_wrapper(
-            retrievers.retrieve_direct,
+        self.get = to_streamed_response_wrapper(
+            retrievers.get,
         )
         self.upsert = to_streamed_response_wrapper(
             retrievers.upsert,
@@ -880,8 +880,8 @@ class AsyncRetrieversResourceWithStreamingResponse:
         self.delete = async_to_streamed_response_wrapper(
             retrievers.delete,
         )
-        self.retrieve_direct = async_to_streamed_response_wrapper(
-            retrievers.retrieve_direct,
+        self.get = async_to_streamed_response_wrapper(
+            retrievers.get,
         )
         self.upsert = async_to_streamed_response_wrapper(
             retrievers.upsert,
