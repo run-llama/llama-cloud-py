@@ -40,6 +40,7 @@ class TestJobs:
                 "generate_additional_metadata": True,
                 "include_hidden_cells": True,
                 "sheet_names": ["string"],
+                "use_experimental_processing": True,
             },
         )
         assert_matches_type(SpreadsheetJob, job, path=["response"])
@@ -189,6 +190,7 @@ class TestAsyncJobs:
                 "generate_additional_metadata": True,
                 "include_hidden_cells": True,
                 "sheet_names": ["string"],
+                "use_experimental_processing": True,
             },
         )
         assert_matches_type(SpreadsheetJob, job, path=["response"])
