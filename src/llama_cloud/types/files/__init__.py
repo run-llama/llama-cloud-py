@@ -3,13 +3,13 @@
 from __future__ import annotations
 
 from .page_figure_metadata import PageFigureMetadata as PageFigureMetadata
+from .page_figure_get_params import PageFigureGetParams as PageFigureGetParams
 from .page_figure_list_params import PageFigureListParams as PageFigureListParams
 from .page_screenshot_metadata import PageScreenshotMetadata as PageScreenshotMetadata
 from .page_figure_list_response import PageFigureListResponse as PageFigureListResponse
-from .page_figure_retrieve_params import PageFigureRetrieveParams as PageFigureRetrieveParams
+from .page_screenshot_get_params import PageScreenshotGetParams as PageScreenshotGetParams
 from .page_screenshot_list_params import PageScreenshotListParams as PageScreenshotListParams
 from .page_screenshot_list_response import PageScreenshotListResponse as PageScreenshotListResponse
-from .page_screenshot_retrieve_params import PageScreenshotRetrieveParams as PageScreenshotRetrieveParams
 from .page_figure_generate_presigned_url_params import (
     PageFigureGeneratePresignedURLParams as PageFigureGeneratePresignedURLParams,
 )

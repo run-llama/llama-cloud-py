@@ -33,14 +33,14 @@ from ...types.extraction import (
     job_list_params,
     job_batch_params,
     job_create_params,
-    job_retrieve_result_params,
+    job_get_result_params,
 )
 from ...types.extraction.extract_job import ExtractJob
 from ...types.extraction.job_list_response import JobListResponse
 from ...types.extraction.job_batch_response import JobBatchResponse
 from ...types.extraction.extract_config_param import ExtractConfigParam
+from ...types.extraction.job_get_result_response import JobGetResultResponse
 from ...types.extraction.webhook_configuration_param import WebhookConfigurationParam
-from ...types.extraction.job_retrieve_result_response import JobRetrieveResultResponse
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
 
@@ -129,39 +129,6 @@ class JobsResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform({"from_ui": from_ui}, job_create_params.JobCreateParams),
-            ),
-            cast_to=ExtractJob,
-        )
-
-    def retrieve(
-        self,
-        job_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractJob:
-        """
-        Get Job
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not job_id:
-            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
-        return self._get(
-            f"/api/v1/extraction/jobs/{job_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ExtractJob,
         )
@@ -327,7 +294,40 @@ class JobsResource(SyncAPIResource):
             cast_to=ExtractJob,
         )
 
-    def retrieve_result(
+    def get(
+        self,
+        job_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ExtractJob:
+        """
+        Get Job
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not job_id:
+            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+        return self._get(
+            f"/api/v1/extraction/jobs/{job_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ExtractJob,
+        )
+
+    def get_result(
         self,
         job_id: str,
         *,
@@ -339,7 +339,7 @@ class JobsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> JobRetrieveResultResponse:
+    ) -> JobGetResultResponse:
         """
         Get Job Result
 
@@ -366,10 +366,10 @@ class JobsResource(SyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    job_retrieve_result_params.JobRetrieveResultParams,
+                    job_get_result_params.JobGetResultParams,
                 ),
             ),
-            cast_to=JobRetrieveResultResponse,
+            cast_to=JobGetResultResponse,
         )
 
 
@@ -457,39 +457,6 @@ class AsyncJobsResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform({"from_ui": from_ui}, job_create_params.JobCreateParams),
-            ),
-            cast_to=ExtractJob,
-        )
-
-    async def retrieve(
-        self,
-        job_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractJob:
-        """
-        Get Job
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not job_id:
-            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
-        return await self._get(
-            f"/api/v1/extraction/jobs/{job_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ExtractJob,
         )
@@ -657,7 +624,40 @@ class AsyncJobsResource(AsyncAPIResource):
             cast_to=ExtractJob,
         )
 
-    async def retrieve_result(
+    async def get(
+        self,
+        job_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ExtractJob:
+        """
+        Get Job
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not job_id:
+            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+        return await self._get(
+            f"/api/v1/extraction/jobs/{job_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ExtractJob,
+        )
+
+    async def get_result(
         self,
         job_id: str,
         *,
@@ -669,7 +669,7 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> JobRetrieveResultResponse:
+    ) -> JobGetResultResponse:
         """
         Get Job Result
 
@@ -696,10 +696,10 @@ class AsyncJobsResource(AsyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    job_retrieve_result_params.JobRetrieveResultParams,
+                    job_get_result_params.JobGetResultParams,
                 ),
             ),
-            cast_to=JobRetrieveResultResponse,
+            cast_to=JobGetResultResponse,
         )
 
 
@@ -710,9 +710,6 @@ class JobsResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             jobs.create,
         )
-        self.retrieve = to_raw_response_wrapper(
-            jobs.retrieve,
-        )
         self.list = to_raw_response_wrapper(
             jobs.list,
         )
@@ -722,8 +719,11 @@ class JobsResourceWithRawResponse:
         self.file = to_raw_response_wrapper(
             jobs.file,
         )
-        self.retrieve_result = to_raw_response_wrapper(
-            jobs.retrieve_result,
+        self.get = to_raw_response_wrapper(
+            jobs.get,
+        )
+        self.get_result = to_raw_response_wrapper(
+            jobs.get_result,
         )
 
 
@@ -734,9 +734,6 @@ class AsyncJobsResourceWithRawResponse:
         self.create = async_to_raw_response_wrapper(
             jobs.create,
         )
-        self.retrieve = async_to_raw_response_wrapper(
-            jobs.retrieve,
-        )
         self.list = async_to_raw_response_wrapper(
             jobs.list,
         )
@@ -746,8 +743,11 @@ class AsyncJobsResourceWithRawResponse:
         self.file = async_to_raw_response_wrapper(
             jobs.file,
         )
-        self.retrieve_result = async_to_raw_response_wrapper(
-            jobs.retrieve_result,
+        self.get = async_to_raw_response_wrapper(
+            jobs.get,
+        )
+        self.get_result = async_to_raw_response_wrapper(
+            jobs.get_result,
         )
 
 
@@ -758,9 +758,6 @@ class JobsResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             jobs.create,
         )
-        self.retrieve = to_streamed_response_wrapper(
-            jobs.retrieve,
-        )
         self.list = to_streamed_response_wrapper(
             jobs.list,
         )
@@ -770,8 +767,11 @@ class JobsResourceWithStreamingResponse:
         self.file = to_streamed_response_wrapper(
             jobs.file,
         )
-        self.retrieve_result = to_streamed_response_wrapper(
-            jobs.retrieve_result,
+        self.get = to_streamed_response_wrapper(
+            jobs.get,
+        )
+        self.get_result = to_streamed_response_wrapper(
+            jobs.get_result,
         )
 
 
@@ -782,9 +782,6 @@ class AsyncJobsResourceWithStreamingResponse:
         self.create = async_to_streamed_response_wrapper(
             jobs.create,
         )
-        self.retrieve = async_to_streamed_response_wrapper(
-            jobs.retrieve,
-        )
         self.list = async_to_streamed_response_wrapper(
             jobs.list,
         )
@@ -794,6 +791,9 @@ class AsyncJobsResourceWithStreamingResponse:
         self.file = async_to_streamed_response_wrapper(
             jobs.file,
         )
-        self.retrieve_result = async_to_streamed_response_wrapper(
-            jobs.retrieve_result,
+        self.get = async_to_streamed_response_wrapper(
+            jobs.get,
+        )
+        self.get_result = async_to_streamed_response_wrapper(
+            jobs.get_result,
         )

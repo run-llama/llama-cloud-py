@@ -75,48 +75,6 @@ class TestDataSources:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: LlamaCloud) -> None:
-        data_source = client.data_sources.retrieve(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(DataSource, data_source, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve(self, client: LlamaCloud) -> None:
-        response = client.data_sources.with_raw_response.retrieve(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        data_source = response.parse()
-        assert_matches_type(DataSource, data_source, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve(self, client: LlamaCloud) -> None:
-        with client.data_sources.with_streaming_response.retrieve(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            data_source = response.parse()
-            assert_matches_type(DataSource, data_source, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_retrieve(self, client: LlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_source_id` but received ''"):
-            client.data_sources.with_raw_response.retrieve(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     def test_method_update(self, client: LlamaCloud) -> None:
         data_source = client.data_sources.update(
             data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -254,6 +212,48 @@ class TestDataSources:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
+    def test_method_get(self, client: LlamaCloud) -> None:
+        data_source = client.data_sources.get(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_get(self, client: LlamaCloud) -> None:
+        response = client.data_sources.with_raw_response.get(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        data_source = response.parse()
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_get(self, client: LlamaCloud) -> None:
+        with client.data_sources.with_streaming_response.get(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            data_source = response.parse()
+            assert_matches_type(DataSource, data_source, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_get(self, client: LlamaCloud) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_source_id` but received ''"):
+            client.data_sources.with_raw_response.get(
+                "",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
     def test_method_upsert(self, client: LlamaCloud) -> None:
         data_source = client.data_sources.upsert(
             component={"foo": "bar"},
@@ -363,48 +363,6 @@ class TestAsyncDataSources:
             assert_matches_type(DataSource, data_source, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        data_source = await async_client.data_sources.retrieve(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(DataSource, data_source, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.data_sources.with_raw_response.retrieve(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        data_source = await response.parse()
-        assert_matches_type(DataSource, data_source, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.data_sources.with_streaming_response.retrieve(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            data_source = await response.parse()
-            assert_matches_type(DataSource, data_source, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_source_id` but received ''"):
-            await async_client.data_sources.with_raw_response.retrieve(
-                "",
-            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -540,6 +498,48 @@ class TestAsyncDataSources:
     async def test_path_params_delete(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_source_id` but received ''"):
             await async_client.data_sources.with_raw_response.delete(
+                "",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_get(self, async_client: AsyncLlamaCloud) -> None:
+        data_source = await async_client.data_sources.get(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_get(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.data_sources.with_raw_response.get(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        data_source = await response.parse()
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_get(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.data_sources.with_streaming_response.get(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            data_source = await response.parse()
+            assert_matches_type(DataSource, data_source, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_get(self, async_client: AsyncLlamaCloud) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_source_id` but received ''"):
+            await async_client.data_sources.with_raw_response.get(
                 "",
             )
 

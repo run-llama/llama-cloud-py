@@ -27,15 +27,15 @@ from ...._response import (
 from ...._base_client import make_request_options
 from ....types.extraction import (
     extraction_agent_update_params,
-    extraction_agent_retrieve_by_name_params,
-    extraction_agent_retrieve_default_params,
+    extraction_agent_get_by_name_params,
+    extraction_agent_get_default_params,
     extraction_agent_extraction_agents_params,
-    extraction_agent_retrieve_extraction_agents_params,
+    extraction_agent_get_extraction_agents_params,
 )
 from ....types.extraction.extract_agent import ExtractAgent
 from ....types.extraction.extract_config_param import ExtractConfigParam
-from ....types.extraction.extraction_agent_retrieve_extraction_agents_response import (
-    ExtractionAgentRetrieveExtractionAgentsResponse,
+from ....types.extraction.extraction_agent_get_extraction_agents_response import (
+    ExtractionAgentGetExtractionAgentsResponse,
 )
 
 __all__ = ["ExtractionAgentsResource", "AsyncExtractionAgentsResource"]
@@ -64,41 +64,6 @@ class ExtractionAgentsResource(SyncAPIResource):
         For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
         """
         return ExtractionAgentsResourceWithStreamingResponse(self)
-
-    def retrieve(
-        self,
-        extraction_agent_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractAgent:
-        """
-        Get Extraction Agent
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not extraction_agent_id:
-            raise ValueError(
-                f"Expected a non-empty value for `extraction_agent_id` but received {extraction_agent_id!r}"
-            )
-        return self._get(
-            f"/api/v1/extraction/extraction-agents/{extraction_agent_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ExtractAgent,
-        )
 
     def update(
         self,
@@ -242,7 +207,42 @@ class ExtractionAgentsResource(SyncAPIResource):
             cast_to=ExtractAgent,
         )
 
-    def retrieve_by_name(
+    def get(
+        self,
+        extraction_agent_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ExtractAgent:
+        """
+        Get Extraction Agent
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not extraction_agent_id:
+            raise ValueError(
+                f"Expected a non-empty value for `extraction_agent_id` but received {extraction_agent_id!r}"
+            )
+        return self._get(
+            f"/api/v1/extraction/extraction-agents/{extraction_agent_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ExtractAgent,
+        )
+
+    def get_by_name(
         self,
         name: str,
         *,
@@ -281,13 +281,13 @@ class ExtractionAgentsResource(SyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    extraction_agent_retrieve_by_name_params.ExtractionAgentRetrieveByNameParams,
+                    extraction_agent_get_by_name_params.ExtractionAgentGetByNameParams,
                 ),
             ),
             cast_to=ExtractAgent,
         )
 
-    def retrieve_default(
+    def get_default(
         self,
         *,
         organization_id: Optional[str] | Omit = omit,
@@ -325,13 +325,13 @@ class ExtractionAgentsResource(SyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    extraction_agent_retrieve_default_params.ExtractionAgentRetrieveDefaultParams,
+                    extraction_agent_get_default_params.ExtractionAgentGetDefaultParams,
                 ),
             ),
             cast_to=ExtractAgent,
         )
 
-    def retrieve_extraction_agents(
+    def get_extraction_agents(
         self,
         *,
         include_default: bool | Omit = omit,
@@ -343,7 +343,7 @@ class ExtractionAgentsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractionAgentRetrieveExtractionAgentsResponse:
+    ) -> ExtractionAgentGetExtractionAgentsResponse:
         """
         List Extraction Agents
 
@@ -371,10 +371,10 @@ class ExtractionAgentsResource(SyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    extraction_agent_retrieve_extraction_agents_params.ExtractionAgentRetrieveExtractionAgentsParams,
+                    extraction_agent_get_extraction_agents_params.ExtractionAgentGetExtractionAgentsParams,
                 ),
             ),
-            cast_to=ExtractionAgentRetrieveExtractionAgentsResponse,
+            cast_to=ExtractionAgentGetExtractionAgentsResponse,
         )
 
 
@@ -401,41 +401,6 @@ class AsyncExtractionAgentsResource(AsyncAPIResource):
         For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
         """
         return AsyncExtractionAgentsResourceWithStreamingResponse(self)
-
-    async def retrieve(
-        self,
-        extraction_agent_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractAgent:
-        """
-        Get Extraction Agent
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not extraction_agent_id:
-            raise ValueError(
-                f"Expected a non-empty value for `extraction_agent_id` but received {extraction_agent_id!r}"
-            )
-        return await self._get(
-            f"/api/v1/extraction/extraction-agents/{extraction_agent_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ExtractAgent,
-        )
 
     async def update(
         self,
@@ -579,7 +544,42 @@ class AsyncExtractionAgentsResource(AsyncAPIResource):
             cast_to=ExtractAgent,
         )
 
-    async def retrieve_by_name(
+    async def get(
+        self,
+        extraction_agent_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ExtractAgent:
+        """
+        Get Extraction Agent
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not extraction_agent_id:
+            raise ValueError(
+                f"Expected a non-empty value for `extraction_agent_id` but received {extraction_agent_id!r}"
+            )
+        return await self._get(
+            f"/api/v1/extraction/extraction-agents/{extraction_agent_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ExtractAgent,
+        )
+
+    async def get_by_name(
         self,
         name: str,
         *,
@@ -618,13 +618,13 @@ class AsyncExtractionAgentsResource(AsyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    extraction_agent_retrieve_by_name_params.ExtractionAgentRetrieveByNameParams,
+                    extraction_agent_get_by_name_params.ExtractionAgentGetByNameParams,
                 ),
             ),
             cast_to=ExtractAgent,
         )
 
-    async def retrieve_default(
+    async def get_default(
         self,
         *,
         organization_id: Optional[str] | Omit = omit,
@@ -662,13 +662,13 @@ class AsyncExtractionAgentsResource(AsyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    extraction_agent_retrieve_default_params.ExtractionAgentRetrieveDefaultParams,
+                    extraction_agent_get_default_params.ExtractionAgentGetDefaultParams,
                 ),
             ),
             cast_to=ExtractAgent,
         )
 
-    async def retrieve_extraction_agents(
+    async def get_extraction_agents(
         self,
         *,
         include_default: bool | Omit = omit,
@@ -680,7 +680,7 @@ class AsyncExtractionAgentsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractionAgentRetrieveExtractionAgentsResponse:
+    ) -> ExtractionAgentGetExtractionAgentsResponse:
         """
         List Extraction Agents
 
@@ -708,10 +708,10 @@ class AsyncExtractionAgentsResource(AsyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    extraction_agent_retrieve_extraction_agents_params.ExtractionAgentRetrieveExtractionAgentsParams,
+                    extraction_agent_get_extraction_agents_params.ExtractionAgentGetExtractionAgentsParams,
                 ),
             ),
-            cast_to=ExtractionAgentRetrieveExtractionAgentsResponse,
+            cast_to=ExtractionAgentGetExtractionAgentsResponse,
         )
 
 
@@ -719,9 +719,6 @@ class ExtractionAgentsResourceWithRawResponse:
     def __init__(self, extraction_agents: ExtractionAgentsResource) -> None:
         self._extraction_agents = extraction_agents
 
-        self.retrieve = to_raw_response_wrapper(
-            extraction_agents.retrieve,
-        )
         self.update = to_raw_response_wrapper(
             extraction_agents.update,
         )
@@ -731,14 +728,17 @@ class ExtractionAgentsResourceWithRawResponse:
         self.extraction_agents = to_raw_response_wrapper(
             extraction_agents.extraction_agents,
         )
-        self.retrieve_by_name = to_raw_response_wrapper(
-            extraction_agents.retrieve_by_name,
+        self.get = to_raw_response_wrapper(
+            extraction_agents.get,
         )
-        self.retrieve_default = to_raw_response_wrapper(
-            extraction_agents.retrieve_default,
+        self.get_by_name = to_raw_response_wrapper(
+            extraction_agents.get_by_name,
         )
-        self.retrieve_extraction_agents = to_raw_response_wrapper(
-            extraction_agents.retrieve_extraction_agents,
+        self.get_default = to_raw_response_wrapper(
+            extraction_agents.get_default,
+        )
+        self.get_extraction_agents = to_raw_response_wrapper(
+            extraction_agents.get_extraction_agents,
         )
 
     @cached_property
@@ -750,9 +750,6 @@ class AsyncExtractionAgentsResourceWithRawResponse:
     def __init__(self, extraction_agents: AsyncExtractionAgentsResource) -> None:
         self._extraction_agents = extraction_agents
 
-        self.retrieve = async_to_raw_response_wrapper(
-            extraction_agents.retrieve,
-        )
         self.update = async_to_raw_response_wrapper(
             extraction_agents.update,
         )
@@ -762,14 +759,17 @@ class AsyncExtractionAgentsResourceWithRawResponse:
         self.extraction_agents = async_to_raw_response_wrapper(
             extraction_agents.extraction_agents,
         )
-        self.retrieve_by_name = async_to_raw_response_wrapper(
-            extraction_agents.retrieve_by_name,
+        self.get = async_to_raw_response_wrapper(
+            extraction_agents.get,
         )
-        self.retrieve_default = async_to_raw_response_wrapper(
-            extraction_agents.retrieve_default,
+        self.get_by_name = async_to_raw_response_wrapper(
+            extraction_agents.get_by_name,
         )
-        self.retrieve_extraction_agents = async_to_raw_response_wrapper(
-            extraction_agents.retrieve_extraction_agents,
+        self.get_default = async_to_raw_response_wrapper(
+            extraction_agents.get_default,
+        )
+        self.get_extraction_agents = async_to_raw_response_wrapper(
+            extraction_agents.get_extraction_agents,
         )
 
     @cached_property
@@ -781,9 +781,6 @@ class ExtractionAgentsResourceWithStreamingResponse:
     def __init__(self, extraction_agents: ExtractionAgentsResource) -> None:
         self._extraction_agents = extraction_agents
 
-        self.retrieve = to_streamed_response_wrapper(
-            extraction_agents.retrieve,
-        )
         self.update = to_streamed_response_wrapper(
             extraction_agents.update,
         )
@@ -793,14 +790,17 @@ class ExtractionAgentsResourceWithStreamingResponse:
         self.extraction_agents = to_streamed_response_wrapper(
             extraction_agents.extraction_agents,
         )
-        self.retrieve_by_name = to_streamed_response_wrapper(
-            extraction_agents.retrieve_by_name,
+        self.get = to_streamed_response_wrapper(
+            extraction_agents.get,
         )
-        self.retrieve_default = to_streamed_response_wrapper(
-            extraction_agents.retrieve_default,
+        self.get_by_name = to_streamed_response_wrapper(
+            extraction_agents.get_by_name,
         )
-        self.retrieve_extraction_agents = to_streamed_response_wrapper(
-            extraction_agents.retrieve_extraction_agents,
+        self.get_default = to_streamed_response_wrapper(
+            extraction_agents.get_default,
+        )
+        self.get_extraction_agents = to_streamed_response_wrapper(
+            extraction_agents.get_extraction_agents,
         )
 
     @cached_property
@@ -812,9 +812,6 @@ class AsyncExtractionAgentsResourceWithStreamingResponse:
     def __init__(self, extraction_agents: AsyncExtractionAgentsResource) -> None:
         self._extraction_agents = extraction_agents
 
-        self.retrieve = async_to_streamed_response_wrapper(
-            extraction_agents.retrieve,
-        )
         self.update = async_to_streamed_response_wrapper(
             extraction_agents.update,
         )
@@ -824,14 +821,17 @@ class AsyncExtractionAgentsResourceWithStreamingResponse:
         self.extraction_agents = async_to_streamed_response_wrapper(
             extraction_agents.extraction_agents,
         )
-        self.retrieve_by_name = async_to_streamed_response_wrapper(
-            extraction_agents.retrieve_by_name,
+        self.get = async_to_streamed_response_wrapper(
+            extraction_agents.get,
         )
-        self.retrieve_default = async_to_streamed_response_wrapper(
-            extraction_agents.retrieve_default,
+        self.get_by_name = async_to_streamed_response_wrapper(
+            extraction_agents.get_by_name,
         )
-        self.retrieve_extraction_agents = async_to_streamed_response_wrapper(
-            extraction_agents.retrieve_extraction_agents,
+        self.get_default = async_to_streamed_response_wrapper(
+            extraction_agents.get_default,
+        )
+        self.get_extraction_agents = async_to_streamed_response_wrapper(
+            extraction_agents.get_extraction_agents,
         )
 
     @cached_property

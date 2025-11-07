@@ -8,9 +8,9 @@ from datetime import datetime
 import httpx
 
 from ...types import (
+    file_get_params,
     file_delete_params,
     file_upload_params,
-    file_retrieve_params,
     file_read_content_params,
     file_upload_from_url_params,
     file_generate_presigned_url_params,
@@ -76,51 +76,6 @@ class FilesResource(SyncAPIResource):
         For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
         """
         return FilesResourceWithStreamingResponse(self)
-
-    def retrieve(
-        self,
-        id: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> File:
-        """
-        Read File metadata objects.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return self._get(
-            f"/api/v1/files/{id}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_retrieve_params.FileRetrieveParams,
-                ),
-            ),
-            cast_to=File,
-        )
 
     def delete(
         self,
@@ -250,6 +205,51 @@ class FilesResource(SyncAPIResource):
                 ),
             ),
             cast_to=FileGeneratePresignedURLResponse,
+        )
+
+    def get(
+        self,
+        id: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> File:
+        """
+        Read File metadata objects.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return self._get(
+            f"/api/v1/files/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    file_get_params.FileGetParams,
+                ),
+            ),
+            cast_to=File,
         )
 
     def read_content(
@@ -465,51 +465,6 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         return AsyncFilesResourceWithStreamingResponse(self)
 
-    async def retrieve(
-        self,
-        id: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> File:
-        """
-        Read File metadata objects.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return await self._get(
-            f"/api/v1/files/{id}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_retrieve_params.FileRetrieveParams,
-                ),
-            ),
-            cast_to=File,
-        )
-
     async def delete(
         self,
         id: str,
@@ -638,6 +593,51 @@ class AsyncFilesResource(AsyncAPIResource):
                 ),
             ),
             cast_to=FileGeneratePresignedURLResponse,
+        )
+
+    async def get(
+        self,
+        id: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> File:
+        """
+        Read File metadata objects.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._get(
+            f"/api/v1/files/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    file_get_params.FileGetParams,
+                ),
+            ),
+            cast_to=File,
         )
 
     async def read_content(
@@ -829,14 +829,14 @@ class FilesResourceWithRawResponse:
     def __init__(self, files: FilesResource) -> None:
         self._files = files
 
-        self.retrieve = to_raw_response_wrapper(
-            files.retrieve,
-        )
         self.delete = to_raw_response_wrapper(
             files.delete,
         )
         self.generate_presigned_url = to_raw_response_wrapper(
             files.generate_presigned_url,
+        )
+        self.get = to_raw_response_wrapper(
+            files.get,
         )
         self.read_content = to_raw_response_wrapper(
             files.read_content,
@@ -861,14 +861,14 @@ class AsyncFilesResourceWithRawResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
         self._files = files
 
-        self.retrieve = async_to_raw_response_wrapper(
-            files.retrieve,
-        )
         self.delete = async_to_raw_response_wrapper(
             files.delete,
         )
         self.generate_presigned_url = async_to_raw_response_wrapper(
             files.generate_presigned_url,
+        )
+        self.get = async_to_raw_response_wrapper(
+            files.get,
         )
         self.read_content = async_to_raw_response_wrapper(
             files.read_content,
@@ -893,14 +893,14 @@ class FilesResourceWithStreamingResponse:
     def __init__(self, files: FilesResource) -> None:
         self._files = files
 
-        self.retrieve = to_streamed_response_wrapper(
-            files.retrieve,
-        )
         self.delete = to_streamed_response_wrapper(
             files.delete,
         )
         self.generate_presigned_url = to_streamed_response_wrapper(
             files.generate_presigned_url,
+        )
+        self.get = to_streamed_response_wrapper(
+            files.get,
         )
         self.read_content = to_streamed_response_wrapper(
             files.read_content,
@@ -925,14 +925,14 @@ class AsyncFilesResourceWithStreamingResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
         self._files = files
 
-        self.retrieve = async_to_streamed_response_wrapper(
-            files.retrieve,
-        )
         self.delete = async_to_streamed_response_wrapper(
             files.delete,
         )
         self.generate_presigned_url = async_to_streamed_response_wrapper(
             files.generate_presigned_url,
+        )
+        self.get = async_to_streamed_response_wrapper(
+            files.get,
         )
         self.read_content = async_to_streamed_response_wrapper(
             files.read_content,
