@@ -6,7 +6,6 @@ from .classify_job import ClassifyJob as ClassifyJob
 from .classifier_rule import ClassifierRule as ClassifierRule
 from .job_list_params import JobListParams as JobListParams
 from .job_create_params import JobCreateParams as JobCreateParams
-from .job_list_response import JobListResponse as JobListResponse
 from .job_retrieve_params import JobRetrieveParams as JobRetrieveParams
 from .classifier_rule_param import ClassifierRuleParam as ClassifierRuleParam
 from .job_get_results_params import JobGetResultsParams as JobGetResultsParams

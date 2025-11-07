@@ -9,6 +9,7 @@ import pytest
 
 from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
+from llama_cloud.pagination import SyncPaginatedClassifyJobs, AsyncPaginatedClassifyJobs
 from llama_cloud.types.beta import (
     DirectoryListResponse,
     DirectoryCreateResponse,
@@ -178,7 +179,7 @@ class TestDirectories:
     @parametrize
     def test_method_list(self, client: LlamaCloud) -> None:
         directory = client.beta.directories.list()
-        assert_matches_type(DirectoryListResponse, directory, path=["response"])
+        assert_matches_type(SyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -192,7 +193,7 @@ class TestDirectories:
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(DirectoryListResponse, directory, path=["response"])
+        assert_matches_type(SyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -202,7 +203,7 @@ class TestDirectories:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         directory = response.parse()
-        assert_matches_type(DirectoryListResponse, directory, path=["response"])
+        assert_matches_type(SyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -212,7 +213,7 @@ class TestDirectories:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             directory = response.parse()
-            assert_matches_type(DirectoryListResponse, directory, path=["response"])
+            assert_matches_type(SyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -430,7 +431,7 @@ class TestAsyncDirectories:
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloud) -> None:
         directory = await async_client.beta.directories.list()
-        assert_matches_type(DirectoryListResponse, directory, path=["response"])
+        assert_matches_type(AsyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -444,7 +445,7 @@ class TestAsyncDirectories:
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(DirectoryListResponse, directory, path=["response"])
+        assert_matches_type(AsyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -454,7 +455,7 @@ class TestAsyncDirectories:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         directory = await response.parse()
-        assert_matches_type(DirectoryListResponse, directory, path=["response"])
+        assert_matches_type(AsyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -464,7 +465,7 @@ class TestAsyncDirectories:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             directory = await response.parse()
-            assert_matches_type(DirectoryListResponse, directory, path=["response"])
+            assert_matches_type(AsyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

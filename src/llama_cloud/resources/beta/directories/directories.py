@@ -24,6 +24,7 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from ....pagination import SyncPaginatedClassifyJobs, AsyncPaginatedClassifyJobs
 from ....types.beta import (
     directory_list_params,
     directory_create_params,
@@ -31,7 +32,7 @@ from ....types.beta import (
     directory_update_params,
     directory_retrieve_params,
 )
-from ...._base_client import make_request_options
+from ...._base_client import AsyncPaginator, make_request_options
 from ....types.beta.directory_list_response import DirectoryListResponse
 from ....types.beta.directory_create_response import DirectoryCreateResponse
 from ....types.beta.directory_update_response import DirectoryUpdateResponse
@@ -245,7 +246,7 @@ class DirectoriesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DirectoryListResponse:
+    ) -> SyncPaginatedClassifyJobs[DirectoryListResponse]:
         """
         List Directories
 
@@ -258,8 +259,9 @@ class DirectoriesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/api/v1/beta/directories",
+            page=SyncPaginatedClassifyJobs[DirectoryListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -278,7 +280,7 @@ class DirectoriesResource(SyncAPIResource):
                     directory_list_params.DirectoryListParams,
                 ),
             ),
-            cast_to=DirectoryListResponse,
+            model=DirectoryListResponse,
         )
 
     def delete(
@@ -517,7 +519,7 @@ class AsyncDirectoriesResource(AsyncAPIResource):
             cast_to=DirectoryUpdateResponse,
         )
 
-    async def list(
+    def list(
         self,
         *,
         data_source_id: Optional[str] | Omit = omit,
@@ -533,7 +535,7 @@ class AsyncDirectoriesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DirectoryListResponse:
+    ) -> AsyncPaginator[DirectoryListResponse, AsyncPaginatedClassifyJobs[DirectoryListResponse]]:
         """
         List Directories
 
@@ -546,14 +548,15 @@ class AsyncDirectoriesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/api/v1/beta/directories",
+            page=AsyncPaginatedClassifyJobs[DirectoryListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "data_source_id": data_source_id,
                         "include_deleted": include_deleted,
@@ -566,7 +569,7 @@ class AsyncDirectoriesResource(AsyncAPIResource):
                     directory_list_params.DirectoryListParams,
                 ),
             ),
-            cast_to=DirectoryListResponse,
+            model=DirectoryListResponse,
         )
 
     async def delete(

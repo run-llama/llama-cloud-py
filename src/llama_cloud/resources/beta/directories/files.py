@@ -16,7 +16,8 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...._base_client import make_request_options
+from ....pagination import SyncPaginatedClassifyJobs, AsyncPaginatedClassifyJobs
+from ...._base_client import AsyncPaginator, make_request_options
 from ....types.beta.directories import (
     file_add_params,
     file_list_params,
@@ -187,7 +188,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListResponse:
+    ) -> SyncPaginatedClassifyJobs[FileListResponse]:
         """
         List all files within the specified directory with optional filtering and
         pagination.
@@ -203,8 +204,9 @@ class FilesResource(SyncAPIResource):
         """
         if not directory_id:
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
-        return self._get(
+        return self._get_api_list(
             f"/api/v1/beta/directories/{directory_id}/files",
+            page=SyncPaginatedClassifyJobs[FileListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -225,7 +227,7 @@ class FilesResource(SyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            model=FileListResponse,
         )
 
     def delete(
@@ -484,7 +486,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=FileUpdateResponse,
         )
 
-    async def list(
+    def list(
         self,
         directory_id: str,
         *,
@@ -503,7 +505,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListResponse:
+    ) -> AsyncPaginator[FileListResponse, AsyncPaginatedClassifyJobs[FileListResponse]]:
         """
         List all files within the specified directory with optional filtering and
         pagination.
@@ -519,14 +521,15 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         if not directory_id:
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
-        return await self._get(
+        return self._get_api_list(
             f"/api/v1/beta/directories/{directory_id}/files",
+            page=AsyncPaginatedClassifyJobs[FileListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "display_name": display_name,
                         "display_name_contains": display_name_contains,
@@ -541,7 +544,7 @@ class AsyncFilesResource(AsyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            model=FileListResponse,
         )
 
     async def delete(

@@ -497,7 +497,6 @@ from llama_cloud.types.classifier import (
     ClassifierRule,
     ClassifyJob,
     ClassifyParsingConfiguration,
-    JobListResponse,
     JobGetResultsResponse,
 )
 ```
@@ -506,7 +505,7 @@ Methods:
 
 - <code title="post /api/v1/classifier/jobs">client.classifier.jobs.<a href="./src/llama_cloud/resources/classifier/jobs.py">create</a>(\*\*<a href="src/llama_cloud/types/classifier/job_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/classifier/classify_job.py">ClassifyJob</a></code>
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}">client.classifier.jobs.<a href="./src/llama_cloud/resources/classifier/jobs.py">retrieve</a>(classify_job_id, \*\*<a href="src/llama_cloud/types/classifier/job_retrieve_params.py">params</a>) -> <a href="./src/llama_cloud/types/classifier/classify_job.py">ClassifyJob</a></code>
-- <code title="get /api/v1/classifier/jobs">client.classifier.jobs.<a href="./src/llama_cloud/resources/classifier/jobs.py">list</a>(\*\*<a href="src/llama_cloud/types/classifier/job_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/classifier/job_list_response.py">JobListResponse</a></code>
+- <code title="get /api/v1/classifier/jobs">client.classifier.jobs.<a href="./src/llama_cloud/resources/classifier/jobs.py">list</a>(\*\*<a href="src/llama_cloud/types/classifier/job_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/classifier/classify_job.py">SyncPaginatedClassifyJobs[ClassifyJob]</a></code>
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}/results">client.classifier.jobs.<a href="./src/llama_cloud/resources/classifier/jobs.py">get_results</a>(classify_job_id, \*\*<a href="src/llama_cloud/types/classifier/job_get_results_params.py">params</a>) -> <a href="./src/llama_cloud/types/classifier/job_get_results_response.py">JobGetResultsResponse</a></code>
 
 # Auth
@@ -585,13 +584,13 @@ Methods:
 Types:
 
 ```python
-from llama_cloud.types.extraction import ExtractConfig, ExtractRun, RunListResponse
+from llama_cloud.types.extraction import ExtractConfig, ExtractRun
 ```
 
 Methods:
 
 - <code title="get /api/v1/extraction/runs/{run_id}">client.extraction.runs.<a href="./src/llama_cloud/resources/extraction/runs.py">retrieve</a>(run_id, \*\*<a href="src/llama_cloud/types/extraction/run_retrieve_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_run.py">ExtractRun</a></code>
-- <code title="get /api/v1/extraction/runs">client.extraction.runs.<a href="./src/llama_cloud/resources/extraction/runs.py">list</a>(\*\*<a href="src/llama_cloud/types/extraction/run_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/run_list_response.py">RunListResponse</a></code>
+- <code title="get /api/v1/extraction/runs">client.extraction.runs.<a href="./src/llama_cloud/resources/extraction/runs.py">list</a>(\*\*<a href="src/llama_cloud/types/extraction/run_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_run.py">SyncPaginatedExtractRuns[ExtractRun]</a></code>
 - <code title="delete /api/v1/extraction/runs/{run_id}">client.extraction.runs.<a href="./src/llama_cloud/resources/extraction/runs.py">delete</a>(run_id, \*\*<a href="src/llama_cloud/types/extraction/run_delete_params.py">params</a>) -> object</code>
 - <code title="get /api/v1/extraction/runs/by-job/{job_id}">client.extraction.runs.<a href="./src/llama_cloud/resources/extraction/runs.py">retrieve_by_job</a>(job_id, \*\*<a href="src/llama_cloud/types/extraction/run_retrieve_by_job_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_run.py">ExtractRun</a></code>
 - <code title="get /api/v1/extraction/runs/latest-from-ui">client.extraction.runs.<a href="./src/llama_cloud/resources/extraction/runs.py">retrieve_latest_from_ui</a>(\*\*<a href="src/llama_cloud/types/extraction/run_retrieve_latest_from_ui_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_run.py">Optional[ExtractRun]</a></code>
@@ -726,18 +725,14 @@ Methods:
 Types:
 
 ```python
-from llama_cloud.types.beta.spreadsheet import (
-    SpreadsheetJob,
-    SpreadsheetParsingConfig,
-    JobListResponse,
-)
+from llama_cloud.types.beta.spreadsheet import SpreadsheetJob, SpreadsheetParsingConfig
 ```
 
 Methods:
 
 - <code title="post /api/v1/beta/spreadsheet/jobs">client.beta.spreadsheet.jobs.<a href="./src/llama_cloud/resources/beta/spreadsheet/jobs/jobs.py">create</a>(\*\*<a href="src/llama_cloud/types/beta/spreadsheet/job_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/spreadsheet/spreadsheet_job.py">SpreadsheetJob</a></code>
 - <code title="get /api/v1/beta/spreadsheet/jobs/{spreadsheet_job_id}">client.beta.spreadsheet.jobs.<a href="./src/llama_cloud/resources/beta/spreadsheet/jobs/jobs.py">retrieve</a>(spreadsheet_job_id, \*\*<a href="src/llama_cloud/types/beta/spreadsheet/job_retrieve_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/spreadsheet/spreadsheet_job.py">SpreadsheetJob</a></code>
-- <code title="get /api/v1/beta/spreadsheet/jobs">client.beta.spreadsheet.jobs.<a href="./src/llama_cloud/resources/beta/spreadsheet/jobs/jobs.py">list</a>(\*\*<a href="src/llama_cloud/types/beta/spreadsheet/job_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/spreadsheet/job_list_response.py">JobListResponse</a></code>
+- <code title="get /api/v1/beta/spreadsheet/jobs">client.beta.spreadsheet.jobs.<a href="./src/llama_cloud/resources/beta/spreadsheet/jobs/jobs.py">list</a>(\*\*<a href="src/llama_cloud/types/beta/spreadsheet/job_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/spreadsheet/spreadsheet_job.py">SyncPaginatedClassifyJobs[SpreadsheetJob]</a></code>
 
 #### Tables
 
@@ -763,7 +758,7 @@ Methods:
 - <code title="post /api/v1/beta/directories">client.beta.directories.<a href="./src/llama_cloud/resources/beta/directories/directories.py">create</a>(\*\*<a href="src/llama_cloud/types/beta/directory_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/directory_create_response.py">DirectoryCreateResponse</a></code>
 - <code title="get /api/v1/beta/directories/{directory_id}">client.beta.directories.<a href="./src/llama_cloud/resources/beta/directories/directories.py">retrieve</a>(directory_id, \*\*<a href="src/llama_cloud/types/beta/directory_retrieve_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/directory_retrieve_response.py">DirectoryRetrieveResponse</a></code>
 - <code title="patch /api/v1/beta/directories/{directory_id}">client.beta.directories.<a href="./src/llama_cloud/resources/beta/directories/directories.py">update</a>(directory_id, \*\*<a href="src/llama_cloud/types/beta/directory_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/directory_update_response.py">DirectoryUpdateResponse</a></code>
-- <code title="get /api/v1/beta/directories">client.beta.directories.<a href="./src/llama_cloud/resources/beta/directories/directories.py">list</a>(\*\*<a href="src/llama_cloud/types/beta/directory_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/directory_list_response.py">DirectoryListResponse</a></code>
+- <code title="get /api/v1/beta/directories">client.beta.directories.<a href="./src/llama_cloud/resources/beta/directories/directories.py">list</a>(\*\*<a href="src/llama_cloud/types/beta/directory_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/directory_list_response.py">SyncPaginatedClassifyJobs[DirectoryListResponse]</a></code>
 - <code title="delete /api/v1/beta/directories/{directory_id}">client.beta.directories.<a href="./src/llama_cloud/resources/beta/directories/directories.py">delete</a>(directory_id, \*\*<a href="src/llama_cloud/types/beta/directory_delete_params.py">params</a>) -> None</code>
 
 ### Files
@@ -783,6 +778,6 @@ Methods:
 
 - <code title="get /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.beta.directories.files.<a href="./src/llama_cloud/resources/beta/directories/files.py">retrieve</a>(directory_file_id, \*, directory_id, \*\*<a href="src/llama_cloud/types/beta/directories/file_retrieve_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/directories/file_retrieve_response.py">FileRetrieveResponse</a></code>
 - <code title="patch /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.beta.directories.files.<a href="./src/llama_cloud/resources/beta/directories/files.py">update</a>(directory_file_id, \*, directory_id, \*\*<a href="src/llama_cloud/types/beta/directories/file_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/directories/file_update_response.py">FileUpdateResponse</a></code>
-- <code title="get /api/v1/beta/directories/{directory_id}/files">client.beta.directories.files.<a href="./src/llama_cloud/resources/beta/directories/files.py">list</a>(directory_id, \*\*<a href="src/llama_cloud/types/beta/directories/file_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/directories/file_list_response.py">FileListResponse</a></code>
+- <code title="get /api/v1/beta/directories/{directory_id}/files">client.beta.directories.files.<a href="./src/llama_cloud/resources/beta/directories/files.py">list</a>(directory_id, \*\*<a href="src/llama_cloud/types/beta/directories/file_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/directories/file_list_response.py">SyncPaginatedClassifyJobs[FileListResponse]</a></code>
 - <code title="delete /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.beta.directories.files.<a href="./src/llama_cloud/resources/beta/directories/files.py">delete</a>(directory_file_id, \*, directory_id, \*\*<a href="src/llama_cloud/types/beta/directories/file_delete_params.py">params</a>) -> None</code>
 - <code title="post /api/v1/beta/directories/{directory_id}/files">client.beta.directories.files.<a href="./src/llama_cloud/resources/beta/directories/files.py">add</a>(directory_id, \*\*<a href="src/llama_cloud/types/beta/directories/file_add_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/directories/file_add_response.py">FileAddResponse</a></code>

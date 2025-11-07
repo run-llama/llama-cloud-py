@@ -24,14 +24,14 @@ from ....._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ....._base_client import make_request_options
+from .....pagination import SyncPaginatedClassifyJobs, AsyncPaginatedClassifyJobs
+from ....._base_client import AsyncPaginator, make_request_options
 from .....types.beta.spreadsheet import (
     job_list_params,
     job_create_params,
     job_retrieve_params,
 )
 from .....types.beta.spreadsheet.spreadsheet_job import SpreadsheetJob
-from .....types.beta.spreadsheet.job_list_response import JobListResponse
 from .....types.beta.spreadsheet.spreadsheet_parsing_config_param import SpreadsheetParsingConfigParam
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
@@ -186,7 +186,7 @@ class JobsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> JobListResponse:
+    ) -> SyncPaginatedClassifyJobs[SpreadsheetJob]:
         """List spreadsheet parsing jobs.
 
         Experimental: This endpoint is not yet ready for
@@ -201,8 +201,9 @@ class JobsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/api/v1/beta/spreadsheet/jobs",
+            page=SyncPaginatedClassifyJobs[SpreadsheetJob],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -219,7 +220,7 @@ class JobsResource(SyncAPIResource):
                     job_list_params.JobListParams,
                 ),
             ),
-            cast_to=JobListResponse,
+            model=SpreadsheetJob,
         )
 
 
@@ -358,7 +359,7 @@ class AsyncJobsResource(AsyncAPIResource):
             cast_to=SpreadsheetJob,
         )
 
-    async def list(
+    def list(
         self,
         *,
         include_results: bool | Omit = omit,
@@ -372,7 +373,7 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> JobListResponse:
+    ) -> AsyncPaginator[SpreadsheetJob, AsyncPaginatedClassifyJobs[SpreadsheetJob]]:
         """List spreadsheet parsing jobs.
 
         Experimental: This endpoint is not yet ready for
@@ -387,14 +388,15 @@ class AsyncJobsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/api/v1/beta/spreadsheet/jobs",
+            page=AsyncPaginatedClassifyJobs[SpreadsheetJob],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "include_results": include_results,
                         "organization_id": organization_id,
@@ -405,7 +407,7 @@ class AsyncJobsResource(AsyncAPIResource):
                     job_list_params.JobListParams,
                 ),
             ),
-            cast_to=JobListResponse,
+            model=SpreadsheetJob,
         )
 
 
