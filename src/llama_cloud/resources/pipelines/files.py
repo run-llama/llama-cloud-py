@@ -18,17 +18,12 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.pipelines import (
-    file_list_params,
-    file_create_params,
-    file_update_params,
-    file_retrieve_status_counts_params,
-)
+from ...types.pipelines import file_list_params, file_create_params, file_update_params, file_get_status_counts_params
 from ...types.pipelines.pipeline_file import PipelineFile
 from ...types.pipelines.file_list_response import FileListResponse
 from ...types.pipelines.file_create_response import FileCreateResponse
 from ...types.managed_ingestion_status_response import ManagedIngestionStatusResponse
-from ...types.pipelines.file_retrieve_status_counts_response import FileRetrieveStatusCountsResponse
+from ...types.pipelines.file_get_status_counts_response import FileGetStatusCountsResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -212,7 +207,7 @@ class FilesResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
-    def retrieve_status(
+    def get_status(
         self,
         file_id: str,
         *,
@@ -248,7 +243,7 @@ class FilesResource(SyncAPIResource):
             cast_to=ManagedIngestionStatusResponse,
         )
 
-    def retrieve_status_counts(
+    def get_status_counts(
         self,
         pipeline_id: str,
         *,
@@ -260,7 +255,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileRetrieveStatusCountsResponse:
+    ) -> FileGetStatusCountsResponse:
         """
         Get files for a pipeline.
 
@@ -287,10 +282,10 @@ class FilesResource(SyncAPIResource):
                         "data_source_id": data_source_id,
                         "only_manually_uploaded": only_manually_uploaded,
                     },
-                    file_retrieve_status_counts_params.FileRetrieveStatusCountsParams,
+                    file_get_status_counts_params.FileGetStatusCountsParams,
                 ),
             ),
-            cast_to=FileRetrieveStatusCountsResponse,
+            cast_to=FileGetStatusCountsResponse,
         )
 
 
@@ -473,7 +468,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
-    async def retrieve_status(
+    async def get_status(
         self,
         file_id: str,
         *,
@@ -509,7 +504,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=ManagedIngestionStatusResponse,
         )
 
-    async def retrieve_status_counts(
+    async def get_status_counts(
         self,
         pipeline_id: str,
         *,
@@ -521,7 +516,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileRetrieveStatusCountsResponse:
+    ) -> FileGetStatusCountsResponse:
         """
         Get files for a pipeline.
 
@@ -548,10 +543,10 @@ class AsyncFilesResource(AsyncAPIResource):
                         "data_source_id": data_source_id,
                         "only_manually_uploaded": only_manually_uploaded,
                     },
-                    file_retrieve_status_counts_params.FileRetrieveStatusCountsParams,
+                    file_get_status_counts_params.FileGetStatusCountsParams,
                 ),
             ),
-            cast_to=FileRetrieveStatusCountsResponse,
+            cast_to=FileGetStatusCountsResponse,
         )
 
 
@@ -573,11 +568,11 @@ class FilesResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             files.delete,
         )
-        self.retrieve_status = to_raw_response_wrapper(
-            files.retrieve_status,
+        self.get_status = to_raw_response_wrapper(
+            files.get_status,
         )
-        self.retrieve_status_counts = to_raw_response_wrapper(
-            files.retrieve_status_counts,
+        self.get_status_counts = to_raw_response_wrapper(
+            files.get_status_counts,
         )
 
 
@@ -599,11 +594,11 @@ class AsyncFilesResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             files.delete,
         )
-        self.retrieve_status = async_to_raw_response_wrapper(
-            files.retrieve_status,
+        self.get_status = async_to_raw_response_wrapper(
+            files.get_status,
         )
-        self.retrieve_status_counts = async_to_raw_response_wrapper(
-            files.retrieve_status_counts,
+        self.get_status_counts = async_to_raw_response_wrapper(
+            files.get_status_counts,
         )
 
 
@@ -625,11 +620,11 @@ class FilesResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             files.delete,
         )
-        self.retrieve_status = to_streamed_response_wrapper(
-            files.retrieve_status,
+        self.get_status = to_streamed_response_wrapper(
+            files.get_status,
         )
-        self.retrieve_status_counts = to_streamed_response_wrapper(
-            files.retrieve_status_counts,
+        self.get_status_counts = to_streamed_response_wrapper(
+            files.get_status_counts,
         )
 
 
@@ -651,9 +646,9 @@ class AsyncFilesResourceWithStreamingResponse:
         self.delete = async_to_streamed_response_wrapper(
             files.delete,
         )
-        self.retrieve_status = async_to_streamed_response_wrapper(
-            files.retrieve_status,
+        self.get_status = async_to_streamed_response_wrapper(
+            files.get_status,
         )
-        self.retrieve_status_counts = async_to_streamed_response_wrapper(
-            files.retrieve_status_counts,
+        self.get_status_counts = async_to_streamed_response_wrapper(
+            files.get_status_counts,
         )

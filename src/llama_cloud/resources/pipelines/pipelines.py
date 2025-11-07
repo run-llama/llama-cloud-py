@@ -29,8 +29,8 @@ from ...types import (
     pipeline_list_params,
     pipeline_create_params,
     pipeline_update_params,
-    pipeline_retrieve_files2_params,
-    pipeline_retrieve_status_params,
+    pipeline_get_files2_params,
+    pipeline_get_status_params,
 )
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
@@ -69,15 +69,14 @@ from .data_sources import (
 from ..._base_client import make_request_options
 from ...types.pipeline import Pipeline
 from ...types.pipeline_type import PipelineType
-from ...types.data_sink_create_param import DataSinkCreateParam
 from ...types.pipeline_list_response import PipelineListResponse
 from ...types.sparse_model_config_param import SparseModelConfigParam
 from ...types.llama_parse_parameters_param import LlamaParseParametersParam
+from ...types.pipeline_get_files2_response import PipelineGetFiles2Response
 from ...types.preset_retrieval_params_param import PresetRetrievalParamsParam
 from ...types.pipeline_metadata_config_param import PipelineMetadataConfigParam
 from ...types.managed_ingestion_status_response import ManagedIngestionStatusResponse
-from ...types.pipeline_retrieve_files2_response import PipelineRetrieveFiles2Response
-from ...types.pipeline_retrieve_playground_session_response import PipelineRetrievePlaygroundSessionResponse
+from ...types.pipeline_get_playground_session_response import PipelineGetPlaygroundSessionResponse
 
 __all__ = ["PipelinesResource", "AsyncPipelinesResource"]
 
@@ -128,7 +127,7 @@ class PipelinesResource(SyncAPIResource):
         name: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        data_sink: Optional[DataSinkCreateParam] | Omit = omit,
+        data_sink: Optional[pipeline_create_params.DataSink] | Omit = omit,
         data_sink_id: Optional[str] | Omit = omit,
         embedding_config: Optional[pipeline_create_params.EmbeddingConfig] | Omit = omit,
         embedding_model_config_id: Optional[str] | Omit = omit,
@@ -223,44 +222,11 @@ class PipelinesResource(SyncAPIResource):
             cast_to=Pipeline,
         )
 
-    def retrieve(
-        self,
-        pipeline_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Pipeline:
-        """
-        Get a pipeline by ID for a given project.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._get(
-            f"/api/v1/pipelines/{pipeline_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Pipeline,
-        )
-
     def update(
         self,
         pipeline_id: str,
         *,
-        data_sink: Optional[DataSinkCreateParam] | Omit = omit,
+        data_sink: Optional[pipeline_update_params.DataSink] | Omit = omit,
         data_sink_id: Optional[str] | Omit = omit,
         embedding_config: Optional[pipeline_update_params.EmbeddingConfig] | Omit = omit,
         embedding_model_config_id: Optional[str] | Omit = omit,
@@ -540,8 +506,41 @@ class PipelinesResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
+    def get(
+        self,
+        pipeline_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Pipeline:
+        """
+        Get a pipeline by ID for a given project.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        return self._get(
+            f"/api/v1/pipelines/{pipeline_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Pipeline,
+        )
+
     @typing_extensions.deprecated("deprecated")
-    def retrieve_files2(
+    def get_files2(
         self,
         pipeline_id: str,
         *,
@@ -557,7 +556,7 @@ class PipelinesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PipelineRetrieveFiles2Response:
+    ) -> PipelineGetFiles2Response:
         """
         Get files for a pipeline.
 
@@ -593,13 +592,13 @@ class PipelinesResource(SyncAPIResource):
                         "only_manually_uploaded": only_manually_uploaded,
                         "order_by": order_by,
                     },
-                    pipeline_retrieve_files2_params.PipelineRetrieveFiles2Params,
+                    pipeline_get_files2_params.PipelineGetFiles2Params,
                 ),
             ),
-            cast_to=PipelineRetrieveFiles2Response,
+            cast_to=PipelineGetFiles2Response,
         )
 
-    def retrieve_playground_session(
+    def get_playground_session(
         self,
         pipeline_id: str,
         *,
@@ -609,7 +608,7 @@ class PipelinesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PipelineRetrievePlaygroundSessionResponse:
+    ) -> PipelineGetPlaygroundSessionResponse:
         """
         Get a playground session for a user and pipeline.
 
@@ -629,10 +628,10 @@ class PipelinesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=PipelineRetrievePlaygroundSessionResponse,
+            cast_to=PipelineGetPlaygroundSessionResponse,
         )
 
-    def retrieve_status(
+    def get_status(
         self,
         pipeline_id: str,
         *,
@@ -666,7 +665,7 @@ class PipelinesResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform(
-                    {"full_details": full_details}, pipeline_retrieve_status_params.PipelineRetrieveStatusParams
+                    {"full_details": full_details}, pipeline_get_status_params.PipelineGetStatusParams
                 ),
             ),
             cast_to=ManagedIngestionStatusResponse,
@@ -719,7 +718,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         name: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        data_sink: Optional[DataSinkCreateParam] | Omit = omit,
+        data_sink: Optional[pipeline_create_params.DataSink] | Omit = omit,
         data_sink_id: Optional[str] | Omit = omit,
         embedding_config: Optional[pipeline_create_params.EmbeddingConfig] | Omit = omit,
         embedding_model_config_id: Optional[str] | Omit = omit,
@@ -814,44 +813,11 @@ class AsyncPipelinesResource(AsyncAPIResource):
             cast_to=Pipeline,
         )
 
-    async def retrieve(
-        self,
-        pipeline_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Pipeline:
-        """
-        Get a pipeline by ID for a given project.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Pipeline,
-        )
-
     async def update(
         self,
         pipeline_id: str,
         *,
-        data_sink: Optional[DataSinkCreateParam] | Omit = omit,
+        data_sink: Optional[pipeline_update_params.DataSink] | Omit = omit,
         data_sink_id: Optional[str] | Omit = omit,
         embedding_config: Optional[pipeline_update_params.EmbeddingConfig] | Omit = omit,
         embedding_model_config_id: Optional[str] | Omit = omit,
@@ -1131,8 +1097,41 @@ class AsyncPipelinesResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
+    async def get(
+        self,
+        pipeline_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Pipeline:
+        """
+        Get a pipeline by ID for a given project.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        return await self._get(
+            f"/api/v1/pipelines/{pipeline_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Pipeline,
+        )
+
     @typing_extensions.deprecated("deprecated")
-    async def retrieve_files2(
+    async def get_files2(
         self,
         pipeline_id: str,
         *,
@@ -1148,7 +1147,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PipelineRetrieveFiles2Response:
+    ) -> PipelineGetFiles2Response:
         """
         Get files for a pipeline.
 
@@ -1184,13 +1183,13 @@ class AsyncPipelinesResource(AsyncAPIResource):
                         "only_manually_uploaded": only_manually_uploaded,
                         "order_by": order_by,
                     },
-                    pipeline_retrieve_files2_params.PipelineRetrieveFiles2Params,
+                    pipeline_get_files2_params.PipelineGetFiles2Params,
                 ),
             ),
-            cast_to=PipelineRetrieveFiles2Response,
+            cast_to=PipelineGetFiles2Response,
         )
 
-    async def retrieve_playground_session(
+    async def get_playground_session(
         self,
         pipeline_id: str,
         *,
@@ -1200,7 +1199,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PipelineRetrievePlaygroundSessionResponse:
+    ) -> PipelineGetPlaygroundSessionResponse:
         """
         Get a playground session for a user and pipeline.
 
@@ -1220,10 +1219,10 @@ class AsyncPipelinesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=PipelineRetrievePlaygroundSessionResponse,
+            cast_to=PipelineGetPlaygroundSessionResponse,
         )
 
-    async def retrieve_status(
+    async def get_status(
         self,
         pipeline_id: str,
         *,
@@ -1257,7 +1256,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform(
-                    {"full_details": full_details}, pipeline_retrieve_status_params.PipelineRetrieveStatusParams
+                    {"full_details": full_details}, pipeline_get_status_params.PipelineGetStatusParams
                 ),
             ),
             cast_to=ManagedIngestionStatusResponse,
@@ -1270,9 +1269,6 @@ class PipelinesResourceWithRawResponse:
 
         self.create = to_raw_response_wrapper(
             pipelines.create,
-        )
-        self.retrieve = to_raw_response_wrapper(
-            pipelines.retrieve,
         )
         self.update = to_raw_response_wrapper(
             pipelines.update,
@@ -1292,16 +1288,19 @@ class PipelinesResourceWithRawResponse:
         self.force_delete = to_raw_response_wrapper(
             pipelines.force_delete,
         )
-        self.retrieve_files2 = (  # pyright: ignore[reportDeprecated]
+        self.get = to_raw_response_wrapper(
+            pipelines.get,
+        )
+        self.get_files2 = (  # pyright: ignore[reportDeprecated]
             to_raw_response_wrapper(
-                pipelines.retrieve_files2,  # pyright: ignore[reportDeprecated],
+                pipelines.get_files2,  # pyright: ignore[reportDeprecated],
             )
         )
-        self.retrieve_playground_session = to_raw_response_wrapper(
-            pipelines.retrieve_playground_session,
+        self.get_playground_session = to_raw_response_wrapper(
+            pipelines.get_playground_session,
         )
-        self.retrieve_status = to_raw_response_wrapper(
-            pipelines.retrieve_status,
+        self.get_status = to_raw_response_wrapper(
+            pipelines.get_status,
         )
 
     @cached_property
@@ -1332,9 +1331,6 @@ class AsyncPipelinesResourceWithRawResponse:
         self.create = async_to_raw_response_wrapper(
             pipelines.create,
         )
-        self.retrieve = async_to_raw_response_wrapper(
-            pipelines.retrieve,
-        )
         self.update = async_to_raw_response_wrapper(
             pipelines.update,
         )
@@ -1353,16 +1349,19 @@ class AsyncPipelinesResourceWithRawResponse:
         self.force_delete = async_to_raw_response_wrapper(
             pipelines.force_delete,
         )
-        self.retrieve_files2 = (  # pyright: ignore[reportDeprecated]
+        self.get = async_to_raw_response_wrapper(
+            pipelines.get,
+        )
+        self.get_files2 = (  # pyright: ignore[reportDeprecated]
             async_to_raw_response_wrapper(
-                pipelines.retrieve_files2,  # pyright: ignore[reportDeprecated],
+                pipelines.get_files2,  # pyright: ignore[reportDeprecated],
             )
         )
-        self.retrieve_playground_session = async_to_raw_response_wrapper(
-            pipelines.retrieve_playground_session,
+        self.get_playground_session = async_to_raw_response_wrapper(
+            pipelines.get_playground_session,
         )
-        self.retrieve_status = async_to_raw_response_wrapper(
-            pipelines.retrieve_status,
+        self.get_status = async_to_raw_response_wrapper(
+            pipelines.get_status,
         )
 
     @cached_property
@@ -1393,9 +1392,6 @@ class PipelinesResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             pipelines.create,
         )
-        self.retrieve = to_streamed_response_wrapper(
-            pipelines.retrieve,
-        )
         self.update = to_streamed_response_wrapper(
             pipelines.update,
         )
@@ -1414,16 +1410,19 @@ class PipelinesResourceWithStreamingResponse:
         self.force_delete = to_streamed_response_wrapper(
             pipelines.force_delete,
         )
-        self.retrieve_files2 = (  # pyright: ignore[reportDeprecated]
+        self.get = to_streamed_response_wrapper(
+            pipelines.get,
+        )
+        self.get_files2 = (  # pyright: ignore[reportDeprecated]
             to_streamed_response_wrapper(
-                pipelines.retrieve_files2,  # pyright: ignore[reportDeprecated],
+                pipelines.get_files2,  # pyright: ignore[reportDeprecated],
             )
         )
-        self.retrieve_playground_session = to_streamed_response_wrapper(
-            pipelines.retrieve_playground_session,
+        self.get_playground_session = to_streamed_response_wrapper(
+            pipelines.get_playground_session,
         )
-        self.retrieve_status = to_streamed_response_wrapper(
-            pipelines.retrieve_status,
+        self.get_status = to_streamed_response_wrapper(
+            pipelines.get_status,
         )
 
     @cached_property
@@ -1454,9 +1453,6 @@ class AsyncPipelinesResourceWithStreamingResponse:
         self.create = async_to_streamed_response_wrapper(
             pipelines.create,
         )
-        self.retrieve = async_to_streamed_response_wrapper(
-            pipelines.retrieve,
-        )
         self.update = async_to_streamed_response_wrapper(
             pipelines.update,
         )
@@ -1475,16 +1471,19 @@ class AsyncPipelinesResourceWithStreamingResponse:
         self.force_delete = async_to_streamed_response_wrapper(
             pipelines.force_delete,
         )
-        self.retrieve_files2 = (  # pyright: ignore[reportDeprecated]
+        self.get = async_to_streamed_response_wrapper(
+            pipelines.get,
+        )
+        self.get_files2 = (  # pyright: ignore[reportDeprecated]
             async_to_streamed_response_wrapper(
-                pipelines.retrieve_files2,  # pyright: ignore[reportDeprecated],
+                pipelines.get_files2,  # pyright: ignore[reportDeprecated],
             )
         )
-        self.retrieve_playground_session = async_to_streamed_response_wrapper(
-            pipelines.retrieve_playground_session,
+        self.get_playground_session = async_to_streamed_response_wrapper(
+            pipelines.get_playground_session,
         )
-        self.retrieve_status = async_to_streamed_response_wrapper(
-            pipelines.retrieve_status,
+        self.get_status = async_to_streamed_response_wrapper(
+            pipelines.get_status,
         )
 
     @cached_property

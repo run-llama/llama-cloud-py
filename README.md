@@ -35,10 +35,10 @@ client = LlamaCloud(
     api_key=os.environ.get("LLAMACLOUD_API_KEY"),  # This is the default and can be omitted
 )
 
-agent_deployment_list = client.projects.list_agents(
-    "REPLACE_ME",
+parsing_job = client.parsing.upload_file(
+    file=b"file.pdf",
 )
-print(agent_deployment_list.deployments)
+print(parsing_job.id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -61,10 +61,10 @@ client = AsyncLlamaCloud(
 
 
 async def main() -> None:
-    agent_deployment_list = await client.projects.list_agents(
-        "REPLACE_ME",
+    parsing_job = await client.parsing.upload_file(
+        file=b"file.pdf",
     )
-    print(agent_deployment_list.deployments)
+    print(parsing_job.id)
 
 
 asyncio.run(main())
@@ -96,10 +96,10 @@ async def main() -> None:
         api_key="My API Key",
         http_client=DefaultAioHttpClient(),
     ) as client:
-        agent_deployment_list = await client.projects.list_agents(
-            "REPLACE_ME",
+        parsing_job = await client.parsing.upload_file(
+            file=b"file.pdf",
         )
-        print(agent_deployment_list.deployments)
+        print(parsing_job.id)
 
 
 asyncio.run(main())
@@ -114,6 +114,83 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
 
+## Pagination
+
+List methods in the Llama Cloud API are paginated.
+
+This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
+
+```python
+from llama_cloud import LlamaCloud
+
+client = LlamaCloud()
+
+all_runs = []
+# Automatically fetches more pages as needed.
+for run in client.extraction.runs.list(
+    extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+    limit=20,
+):
+    # Do something with run here
+    all_runs.append(run)
+print(all_runs)
+```
+
+Or, asynchronously:
+
+```python
+import asyncio
+from llama_cloud import AsyncLlamaCloud
+
+client = AsyncLlamaCloud()
+
+
+async def main() -> None:
+    all_runs = []
+    # Iterate through items across all pages, issuing requests as needed.
+    async for run in client.extraction.runs.list(
+        extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        limit=20,
+    ):
+        all_runs.append(run)
+    print(all_runs)
+
+
+asyncio.run(main())
+```
+
+Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get_next_page()` methods for more granular control working with pages:
+
+```python
+first_page = await client.extraction.runs.list(
+    extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+    limit=20,
+)
+if first_page.has_next_page():
+    print(f"will fetch next page using these details: {first_page.next_page_info()}")
+    next_page = await first_page.get_next_page()
+    print(f"number of items we just fetched: {len(next_page.items)}")
+
+# Remove `await` for non-async usage.
+```
+
+Or just work directly with the returned data:
+
+```python
+first_page = await client.extraction.runs.list(
+    extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+    limit=20,
+)
+
+print(
+    f"the current start offset for this page: {first_page.skip}"
+)  # => "the current start offset for this page: 1"
+for run in first_page.items:
+    print(run.id)
+
+# Remove `await` for non-async usage.
+```
+
 ## Nested params
 
 Nested parameters are dictionaries, typed using `TypedDict`, for example:
@@ -123,10 +200,15 @@ from llama_cloud import LlamaCloud
 
 client = LlamaCloud()
 
-base_connection_validation = client.validate_integrations.validate_embedding_connection(
-    component={},
+pipeline = client.pipelines.create(
+    name="x",
+    data_sink={
+        "component": {"foo": "bar"},
+        "name": "name",
+        "sink_type": "PINECONE",
+    },
 )
-print(base_connection_validation.component)
+print(pipeline.data_sink)
 ```
 
 ## File uploads
@@ -139,8 +221,8 @@ from llama_cloud import LlamaCloud
 
 client = LlamaCloud()
 
-client.files.upload(
-    upload_file=Path("/path/to/file"),
+client.parsing.upload_file(
+    file=Path("/path/to/file"),
 )
 ```
 
@@ -162,8 +244,8 @@ from llama_cloud import LlamaCloud
 client = LlamaCloud()
 
 try:
-    client.projects.list_agents(
-        "REPLACE_ME",
+    client.pipelines.list(
+        project_id="my-project-id",
     )
 except llama_cloud.APIConnectionError as e:
     print("The server could not be reached")
@@ -207,8 +289,8 @@ client = LlamaCloud(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).projects.list_agents(
-    "REPLACE_ME",
+client.with_options(max_retries=5).pipelines.list(
+    project_id="my-project-id",
 )
 ```
 
@@ -232,8 +314,8 @@ client = LlamaCloud(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).projects.list_agents(
-    "REPLACE_ME",
+client.with_options(timeout=5.0).pipelines.list(
+    project_id="my-project-id",
 )
 ```
 
@@ -275,13 +357,13 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from llama_cloud import LlamaCloud
 
 client = LlamaCloud()
-response = client.projects.with_raw_response.list_agents(
-    "REPLACE_ME",
+response = client.pipelines.with_raw_response.list(
+    project_id="my-project-id",
 )
 print(response.headers.get('X-My-Header'))
 
-project = response.parse()  # get the object that `projects.list_agents()` would have returned
-print(project.deployments)
+pipeline = response.parse()  # get the object that `pipelines.list()` would have returned
+print(pipeline)
 ```
 
 These methods return an [`APIResponse`](https://github.com/run-llama/llama-cloud-py/tree/main/src/llama_cloud/_response.py) object.
@@ -295,8 +377,8 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.projects.with_streaming_response.list_agents(
-    "REPLACE_ME",
+with client.pipelines.with_streaming_response.list(
+    project_id="my-project-id",
 ) as response:
     print(response.headers.get("X-My-Header"))
 

@@ -16,16 +16,16 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
+from ...pagination import SyncPaginatedExtractRuns, AsyncPaginatedExtractRuns
+from ..._base_client import AsyncPaginator, make_request_options
 from ...types.extraction import (
+    run_get_params,
     run_list_params,
     run_delete_params,
-    run_retrieve_params,
-    run_retrieve_by_job_params,
-    run_retrieve_latest_from_ui_params,
+    run_get_by_job_params,
+    run_get_latest_from_ui_params,
 )
 from ...types.extraction.extract_run import ExtractRun
-from ...types.extraction.run_list_response import RunListResponse
 
 __all__ = ["RunsResource", "AsyncRunsResource"]
 
@@ -50,51 +50,6 @@ class RunsResource(SyncAPIResource):
         """
         return RunsResourceWithStreamingResponse(self)
 
-    def retrieve(
-        self,
-        run_id: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractRun:
-        """
-        Get Run
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not run_id:
-            raise ValueError(f"Expected a non-empty value for `run_id` but received {run_id!r}")
-        return self._get(
-            f"/api/v1/extraction/runs/{run_id}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    run_retrieve_params.RunRetrieveParams,
-                ),
-            ),
-            cast_to=ExtractRun,
-        )
-
     def list(
         self,
         *,
@@ -107,7 +62,7 @@ class RunsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RunListResponse:
+    ) -> SyncPaginatedExtractRuns[ExtractRun]:
         """
         List Extract Runs
 
@@ -120,8 +75,9 @@ class RunsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/api/v1/extraction/runs",
+            page=SyncPaginatedExtractRuns[ExtractRun],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -136,7 +92,7 @@ class RunsResource(SyncAPIResource):
                     run_list_params.RunListParams,
                 ),
             ),
-            cast_to=RunListResponse,
+            model=ExtractRun,
         )
 
     def delete(
@@ -184,7 +140,52 @@ class RunsResource(SyncAPIResource):
             cast_to=object,
         )
 
-    def retrieve_by_job(
+    def get(
+        self,
+        run_id: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ExtractRun:
+        """
+        Get Run
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not run_id:
+            raise ValueError(f"Expected a non-empty value for `run_id` but received {run_id!r}")
+        return self._get(
+            f"/api/v1/extraction/runs/{run_id}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    run_get_params.RunGetParams,
+                ),
+            ),
+            cast_to=ExtractRun,
+        )
+
+    def get_by_job(
         self,
         job_id: str,
         *,
@@ -223,13 +224,13 @@ class RunsResource(SyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    run_retrieve_by_job_params.RunRetrieveByJobParams,
+                    run_get_by_job_params.RunGetByJobParams,
                 ),
             ),
             cast_to=ExtractRun,
         )
 
-    def retrieve_latest_from_ui(
+    def get_latest_from_ui(
         self,
         *,
         extraction_agent_id: str,
@@ -260,8 +261,7 @@ class RunsResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform(
-                    {"extraction_agent_id": extraction_agent_id},
-                    run_retrieve_latest_from_ui_params.RunRetrieveLatestFromUiParams,
+                    {"extraction_agent_id": extraction_agent_id}, run_get_latest_from_ui_params.RunGetLatestFromUiParams
                 ),
             ),
             cast_to=ExtractRun,
@@ -288,52 +288,7 @@ class AsyncRunsResource(AsyncAPIResource):
         """
         return AsyncRunsResourceWithStreamingResponse(self)
 
-    async def retrieve(
-        self,
-        run_id: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractRun:
-        """
-        Get Run
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not run_id:
-            raise ValueError(f"Expected a non-empty value for `run_id` but received {run_id!r}")
-        return await self._get(
-            f"/api/v1/extraction/runs/{run_id}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    run_retrieve_params.RunRetrieveParams,
-                ),
-            ),
-            cast_to=ExtractRun,
-        )
-
-    async def list(
+    def list(
         self,
         *,
         extraction_agent_id: str,
@@ -345,7 +300,7 @@ class AsyncRunsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RunListResponse:
+    ) -> AsyncPaginator[ExtractRun, AsyncPaginatedExtractRuns[ExtractRun]]:
         """
         List Extract Runs
 
@@ -358,14 +313,15 @@ class AsyncRunsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/api/v1/extraction/runs",
+            page=AsyncPaginatedExtractRuns[ExtractRun],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "extraction_agent_id": extraction_agent_id,
                         "limit": limit,
@@ -374,7 +330,7 @@ class AsyncRunsResource(AsyncAPIResource):
                     run_list_params.RunListParams,
                 ),
             ),
-            cast_to=RunListResponse,
+            model=ExtractRun,
         )
 
     async def delete(
@@ -422,7 +378,52 @@ class AsyncRunsResource(AsyncAPIResource):
             cast_to=object,
         )
 
-    async def retrieve_by_job(
+    async def get(
+        self,
+        run_id: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ExtractRun:
+        """
+        Get Run
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not run_id:
+            raise ValueError(f"Expected a non-empty value for `run_id` but received {run_id!r}")
+        return await self._get(
+            f"/api/v1/extraction/runs/{run_id}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    run_get_params.RunGetParams,
+                ),
+            ),
+            cast_to=ExtractRun,
+        )
+
+    async def get_by_job(
         self,
         job_id: str,
         *,
@@ -461,13 +462,13 @@ class AsyncRunsResource(AsyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    run_retrieve_by_job_params.RunRetrieveByJobParams,
+                    run_get_by_job_params.RunGetByJobParams,
                 ),
             ),
             cast_to=ExtractRun,
         )
 
-    async def retrieve_latest_from_ui(
+    async def get_latest_from_ui(
         self,
         *,
         extraction_agent_id: str,
@@ -498,8 +499,7 @@ class AsyncRunsResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform(
-                    {"extraction_agent_id": extraction_agent_id},
-                    run_retrieve_latest_from_ui_params.RunRetrieveLatestFromUiParams,
+                    {"extraction_agent_id": extraction_agent_id}, run_get_latest_from_ui_params.RunGetLatestFromUiParams
                 ),
             ),
             cast_to=ExtractRun,
@@ -510,20 +510,20 @@ class RunsResourceWithRawResponse:
     def __init__(self, runs: RunsResource) -> None:
         self._runs = runs
 
-        self.retrieve = to_raw_response_wrapper(
-            runs.retrieve,
-        )
         self.list = to_raw_response_wrapper(
             runs.list,
         )
         self.delete = to_raw_response_wrapper(
             runs.delete,
         )
-        self.retrieve_by_job = to_raw_response_wrapper(
-            runs.retrieve_by_job,
+        self.get = to_raw_response_wrapper(
+            runs.get,
         )
-        self.retrieve_latest_from_ui = to_raw_response_wrapper(
-            runs.retrieve_latest_from_ui,
+        self.get_by_job = to_raw_response_wrapper(
+            runs.get_by_job,
+        )
+        self.get_latest_from_ui = to_raw_response_wrapper(
+            runs.get_latest_from_ui,
         )
 
 
@@ -531,20 +531,20 @@ class AsyncRunsResourceWithRawResponse:
     def __init__(self, runs: AsyncRunsResource) -> None:
         self._runs = runs
 
-        self.retrieve = async_to_raw_response_wrapper(
-            runs.retrieve,
-        )
         self.list = async_to_raw_response_wrapper(
             runs.list,
         )
         self.delete = async_to_raw_response_wrapper(
             runs.delete,
         )
-        self.retrieve_by_job = async_to_raw_response_wrapper(
-            runs.retrieve_by_job,
+        self.get = async_to_raw_response_wrapper(
+            runs.get,
         )
-        self.retrieve_latest_from_ui = async_to_raw_response_wrapper(
-            runs.retrieve_latest_from_ui,
+        self.get_by_job = async_to_raw_response_wrapper(
+            runs.get_by_job,
+        )
+        self.get_latest_from_ui = async_to_raw_response_wrapper(
+            runs.get_latest_from_ui,
         )
 
 
@@ -552,20 +552,20 @@ class RunsResourceWithStreamingResponse:
     def __init__(self, runs: RunsResource) -> None:
         self._runs = runs
 
-        self.retrieve = to_streamed_response_wrapper(
-            runs.retrieve,
-        )
         self.list = to_streamed_response_wrapper(
             runs.list,
         )
         self.delete = to_streamed_response_wrapper(
             runs.delete,
         )
-        self.retrieve_by_job = to_streamed_response_wrapper(
-            runs.retrieve_by_job,
+        self.get = to_streamed_response_wrapper(
+            runs.get,
         )
-        self.retrieve_latest_from_ui = to_streamed_response_wrapper(
-            runs.retrieve_latest_from_ui,
+        self.get_by_job = to_streamed_response_wrapper(
+            runs.get_by_job,
+        )
+        self.get_latest_from_ui = to_streamed_response_wrapper(
+            runs.get_latest_from_ui,
         )
 
 
@@ -573,18 +573,18 @@ class AsyncRunsResourceWithStreamingResponse:
     def __init__(self, runs: AsyncRunsResource) -> None:
         self._runs = runs
 
-        self.retrieve = async_to_streamed_response_wrapper(
-            runs.retrieve,
-        )
         self.list = async_to_streamed_response_wrapper(
             runs.list,
         )
         self.delete = async_to_streamed_response_wrapper(
             runs.delete,
         )
-        self.retrieve_by_job = async_to_streamed_response_wrapper(
-            runs.retrieve_by_job,
+        self.get = async_to_streamed_response_wrapper(
+            runs.get,
         )
-        self.retrieve_latest_from_ui = async_to_streamed_response_wrapper(
-            runs.retrieve_latest_from_ui,
+        self.get_by_job = async_to_streamed_response_wrapper(
+            runs.get_by_job,
+        )
+        self.get_latest_from_ui = async_to_streamed_response_wrapper(
+            runs.get_latest_from_ui,
         )

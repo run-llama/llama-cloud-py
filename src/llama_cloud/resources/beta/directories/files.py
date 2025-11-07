@@ -16,18 +16,19 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...._base_client import make_request_options
+from ....pagination import SyncPaginatedClassifyJobs, AsyncPaginatedClassifyJobs
+from ...._base_client import AsyncPaginator, make_request_options
 from ....types.beta.directories import (
     file_add_params,
+    file_get_params,
     file_list_params,
     file_delete_params,
     file_update_params,
-    file_retrieve_params,
 )
 from ....types.beta.directories.file_add_response import FileAddResponse
+from ....types.beta.directories.file_get_response import FileGetResponse
 from ....types.beta.directories.file_list_response import FileListResponse
 from ....types.beta.directories.file_update_response import FileUpdateResponse
-from ....types.beta.directories.file_retrieve_response import FileRetrieveResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -51,57 +52,6 @@ class FilesResource(SyncAPIResource):
         For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
         """
         return FilesResourceWithStreamingResponse(self)
-
-    def retrieve(
-        self,
-        directory_file_id: str,
-        *,
-        directory_id: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileRetrieveResponse:
-        """Get a file by its directory_file_id within the specified directory.
-
-        If you're
-        trying to get a file by its unique_id, use the list endpoint with a filter
-        instead.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not directory_id:
-            raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
-        if not directory_file_id:
-            raise ValueError(f"Expected a non-empty value for `directory_file_id` but received {directory_file_id!r}")
-        return self._get(
-            f"/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_retrieve_params.FileRetrieveParams,
-                ),
-            ),
-            cast_to=FileRetrieveResponse,
-        )
 
     def update(
         self,
@@ -187,7 +137,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListResponse:
+    ) -> SyncPaginatedClassifyJobs[FileListResponse]:
         """
         List all files within the specified directory with optional filtering and
         pagination.
@@ -203,8 +153,9 @@ class FilesResource(SyncAPIResource):
         """
         if not directory_id:
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
-        return self._get(
+        return self._get_api_list(
             f"/api/v1/beta/directories/{directory_id}/files",
+            page=SyncPaginatedClassifyJobs[FileListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -225,7 +176,7 @@ class FilesResource(SyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            model=FileListResponse,
         )
 
     def delete(
@@ -347,6 +298,57 @@ class FilesResource(SyncAPIResource):
             cast_to=FileAddResponse,
         )
 
+    def get(
+        self,
+        directory_file_id: str,
+        *,
+        directory_id: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> FileGetResponse:
+        """Get a file by its directory_file_id within the specified directory.
+
+        If you're
+        trying to get a file by its unique_id, use the list endpoint with a filter
+        instead.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not directory_id:
+            raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
+        if not directory_file_id:
+            raise ValueError(f"Expected a non-empty value for `directory_file_id` but received {directory_file_id!r}")
+        return self._get(
+            f"/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    file_get_params.FileGetParams,
+                ),
+            ),
+            cast_to=FileGetResponse,
+        )
+
 
 class AsyncFilesResource(AsyncAPIResource):
     @cached_property
@@ -367,57 +369,6 @@ class AsyncFilesResource(AsyncAPIResource):
         For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
         """
         return AsyncFilesResourceWithStreamingResponse(self)
-
-    async def retrieve(
-        self,
-        directory_file_id: str,
-        *,
-        directory_id: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileRetrieveResponse:
-        """Get a file by its directory_file_id within the specified directory.
-
-        If you're
-        trying to get a file by its unique_id, use the list endpoint with a filter
-        instead.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not directory_id:
-            raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
-        if not directory_file_id:
-            raise ValueError(f"Expected a non-empty value for `directory_file_id` but received {directory_file_id!r}")
-        return await self._get(
-            f"/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_retrieve_params.FileRetrieveParams,
-                ),
-            ),
-            cast_to=FileRetrieveResponse,
-        )
 
     async def update(
         self,
@@ -484,7 +435,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=FileUpdateResponse,
         )
 
-    async def list(
+    def list(
         self,
         directory_id: str,
         *,
@@ -503,7 +454,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListResponse:
+    ) -> AsyncPaginator[FileListResponse, AsyncPaginatedClassifyJobs[FileListResponse]]:
         """
         List all files within the specified directory with optional filtering and
         pagination.
@@ -519,14 +470,15 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         if not directory_id:
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
-        return await self._get(
+        return self._get_api_list(
             f"/api/v1/beta/directories/{directory_id}/files",
+            page=AsyncPaginatedClassifyJobs[FileListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "display_name": display_name,
                         "display_name_contains": display_name_contains,
@@ -541,7 +493,7 @@ class AsyncFilesResource(AsyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            model=FileListResponse,
         )
 
     async def delete(
@@ -663,14 +615,62 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=FileAddResponse,
         )
 
+    async def get(
+        self,
+        directory_file_id: str,
+        *,
+        directory_id: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> FileGetResponse:
+        """Get a file by its directory_file_id within the specified directory.
+
+        If you're
+        trying to get a file by its unique_id, use the list endpoint with a filter
+        instead.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not directory_id:
+            raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
+        if not directory_file_id:
+            raise ValueError(f"Expected a non-empty value for `directory_file_id` but received {directory_file_id!r}")
+        return await self._get(
+            f"/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    file_get_params.FileGetParams,
+                ),
+            ),
+            cast_to=FileGetResponse,
+        )
+
 
 class FilesResourceWithRawResponse:
     def __init__(self, files: FilesResource) -> None:
         self._files = files
 
-        self.retrieve = to_raw_response_wrapper(
-            files.retrieve,
-        )
         self.update = to_raw_response_wrapper(
             files.update,
         )
@@ -683,15 +683,15 @@ class FilesResourceWithRawResponse:
         self.add = to_raw_response_wrapper(
             files.add,
         )
+        self.get = to_raw_response_wrapper(
+            files.get,
+        )
 
 
 class AsyncFilesResourceWithRawResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
         self._files = files
 
-        self.retrieve = async_to_raw_response_wrapper(
-            files.retrieve,
-        )
         self.update = async_to_raw_response_wrapper(
             files.update,
         )
@@ -704,15 +704,15 @@ class AsyncFilesResourceWithRawResponse:
         self.add = async_to_raw_response_wrapper(
             files.add,
         )
+        self.get = async_to_raw_response_wrapper(
+            files.get,
+        )
 
 
 class FilesResourceWithStreamingResponse:
     def __init__(self, files: FilesResource) -> None:
         self._files = files
 
-        self.retrieve = to_streamed_response_wrapper(
-            files.retrieve,
-        )
         self.update = to_streamed_response_wrapper(
             files.update,
         )
@@ -725,15 +725,15 @@ class FilesResourceWithStreamingResponse:
         self.add = to_streamed_response_wrapper(
             files.add,
         )
+        self.get = to_streamed_response_wrapper(
+            files.get,
+        )
 
 
 class AsyncFilesResourceWithStreamingResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
         self._files = files
 
-        self.retrieve = async_to_streamed_response_wrapper(
-            files.retrieve,
-        )
         self.update = async_to_streamed_response_wrapper(
             files.update,
         )
@@ -745,4 +745,7 @@ class AsyncFilesResourceWithStreamingResponse:
         )
         self.add = async_to_streamed_response_wrapper(
             files.add,
+        )
+        self.get = async_to_streamed_response_wrapper(
+            files.get,
         )

@@ -22,58 +22,6 @@ class TestParseConfigurations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: LlamaCloud) -> None:
-        parse_configuration = client.beta.parse_configurations.retrieve(
-            config_id="config_id",
-        )
-        assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_retrieve_with_all_params(self, client: LlamaCloud) -> None:
-        parse_configuration = client.beta.parse_configurations.retrieve(
-            config_id="config_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve(self, client: LlamaCloud) -> None:
-        response = client.beta.parse_configurations.with_raw_response.retrieve(
-            config_id="config_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        parse_configuration = response.parse()
-        assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve(self, client: LlamaCloud) -> None:
-        with client.beta.parse_configurations.with_streaming_response.retrieve(
-            config_id="config_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            parse_configuration = response.parse()
-            assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_retrieve(self, client: LlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_id` but received ''"):
-            client.beta.parse_configurations.with_raw_response.retrieve(
-                config_id="",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     def test_method_update(self, client: LlamaCloud) -> None:
         parse_configuration = client.beta.parse_configurations.update(
             config_id="config_id",
@@ -295,6 +243,138 @@ class TestParseConfigurations:
             client.beta.parse_configurations.with_raw_response.delete(
                 config_id="",
             )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_get(self, client: LlamaCloud) -> None:
+        parse_configuration = client.beta.parse_configurations.get(
+            config_id="config_id",
+        )
+        assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_get_with_all_params(self, client: LlamaCloud) -> None:
+        parse_configuration = client.beta.parse_configurations.get(
+            config_id="config_id",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_get(self, client: LlamaCloud) -> None:
+        response = client.beta.parse_configurations.with_raw_response.get(
+            config_id="config_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        parse_configuration = response.parse()
+        assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_get(self, client: LlamaCloud) -> None:
+        with client.beta.parse_configurations.with_streaming_response.get(
+            config_id="config_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            parse_configuration = response.parse()
+            assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_get(self, client: LlamaCloud) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_id` but received ''"):
+            client.beta.parse_configurations.with_raw_response.get(
+                config_id="",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_get_latest(self, client: LlamaCloud) -> None:
+        parse_configuration = client.beta.parse_configurations.get_latest()
+        assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_get_latest_with_all_params(self, client: LlamaCloud) -> None:
+        parse_configuration = client.beta.parse_configurations.get_latest(
+            creator="creator",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_get_latest(self, client: LlamaCloud) -> None:
+        response = client.beta.parse_configurations.with_raw_response.get_latest()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        parse_configuration = response.parse()
+        assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_get_latest(self, client: LlamaCloud) -> None:
+        with client.beta.parse_configurations.with_streaming_response.get_latest() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            parse_configuration = response.parse()
+            assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_get_parse_configurations(self, client: LlamaCloud) -> None:
+        parse_configuration = client.beta.parse_configurations.get_parse_configurations()
+        assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_get_parse_configurations_with_all_params(self, client: LlamaCloud) -> None:
+        parse_configuration = client.beta.parse_configurations.get_parse_configurations(
+            creator="creator",
+            name="name",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            page_size=0,
+            page_token="page_token",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            version="version",
+        )
+        assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_get_parse_configurations(self, client: LlamaCloud) -> None:
+        response = client.beta.parse_configurations.with_raw_response.get_parse_configurations()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        parse_configuration = response.parse()
+        assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_get_parse_configurations(self, client: LlamaCloud) -> None:
+        with client.beta.parse_configurations.with_streaming_response.get_parse_configurations() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            parse_configuration = response.parse()
+            assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -520,86 +600,6 @@ class TestParseConfigurations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve_latest(self, client: LlamaCloud) -> None:
-        parse_configuration = client.beta.parse_configurations.retrieve_latest()
-        assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_retrieve_latest_with_all_params(self, client: LlamaCloud) -> None:
-        parse_configuration = client.beta.parse_configurations.retrieve_latest(
-            creator="creator",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve_latest(self, client: LlamaCloud) -> None:
-        response = client.beta.parse_configurations.with_raw_response.retrieve_latest()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        parse_configuration = response.parse()
-        assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve_latest(self, client: LlamaCloud) -> None:
-        with client.beta.parse_configurations.with_streaming_response.retrieve_latest() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            parse_configuration = response.parse()
-            assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_retrieve_parse_configurations(self, client: LlamaCloud) -> None:
-        parse_configuration = client.beta.parse_configurations.retrieve_parse_configurations()
-        assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_retrieve_parse_configurations_with_all_params(self, client: LlamaCloud) -> None:
-        parse_configuration = client.beta.parse_configurations.retrieve_parse_configurations(
-            creator="creator",
-            name="name",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            page_size=0,
-            page_token="page_token",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            version="version",
-        )
-        assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve_parse_configurations(self, client: LlamaCloud) -> None:
-        response = client.beta.parse_configurations.with_raw_response.retrieve_parse_configurations()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        parse_configuration = response.parse()
-        assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve_parse_configurations(self, client: LlamaCloud) -> None:
-        with client.beta.parse_configurations.with_streaming_response.retrieve_parse_configurations() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            parse_configuration = response.parse()
-            assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     def test_method_update_parse_configurations(self, client: LlamaCloud) -> None:
         parse_configuration = client.beta.parse_configurations.update_parse_configurations(
             name="name",
@@ -777,58 +777,6 @@ class TestAsyncParseConfigurations:
     parametrize = pytest.mark.parametrize(
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        parse_configuration = await async_client.beta.parse_configurations.retrieve(
-            config_id="config_id",
-        )
-        assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_retrieve_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        parse_configuration = await async_client.beta.parse_configurations.retrieve(
-            config_id="config_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.beta.parse_configurations.with_raw_response.retrieve(
-            config_id="config_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        parse_configuration = await response.parse()
-        assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.beta.parse_configurations.with_streaming_response.retrieve(
-            config_id="config_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            parse_configuration = await response.parse()
-            assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_id` but received ''"):
-            await async_client.beta.parse_configurations.with_raw_response.retrieve(
-                config_id="",
-            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -1056,6 +1004,140 @@ class TestAsyncParseConfigurations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
+    async def test_method_get(self, async_client: AsyncLlamaCloud) -> None:
+        parse_configuration = await async_client.beta.parse_configurations.get(
+            config_id="config_id",
+        )
+        assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_get_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        parse_configuration = await async_client.beta.parse_configurations.get(
+            config_id="config_id",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_get(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.beta.parse_configurations.with_raw_response.get(
+            config_id="config_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        parse_configuration = await response.parse()
+        assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_get(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.beta.parse_configurations.with_streaming_response.get(
+            config_id="config_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            parse_configuration = await response.parse()
+            assert_matches_type(ParseConfiguration, parse_configuration, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_get(self, async_client: AsyncLlamaCloud) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_id` but received ''"):
+            await async_client.beta.parse_configurations.with_raw_response.get(
+                config_id="",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_get_latest(self, async_client: AsyncLlamaCloud) -> None:
+        parse_configuration = await async_client.beta.parse_configurations.get_latest()
+        assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_get_latest_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        parse_configuration = await async_client.beta.parse_configurations.get_latest(
+            creator="creator",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_get_latest(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.beta.parse_configurations.with_raw_response.get_latest()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        parse_configuration = await response.parse()
+        assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_get_latest(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.beta.parse_configurations.with_streaming_response.get_latest() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            parse_configuration = await response.parse()
+            assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_get_parse_configurations(self, async_client: AsyncLlamaCloud) -> None:
+        parse_configuration = await async_client.beta.parse_configurations.get_parse_configurations()
+        assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_get_parse_configurations_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        parse_configuration = await async_client.beta.parse_configurations.get_parse_configurations(
+            creator="creator",
+            name="name",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            page_size=0,
+            page_token="page_token",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            version="version",
+        )
+        assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_get_parse_configurations(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.beta.parse_configurations.with_raw_response.get_parse_configurations()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        parse_configuration = await response.parse()
+        assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_get_parse_configurations(self, async_client: AsyncLlamaCloud) -> None:
+        async with (
+            async_client.beta.parse_configurations.with_streaming_response.get_parse_configurations()
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            parse_configuration = await response.parse()
+            assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
     async def test_method_parse_configurations(self, async_client: AsyncLlamaCloud) -> None:
         parse_configuration = await async_client.beta.parse_configurations.parse_configurations(
             name="name",
@@ -1268,88 +1350,6 @@ class TestAsyncParseConfigurations:
     @parametrize
     async def test_streaming_response_query(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.parse_configurations.with_streaming_response.query() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            parse_configuration = await response.parse()
-            assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_retrieve_latest(self, async_client: AsyncLlamaCloud) -> None:
-        parse_configuration = await async_client.beta.parse_configurations.retrieve_latest()
-        assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_retrieve_latest_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        parse_configuration = await async_client.beta.parse_configurations.retrieve_latest(
-            creator="creator",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_retrieve_latest(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.beta.parse_configurations.with_raw_response.retrieve_latest()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        parse_configuration = await response.parse()
-        assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_retrieve_latest(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.beta.parse_configurations.with_streaming_response.retrieve_latest() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            parse_configuration = await response.parse()
-            assert_matches_type(Optional[ParseConfiguration], parse_configuration, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_retrieve_parse_configurations(self, async_client: AsyncLlamaCloud) -> None:
-        parse_configuration = await async_client.beta.parse_configurations.retrieve_parse_configurations()
-        assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_retrieve_parse_configurations_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        parse_configuration = await async_client.beta.parse_configurations.retrieve_parse_configurations(
-            creator="creator",
-            name="name",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            page_size=0,
-            page_token="page_token",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            version="version",
-        )
-        assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_retrieve_parse_configurations(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.beta.parse_configurations.with_raw_response.retrieve_parse_configurations()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        parse_configuration = await response.parse()
-        assert_matches_type(ParseConfigurationQueryResponse, parse_configuration, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_retrieve_parse_configurations(self, async_client: AsyncLlamaCloud) -> None:
-        async with (
-            async_client.beta.parse_configurations.with_streaming_response.retrieve_parse_configurations()
-        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 

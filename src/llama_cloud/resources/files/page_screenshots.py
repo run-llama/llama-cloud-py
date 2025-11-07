@@ -17,8 +17,8 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ...types.files import (
+    page_screenshot_get_params,
     page_screenshot_list_params,
-    page_screenshot_retrieve_params,
     page_screenshot_generate_presigned_url_params,
 )
 from ..._base_client import make_request_options
@@ -47,52 +47,6 @@ class PageScreenshotsResource(SyncAPIResource):
         For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
         """
         return PageScreenshotsResourceWithStreamingResponse(self)
-
-    def retrieve(
-        self,
-        page_index: int,
-        *,
-        id: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """
-        Get screenshot of a page from a file.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return self._get(
-            f"/api/v1/files/{id}/page_screenshots/{page_index}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    page_screenshot_retrieve_params.PageScreenshotRetrieveParams,
-                ),
-            ),
-            cast_to=object,
-        )
 
     def list(
         self,
@@ -189,28 +143,7 @@ class PageScreenshotsResource(SyncAPIResource):
             cast_to=PresignedURL,
         )
 
-
-class AsyncPageScreenshotsResource(AsyncAPIResource):
-    @cached_property
-    def with_raw_response(self) -> AsyncPageScreenshotsResourceWithRawResponse:
-        """
-        This property can be used as a prefix for any HTTP method call to return
-        the raw response object instead of the parsed content.
-
-        For more information, see https://www.github.com/run-llama/llama-cloud-py#accessing-raw-response-data-eg-headers
-        """
-        return AsyncPageScreenshotsResourceWithRawResponse(self)
-
-    @cached_property
-    def with_streaming_response(self) -> AsyncPageScreenshotsResourceWithStreamingResponse:
-        """
-        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
-
-        For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
-        """
-        return AsyncPageScreenshotsResourceWithStreamingResponse(self)
-
-    async def retrieve(
+    def get(
         self,
         page_index: int,
         *,
@@ -238,23 +171,44 @@ class AsyncPageScreenshotsResource(AsyncAPIResource):
         """
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return await self._get(
+        return self._get(
             f"/api/v1/files/{id}/page_screenshots/{page_index}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    page_screenshot_retrieve_params.PageScreenshotRetrieveParams,
+                    page_screenshot_get_params.PageScreenshotGetParams,
                 ),
             ),
             cast_to=object,
         )
+
+
+class AsyncPageScreenshotsResource(AsyncAPIResource):
+    @cached_property
+    def with_raw_response(self) -> AsyncPageScreenshotsResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/run-llama/llama-cloud-py#accessing-raw-response-data-eg-headers
+        """
+        return AsyncPageScreenshotsResourceWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncPageScreenshotsResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
+        """
+        return AsyncPageScreenshotsResourceWithStreamingResponse(self)
 
     async def list(
         self,
@@ -351,19 +305,65 @@ class AsyncPageScreenshotsResource(AsyncAPIResource):
             cast_to=PresignedURL,
         )
 
+    async def get(
+        self,
+        page_index: int,
+        *,
+        id: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """
+        Get screenshot of a page from a file.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._get(
+            f"/api/v1/files/{id}/page_screenshots/{page_index}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    page_screenshot_get_params.PageScreenshotGetParams,
+                ),
+            ),
+            cast_to=object,
+        )
+
 
 class PageScreenshotsResourceWithRawResponse:
     def __init__(self, page_screenshots: PageScreenshotsResource) -> None:
         self._page_screenshots = page_screenshots
 
-        self.retrieve = to_raw_response_wrapper(
-            page_screenshots.retrieve,
-        )
         self.list = to_raw_response_wrapper(
             page_screenshots.list,
         )
         self.generate_presigned_url = to_raw_response_wrapper(
             page_screenshots.generate_presigned_url,
+        )
+        self.get = to_raw_response_wrapper(
+            page_screenshots.get,
         )
 
 
@@ -371,14 +371,14 @@ class AsyncPageScreenshotsResourceWithRawResponse:
     def __init__(self, page_screenshots: AsyncPageScreenshotsResource) -> None:
         self._page_screenshots = page_screenshots
 
-        self.retrieve = async_to_raw_response_wrapper(
-            page_screenshots.retrieve,
-        )
         self.list = async_to_raw_response_wrapper(
             page_screenshots.list,
         )
         self.generate_presigned_url = async_to_raw_response_wrapper(
             page_screenshots.generate_presigned_url,
+        )
+        self.get = async_to_raw_response_wrapper(
+            page_screenshots.get,
         )
 
 
@@ -386,14 +386,14 @@ class PageScreenshotsResourceWithStreamingResponse:
     def __init__(self, page_screenshots: PageScreenshotsResource) -> None:
         self._page_screenshots = page_screenshots
 
-        self.retrieve = to_streamed_response_wrapper(
-            page_screenshots.retrieve,
-        )
         self.list = to_streamed_response_wrapper(
             page_screenshots.list,
         )
         self.generate_presigned_url = to_streamed_response_wrapper(
             page_screenshots.generate_presigned_url,
+        )
+        self.get = to_streamed_response_wrapper(
+            page_screenshots.get,
         )
 
 
@@ -401,12 +401,12 @@ class AsyncPageScreenshotsResourceWithStreamingResponse:
     def __init__(self, page_screenshots: AsyncPageScreenshotsResource) -> None:
         self._page_screenshots = page_screenshots
 
-        self.retrieve = async_to_streamed_response_wrapper(
-            page_screenshots.retrieve,
-        )
         self.list = async_to_streamed_response_wrapper(
             page_screenshots.list,
         )
         self.generate_presigned_url = async_to_streamed_response_wrapper(
             page_screenshots.generate_presigned_url,
+        )
+        self.get = async_to_streamed_response_wrapper(
+            page_screenshots.get,
         )

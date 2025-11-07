@@ -9,11 +9,12 @@ import pytest
 
 from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
+from llama_cloud.pagination import SyncPaginatedClassifyJobs, AsyncPaginatedClassifyJobs
 from llama_cloud.types.beta import (
+    DirectoryGetResponse,
     DirectoryListResponse,
     DirectoryCreateResponse,
     DirectoryUpdateResponse,
-    DirectoryRetrieveResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -67,58 +68,6 @@ class TestDirectories:
             assert_matches_type(DirectoryCreateResponse, directory, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_retrieve(self, client: LlamaCloud) -> None:
-        directory = client.beta.directories.retrieve(
-            directory_id="directory_id",
-        )
-        assert_matches_type(DirectoryRetrieveResponse, directory, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_retrieve_with_all_params(self, client: LlamaCloud) -> None:
-        directory = client.beta.directories.retrieve(
-            directory_id="directory_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(DirectoryRetrieveResponse, directory, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve(self, client: LlamaCloud) -> None:
-        response = client.beta.directories.with_raw_response.retrieve(
-            directory_id="directory_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        directory = response.parse()
-        assert_matches_type(DirectoryRetrieveResponse, directory, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve(self, client: LlamaCloud) -> None:
-        with client.beta.directories.with_streaming_response.retrieve(
-            directory_id="directory_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            directory = response.parse()
-            assert_matches_type(DirectoryRetrieveResponse, directory, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_retrieve(self, client: LlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
-            client.beta.directories.with_raw_response.retrieve(
-                directory_id="",
-            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -178,7 +127,7 @@ class TestDirectories:
     @parametrize
     def test_method_list(self, client: LlamaCloud) -> None:
         directory = client.beta.directories.list()
-        assert_matches_type(DirectoryListResponse, directory, path=["response"])
+        assert_matches_type(SyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -192,7 +141,7 @@ class TestDirectories:
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(DirectoryListResponse, directory, path=["response"])
+        assert_matches_type(SyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -202,7 +151,7 @@ class TestDirectories:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         directory = response.parse()
-        assert_matches_type(DirectoryListResponse, directory, path=["response"])
+        assert_matches_type(SyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -212,7 +161,7 @@ class TestDirectories:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             directory = response.parse()
-            assert_matches_type(DirectoryListResponse, directory, path=["response"])
+            assert_matches_type(SyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -268,6 +217,58 @@ class TestDirectories:
                 directory_id="",
             )
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_get(self, client: LlamaCloud) -> None:
+        directory = client.beta.directories.get(
+            directory_id="directory_id",
+        )
+        assert_matches_type(DirectoryGetResponse, directory, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_get_with_all_params(self, client: LlamaCloud) -> None:
+        directory = client.beta.directories.get(
+            directory_id="directory_id",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(DirectoryGetResponse, directory, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_get(self, client: LlamaCloud) -> None:
+        response = client.beta.directories.with_raw_response.get(
+            directory_id="directory_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        directory = response.parse()
+        assert_matches_type(DirectoryGetResponse, directory, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_get(self, client: LlamaCloud) -> None:
+        with client.beta.directories.with_streaming_response.get(
+            directory_id="directory_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            directory = response.parse()
+            assert_matches_type(DirectoryGetResponse, directory, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_get(self, client: LlamaCloud) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
+            client.beta.directories.with_raw_response.get(
+                directory_id="",
+            )
+
 
 class TestAsyncDirectories:
     parametrize = pytest.mark.parametrize(
@@ -319,58 +320,6 @@ class TestAsyncDirectories:
             assert_matches_type(DirectoryCreateResponse, directory, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        directory = await async_client.beta.directories.retrieve(
-            directory_id="directory_id",
-        )
-        assert_matches_type(DirectoryRetrieveResponse, directory, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_retrieve_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        directory = await async_client.beta.directories.retrieve(
-            directory_id="directory_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(DirectoryRetrieveResponse, directory, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.beta.directories.with_raw_response.retrieve(
-            directory_id="directory_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        directory = await response.parse()
-        assert_matches_type(DirectoryRetrieveResponse, directory, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.beta.directories.with_streaming_response.retrieve(
-            directory_id="directory_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            directory = await response.parse()
-            assert_matches_type(DirectoryRetrieveResponse, directory, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
-            await async_client.beta.directories.with_raw_response.retrieve(
-                directory_id="",
-            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -430,7 +379,7 @@ class TestAsyncDirectories:
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloud) -> None:
         directory = await async_client.beta.directories.list()
-        assert_matches_type(DirectoryListResponse, directory, path=["response"])
+        assert_matches_type(AsyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -444,7 +393,7 @@ class TestAsyncDirectories:
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(DirectoryListResponse, directory, path=["response"])
+        assert_matches_type(AsyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -454,7 +403,7 @@ class TestAsyncDirectories:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         directory = await response.parse()
-        assert_matches_type(DirectoryListResponse, directory, path=["response"])
+        assert_matches_type(AsyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -464,7 +413,7 @@ class TestAsyncDirectories:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             directory = await response.parse()
-            assert_matches_type(DirectoryListResponse, directory, path=["response"])
+            assert_matches_type(AsyncPaginatedClassifyJobs[DirectoryListResponse], directory, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -517,5 +466,57 @@ class TestAsyncDirectories:
     async def test_path_params_delete(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
             await async_client.beta.directories.with_raw_response.delete(
+                directory_id="",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_get(self, async_client: AsyncLlamaCloud) -> None:
+        directory = await async_client.beta.directories.get(
+            directory_id="directory_id",
+        )
+        assert_matches_type(DirectoryGetResponse, directory, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_get_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        directory = await async_client.beta.directories.get(
+            directory_id="directory_id",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(DirectoryGetResponse, directory, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_get(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.beta.directories.with_raw_response.get(
+            directory_id="directory_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        directory = await response.parse()
+        assert_matches_type(DirectoryGetResponse, directory, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_get(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.beta.directories.with_streaming_response.get(
+            directory_id="directory_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            directory = await response.parse()
+            assert_matches_type(DirectoryGetResponse, directory, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_get(self, async_client: AsyncLlamaCloud) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
+            await async_client.beta.directories.with_raw_response.get(
                 directory_id="",
             )

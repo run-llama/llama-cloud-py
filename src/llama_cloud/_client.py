@@ -21,17 +21,7 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
-from .resources import (
-    auth,
-    evals,
-    api_keys,
-    projects,
-    data_sinks,
-    retrievers,
-    data_sources,
-    validate_integrations,
-    embedding_model_configs,
-)
+from .resources import evals, projects, data_sinks, retrievers, data_sources
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, LlamaCloudError
 from ._base_client import (
@@ -41,7 +31,6 @@ from ._base_client import (
 )
 from .resources.beta import beta
 from .resources.files import files
-from .resources.billing import billing
 from .resources.parsing import parsing
 from .resources.pipelines import pipelines
 from .resources.classifier import classifier
@@ -62,11 +51,8 @@ __all__ = [
 
 class LlamaCloud(SyncAPIClient):
     projects: projects.ProjectsResource
-    api_keys: api_keys.APIKeysResource
-    validate_integrations: validate_integrations.ValidateIntegrationsResource
     data_sinks: data_sinks.DataSinksResource
     data_sources: data_sources.DataSourcesResource
-    embedding_model_configs: embedding_model_configs.EmbeddingModelConfigsResource
     organizations: organizations.OrganizationsResource
     files: files.FilesResource
     pipelines: pipelines.PipelinesResource
@@ -74,8 +60,6 @@ class LlamaCloud(SyncAPIClient):
     evals: evals.EvalsResource
     parsing: parsing.ParsingResource
     classifier: classifier.ClassifierResource
-    auth: auth.AuthResource
-    billing: billing.BillingResource
     extraction: extraction.ExtractionResource
     beta: beta.BetaResource
     with_raw_response: LlamaCloudWithRawResponse
@@ -136,11 +120,8 @@ class LlamaCloud(SyncAPIClient):
         )
 
         self.projects = projects.ProjectsResource(self)
-        self.api_keys = api_keys.APIKeysResource(self)
-        self.validate_integrations = validate_integrations.ValidateIntegrationsResource(self)
         self.data_sinks = data_sinks.DataSinksResource(self)
         self.data_sources = data_sources.DataSourcesResource(self)
-        self.embedding_model_configs = embedding_model_configs.EmbeddingModelConfigsResource(self)
         self.organizations = organizations.OrganizationsResource(self)
         self.files = files.FilesResource(self)
         self.pipelines = pipelines.PipelinesResource(self)
@@ -148,8 +129,6 @@ class LlamaCloud(SyncAPIClient):
         self.evals = evals.EvalsResource(self)
         self.parsing = parsing.ParsingResource(self)
         self.classifier = classifier.ClassifierResource(self)
-        self.auth = auth.AuthResource(self)
-        self.billing = billing.BillingResource(self)
         self.extraction = extraction.ExtractionResource(self)
         self.beta = beta.BetaResource(self)
         self.with_raw_response = LlamaCloudWithRawResponse(self)
@@ -262,11 +241,8 @@ class LlamaCloud(SyncAPIClient):
 
 class AsyncLlamaCloud(AsyncAPIClient):
     projects: projects.AsyncProjectsResource
-    api_keys: api_keys.AsyncAPIKeysResource
-    validate_integrations: validate_integrations.AsyncValidateIntegrationsResource
     data_sinks: data_sinks.AsyncDataSinksResource
     data_sources: data_sources.AsyncDataSourcesResource
-    embedding_model_configs: embedding_model_configs.AsyncEmbeddingModelConfigsResource
     organizations: organizations.AsyncOrganizationsResource
     files: files.AsyncFilesResource
     pipelines: pipelines.AsyncPipelinesResource
@@ -274,8 +250,6 @@ class AsyncLlamaCloud(AsyncAPIClient):
     evals: evals.AsyncEvalsResource
     parsing: parsing.AsyncParsingResource
     classifier: classifier.AsyncClassifierResource
-    auth: auth.AsyncAuthResource
-    billing: billing.AsyncBillingResource
     extraction: extraction.AsyncExtractionResource
     beta: beta.AsyncBetaResource
     with_raw_response: AsyncLlamaCloudWithRawResponse
@@ -336,11 +310,8 @@ class AsyncLlamaCloud(AsyncAPIClient):
         )
 
         self.projects = projects.AsyncProjectsResource(self)
-        self.api_keys = api_keys.AsyncAPIKeysResource(self)
-        self.validate_integrations = validate_integrations.AsyncValidateIntegrationsResource(self)
         self.data_sinks = data_sinks.AsyncDataSinksResource(self)
         self.data_sources = data_sources.AsyncDataSourcesResource(self)
-        self.embedding_model_configs = embedding_model_configs.AsyncEmbeddingModelConfigsResource(self)
         self.organizations = organizations.AsyncOrganizationsResource(self)
         self.files = files.AsyncFilesResource(self)
         self.pipelines = pipelines.AsyncPipelinesResource(self)
@@ -348,8 +319,6 @@ class AsyncLlamaCloud(AsyncAPIClient):
         self.evals = evals.AsyncEvalsResource(self)
         self.parsing = parsing.AsyncParsingResource(self)
         self.classifier = classifier.AsyncClassifierResource(self)
-        self.auth = auth.AsyncAuthResource(self)
-        self.billing = billing.AsyncBillingResource(self)
         self.extraction = extraction.AsyncExtractionResource(self)
         self.beta = beta.AsyncBetaResource(self)
         self.with_raw_response = AsyncLlamaCloudWithRawResponse(self)
@@ -463,15 +432,8 @@ class AsyncLlamaCloud(AsyncAPIClient):
 class LlamaCloudWithRawResponse:
     def __init__(self, client: LlamaCloud) -> None:
         self.projects = projects.ProjectsResourceWithRawResponse(client.projects)
-        self.api_keys = api_keys.APIKeysResourceWithRawResponse(client.api_keys)
-        self.validate_integrations = validate_integrations.ValidateIntegrationsResourceWithRawResponse(
-            client.validate_integrations
-        )
         self.data_sinks = data_sinks.DataSinksResourceWithRawResponse(client.data_sinks)
         self.data_sources = data_sources.DataSourcesResourceWithRawResponse(client.data_sources)
-        self.embedding_model_configs = embedding_model_configs.EmbeddingModelConfigsResourceWithRawResponse(
-            client.embedding_model_configs
-        )
         self.organizations = organizations.OrganizationsResourceWithRawResponse(client.organizations)
         self.files = files.FilesResourceWithRawResponse(client.files)
         self.pipelines = pipelines.PipelinesResourceWithRawResponse(client.pipelines)
@@ -479,8 +441,6 @@ class LlamaCloudWithRawResponse:
         self.evals = evals.EvalsResourceWithRawResponse(client.evals)
         self.parsing = parsing.ParsingResourceWithRawResponse(client.parsing)
         self.classifier = classifier.ClassifierResourceWithRawResponse(client.classifier)
-        self.auth = auth.AuthResourceWithRawResponse(client.auth)
-        self.billing = billing.BillingResourceWithRawResponse(client.billing)
         self.extraction = extraction.ExtractionResourceWithRawResponse(client.extraction)
         self.beta = beta.BetaResourceWithRawResponse(client.beta)
 
@@ -488,15 +448,8 @@ class LlamaCloudWithRawResponse:
 class AsyncLlamaCloudWithRawResponse:
     def __init__(self, client: AsyncLlamaCloud) -> None:
         self.projects = projects.AsyncProjectsResourceWithRawResponse(client.projects)
-        self.api_keys = api_keys.AsyncAPIKeysResourceWithRawResponse(client.api_keys)
-        self.validate_integrations = validate_integrations.AsyncValidateIntegrationsResourceWithRawResponse(
-            client.validate_integrations
-        )
         self.data_sinks = data_sinks.AsyncDataSinksResourceWithRawResponse(client.data_sinks)
         self.data_sources = data_sources.AsyncDataSourcesResourceWithRawResponse(client.data_sources)
-        self.embedding_model_configs = embedding_model_configs.AsyncEmbeddingModelConfigsResourceWithRawResponse(
-            client.embedding_model_configs
-        )
         self.organizations = organizations.AsyncOrganizationsResourceWithRawResponse(client.organizations)
         self.files = files.AsyncFilesResourceWithRawResponse(client.files)
         self.pipelines = pipelines.AsyncPipelinesResourceWithRawResponse(client.pipelines)
@@ -504,8 +457,6 @@ class AsyncLlamaCloudWithRawResponse:
         self.evals = evals.AsyncEvalsResourceWithRawResponse(client.evals)
         self.parsing = parsing.AsyncParsingResourceWithRawResponse(client.parsing)
         self.classifier = classifier.AsyncClassifierResourceWithRawResponse(client.classifier)
-        self.auth = auth.AsyncAuthResourceWithRawResponse(client.auth)
-        self.billing = billing.AsyncBillingResourceWithRawResponse(client.billing)
         self.extraction = extraction.AsyncExtractionResourceWithRawResponse(client.extraction)
         self.beta = beta.AsyncBetaResourceWithRawResponse(client.beta)
 
@@ -513,15 +464,8 @@ class AsyncLlamaCloudWithRawResponse:
 class LlamaCloudWithStreamedResponse:
     def __init__(self, client: LlamaCloud) -> None:
         self.projects = projects.ProjectsResourceWithStreamingResponse(client.projects)
-        self.api_keys = api_keys.APIKeysResourceWithStreamingResponse(client.api_keys)
-        self.validate_integrations = validate_integrations.ValidateIntegrationsResourceWithStreamingResponse(
-            client.validate_integrations
-        )
         self.data_sinks = data_sinks.DataSinksResourceWithStreamingResponse(client.data_sinks)
         self.data_sources = data_sources.DataSourcesResourceWithStreamingResponse(client.data_sources)
-        self.embedding_model_configs = embedding_model_configs.EmbeddingModelConfigsResourceWithStreamingResponse(
-            client.embedding_model_configs
-        )
         self.organizations = organizations.OrganizationsResourceWithStreamingResponse(client.organizations)
         self.files = files.FilesResourceWithStreamingResponse(client.files)
         self.pipelines = pipelines.PipelinesResourceWithStreamingResponse(client.pipelines)
@@ -529,8 +473,6 @@ class LlamaCloudWithStreamedResponse:
         self.evals = evals.EvalsResourceWithStreamingResponse(client.evals)
         self.parsing = parsing.ParsingResourceWithStreamingResponse(client.parsing)
         self.classifier = classifier.ClassifierResourceWithStreamingResponse(client.classifier)
-        self.auth = auth.AuthResourceWithStreamingResponse(client.auth)
-        self.billing = billing.BillingResourceWithStreamingResponse(client.billing)
         self.extraction = extraction.ExtractionResourceWithStreamingResponse(client.extraction)
         self.beta = beta.BetaResourceWithStreamingResponse(client.beta)
 
@@ -538,15 +480,8 @@ class LlamaCloudWithStreamedResponse:
 class AsyncLlamaCloudWithStreamedResponse:
     def __init__(self, client: AsyncLlamaCloud) -> None:
         self.projects = projects.AsyncProjectsResourceWithStreamingResponse(client.projects)
-        self.api_keys = api_keys.AsyncAPIKeysResourceWithStreamingResponse(client.api_keys)
-        self.validate_integrations = validate_integrations.AsyncValidateIntegrationsResourceWithStreamingResponse(
-            client.validate_integrations
-        )
         self.data_sinks = data_sinks.AsyncDataSinksResourceWithStreamingResponse(client.data_sinks)
         self.data_sources = data_sources.AsyncDataSourcesResourceWithStreamingResponse(client.data_sources)
-        self.embedding_model_configs = embedding_model_configs.AsyncEmbeddingModelConfigsResourceWithStreamingResponse(
-            client.embedding_model_configs
-        )
         self.organizations = organizations.AsyncOrganizationsResourceWithStreamingResponse(client.organizations)
         self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
         self.pipelines = pipelines.AsyncPipelinesResourceWithStreamingResponse(client.pipelines)
@@ -554,8 +489,6 @@ class AsyncLlamaCloudWithStreamedResponse:
         self.evals = evals.AsyncEvalsResourceWithStreamingResponse(client.evals)
         self.parsing = parsing.AsyncParsingResourceWithStreamingResponse(client.parsing)
         self.classifier = classifier.AsyncClassifierResourceWithStreamingResponse(client.classifier)
-        self.auth = auth.AsyncAuthResourceWithStreamingResponse(client.auth)
-        self.billing = billing.AsyncBillingResourceWithStreamingResponse(client.billing)
         self.extraction = extraction.AsyncExtractionResourceWithStreamingResponse(client.extraction)
         self.beta = beta.AsyncBetaResourceWithStreamingResponse(client.beta)
 

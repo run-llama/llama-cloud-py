@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 from typing import Dict, Union, Iterable, Optional
+from typing_extensions import Literal
 
 import httpx
 
 from ..types import (
-    ConfigurableDataSourceNames,
     data_source_list_params,
     data_source_create_params,
     data_source_update_params,
@@ -26,7 +26,6 @@ from .._response import (
 from .._base_client import make_request_options
 from ..types.data_source import DataSource
 from ..types.data_source_list_response import DataSourceListResponse
-from ..types.configurable_data_source_names import ConfigurableDataSourceNames
 
 __all__ = ["DataSourcesResource", "AsyncDataSourcesResource"]
 
@@ -56,7 +55,19 @@ class DataSourcesResource(SyncAPIResource):
         *,
         component: data_source_create_params.Component,
         name: str,
-        source_type: ConfigurableDataSourceNames,
+        source_type: Literal[
+            "S3",
+            "AZURE_STORAGE_BLOB",
+            "GOOGLE_DRIVE",
+            "MICROSOFT_ONEDRIVE",
+            "MICROSOFT_SHAREPOINT",
+            "SLACK",
+            "NOTION_PAGE",
+            "CONFLUENCE",
+            "JIRA",
+            "JIRA_V2",
+            "BOX",
+        ],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         custom_metadata: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
@@ -113,44 +124,23 @@ class DataSourcesResource(SyncAPIResource):
             cast_to=DataSource,
         )
 
-    def retrieve(
-        self,
-        data_source_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DataSource:
-        """
-        Get a data source by ID.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not data_source_id:
-            raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
-        return self._get(
-            f"/api/v1/data-sources/{data_source_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=DataSource,
-        )
-
     def update(
         self,
         data_source_id: str,
         *,
-        source_type: ConfigurableDataSourceNames,
+        source_type: Literal[
+            "S3",
+            "AZURE_STORAGE_BLOB",
+            "GOOGLE_DRIVE",
+            "MICROSOFT_ONEDRIVE",
+            "MICROSOFT_SHAREPOINT",
+            "SLACK",
+            "NOTION_PAGE",
+            "CONFLUENCE",
+            "JIRA",
+            "JIRA_V2",
+            "BOX",
+        ],
         component: Optional[data_source_update_params.Component] | Omit = omit,
         custom_metadata: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
         | Omit = omit,
@@ -277,12 +267,57 @@ class DataSourcesResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
+    def get(
+        self,
+        data_source_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DataSource:
+        """
+        Get a data source by ID.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not data_source_id:
+            raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
+        return self._get(
+            f"/api/v1/data-sources/{data_source_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DataSource,
+        )
+
     def upsert(
         self,
         *,
         component: data_source_upsert_params.Component,
         name: str,
-        source_type: ConfigurableDataSourceNames,
+        source_type: Literal[
+            "S3",
+            "AZURE_STORAGE_BLOB",
+            "GOOGLE_DRIVE",
+            "MICROSOFT_ONEDRIVE",
+            "MICROSOFT_SHAREPOINT",
+            "SLACK",
+            "NOTION_PAGE",
+            "CONFLUENCE",
+            "JIRA",
+            "JIRA_V2",
+            "BOX",
+        ],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         custom_metadata: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
@@ -367,7 +402,19 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         *,
         component: data_source_create_params.Component,
         name: str,
-        source_type: ConfigurableDataSourceNames,
+        source_type: Literal[
+            "S3",
+            "AZURE_STORAGE_BLOB",
+            "GOOGLE_DRIVE",
+            "MICROSOFT_ONEDRIVE",
+            "MICROSOFT_SHAREPOINT",
+            "SLACK",
+            "NOTION_PAGE",
+            "CONFLUENCE",
+            "JIRA",
+            "JIRA_V2",
+            "BOX",
+        ],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         custom_metadata: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
@@ -424,44 +471,23 @@ class AsyncDataSourcesResource(AsyncAPIResource):
             cast_to=DataSource,
         )
 
-    async def retrieve(
-        self,
-        data_source_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DataSource:
-        """
-        Get a data source by ID.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not data_source_id:
-            raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
-        return await self._get(
-            f"/api/v1/data-sources/{data_source_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=DataSource,
-        )
-
     async def update(
         self,
         data_source_id: str,
         *,
-        source_type: ConfigurableDataSourceNames,
+        source_type: Literal[
+            "S3",
+            "AZURE_STORAGE_BLOB",
+            "GOOGLE_DRIVE",
+            "MICROSOFT_ONEDRIVE",
+            "MICROSOFT_SHAREPOINT",
+            "SLACK",
+            "NOTION_PAGE",
+            "CONFLUENCE",
+            "JIRA",
+            "JIRA_V2",
+            "BOX",
+        ],
         component: Optional[data_source_update_params.Component] | Omit = omit,
         custom_metadata: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
         | Omit = omit,
@@ -588,12 +614,57 @@ class AsyncDataSourcesResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
+    async def get(
+        self,
+        data_source_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DataSource:
+        """
+        Get a data source by ID.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not data_source_id:
+            raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
+        return await self._get(
+            f"/api/v1/data-sources/{data_source_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DataSource,
+        )
+
     async def upsert(
         self,
         *,
         component: data_source_upsert_params.Component,
         name: str,
-        source_type: ConfigurableDataSourceNames,
+        source_type: Literal[
+            "S3",
+            "AZURE_STORAGE_BLOB",
+            "GOOGLE_DRIVE",
+            "MICROSOFT_ONEDRIVE",
+            "MICROSOFT_SHAREPOINT",
+            "SLACK",
+            "NOTION_PAGE",
+            "CONFLUENCE",
+            "JIRA",
+            "JIRA_V2",
+            "BOX",
+        ],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         custom_metadata: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
@@ -660,9 +731,6 @@ class DataSourcesResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             data_sources.create,
         )
-        self.retrieve = to_raw_response_wrapper(
-            data_sources.retrieve,
-        )
         self.update = to_raw_response_wrapper(
             data_sources.update,
         )
@@ -671,6 +739,9 @@ class DataSourcesResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             data_sources.delete,
+        )
+        self.get = to_raw_response_wrapper(
+            data_sources.get,
         )
         self.upsert = to_raw_response_wrapper(
             data_sources.upsert,
@@ -684,9 +755,6 @@ class AsyncDataSourcesResourceWithRawResponse:
         self.create = async_to_raw_response_wrapper(
             data_sources.create,
         )
-        self.retrieve = async_to_raw_response_wrapper(
-            data_sources.retrieve,
-        )
         self.update = async_to_raw_response_wrapper(
             data_sources.update,
         )
@@ -695,6 +763,9 @@ class AsyncDataSourcesResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             data_sources.delete,
+        )
+        self.get = async_to_raw_response_wrapper(
+            data_sources.get,
         )
         self.upsert = async_to_raw_response_wrapper(
             data_sources.upsert,
@@ -708,9 +779,6 @@ class DataSourcesResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             data_sources.create,
         )
-        self.retrieve = to_streamed_response_wrapper(
-            data_sources.retrieve,
-        )
         self.update = to_streamed_response_wrapper(
             data_sources.update,
         )
@@ -719,6 +787,9 @@ class DataSourcesResourceWithStreamingResponse:
         )
         self.delete = to_streamed_response_wrapper(
             data_sources.delete,
+        )
+        self.get = to_streamed_response_wrapper(
+            data_sources.get,
         )
         self.upsert = to_streamed_response_wrapper(
             data_sources.upsert,
@@ -732,9 +803,6 @@ class AsyncDataSourcesResourceWithStreamingResponse:
         self.create = async_to_streamed_response_wrapper(
             data_sources.create,
         )
-        self.retrieve = async_to_streamed_response_wrapper(
-            data_sources.retrieve,
-        )
         self.update = async_to_streamed_response_wrapper(
             data_sources.update,
         )
@@ -743,6 +811,9 @@ class AsyncDataSourcesResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             data_sources.delete,
+        )
+        self.get = async_to_streamed_response_wrapper(
+            data_sources.get,
         )
         self.upsert = async_to_streamed_response_wrapper(
             data_sources.upsert,

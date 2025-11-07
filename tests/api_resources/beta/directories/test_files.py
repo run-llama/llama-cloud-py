@@ -9,11 +9,12 @@ import pytest
 
 from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
+from llama_cloud.pagination import SyncPaginatedClassifyJobs, AsyncPaginatedClassifyJobs
 from llama_cloud.types.beta.directories import (
     FileAddResponse,
+    FileGetResponse,
     FileListResponse,
     FileUpdateResponse,
-    FileRetrieveResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -21,69 +22,6 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 class TestFiles:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_retrieve(self, client: LlamaCloud) -> None:
-        file = client.beta.directories.files.retrieve(
-            directory_file_id="directory_file_id",
-            directory_id="directory_id",
-        )
-        assert_matches_type(FileRetrieveResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_retrieve_with_all_params(self, client: LlamaCloud) -> None:
-        file = client.beta.directories.files.retrieve(
-            directory_file_id="directory_file_id",
-            directory_id="directory_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(FileRetrieveResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve(self, client: LlamaCloud) -> None:
-        response = client.beta.directories.files.with_raw_response.retrieve(
-            directory_file_id="directory_file_id",
-            directory_id="directory_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        file = response.parse()
-        assert_matches_type(FileRetrieveResponse, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve(self, client: LlamaCloud) -> None:
-        with client.beta.directories.files.with_streaming_response.retrieve(
-            directory_file_id="directory_file_id",
-            directory_id="directory_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            file = response.parse()
-            assert_matches_type(FileRetrieveResponse, file, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_retrieve(self, client: LlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
-            client.beta.directories.files.with_raw_response.retrieve(
-                directory_file_id="directory_file_id",
-                directory_id="",
-            )
-
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_file_id` but received ''"):
-            client.beta.directories.files.with_raw_response.retrieve(
-                directory_file_id="",
-                directory_id="directory_id",
-            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -156,7 +94,7 @@ class TestFiles:
         file = client.beta.directories.files.list(
             directory_id="directory_id",
         )
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(SyncPaginatedClassifyJobs[FileListResponse], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -173,7 +111,7 @@ class TestFiles:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             unique_id="unique_id",
         )
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(SyncPaginatedClassifyJobs[FileListResponse], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -185,7 +123,7 @@ class TestFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = response.parse()
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(SyncPaginatedClassifyJobs[FileListResponse], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -197,7 +135,7 @@ class TestFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = response.parse()
-            assert_matches_type(FileListResponse, file, path=["response"])
+            assert_matches_type(SyncPaginatedClassifyJobs[FileListResponse], file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -331,74 +269,74 @@ class TestFiles:
                 file_id="file_id",
             )
 
-
-class TestAsyncFiles:
-    parametrize = pytest.mark.parametrize(
-        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
-    )
-
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        file = await async_client.beta.directories.files.retrieve(
+    def test_method_get(self, client: LlamaCloud) -> None:
+        file = client.beta.directories.files.get(
             directory_file_id="directory_file_id",
             directory_id="directory_id",
         )
-        assert_matches_type(FileRetrieveResponse, file, path=["response"])
+        assert_matches_type(FileGetResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        file = await async_client.beta.directories.files.retrieve(
+    def test_method_get_with_all_params(self, client: LlamaCloud) -> None:
+        file = client.beta.directories.files.get(
             directory_file_id="directory_file_id",
             directory_id="directory_id",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(FileRetrieveResponse, file, path=["response"])
+        assert_matches_type(FileGetResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.beta.directories.files.with_raw_response.retrieve(
+    def test_raw_response_get(self, client: LlamaCloud) -> None:
+        response = client.beta.directories.files.with_raw_response.get(
             directory_file_id="directory_file_id",
             directory_id="directory_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        file = await response.parse()
-        assert_matches_type(FileRetrieveResponse, file, path=["response"])
+        file = response.parse()
+        assert_matches_type(FileGetResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.beta.directories.files.with_streaming_response.retrieve(
+    def test_streaming_response_get(self, client: LlamaCloud) -> None:
+        with client.beta.directories.files.with_streaming_response.get(
             directory_file_id="directory_file_id",
             directory_id="directory_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            file = await response.parse()
-            assert_matches_type(FileRetrieveResponse, file, path=["response"])
+            file = response.parse()
+            assert_matches_type(FileGetResponse, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncLlamaCloud) -> None:
+    def test_path_params_get(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
-            await async_client.beta.directories.files.with_raw_response.retrieve(
+            client.beta.directories.files.with_raw_response.get(
                 directory_file_id="directory_file_id",
                 directory_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_file_id` but received ''"):
-            await async_client.beta.directories.files.with_raw_response.retrieve(
+            client.beta.directories.files.with_raw_response.get(
                 directory_file_id="",
                 directory_id="directory_id",
             )
+
+
+class TestAsyncFiles:
+    parametrize = pytest.mark.parametrize(
+        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
+    )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -471,7 +409,7 @@ class TestAsyncFiles:
         file = await async_client.beta.directories.files.list(
             directory_id="directory_id",
         )
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(AsyncPaginatedClassifyJobs[FileListResponse], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -488,7 +426,7 @@ class TestAsyncFiles:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             unique_id="unique_id",
         )
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(AsyncPaginatedClassifyJobs[FileListResponse], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -500,7 +438,7 @@ class TestAsyncFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = await response.parse()
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(AsyncPaginatedClassifyJobs[FileListResponse], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -512,7 +450,7 @@ class TestAsyncFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = await response.parse()
-            assert_matches_type(FileListResponse, file, path=["response"])
+            assert_matches_type(AsyncPaginatedClassifyJobs[FileListResponse], file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -644,4 +582,67 @@ class TestAsyncFiles:
             await async_client.beta.directories.files.with_raw_response.add(
                 directory_id="",
                 file_id="file_id",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_get(self, async_client: AsyncLlamaCloud) -> None:
+        file = await async_client.beta.directories.files.get(
+            directory_file_id="directory_file_id",
+            directory_id="directory_id",
+        )
+        assert_matches_type(FileGetResponse, file, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_get_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        file = await async_client.beta.directories.files.get(
+            directory_file_id="directory_file_id",
+            directory_id="directory_id",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(FileGetResponse, file, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_get(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.beta.directories.files.with_raw_response.get(
+            directory_file_id="directory_file_id",
+            directory_id="directory_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        file = await response.parse()
+        assert_matches_type(FileGetResponse, file, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_get(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.beta.directories.files.with_streaming_response.get(
+            directory_file_id="directory_file_id",
+            directory_id="directory_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            file = await response.parse()
+            assert_matches_type(FileGetResponse, file, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_get(self, async_client: AsyncLlamaCloud) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
+            await async_client.beta.directories.files.with_raw_response.get(
+                directory_file_id="directory_file_id",
+                directory_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_file_id` but received ''"):
+            await async_client.beta.directories.files.with_raw_response.get(
+                directory_file_id="",
+                directory_id="directory_id",
             )

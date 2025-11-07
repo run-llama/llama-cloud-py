@@ -16,11 +16,7 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...types.files import (
-    page_figure_list_params,
-    page_figure_retrieve_params,
-    page_figure_generate_presigned_url_params,
-)
+from ...types.files import page_figure_get_params, page_figure_list_params, page_figure_generate_presigned_url_params
 from ..._base_client import make_request_options
 from ...types.presigned_url import PresignedURL
 from ...types.files.page_figure_list_response import PageFigureListResponse
@@ -47,55 +43,6 @@ class PageFiguresResource(SyncAPIResource):
         For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
         """
         return PageFiguresResourceWithStreamingResponse(self)
-
-    def retrieve(
-        self,
-        figure_name: str,
-        *,
-        id: str,
-        page_index: int,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """
-        Get a specific figure from a page of a file.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        if not figure_name:
-            raise ValueError(f"Expected a non-empty value for `figure_name` but received {figure_name!r}")
-        return self._get(
-            f"/api/v1/files/{id}/page-figures/{page_index}/{figure_name}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    page_figure_retrieve_params.PageFigureRetrieveParams,
-                ),
-            ),
-            cast_to=object,
-        )
 
     def list(
         self,
@@ -195,28 +142,7 @@ class PageFiguresResource(SyncAPIResource):
             cast_to=PresignedURL,
         )
 
-
-class AsyncPageFiguresResource(AsyncAPIResource):
-    @cached_property
-    def with_raw_response(self) -> AsyncPageFiguresResourceWithRawResponse:
-        """
-        This property can be used as a prefix for any HTTP method call to return
-        the raw response object instead of the parsed content.
-
-        For more information, see https://www.github.com/run-llama/llama-cloud-py#accessing-raw-response-data-eg-headers
-        """
-        return AsyncPageFiguresResourceWithRawResponse(self)
-
-    @cached_property
-    def with_streaming_response(self) -> AsyncPageFiguresResourceWithStreamingResponse:
-        """
-        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
-
-        For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
-        """
-        return AsyncPageFiguresResourceWithStreamingResponse(self)
-
-    async def retrieve(
+    def get(
         self,
         figure_name: str,
         *,
@@ -247,23 +173,44 @@ class AsyncPageFiguresResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         if not figure_name:
             raise ValueError(f"Expected a non-empty value for `figure_name` but received {figure_name!r}")
-        return await self._get(
+        return self._get(
             f"/api/v1/files/{id}/page-figures/{page_index}/{figure_name}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    page_figure_retrieve_params.PageFigureRetrieveParams,
+                    page_figure_get_params.PageFigureGetParams,
                 ),
             ),
             cast_to=object,
         )
+
+
+class AsyncPageFiguresResource(AsyncAPIResource):
+    @cached_property
+    def with_raw_response(self) -> AsyncPageFiguresResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/run-llama/llama-cloud-py#accessing-raw-response-data-eg-headers
+        """
+        return AsyncPageFiguresResourceWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncPageFiguresResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
+        """
+        return AsyncPageFiguresResourceWithStreamingResponse(self)
 
     async def list(
         self,
@@ -363,19 +310,68 @@ class AsyncPageFiguresResource(AsyncAPIResource):
             cast_to=PresignedURL,
         )
 
+    async def get(
+        self,
+        figure_name: str,
+        *,
+        id: str,
+        page_index: int,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """
+        Get a specific figure from a page of a file.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        if not figure_name:
+            raise ValueError(f"Expected a non-empty value for `figure_name` but received {figure_name!r}")
+        return await self._get(
+            f"/api/v1/files/{id}/page-figures/{page_index}/{figure_name}",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    page_figure_get_params.PageFigureGetParams,
+                ),
+            ),
+            cast_to=object,
+        )
+
 
 class PageFiguresResourceWithRawResponse:
     def __init__(self, page_figures: PageFiguresResource) -> None:
         self._page_figures = page_figures
 
-        self.retrieve = to_raw_response_wrapper(
-            page_figures.retrieve,
-        )
         self.list = to_raw_response_wrapper(
             page_figures.list,
         )
         self.generate_presigned_url = to_raw_response_wrapper(
             page_figures.generate_presigned_url,
+        )
+        self.get = to_raw_response_wrapper(
+            page_figures.get,
         )
 
 
@@ -383,14 +379,14 @@ class AsyncPageFiguresResourceWithRawResponse:
     def __init__(self, page_figures: AsyncPageFiguresResource) -> None:
         self._page_figures = page_figures
 
-        self.retrieve = async_to_raw_response_wrapper(
-            page_figures.retrieve,
-        )
         self.list = async_to_raw_response_wrapper(
             page_figures.list,
         )
         self.generate_presigned_url = async_to_raw_response_wrapper(
             page_figures.generate_presigned_url,
+        )
+        self.get = async_to_raw_response_wrapper(
+            page_figures.get,
         )
 
 
@@ -398,14 +394,14 @@ class PageFiguresResourceWithStreamingResponse:
     def __init__(self, page_figures: PageFiguresResource) -> None:
         self._page_figures = page_figures
 
-        self.retrieve = to_streamed_response_wrapper(
-            page_figures.retrieve,
-        )
         self.list = to_streamed_response_wrapper(
             page_figures.list,
         )
         self.generate_presigned_url = to_streamed_response_wrapper(
             page_figures.generate_presigned_url,
+        )
+        self.get = to_streamed_response_wrapper(
+            page_figures.get,
         )
 
 
@@ -413,12 +409,12 @@ class AsyncPageFiguresResourceWithStreamingResponse:
     def __init__(self, page_figures: AsyncPageFiguresResource) -> None:
         self._page_figures = page_figures
 
-        self.retrieve = async_to_streamed_response_wrapper(
-            page_figures.retrieve,
-        )
         self.list = async_to_streamed_response_wrapper(
             page_figures.list,
         )
         self.generate_presigned_url = async_to_streamed_response_wrapper(
             page_figures.generate_presigned_url,
+        )
+        self.get = async_to_streamed_response_wrapper(
+            page_figures.get,
         )

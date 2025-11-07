@@ -52,39 +52,6 @@ class JobResource(SyncAPIResource):
         """
         return JobResourceWithStreamingResponse(self)
 
-    def retrieve(
-        self,
-        job_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ParsingJob:
-        """
-        Get a job by id
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not job_id:
-            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
-        return self._get(
-            f"/api/v1/parsing/job/{job_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ParsingJob,
-        )
-
     def generate_presigned_url(
         self,
         filename: str,
@@ -119,6 +86,39 @@ class JobResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=PresignedURL,
+        )
+
+    def get(
+        self,
+        job_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ParsingJob:
+        """
+        Get a job by id
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not job_id:
+            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+        return self._get(
+            f"/api/v1/parsing/job/{job_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ParsingJob,
         )
 
     def get_details(
@@ -212,39 +212,6 @@ class AsyncJobResource(AsyncAPIResource):
         """
         return AsyncJobResourceWithStreamingResponse(self)
 
-    async def retrieve(
-        self,
-        job_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ParsingJob:
-        """
-        Get a job by id
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not job_id:
-            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
-        return await self._get(
-            f"/api/v1/parsing/job/{job_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ParsingJob,
-        )
-
     async def generate_presigned_url(
         self,
         filename: str,
@@ -279,6 +246,39 @@ class AsyncJobResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=PresignedURL,
+        )
+
+    async def get(
+        self,
+        job_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ParsingJob:
+        """
+        Get a job by id
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not job_id:
+            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+        return await self._get(
+            f"/api/v1/parsing/job/{job_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ParsingJob,
         )
 
     async def get_details(
@@ -352,11 +352,11 @@ class JobResourceWithRawResponse:
     def __init__(self, job: JobResource) -> None:
         self._job = job
 
-        self.retrieve = to_raw_response_wrapper(
-            job.retrieve,
-        )
         self.generate_presigned_url = to_raw_response_wrapper(
             job.generate_presigned_url,
+        )
+        self.get = to_raw_response_wrapper(
+            job.get,
         )
         self.get_details = to_raw_response_wrapper(
             job.get_details,
@@ -374,11 +374,11 @@ class AsyncJobResourceWithRawResponse:
     def __init__(self, job: AsyncJobResource) -> None:
         self._job = job
 
-        self.retrieve = async_to_raw_response_wrapper(
-            job.retrieve,
-        )
         self.generate_presigned_url = async_to_raw_response_wrapper(
             job.generate_presigned_url,
+        )
+        self.get = async_to_raw_response_wrapper(
+            job.get,
         )
         self.get_details = async_to_raw_response_wrapper(
             job.get_details,
@@ -396,11 +396,11 @@ class JobResourceWithStreamingResponse:
     def __init__(self, job: JobResource) -> None:
         self._job = job
 
-        self.retrieve = to_streamed_response_wrapper(
-            job.retrieve,
-        )
         self.generate_presigned_url = to_streamed_response_wrapper(
             job.generate_presigned_url,
+        )
+        self.get = to_streamed_response_wrapper(
+            job.get,
         )
         self.get_details = to_streamed_response_wrapper(
             job.get_details,
@@ -418,11 +418,11 @@ class AsyncJobResourceWithStreamingResponse:
     def __init__(self, job: AsyncJobResource) -> None:
         self._job = job
 
-        self.retrieve = async_to_streamed_response_wrapper(
-            job.retrieve,
-        )
         self.generate_presigned_url = async_to_streamed_response_wrapper(
             job.generate_presigned_url,
+        )
+        self.get = async_to_streamed_response_wrapper(
+            job.get,
         )
         self.get_details = async_to_streamed_response_wrapper(
             job.get_details,
