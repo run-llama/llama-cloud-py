@@ -53,26 +53,6 @@ Methods:
 - <code title="get /api/v1/data-sources/{data_source_id}">client.data_sources.<a href="./src/llama_cloud/resources/data_sources.py">get</a>(data_source_id) -> <a href="./src/llama_cloud/types/data_source.py">DataSource</a></code>
 - <code title="put /api/v1/data-sources">client.data_sources.<a href="./src/llama_cloud/resources/data_sources.py">upsert</a>(\*\*<a href="src/llama_cloud/types/data_source_upsert_params.py">params</a>) -> <a href="./src/llama_cloud/types/data_source.py">DataSource</a></code>
 
-# EmbeddingModelConfigs
-
-Types:
-
-```python
-from llama_cloud.types import (
-    EmbeddingModelConfig,
-    EmbeddingModelConfigUpdate,
-    EmbeddingModelConfigListResponse,
-)
-```
-
-Methods:
-
-- <code title="post /api/v1/embedding-model-configs">client.embedding_model_configs.<a href="./src/llama_cloud/resources/embedding_model_configs.py">create</a>(\*\*<a href="src/llama_cloud/types/embedding_model_config_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/embedding_model_config.py">EmbeddingModelConfig</a></code>
-- <code title="put /api/v1/embedding-model-configs/{embedding_model_config_id}">client.embedding_model_configs.<a href="./src/llama_cloud/resources/embedding_model_configs.py">update</a>(embedding_model_config_id, \*\*<a href="src/llama_cloud/types/embedding_model_config_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/embedding_model_config.py">EmbeddingModelConfig</a></code>
-- <code title="get /api/v1/embedding-model-configs">client.embedding_model_configs.<a href="./src/llama_cloud/resources/embedding_model_configs.py">list</a>(\*\*<a href="src/llama_cloud/types/embedding_model_config_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/embedding_model_config_list_response.py">EmbeddingModelConfigListResponse</a></code>
-- <code title="delete /api/v1/embedding-model-configs/{embedding_model_config_id}">client.embedding_model_configs.<a href="./src/llama_cloud/resources/embedding_model_configs.py">delete</a>(embedding_model_config_id, \*\*<a href="src/llama_cloud/types/embedding_model_config_delete_params.py">params</a>) -> None</code>
-- <code title="put /api/v1/embedding-model-configs">client.embedding_model_configs.<a href="./src/llama_cloud/resources/embedding_model_configs.py">upsert</a>(\*\*<a href="src/llama_cloud/types/embedding_model_config_upsert_params.py">params</a>) -> <a href="./src/llama_cloud/types/embedding_model_config.py">EmbeddingModelConfig</a></code>
-
 # Organizations
 
 Types:
