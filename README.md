@@ -35,10 +35,10 @@ client = LlamaCloud(
     api_key=os.environ.get("LLAMACLOUD_API_KEY"),  # This is the default and can be omitted
 )
 
-agent_deployment_list = client.projects.list_agents(
-    "REPLACE_ME",
+parsing_job = client.parsing.upload_file(
+    file=b"file.pdf",
 )
-print(agent_deployment_list.deployments)
+print(parsing_job.id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -61,10 +61,10 @@ client = AsyncLlamaCloud(
 
 
 async def main() -> None:
-    agent_deployment_list = await client.projects.list_agents(
-        "REPLACE_ME",
+    parsing_job = await client.parsing.upload_file(
+        file=b"file.pdf",
     )
-    print(agent_deployment_list.deployments)
+    print(parsing_job.id)
 
 
 asyncio.run(main())
@@ -96,10 +96,10 @@ async def main() -> None:
         api_key="My API Key",
         http_client=DefaultAioHttpClient(),
     ) as client:
-        agent_deployment_list = await client.projects.list_agents(
-            "REPLACE_ME",
+        parsing_job = await client.parsing.upload_file(
+            file=b"file.pdf",
         )
-        print(agent_deployment_list.deployments)
+        print(parsing_job.id)
 
 
 asyncio.run(main())
@@ -144,8 +144,8 @@ from llama_cloud import LlamaCloud
 
 client = LlamaCloud()
 
-client.files.upload(
-    upload_file=Path("/path/to/file"),
+client.parsing.upload_file(
+    file=Path("/path/to/file"),
 )
 ```
 
@@ -167,8 +167,8 @@ from llama_cloud import LlamaCloud
 client = LlamaCloud()
 
 try:
-    client.projects.list_agents(
-        "REPLACE_ME",
+    client.pipelines.list(
+        project_id="my-project-id",
     )
 except llama_cloud.APIConnectionError as e:
     print("The server could not be reached")
@@ -212,8 +212,8 @@ client = LlamaCloud(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).projects.list_agents(
-    "REPLACE_ME",
+client.with_options(max_retries=5).pipelines.list(
+    project_id="my-project-id",
 )
 ```
 
@@ -237,8 +237,8 @@ client = LlamaCloud(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).projects.list_agents(
-    "REPLACE_ME",
+client.with_options(timeout=5.0).pipelines.list(
+    project_id="my-project-id",
 )
 ```
 
@@ -280,13 +280,13 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from llama_cloud import LlamaCloud
 
 client = LlamaCloud()
-response = client.projects.with_raw_response.list_agents(
-    "REPLACE_ME",
+response = client.pipelines.with_raw_response.list(
+    project_id="my-project-id",
 )
 print(response.headers.get('X-My-Header'))
 
-project = response.parse()  # get the object that `projects.list_agents()` would have returned
-print(project.deployments)
+pipeline = response.parse()  # get the object that `pipelines.list()` would have returned
+print(pipeline)
 ```
 
 These methods return an [`APIResponse`](https://github.com/run-llama/llama-cloud-py/tree/main/src/llama_cloud/_response.py) object.
@@ -300,8 +300,8 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.projects.with_streaming_response.list_agents(
-    "REPLACE_ME",
+with client.pipelines.with_streaming_response.list(
+    project_id="my-project-id",
 ) as response:
     print(response.headers.get("X-My-Header"))
 
