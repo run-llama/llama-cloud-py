@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.1 (2025-11-11)
+
+Full Changelog: [v0.1.0...v0.1.1](https://github.com/run-llama/llama-cloud-py/compare/v0.1.0...v0.1.1)
+
+### Bug Fixes
+
+* compat with Python 3.14 ([198061d](https://github.com/run-llama/llama-cloud-py/commit/198061d9a14a632331aee4300e2c4fe3a39e10d8))
+
+
+### Chores
+
+* **package:** drop Python 3.8 support ([dba8e3a](https://github.com/run-llama/llama-cloud-py/commit/dba8e3a953a3f5d29a5357fd7c46babfd2e9b7cb))
+
 ## 0.1.0 (2025-11-07)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/run-llama/llama-cloud-py/compare/v0.0.1...v0.1.0)
