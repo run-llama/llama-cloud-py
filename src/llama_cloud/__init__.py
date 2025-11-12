@@ -36,6 +36,10 @@ from ._exceptions import (
     UnprocessableEntityError,
     APIResponseValidationError,
 )
+from ._polling import (
+    PollingError,
+    PollingTimeoutError,
+)
 from ._base_client import DefaultHttpxClient, DefaultAioHttpClient, DefaultAsyncHttpxClient
 from ._utils._logs import setup_logging as _setup_logging
 
@@ -65,6 +69,8 @@ __all__ = [
     "UnprocessableEntityError",
     "RateLimitError",
     "InternalServerError",
+    "PollingError",
+    "PollingTimeoutError",
     "Timeout",
     "RequestOptions",
     "Client",
