@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import typing_extensions
-from typing import List, Mapping, Optional, cast
+from typing import List, Mapping, Optional, Union, cast
+from typing_extensions import Literal, Unpack
 
 import httpx
 
@@ -33,6 +34,12 @@ from ...types.fail_page_mode import FailPageMode
 from ...types.parser_languages import ParserLanguages
 from ...types.parsing_get_parsing_history_response import ParsingGetParsingHistoryResponse
 from ...types.parsing_get_supported_file_extensions_response import ParsingGetSupportedFileExtensionsResponse
+from ...types.parsing_upload_file_params import ParsingUploadFileParams
+from ...types.parsing.job.parsing_job_json_result import ParsingJobJsonResult
+from ...types.parsing.job.parsing_job_text_result import ParsingJobTextResult
+from ...types.parsing.job.parsing_job_markdown_result import ParsingJobMarkdownResult
+from ...types.parsing.job.parsing_job_structured_result import ParsingJobStructuredResult
+from ..._polling import BackoffStrategy
 
 __all__ = ["ParsingResource", "AsyncParsingResource"]
 
@@ -462,6 +469,100 @@ class ParsingResource(SyncAPIResource):
             cast_to=ParsingJob,
         )
 
+    def upload_file_and_wait(
+        self,
+        *,
+        result_type: Literal["markdown", "text", "json", "structured"] = "markdown",
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        timeout: float = 2000.0,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        **upload_params: Unpack[ParsingUploadFileParams],
+    ) -> Union[ParsingJobMarkdownResult, ParsingJobTextResult, ParsingJobJsonResult, ParsingJobStructuredResult]:
+        """
+        Upload a file for parsing and wait for it to complete, returning the result.
+
+        This is a convenience method that combines upload_file(), wait_for_completion(),
+        and result.get_*() into a single call for the most common end-to-end workflow.
+
+        Args:
+            result_type: The type of result to return. Options:
+                - "markdown": Return markdown formatted result (default)
+                - "text": Return plain text result
+                - "json": Return JSON formatted result
+                - "structured": Return structured data result
+
+            polling_interval: Initial polling interval in seconds (default: 1.0)
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0)
+
+            timeout: Maximum time to wait in seconds (default: 2000.0)
+
+            backoff: Backoff strategy for polling intervals. Options:
+                - "constant": Keep the same polling interval
+                - "linear": Increase interval by 1 second each poll (default)
+                - "exponential": Double the interval each poll
+
+            verbose: Print progress indicators every 10 polls (default: False)
+
+            **upload_params: All parameters accepted by upload_file(), including:
+                - file: The file to parse
+                - organization_id: Optional organization ID
+                - project_id: Optional project ID
+                - parse_mode: Parsing mode to use
+                - And 100+ other parsing configuration options
+
+        Returns:
+            The parsing result in the requested format
+
+        Raises:
+            PollingTimeoutError: If the job doesn't complete within the timeout period
+
+            PollingError: If the job fails or is cancelled
+
+        Example:
+            ```python
+            from llama_cloud import LlamaCloud
+
+            client = LlamaCloud(api_key="...")
+
+            # One-shot: upload, wait, and get markdown result
+            result = client.parsing.upload_file_and_wait(
+                file=open("document.pdf", "rb"),
+                result_type="markdown",
+                verbose=True
+            )
+
+            print(result.markdown)
+            ```
+        """
+        # Upload the file
+        job = self.upload_file(**upload_params)
+
+        # Wait for completion
+        self.job.wait_for_completion(
+            job.id,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=timeout,
+            backoff=backoff,
+            verbose=verbose,
+        )
+
+        # Get and return the result in the requested format
+        organization_id = upload_params.get("organization_id")
+        if result_type == "markdown":
+            return self.job.result.get_markdown(job.id, organization_id=organization_id)
+        elif result_type == "text":
+            return self.job.result.get_text(job.id, organization_id=organization_id)
+        elif result_type == "json":
+            return self.job.result.get_json(job.id, organization_id=organization_id)
+        elif result_type == "structured":
+            return self.job.result.get_structured(job.id, organization_id=organization_id)
+        else:
+            raise ValueError(f"Invalid result_type: {result_type}")
+
 
 class AsyncParsingResource(AsyncAPIResource):
     @cached_property
@@ -887,6 +988,100 @@ class AsyncParsingResource(AsyncAPIResource):
             ),
             cast_to=ParsingJob,
         )
+
+    async def upload_file_and_wait(
+        self,
+        *,
+        result_type: Literal["markdown", "text", "json", "structured"] = "markdown",
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        timeout: float = 2000.0,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        **upload_params: Unpack[ParsingUploadFileParams],
+    ) -> Union[ParsingJobMarkdownResult, ParsingJobTextResult, ParsingJobJsonResult, ParsingJobStructuredResult]:
+        """
+        Upload a file for parsing and wait for it to complete, returning the result.
+
+        This is a convenience method that combines upload_file(), wait_for_completion(),
+        and result.get_*() into a single call for the most common end-to-end workflow.
+
+        Args:
+            result_type: The type of result to return. Options:
+                - "markdown": Return markdown formatted result (default)
+                - "text": Return plain text result
+                - "json": Return JSON formatted result
+                - "structured": Return structured data result
+
+            polling_interval: Initial polling interval in seconds (default: 1.0)
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0)
+
+            timeout: Maximum time to wait in seconds (default: 2000.0)
+
+            backoff: Backoff strategy for polling intervals. Options:
+                - "constant": Keep the same polling interval
+                - "linear": Increase interval by 1 second each poll (default)
+                - "exponential": Double the interval each poll
+
+            verbose: Print progress indicators every 10 polls (default: False)
+
+            **upload_params: All parameters accepted by upload_file(), including:
+                - file: The file to parse
+                - organization_id: Optional organization ID
+                - project_id: Optional project ID
+                - parse_mode: Parsing mode to use
+                - And 100+ other parsing configuration options
+
+        Returns:
+            The parsing result in the requested format
+
+        Raises:
+            PollingTimeoutError: If the job doesn't complete within the timeout period
+
+            PollingError: If the job fails or is cancelled
+
+        Example:
+            ```python
+            from llama_cloud import AsyncLlamaCloud
+
+            client = AsyncLlamaCloud(api_key="...")
+
+            # One-shot: upload, wait, and get markdown result
+            result = await client.parsing.upload_file_and_wait(
+                file=open("document.pdf", "rb"),
+                result_type="markdown",
+                verbose=True
+            )
+
+            print(result.markdown)
+            ```
+        """
+        # Upload the file
+        job = await self.upload_file(**upload_params)
+
+        # Wait for completion
+        await self.job.wait_for_completion(
+            job.id,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=timeout,
+            backoff=backoff,
+            verbose=verbose,
+        )
+
+        # Get and return the result in the requested format
+        organization_id = upload_params.get("organization_id")
+        if result_type == "markdown":
+            return await self.job.result.get_markdown(job.id, organization_id=organization_id)
+        elif result_type == "text":
+            return await self.job.result.get_text(job.id, organization_id=organization_id)
+        elif result_type == "json":
+            return await self.job.result.get_json(job.id, organization_id=organization_id)
+        elif result_type == "structured":
+            return await self.job.result.get_structured(job.id, organization_id=organization_id)
+        else:
+            raise ValueError(f"Invalid result_type: {result_type}")
 
 
 class ParsingResourceWithRawResponse:

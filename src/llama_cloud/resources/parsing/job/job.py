@@ -24,6 +24,11 @@ from .result.result import (
 from ...._base_client import make_request_options
 from ....types.parsing_job import ParsingJob
 from ....types.presigned_url import PresignedURL
+from ...._polling import (
+    BackoffStrategy,
+    poll_until_complete,
+    poll_until_complete_async,
+)
 
 __all__ = ["JobResource", "AsyncJobResource"]
 
@@ -187,6 +192,115 @@ class JobResource(SyncAPIResource):
             cast_to=object,
         )
 
+    def wait_for_completion(
+        self,
+        job_id: str,
+        *,
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        timeout: float = 2000.0,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+    ) -> ParsingJob:
+        """
+        Wait for a parsing job to complete by polling until it reaches a terminal state.
+
+        This method polls the job status at regular intervals until the job completes
+        successfully or fails. It uses configurable backoff strategies to optimize
+        polling behavior.
+
+        Args:
+            job_id: The ID of the parsing job to wait for
+
+            polling_interval: Initial polling interval in seconds (default: 1.0)
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0)
+
+            timeout: Maximum time to wait in seconds (default: 2000.0)
+
+            backoff: Backoff strategy for polling intervals. Options:
+                - "constant": Keep the same polling interval
+                - "linear": Increase interval by 1 second each poll (default)
+                - "exponential": Double the interval each poll
+
+            verbose: Print progress indicators every 10 polls (default: False)
+
+            extra_headers: Send extra headers
+
+            extra_query: Add additional query parameters to the request
+
+            extra_body: Add additional JSON properties to the request
+
+        Returns:
+            The completed ParsingJob
+
+        Raises:
+            PollingTimeoutError: If the job doesn't complete within the timeout period
+
+            PollingError: If the job fails or is cancelled
+
+        Example:
+            ```python
+            from llama_cloud import LlamaCloud
+
+            client = LlamaCloud(api_key="...")
+
+            # Start a parsing job
+            job = client.parsing.upload(file="document.pdf")
+
+            # Wait for it to complete with exponential backoff
+            completed_job = client.parsing.job.wait_for_completion(
+                job.id,
+                backoff="exponential",
+                verbose=True
+            )
+
+            # Get the result
+            result = client.parsing.job.result.get(job.id, "markdown")
+            ```
+        """
+        if not job_id:
+            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+
+        def get_status() -> ParsingJob:
+            return self.get(
+                job_id,
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+            )
+
+        def is_complete(job: ParsingJob) -> bool:
+            return job.status in ("SUCCESS", "PARTIAL_SUCCESS")
+
+        def is_error(job: ParsingJob) -> bool:
+            return job.status in ("ERROR", "CANCELLED")
+
+        def get_error_message(job: ParsingJob) -> str:
+            error_parts = [f"Job {job_id} failed with status: {job.status}"]
+            if job.error_code:
+                error_parts.append(f"Error code: {job.error_code}")
+            if job.error_message:
+                error_parts.append(f"Error message: {job.error_message}")
+            return " | ".join(error_parts)
+
+        return poll_until_complete(
+            get_status_fn=get_status,
+            is_complete_fn=is_complete,
+            is_error_fn=is_error,
+            get_error_message_fn=get_error_message,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=timeout,
+            backoff=backoff,
+            verbose=verbose,
+        )
+
 
 class AsyncJobResource(AsyncAPIResource):
     @cached_property
@@ -345,6 +459,115 @@ class AsyncJobResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=object,
+        )
+
+    async def wait_for_completion(
+        self,
+        job_id: str,
+        *,
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        timeout: float = 2000.0,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+    ) -> ParsingJob:
+        """
+        Wait for a parsing job to complete by polling until it reaches a terminal state.
+
+        This method polls the job status at regular intervals until the job completes
+        successfully or fails. It uses configurable backoff strategies to optimize
+        polling behavior.
+
+        Args:
+            job_id: The ID of the parsing job to wait for
+
+            polling_interval: Initial polling interval in seconds (default: 1.0)
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0)
+
+            timeout: Maximum time to wait in seconds (default: 2000.0)
+
+            backoff: Backoff strategy for polling intervals. Options:
+                - "constant": Keep the same polling interval
+                - "linear": Increase interval by 1 second each poll (default)
+                - "exponential": Double the interval each poll
+
+            verbose: Print progress indicators every 10 polls (default: False)
+
+            extra_headers: Send extra headers
+
+            extra_query: Add additional query parameters to the request
+
+            extra_body: Add additional JSON properties to the request
+
+        Returns:
+            The completed ParsingJob
+
+        Raises:
+            PollingTimeoutError: If the job doesn't complete within the timeout period
+
+            PollingError: If the job fails or is cancelled
+
+        Example:
+            ```python
+            from llama_cloud import LlamaCloud
+
+            client = LlamaCloud(api_key="...")
+
+            # Start a parsing job
+            job = await client.parsing.upload(file="document.pdf")
+
+            # Wait for it to complete with exponential backoff
+            completed_job = await client.parsing.job.wait_for_completion(
+                job.id,
+                backoff="exponential",
+                verbose=True
+            )
+
+            # Get the result
+            result = await client.parsing.job.result.get(job.id, "markdown")
+            ```
+        """
+        if not job_id:
+            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+
+        async def get_status() -> ParsingJob:
+            return await self.get(
+                job_id,
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+            )
+
+        def is_complete(job: ParsingJob) -> bool:
+            return job.status in ("SUCCESS", "PARTIAL_SUCCESS")
+
+        def is_error(job: ParsingJob) -> bool:
+            return job.status in ("ERROR", "CANCELLED")
+
+        def get_error_message(job: ParsingJob) -> str:
+            error_parts = [f"Job {job_id} failed with status: {job.status}"]
+            if job.error_code:
+                error_parts.append(f"Error code: {job.error_code}")
+            if job.error_message:
+                error_parts.append(f"Error message: {job.error_message}")
+            return " | ".join(error_parts)
+
+        return await poll_until_complete_async(
+            get_status_fn=get_status,
+            is_complete_fn=is_complete,
+            is_error_fn=is_error,
+            get_error_message_fn=get_error_message,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=timeout,
+            backoff=backoff,
+            verbose=verbose,
         )
 
 
