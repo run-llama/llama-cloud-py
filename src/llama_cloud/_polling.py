@@ -39,7 +39,8 @@ def _calculate_next_interval(
         return min(current_interval + 1.0, max_interval)
     elif backoff == "exponential":
         return min(current_interval * 2.0, max_interval)
-    return current_interval
+    else:
+        raise ValueError(f"Invalid backoff strategy: {backoff}")
 
 
 def poll_until_complete(
