@@ -4,11 +4,13 @@ from __future__ import annotations
 
 import time
 import asyncio
-from typing import TypeVar, Callable, Awaitable, Literal, Any
+from typing import Literal, TypeVar, Callable, Awaitable
+from logging import getLogger
 from typing_extensions import ParamSpec
 
 P = ParamSpec("P")
 T = TypeVar("T")
+logger = getLogger(__name__)
 
 BackoffStrategy = Literal["constant", "linear", "exponential"]
 
@@ -87,7 +89,7 @@ def poll_until_complete(
         # Check if complete
         if is_complete_fn(status):
             if verbose and tries > 1:
-                print(f"\nCompleted after {tries} checks")
+                logger.info(f"\nCompleted after {tries} checks")
             return status
 
         # Check if error
@@ -98,18 +100,14 @@ def poll_until_complete(
         # Check timeout
         elapsed = time.time() - start_time
         if elapsed > timeout:
-            raise PollingTimeoutError(
-                f"Polling timed out after {elapsed:.1f}s (timeout: {timeout}s)"
-            )
+            raise PollingTimeoutError(f"Polling timed out after {elapsed:.1f}s (timeout: {timeout}s)")
 
         # Print progress
         if verbose and tries % 10 == 0:
-            print(".", end="", flush=True)
+            logger.info(".")
 
         # Calculate next interval
-        current_interval = _calculate_next_interval(
-            current_interval, backoff, max_interval
-        )
+        current_interval = _calculate_next_interval(current_interval, backoff, max_interval)
 
 
 async def poll_until_complete_async(
@@ -159,7 +157,7 @@ async def poll_until_complete_async(
         # Check if complete
         if is_complete_fn(status):
             if verbose and tries > 1:
-                print(f"\nCompleted after {tries} checks")
+                logger.info(f"\nCompleted after {tries} checks")
             return status
 
         # Check if error
@@ -170,15 +168,11 @@ async def poll_until_complete_async(
         # Check timeout
         elapsed = time.time() - start_time
         if elapsed > timeout:
-            raise PollingTimeoutError(
-                f"Polling timed out after {elapsed:.1f}s (timeout: {timeout}s)"
-            )
+            raise PollingTimeoutError(f"Polling timed out after {elapsed:.1f}s (timeout: {timeout}s)")
 
         # Print progress
         if verbose and tries % 10 == 0:
-            print(".", end="", flush=True)
+            logger.info(".")
 
         # Calculate next interval
-        current_interval = _calculate_next_interval(
-            current_interval, backoff, max_interval
-        )
+        current_interval = _calculate_next_interval(current_interval, backoff, max_interval)

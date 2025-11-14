@@ -6,6 +6,11 @@ import httpx
 
 from ...._types import Body, Query, Headers, NotGiven, not_given
 from ...._compat import cached_property
+from ...._polling import (
+    BackoffStrategy,
+    poll_until_complete,
+    poll_until_complete_async,
+)
 from ...._resource import SyncAPIResource, AsyncAPIResource
 from ...._response import (
     to_raw_response_wrapper,
@@ -24,11 +29,6 @@ from .result.result import (
 from ...._base_client import make_request_options
 from ....types.parsing_job import ParsingJob
 from ....types.presigned_url import PresignedURL
-from ...._polling import (
-    BackoffStrategy,
-    poll_until_complete,
-    poll_until_complete_async,
-)
 
 __all__ = ["JobResource", "AsyncJobResource"]
 
@@ -254,11 +254,7 @@ class JobResource(SyncAPIResource):
             job = client.parsing.upload(file="document.pdf")
 
             # Wait for it to complete with exponential backoff
-            completed_job = client.parsing.job.wait_for_completion(
-                job.id,
-                backoff="exponential",
-                verbose=True
-            )
+            completed_job = client.parsing.job.wait_for_completion(job.id, backoff="exponential", verbose=True)
 
             # Get the result
             result = client.parsing.job.result.get(job.id, "markdown")
@@ -523,11 +519,7 @@ class AsyncJobResource(AsyncAPIResource):
             job = await client.parsing.upload(file="document.pdf")
 
             # Wait for it to complete with exponential backoff
-            completed_job = await client.parsing.job.wait_for_completion(
-                job.id,
-                backoff="exponential",
-                verbose=True
-            )
+            completed_job = await client.parsing.job.wait_for_completion(job.id, backoff="exponential", verbose=True)
 
             # Get the result
             result = await client.parsing.job.result.get(job.id, "markdown")

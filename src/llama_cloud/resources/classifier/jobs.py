@@ -9,6 +9,11 @@ import httpx
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
+from ..._polling import (
+    BackoffStrategy,
+    poll_until_complete,
+    poll_until_complete_async,
+)
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
     to_raw_response_wrapper,
@@ -28,11 +33,6 @@ from ...types.classifier.classify_job import ClassifyJob
 from ...types.classifier.classifier_rule_param import ClassifierRuleParam
 from ...types.classifier.job_get_results_response import JobGetResultsResponse
 from ...types.classifier.classify_parsing_configuration_param import ClassifyParsingConfigurationParam
-from ..._polling import (
-    BackoffStrategy,
-    poll_until_complete,
-    poll_until_complete_async,
-)
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
 
@@ -336,9 +336,9 @@ class JobsResource(SyncAPIResource):
                 file_ids=["file1", "file2", "file3"],
                 rules=[
                     {"name": "invoice", "description": "Invoice documents"},
-                    {"name": "receipt", "description": "Receipt documents"}
+                    {"name": "receipt", "description": "Receipt documents"},
                 ],
-                verbose=True
+                verbose=True,
             )
 
             # Results are ready to use immediately
@@ -448,16 +448,10 @@ class JobsResource(SyncAPIResource):
             client = LlamaCloud(api_key="...")
 
             # Create a classify job
-            job = client.classifier.jobs.create(
-                file_ids=["file1", "file2"],
-                rules=[...]
-            )
+            job = client.classifier.jobs.create(file_ids=["file1", "file2"], rules=[...])
 
             # Wait for it to complete
-            completed_job = client.classifier.jobs.wait_for_completion(
-                job.id,
-                verbose=True
-            )
+            completed_job = client.classifier.jobs.wait_for_completion(job.id, verbose=True)
 
             # Get the results
             results = client.classifier.jobs.get_results(job.id)
@@ -800,9 +794,9 @@ class AsyncJobsResource(AsyncAPIResource):
                 file_ids=["file1", "file2", "file3"],
                 rules=[
                     {"name": "invoice", "description": "Invoice documents"},
-                    {"name": "receipt", "description": "Receipt documents"}
+                    {"name": "receipt", "description": "Receipt documents"},
                 ],
-                verbose=True
+                verbose=True,
             )
 
             # Results are ready to use immediately
@@ -912,16 +906,10 @@ class AsyncJobsResource(AsyncAPIResource):
             client = LlamaCloud(api_key="...")
 
             # Create a classify job
-            job = await client.classifier.jobs.create(
-                file_ids=["file1", "file2"],
-                rules=[...]
-            )
+            job = await client.classifier.jobs.create(file_ids=["file1", "file2"], rules=[...])
 
             # Wait for it to complete
-            completed_job = await client.classifier.jobs.wait_for_completion(
-                job.id,
-                verbose=True
-            )
+            completed_job = await client.classifier.jobs.wait_for_completion(job.id, verbose=True)
 
             # Get the results
             results = await client.classifier.jobs.get_results(job.id)

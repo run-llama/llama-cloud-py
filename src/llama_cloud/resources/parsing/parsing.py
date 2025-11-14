@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import typing_extensions
-from typing import List, Mapping, Optional, Union, cast
-from typing_extensions import Literal, Unpack
+from typing import List, Union, Mapping, Optional, cast
+from typing_extensions import Unpack, Literal
 
 import httpx
 
@@ -20,6 +20,7 @@ from .job.job import (
 from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
 from ..._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from ..._compat import cached_property
+from ..._polling import BackoffStrategy
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
     to_raw_response_wrapper,
@@ -32,14 +33,13 @@ from ...types.parsing_job import ParsingJob
 from ...types.parsing_mode import ParsingMode
 from ...types.fail_page_mode import FailPageMode
 from ...types.parser_languages import ParserLanguages
-from ...types.parsing_get_parsing_history_response import ParsingGetParsingHistoryResponse
-from ...types.parsing_get_supported_file_extensions_response import ParsingGetSupportedFileExtensionsResponse
 from ...types.parsing_upload_file_params import ParsingUploadFileParams
 from ...types.parsing.job.parsing_job_json_result import ParsingJobJsonResult
 from ...types.parsing.job.parsing_job_text_result import ParsingJobTextResult
+from ...types.parsing_get_parsing_history_response import ParsingGetParsingHistoryResponse
 from ...types.parsing.job.parsing_job_markdown_result import ParsingJobMarkdownResult
 from ...types.parsing.job.parsing_job_structured_result import ParsingJobStructuredResult
-from ..._polling import BackoffStrategy
+from ...types.parsing_get_supported_file_extensions_response import ParsingGetSupportedFileExtensionsResponse
 
 __all__ = ["ParsingResource", "AsyncParsingResource"]
 
@@ -529,9 +529,7 @@ class ParsingResource(SyncAPIResource):
 
             # One-shot: upload, wait, and get markdown result
             result = client.parsing.upload_file_and_wait(
-                file=open("document.pdf", "rb"),
-                result_type="markdown",
-                verbose=True
+                file=open("document.pdf", "rb"), result_type="markdown", verbose=True
             )
 
             print(result.markdown)
@@ -1049,9 +1047,7 @@ class AsyncParsingResource(AsyncAPIResource):
 
             # One-shot: upload, wait, and get markdown result
             result = await client.parsing.upload_file_and_wait(
-                file=open("document.pdf", "rb"),
-                result_type="markdown",
-                verbose=True
+                file=open("document.pdf", "rb"), result_type="markdown", verbose=True
             )
 
             print(result.markdown)

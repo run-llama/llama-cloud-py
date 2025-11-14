@@ -17,6 +17,10 @@ from ._client import (
     AsyncLlamaCloud,
 )
 from ._models import BaseModel
+from ._polling import (
+    PollingError,
+    PollingTimeoutError,
+)
 from ._version import __title__, __version__
 from ._response import APIResponse as APIResponse, AsyncAPIResponse as AsyncAPIResponse
 from ._constants import DEFAULT_TIMEOUT, DEFAULT_MAX_RETRIES, DEFAULT_CONNECTION_LIMITS
@@ -35,10 +39,6 @@ from ._exceptions import (
     PermissionDeniedError,
     UnprocessableEntityError,
     APIResponseValidationError,
-)
-from ._polling import (
-    PollingError,
-    PollingTimeoutError,
 )
 from ._base_client import DefaultHttpxClient, DefaultAioHttpClient, DefaultAsyncHttpxClient
 from ._utils._logs import setup_logging as _setup_logging

@@ -20,6 +20,11 @@ from ..._types import (
 )
 from ..._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from ..._compat import cached_property
+from ..._polling import (
+    BackoffStrategy,
+    poll_until_complete,
+    poll_until_complete_async,
+)
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
     to_raw_response_wrapper,
@@ -41,11 +46,6 @@ from ...types.extraction.job_batch_response import JobBatchResponse
 from ...types.extraction.extract_config_param import ExtractConfigParam
 from ...types.extraction.job_get_result_response import JobGetResultResponse
 from ...types.extraction.webhook_configuration_param import WebhookConfigurationParam
-from ..._polling import (
-    BackoffStrategy,
-    poll_until_complete,
-    poll_until_complete_async,
-)
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
 
@@ -459,9 +459,7 @@ class JobsResource(SyncAPIResource):
 
             # One-shot: create job, wait for completion, and get result
             result = client.extraction.jobs.create_and_wait(
-                extraction_agent_id="agent_id",
-                file_id="file_id",
-                verbose=True
+                extraction_agent_id="agent_id", file_id="file_id", verbose=True
             )
 
             # Result is ready to use immediately
@@ -562,16 +560,10 @@ class JobsResource(SyncAPIResource):
             client = LlamaCloud(api_key="...")
 
             # Create an extraction job
-            job = client.extraction.jobs.create(
-                extraction_agent_id="agent_id",
-                file_id="file_id"
-            )
+            job = client.extraction.jobs.create(extraction_agent_id="agent_id", file_id="file_id")
 
             # Wait for it to complete
-            completed_job = client.extraction.jobs.wait_for_completion(
-                job.id,
-                verbose=True
-            )
+            completed_job = client.extraction.jobs.wait_for_completion(job.id, verbose=True)
 
             # Get the result
             result = client.extraction.jobs.get_result(job.id)
@@ -1024,9 +1016,7 @@ class AsyncJobsResource(AsyncAPIResource):
 
             # One-shot: create job, wait for completion, and get result
             result = await client.extraction.jobs.create_and_wait(
-                extraction_agent_id="agent_id",
-                file_id="file_id",
-                verbose=True
+                extraction_agent_id="agent_id", file_id="file_id", verbose=True
             )
 
             # Result is ready to use immediately
@@ -1127,16 +1117,10 @@ class AsyncJobsResource(AsyncAPIResource):
             client = LlamaCloud(api_key="...")
 
             # Create an extraction job
-            job = await client.extraction.jobs.create(
-                extraction_agent_id="agent_id",
-                file_id="file_id"
-            )
+            job = await client.extraction.jobs.create(extraction_agent_id="agent_id", file_id="file_id")
 
             # Wait for it to complete
-            completed_job = await client.extraction.jobs.wait_for_completion(
-                job.id,
-                verbose=True
-            )
+            completed_job = await client.extraction.jobs.wait_for_completion(job.id, verbose=True)
 
             # Get the result
             result = await client.extraction.jobs.get_result(job.id)
