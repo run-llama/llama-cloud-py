@@ -17,6 +17,10 @@ from ._client import (
     AsyncLlamaCloud,
 )
 from ._models import BaseModel
+from ._polling import (
+    PollingError,
+    PollingTimeoutError,
+)
 from ._version import __title__, __version__
 from ._response import APIResponse as APIResponse, AsyncAPIResponse as AsyncAPIResponse
 from ._constants import DEFAULT_TIMEOUT, DEFAULT_MAX_RETRIES, DEFAULT_CONNECTION_LIMITS
@@ -65,6 +69,8 @@ __all__ = [
     "UnprocessableEntityError",
     "RateLimitError",
     "InternalServerError",
+    "PollingError",
+    "PollingTimeoutError",
     "Timeout",
     "RequestOptions",
     "Client",
