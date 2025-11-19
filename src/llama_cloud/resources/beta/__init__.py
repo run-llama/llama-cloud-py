@@ -32,14 +32,6 @@ from .directories import (
     DirectoriesResourceWithStreamingResponse,
     AsyncDirectoriesResourceWithStreamingResponse,
 )
-from .spreadsheet import (
-    SpreadsheetResource,
-    AsyncSpreadsheetResource,
-    SpreadsheetResourceWithRawResponse,
-    AsyncSpreadsheetResourceWithRawResponse,
-    SpreadsheetResourceWithStreamingResponse,
-    AsyncSpreadsheetResourceWithStreamingResponse,
-)
 from .parse_configurations import (
     ParseConfigurationsResource,
     AsyncParseConfigurationsResource,
@@ -68,12 +60,6 @@ __all__ = [
     "AsyncParseConfigurationsResourceWithRawResponse",
     "ParseConfigurationsResourceWithStreamingResponse",
     "AsyncParseConfigurationsResourceWithStreamingResponse",
-    "SpreadsheetResource",
-    "AsyncSpreadsheetResource",
-    "SpreadsheetResourceWithRawResponse",
-    "AsyncSpreadsheetResourceWithRawResponse",
-    "SpreadsheetResourceWithStreamingResponse",
-    "AsyncSpreadsheetResourceWithStreamingResponse",
     "DirectoriesResource",
     "AsyncDirectoriesResource",
     "DirectoriesResourceWithRawResponse",

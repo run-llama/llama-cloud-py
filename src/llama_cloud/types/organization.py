@@ -23,7 +23,7 @@ class Organization(BaseModel):
     """Feature flags for the organization."""
 
     parse_plan_level: Optional[Literal["DEFAULT", "PREMIUM"]] = None
-    """Whether the organization is a Parse Premium customer."""
+    """[Deprecated] Whether the organization is a Parse Premium customer."""
 
     stripe_customer_id: Optional[str] = None
     """The Stripe customer ID for the organization."""

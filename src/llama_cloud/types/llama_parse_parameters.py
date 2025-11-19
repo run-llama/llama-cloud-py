@@ -73,6 +73,8 @@ class LlamaParseParameters(BaseModel):
 
     extract_layout: Optional[bool] = None
 
+    extract_printed_page_number: Optional[bool] = None
+
     fast_mode: Optional[bool] = None
 
     formatting_instruction: Optional[str] = None

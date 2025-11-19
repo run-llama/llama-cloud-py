@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Dict, Union, Iterable, Optional
 from typing_extensions import TypedDict
 
 __all__ = ["SchemaGenerateParams"]
@@ -12,6 +12,9 @@ class SchemaGenerateParams(TypedDict, total=False):
     organization_id: Optional[str]
 
     project_id: Optional[str]
+
+    data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str, None]
+    """Optional schema to validate, refine, or extend during generation"""
 
     file_id: Optional[str]
     """Optional file ID to analyze for schema generation"""
