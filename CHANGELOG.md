@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.0 (2025-11-19)
+
+Full Changelog: [v0.1.1...v0.2.0](https://github.com/run-llama/llama-cloud-py/compare/v0.1.1...v0.2.0)
+
+### Features
+
+* **api:** api update ([02e9e08](https://github.com/run-llama/llama-cloud-py/commit/02e9e088adfe7842c3a098e816aa6930ae156e86))
+
+
+### Bug Fixes
+
+* **compat:** update signatures of `model_dump` and `model_dump_json` for Pydantic v1 ([9784558](https://github.com/run-llama/llama-cloud-py/commit/97845584d969cf89fb7b28f4d5acea26055c0e50))
+
 ## 0.1.1 (2025-11-11)
 
 Full Changelog: [v0.1.0...v0.1.1](https://github.com/run-llama/llama-cloud-py/compare/v0.1.0...v0.1.1)
