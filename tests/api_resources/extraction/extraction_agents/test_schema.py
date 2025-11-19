@@ -32,6 +32,7 @@ class TestSchema:
         schema = client.extraction.extraction_agents.schema.generate(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            data_schema={"foo": {"foo": "bar"}},
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             prompt="prompt",
         )
@@ -111,6 +112,7 @@ class TestAsyncSchema:
         schema = await async_client.extraction.extraction_agents.schema.generate(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            data_schema={"foo": {"foo": "bar"}},
             file_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             prompt="prompt",
         )

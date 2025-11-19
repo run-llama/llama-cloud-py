@@ -578,13 +578,6 @@ Types:
 from llama_cloud.types.beta import SpreadsheetJob, SpreadsheetParsingConfig
 ```
 
-Methods:
-
-- <code title="post /api/v1/beta/spreadsheet/jobs">client.beta.spreadsheet.<a href="./src/llama_cloud/resources/beta/spreadsheet.py">create</a>(\*\*<a href="src/llama_cloud/types/beta/spreadsheet_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/spreadsheet_job.py">SpreadsheetJob</a></code>
-- <code title="get /api/v1/beta/spreadsheet/jobs">client.beta.spreadsheet.<a href="./src/llama_cloud/resources/beta/spreadsheet.py">list</a>(\*\*<a href="src/llama_cloud/types/beta/spreadsheet_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/spreadsheet_job.py">SyncPaginatedClassifyJobs[SpreadsheetJob]</a></code>
-- <code title="get /api/v1/beta/spreadsheet/jobs/{spreadsheet_job_id}">client.beta.spreadsheet.<a href="./src/llama_cloud/resources/beta/spreadsheet.py">get</a>(spreadsheet_job_id, \*\*<a href="src/llama_cloud/types/beta/spreadsheet_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/spreadsheet_job.py">SpreadsheetJob</a></code>
-- <code title="get /api/v1/beta/spreadsheet/jobs/{spreadsheet_job_id}/tables/{table_id}/result/{table_type}">client.beta.spreadsheet.<a href="./src/llama_cloud/resources/beta/spreadsheet.py">get_result_table</a>(table_type, \*, spreadsheet_job_id, table_id, \*\*<a href="src/llama_cloud/types/beta/spreadsheet_get_result_table_params.py">params</a>) -> <a href="./src/llama_cloud/types/presigned_url.py">PresignedURL</a></code>
-
 ## Directories
 
 Types:

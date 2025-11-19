@@ -49,6 +49,8 @@ class SchemaResource(SyncAPIResource):
         *,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
+        data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str, None]
+        | Omit = omit,
         file_id: Optional[str] | Omit = omit,
         prompt: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -59,10 +61,12 @@ class SchemaResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SchemaGenerateResponse:
         """
-        Generates an extraction agent's schema definition from a file and/or natural
-        language prompt.
+        Generates or refines an extraction agent's schema definition from a file,
+        natural language prompt, or existing schema.
 
         Args:
+          data_schema: Optional schema to validate, refine, or extend during generation
+
           file_id: Optional file ID to analyze for schema generation
 
           prompt: Natural language description of the data structure to extract
@@ -79,6 +83,7 @@ class SchemaResource(SyncAPIResource):
             "/api/v1/extraction/extraction-agents/schema/generate",
             body=maybe_transform(
                 {
+                    "data_schema": data_schema,
                     "file_id": file_id,
                     "prompt": prompt,
                 },
@@ -160,6 +165,8 @@ class AsyncSchemaResource(AsyncAPIResource):
         *,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
+        data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str, None]
+        | Omit = omit,
         file_id: Optional[str] | Omit = omit,
         prompt: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -170,10 +177,12 @@ class AsyncSchemaResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SchemaGenerateResponse:
         """
-        Generates an extraction agent's schema definition from a file and/or natural
-        language prompt.
+        Generates or refines an extraction agent's schema definition from a file,
+        natural language prompt, or existing schema.
 
         Args:
+          data_schema: Optional schema to validate, refine, or extend during generation
+
           file_id: Optional file ID to analyze for schema generation
 
           prompt: Natural language description of the data structure to extract
@@ -190,6 +199,7 @@ class AsyncSchemaResource(AsyncAPIResource):
             "/api/v1/extraction/extraction-agents/schema/generate",
             body=await async_maybe_transform(
                 {
+                    "data_schema": data_schema,
                     "file_id": file_id,
                     "prompt": prompt,
                 },
