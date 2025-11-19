@@ -73,6 +73,8 @@ class LlamaParseParametersParam(TypedDict, total=False):
 
     extract_layout: Optional[bool]
 
+    extract_printed_page_number: Optional[bool]
+
     fast_mode: Optional[bool]
 
     formatting_instruction: Optional[str]

@@ -77,6 +77,8 @@ class ParsingUploadFileParams(TypedDict, total=False):
 
     extract_layout: bool
 
+    extract_printed_page_number: bool
+
     fast_mode: bool
 
     file: Optional[FileTypes]

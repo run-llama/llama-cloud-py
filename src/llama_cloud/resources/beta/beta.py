@@ -20,14 +20,6 @@ from .agent_data import (
     AsyncAgentDataResourceWithStreamingResponse,
 )
 from ..._resource import SyncAPIResource, AsyncAPIResource
-from .spreadsheet import (
-    SpreadsheetResource,
-    AsyncSpreadsheetResource,
-    SpreadsheetResourceWithRawResponse,
-    AsyncSpreadsheetResourceWithRawResponse,
-    SpreadsheetResourceWithStreamingResponse,
-    AsyncSpreadsheetResourceWithStreamingResponse,
-)
 from .parse_configurations import (
     ParseConfigurationsResource,
     AsyncParseConfigurationsResource,
@@ -60,10 +52,6 @@ class BetaResource(SyncAPIResource):
     @cached_property
     def parse_configurations(self) -> ParseConfigurationsResource:
         return ParseConfigurationsResource(self._client)
-
-    @cached_property
-    def spreadsheet(self) -> SpreadsheetResource:
-        return SpreadsheetResource(self._client)
 
     @cached_property
     def directories(self) -> DirectoriesResource:
@@ -101,10 +89,6 @@ class AsyncBetaResource(AsyncAPIResource):
     @cached_property
     def parse_configurations(self) -> AsyncParseConfigurationsResource:
         return AsyncParseConfigurationsResource(self._client)
-
-    @cached_property
-    def spreadsheet(self) -> AsyncSpreadsheetResource:
-        return AsyncSpreadsheetResource(self._client)
 
     @cached_property
     def directories(self) -> AsyncDirectoriesResource:
@@ -147,10 +131,6 @@ class BetaResourceWithRawResponse:
         return ParseConfigurationsResourceWithRawResponse(self._beta.parse_configurations)
 
     @cached_property
-    def spreadsheet(self) -> SpreadsheetResourceWithRawResponse:
-        return SpreadsheetResourceWithRawResponse(self._beta.spreadsheet)
-
-    @cached_property
     def directories(self) -> DirectoriesResourceWithRawResponse:
         return DirectoriesResourceWithRawResponse(self._beta.directories)
 
@@ -170,10 +150,6 @@ class AsyncBetaResourceWithRawResponse:
     @cached_property
     def parse_configurations(self) -> AsyncParseConfigurationsResourceWithRawResponse:
         return AsyncParseConfigurationsResourceWithRawResponse(self._beta.parse_configurations)
-
-    @cached_property
-    def spreadsheet(self) -> AsyncSpreadsheetResourceWithRawResponse:
-        return AsyncSpreadsheetResourceWithRawResponse(self._beta.spreadsheet)
 
     @cached_property
     def directories(self) -> AsyncDirectoriesResourceWithRawResponse:
@@ -197,10 +173,6 @@ class BetaResourceWithStreamingResponse:
         return ParseConfigurationsResourceWithStreamingResponse(self._beta.parse_configurations)
 
     @cached_property
-    def spreadsheet(self) -> SpreadsheetResourceWithStreamingResponse:
-        return SpreadsheetResourceWithStreamingResponse(self._beta.spreadsheet)
-
-    @cached_property
     def directories(self) -> DirectoriesResourceWithStreamingResponse:
         return DirectoriesResourceWithStreamingResponse(self._beta.directories)
 
@@ -220,10 +192,6 @@ class AsyncBetaResourceWithStreamingResponse:
     @cached_property
     def parse_configurations(self) -> AsyncParseConfigurationsResourceWithStreamingResponse:
         return AsyncParseConfigurationsResourceWithStreamingResponse(self._beta.parse_configurations)
-
-    @cached_property
-    def spreadsheet(self) -> AsyncSpreadsheetResourceWithStreamingResponse:
-        return AsyncSpreadsheetResourceWithStreamingResponse(self._beta.spreadsheet)
 
     @cached_property
     def directories(self) -> AsyncDirectoriesResourceWithStreamingResponse:
