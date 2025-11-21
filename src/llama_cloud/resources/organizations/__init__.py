@@ -1,13 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .users import (
-    UsersResource,
-    AsyncUsersResource,
-    UsersResourceWithRawResponse,
-    AsyncUsersResourceWithRawResponse,
-    UsersResourceWithStreamingResponse,
-    AsyncUsersResourceWithStreamingResponse,
-)
 from .default import (
     DefaultResource,
     AsyncDefaultResource,
@@ -32,12 +24,6 @@ __all__ = [
     "AsyncDefaultResourceWithRawResponse",
     "DefaultResourceWithStreamingResponse",
     "AsyncDefaultResourceWithStreamingResponse",
-    "UsersResource",
-    "AsyncUsersResource",
-    "UsersResourceWithRawResponse",
-    "AsyncUsersResourceWithRawResponse",
-    "UsersResourceWithStreamingResponse",
-    "AsyncUsersResourceWithStreamingResponse",
     "OrganizationsResource",
     "AsyncOrganizationsResource",
     "OrganizationsResourceWithRawResponse",

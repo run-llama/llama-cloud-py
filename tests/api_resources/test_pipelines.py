@@ -174,10 +174,12 @@ class TestPipelines:
                 "system_prompt_append": "system_prompt_append",
                 "take_screenshot": True,
                 "target_pages": "target_pages",
+                "tier": "tier",
                 "use_vendor_multimodal_model": True,
                 "user_prompt": "user_prompt",
                 "vendor_multimodal_api_key": "vendor_multimodal_api_key",
                 "vendor_multimodal_model_name": "vendor_multimodal_model_name",
+                "version": "version",
                 "webhook_configurations": [
                     {
                         "webhook_events": ["extract.pending"],
@@ -405,10 +407,12 @@ class TestPipelines:
                 "system_prompt_append": "system_prompt_append",
                 "take_screenshot": True,
                 "target_pages": "target_pages",
+                "tier": "tier",
                 "use_vendor_multimodal_model": True,
                 "user_prompt": "user_prompt",
                 "vendor_multimodal_api_key": "vendor_multimodal_api_key",
                 "vendor_multimodal_model_name": "vendor_multimodal_model_name",
+                "version": "version",
                 "webhook_configurations": [
                     {
                         "webhook_events": ["extract.pending"],
@@ -1112,10 +1116,12 @@ class TestAsyncPipelines:
                 "system_prompt_append": "system_prompt_append",
                 "take_screenshot": True,
                 "target_pages": "target_pages",
+                "tier": "tier",
                 "use_vendor_multimodal_model": True,
                 "user_prompt": "user_prompt",
                 "vendor_multimodal_api_key": "vendor_multimodal_api_key",
                 "vendor_multimodal_model_name": "vendor_multimodal_model_name",
+                "version": "version",
                 "webhook_configurations": [
                     {
                         "webhook_events": ["extract.pending"],
@@ -1343,10 +1349,12 @@ class TestAsyncPipelines:
                 "system_prompt_append": "system_prompt_append",
                 "take_screenshot": True,
                 "target_pages": "target_pages",
+                "tier": "tier",
                 "use_vendor_multimodal_model": True,
                 "user_prompt": "user_prompt",
                 "vendor_multimodal_api_key": "vendor_multimodal_api_key",
                 "vendor_multimodal_model_name": "vendor_multimodal_model_name",
+                "version": "version",
                 "webhook_configurations": [
                     {
                         "webhook_events": ["extract.pending"],

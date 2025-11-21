@@ -13,7 +13,6 @@ from llama_cloud.types import (
     Organization,
     UsageAndPlan,
     OrganizationListResponse,
-    OrganizationGetRolesResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -221,48 +220,6 @@ class TestOrganizations:
     def test_path_params_get(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
             client.organizations.with_raw_response.get(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_get_roles(self, client: LlamaCloud) -> None:
-        organization = client.organizations.get_roles(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(OrganizationGetRolesResponse, organization, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_get_roles(self, client: LlamaCloud) -> None:
-        response = client.organizations.with_raw_response.get_roles(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        organization = response.parse()
-        assert_matches_type(OrganizationGetRolesResponse, organization, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_get_roles(self, client: LlamaCloud) -> None:
-        with client.organizations.with_streaming_response.get_roles(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            organization = response.parse()
-            assert_matches_type(OrganizationGetRolesResponse, organization, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_get_roles(self, client: LlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            client.organizations.with_raw_response.get_roles(
                 "",
             )
 
@@ -522,48 +479,6 @@ class TestAsyncOrganizations:
     async def test_path_params_get(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
             await async_client.organizations.with_raw_response.get(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_get_roles(self, async_client: AsyncLlamaCloud) -> None:
-        organization = await async_client.organizations.get_roles(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(OrganizationGetRolesResponse, organization, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_get_roles(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.organizations.with_raw_response.get_roles(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        organization = await response.parse()
-        assert_matches_type(OrganizationGetRolesResponse, organization, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_get_roles(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.organizations.with_streaming_response.get_roles(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            organization = await response.parse()
-            assert_matches_type(OrganizationGetRolesResponse, organization, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_get_roles(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            await async_client.organizations.with_raw_response.get_roles(
                 "",
             )
 

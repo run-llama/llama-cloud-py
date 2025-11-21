@@ -61,10 +61,8 @@ Types:
 from llama_cloud.types import (
     Organization,
     OrganizationCreate,
-    Role,
     UsageAndPlan,
     OrganizationListResponse,
-    OrganizationGetRolesResponse,
 )
 ```
 
@@ -75,7 +73,6 @@ Methods:
 - <code title="get /api/v1/organizations">client.organizations.<a href="./src/llama_cloud/resources/organizations/organizations.py">list</a>() -> <a href="./src/llama_cloud/types/organization_list_response.py">OrganizationListResponse</a></code>
 - <code title="delete /api/v1/organizations/{organization_id}">client.organizations.<a href="./src/llama_cloud/resources/organizations/organizations.py">delete</a>(organization_id) -> None</code>
 - <code title="get /api/v1/organizations/{organization_id}">client.organizations.<a href="./src/llama_cloud/resources/organizations/organizations.py">get</a>(organization_id) -> <a href="./src/llama_cloud/types/organization.py">Organization</a></code>
-- <code title="get /api/v1/organizations/{organization_id}/roles">client.organizations.<a href="./src/llama_cloud/resources/organizations/organizations.py">get_roles</a>(organization_id) -> <a href="./src/llama_cloud/types/organization_get_roles_response.py">OrganizationGetRolesResponse</a></code>
 - <code title="get /api/v1/organizations/{organization_id}/usage">client.organizations.<a href="./src/llama_cloud/resources/organizations/organizations.py">get_usage</a>(organization_id, \*\*<a href="src/llama_cloud/types/organization_get_usage_params.py">params</a>) -> <a href="./src/llama_cloud/types/usage_and_plan.py">UsageAndPlan</a></code>
 
 ## Default
@@ -83,47 +80,6 @@ Methods:
 Methods:
 
 - <code title="get /api/v1/organizations/default">client.organizations.default.<a href="./src/llama_cloud/resources/organizations/default.py">list</a>() -> <a href="./src/llama_cloud/types/organization.py">Organization</a></code>
-
-## Users
-
-Types:
-
-```python
-from llama_cloud.types.organizations import UserOrganization, UserCreateResponse, UserListResponse
-```
-
-Methods:
-
-- <code title="put /api/v1/organizations/{organization_id}/users">client.organizations.users.<a href="./src/llama_cloud/resources/organizations/users/users.py">create</a>(organization_id, \*\*<a href="src/llama_cloud/types/organizations/user_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/organizations/user_create_response.py">UserCreateResponse</a></code>
-- <code title="get /api/v1/organizations/{organization_id}/users">client.organizations.users.<a href="./src/llama_cloud/resources/organizations/users/users.py">list</a>(organization_id) -> <a href="./src/llama_cloud/types/organizations/user_list_response.py">UserListResponse</a></code>
-- <code title="delete /api/v1/organizations/{organization_id}/users/{member_user_id}">client.organizations.users.<a href="./src/llama_cloud/resources/organizations/users/users.py">delete</a>(member_user_id, \*, organization_id, \*\*<a href="src/llama_cloud/types/organizations/user_delete_params.py">params</a>) -> None</code>
-
-### Roles
-
-Types:
-
-```python
-from llama_cloud.types.organizations.users import UserOrganizationRole
-```
-
-Methods:
-
-- <code title="put /api/v1/organizations/{organization_id}/users/roles">client.organizations.users.roles.<a href="./src/llama_cloud/resources/organizations/users/roles.py">create</a>(path_organization_id, \*\*<a href="src/llama_cloud/types/organizations/users/role_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/organizations/users/user_organization_role.py">UserOrganizationRole</a></code>
-- <code title="get /api/v1/organizations/{organization_id}/users/roles">client.organizations.users.roles.<a href="./src/llama_cloud/resources/organizations/users/roles.py">list</a>(organization_id, \*\*<a href="src/llama_cloud/types/organizations/users/role_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/organizations/users/user_organization_role.py">Optional[UserOrganizationRole]</a></code>
-
-### Projects
-
-Types:
-
-```python
-from llama_cloud.types.organizations.users import ProjectListResponse
-```
-
-Methods:
-
-- <code title="put /api/v1/organizations/{organization_id}/users/{user_id}/projects">client.organizations.users.projects.<a href="./src/llama_cloud/resources/organizations/users/projects.py">create</a>(user_id, \*, organization_id, \*\*<a href="src/llama_cloud/types/organizations/users/project_create_params.py">params</a>) -> object</code>
-- <code title="get /api/v1/organizations/{organization_id}/users/{user_id}/projects">client.organizations.users.projects.<a href="./src/llama_cloud/resources/organizations/users/projects.py">list</a>(user_id, \*, organization_id) -> <a href="./src/llama_cloud/types/organizations/users/project_list_response.py">ProjectListResponse</a></code>
-- <code title="delete /api/v1/organizations/{organization_id}/users/{user_id}/projects/{project_id}">client.organizations.users.projects.<a href="./src/llama_cloud/resources/organizations/users/projects.py">delete</a>(project_id, \*, organization_id, user_id) -> object</code>
 
 # Files
 
@@ -327,18 +283,6 @@ Methods:
 - <code title="delete /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/llama_cloud/resources/retrievers.py">delete</a>(retriever_id) -> None</code>
 - <code title="get /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/llama_cloud/resources/retrievers.py">get</a>(retriever_id, \*\*<a href="src/llama_cloud/types/retriever_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/retriever.py">Retriever</a></code>
 - <code title="put /api/v1/retrievers">client.retrievers.<a href="./src/llama_cloud/resources/retrievers.py">upsert</a>(\*\*<a href="src/llama_cloud/types/retriever_upsert_params.py">params</a>) -> <a href="./src/llama_cloud/types/retriever.py">Retriever</a></code>
-
-# Evals
-
-Types:
-
-```python
-from llama_cloud.types import EvalListSupportedModelsResponse
-```
-
-Methods:
-
-- <code title="get /api/v1/evals/models">client.evals.<a href="./src/llama_cloud/resources/evals.py">list_supported_models</a>() -> <a href="./src/llama_cloud/types/eval_list_supported_models_response.py">EvalListSupportedModelsResponse</a></code>
 
 # Parsing
 
