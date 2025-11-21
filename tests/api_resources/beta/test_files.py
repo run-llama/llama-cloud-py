@@ -11,7 +11,9 @@ from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
 from llama_cloud.types import File
 from llama_cloud._utils import parse_datetime
-from llama_cloud.types.beta import FileQueryResponse
+from llama_cloud.types.beta import (
+    FileQueryResponse,
+)
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -169,6 +171,56 @@ class TestFiles:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_upsert(self, client: LlamaCloud) -> None:
+        file = client.beta.files.upsert(
+            name="x",
+        )
+        assert_matches_type(File, file, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_upsert_with_all_params(self, client: LlamaCloud) -> None:
+        file = client.beta.files.upsert(
+            name="x",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            external_file_id="external_file_id",
+            file_size=0,
+            last_modified_at=parse_datetime("2019-12-27T18:11:19.117Z"),
+            permission_info={"foo": {"foo": "bar"}},
+            resource_info={"foo": {"foo": "bar"}},
+        )
+        assert_matches_type(File, file, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_upsert(self, client: LlamaCloud) -> None:
+        response = client.beta.files.with_raw_response.upsert(
+            name="x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        file = response.parse()
+        assert_matches_type(File, file, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_upsert(self, client: LlamaCloud) -> None:
+        with client.beta.files.with_streaming_response.upsert(
+            name="x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            file = response.parse()
+            assert_matches_type(File, file, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
 
 class TestAsyncFiles:
     parametrize = pytest.mark.parametrize(
@@ -322,5 +374,55 @@ class TestAsyncFiles:
 
             file = await response.parse()
             assert_matches_type(FileQueryResponse, file, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_upsert(self, async_client: AsyncLlamaCloud) -> None:
+        file = await async_client.beta.files.upsert(
+            name="x",
+        )
+        assert_matches_type(File, file, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_upsert_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        file = await async_client.beta.files.upsert(
+            name="x",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            external_file_id="external_file_id",
+            file_size=0,
+            last_modified_at=parse_datetime("2019-12-27T18:11:19.117Z"),
+            permission_info={"foo": {"foo": "bar"}},
+            resource_info={"foo": {"foo": "bar"}},
+        )
+        assert_matches_type(File, file, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_upsert(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.beta.files.with_raw_response.upsert(
+            name="x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        file = await response.parse()
+        assert_matches_type(File, file, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_upsert(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.beta.files.with_streaming_response.upsert(
+            name="x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            file = await response.parse()
+            assert_matches_type(File, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True

@@ -17,7 +17,7 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...types.beta import file_query_params, file_create_params, file_delete_params
+from ...types.beta import file_query_params, file_create_params, file_delete_params, file_upsert_params
 from ...types.file import File
 from ..._base_client import make_request_options
 from ...types.beta.file_query_response import FileQueryResponse
@@ -251,6 +251,89 @@ class FilesResource(SyncAPIResource):
             cast_to=FileQueryResponse,
         )
 
+    def upsert(
+        self,
+        *,
+        name: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        data_source_id: Optional[str] | Omit = omit,
+        external_file_id: Optional[str] | Omit = omit,
+        file_size: Optional[int] | Omit = omit,
+        last_modified_at: Union[str, datetime, None] | Omit = omit,
+        permission_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
+        | Omit = omit,
+        resource_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
+        | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> File:
+        """
+        Upsert a file (create or update if exists) in the project.
+
+        Args: file_create: File creation/update data project: Validated project from
+        dependency db: Database session
+
+        Returns: The upserted file
+
+        Args:
+          name: Name that will be used for created file. If possible, always include the file
+              extension in the name.
+
+          data_source_id: The ID of the data source that the file belongs to
+
+          external_file_id: The ID of the file in the external system
+
+          file_size: Size of the file in bytes
+
+          last_modified_at: The last modified time of the file
+
+          permission_info: Permission information for the file
+
+          resource_info: Resource information for the file
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._put(
+            "/api/v1/beta/files",
+            body=maybe_transform(
+                {
+                    "name": name,
+                    "data_source_id": data_source_id,
+                    "external_file_id": external_file_id,
+                    "file_size": file_size,
+                    "last_modified_at": last_modified_at,
+                    "permission_info": permission_info,
+                    "resource_info": resource_info,
+                },
+                file_upsert_params.FileUpsertParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    file_upsert_params.FileUpsertParams,
+                ),
+            ),
+            cast_to=File,
+        )
+
 
 class AsyncFilesResource(AsyncAPIResource):
     @cached_property
@@ -478,6 +561,89 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=FileQueryResponse,
         )
 
+    async def upsert(
+        self,
+        *,
+        name: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        data_source_id: Optional[str] | Omit = omit,
+        external_file_id: Optional[str] | Omit = omit,
+        file_size: Optional[int] | Omit = omit,
+        last_modified_at: Union[str, datetime, None] | Omit = omit,
+        permission_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
+        | Omit = omit,
+        resource_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
+        | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> File:
+        """
+        Upsert a file (create or update if exists) in the project.
+
+        Args: file_create: File creation/update data project: Validated project from
+        dependency db: Database session
+
+        Returns: The upserted file
+
+        Args:
+          name: Name that will be used for created file. If possible, always include the file
+              extension in the name.
+
+          data_source_id: The ID of the data source that the file belongs to
+
+          external_file_id: The ID of the file in the external system
+
+          file_size: Size of the file in bytes
+
+          last_modified_at: The last modified time of the file
+
+          permission_info: Permission information for the file
+
+          resource_info: Resource information for the file
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._put(
+            "/api/v1/beta/files",
+            body=await async_maybe_transform(
+                {
+                    "name": name,
+                    "data_source_id": data_source_id,
+                    "external_file_id": external_file_id,
+                    "file_size": file_size,
+                    "last_modified_at": last_modified_at,
+                    "permission_info": permission_info,
+                    "resource_info": resource_info,
+                },
+                file_upsert_params.FileUpsertParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    file_upsert_params.FileUpsertParams,
+                ),
+            ),
+            cast_to=File,
+        )
+
 
 class FilesResourceWithRawResponse:
     def __init__(self, files: FilesResource) -> None:
@@ -491,6 +657,9 @@ class FilesResourceWithRawResponse:
         )
         self.query = to_raw_response_wrapper(
             files.query,
+        )
+        self.upsert = to_raw_response_wrapper(
+            files.upsert,
         )
 
 
@@ -507,6 +676,9 @@ class AsyncFilesResourceWithRawResponse:
         self.query = async_to_raw_response_wrapper(
             files.query,
         )
+        self.upsert = async_to_raw_response_wrapper(
+            files.upsert,
+        )
 
 
 class FilesResourceWithStreamingResponse:
@@ -522,6 +694,9 @@ class FilesResourceWithStreamingResponse:
         self.query = to_streamed_response_wrapper(
             files.query,
         )
+        self.upsert = to_streamed_response_wrapper(
+            files.upsert,
+        )
 
 
 class AsyncFilesResourceWithStreamingResponse:
@@ -536,4 +711,7 @@ class AsyncFilesResourceWithStreamingResponse:
         )
         self.query = async_to_streamed_response_wrapper(
             files.query,
+        )
+        self.upsert = async_to_streamed_response_wrapper(
+            files.upsert,
         )
