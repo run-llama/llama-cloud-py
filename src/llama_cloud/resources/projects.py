@@ -19,7 +19,6 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.project import Project
-from ..types.agent_deployment_list import AgentDeploymentList
 from ..types.project_list_response import ProjectListResponse
 
 __all__ = ["ProjectsResource", "AsyncProjectsResource"]
@@ -125,72 +124,6 @@ class ProjectsResource(SyncAPIResource):
             cast_to=Project,
         )
 
-    def list_agents(
-        self,
-        project_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentDeploymentList:
-        """
-        List all deployments for a project.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not project_id:
-            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
-        return self._get(
-            f"/api/v1/projects/{project_id}/agents",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AgentDeploymentList,
-        )
-
-    def sync_agents(
-        self,
-        project_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentDeploymentList:
-        """
-        Sync deployments for a project.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not project_id:
-            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
-        return self._post(
-            f"/api/v1/projects/{project_id}/agents:sync",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AgentDeploymentList,
-        )
-
 
 class AsyncProjectsResource(AsyncAPIResource):
     @cached_property
@@ -294,72 +227,6 @@ class AsyncProjectsResource(AsyncAPIResource):
             cast_to=Project,
         )
 
-    async def list_agents(
-        self,
-        project_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentDeploymentList:
-        """
-        List all deployments for a project.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not project_id:
-            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
-        return await self._get(
-            f"/api/v1/projects/{project_id}/agents",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AgentDeploymentList,
-        )
-
-    async def sync_agents(
-        self,
-        project_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentDeploymentList:
-        """
-        Sync deployments for a project.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not project_id:
-            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
-        return await self._post(
-            f"/api/v1/projects/{project_id}/agents:sync",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AgentDeploymentList,
-        )
-
 
 class ProjectsResourceWithRawResponse:
     def __init__(self, projects: ProjectsResource) -> None:
@@ -370,12 +237,6 @@ class ProjectsResourceWithRawResponse:
         )
         self.get = to_raw_response_wrapper(
             projects.get,
-        )
-        self.list_agents = to_raw_response_wrapper(
-            projects.list_agents,
-        )
-        self.sync_agents = to_raw_response_wrapper(
-            projects.sync_agents,
         )
 
 
@@ -389,12 +250,6 @@ class AsyncProjectsResourceWithRawResponse:
         self.get = async_to_raw_response_wrapper(
             projects.get,
         )
-        self.list_agents = async_to_raw_response_wrapper(
-            projects.list_agents,
-        )
-        self.sync_agents = async_to_raw_response_wrapper(
-            projects.sync_agents,
-        )
 
 
 class ProjectsResourceWithStreamingResponse:
@@ -407,12 +262,6 @@ class ProjectsResourceWithStreamingResponse:
         self.get = to_streamed_response_wrapper(
             projects.get,
         )
-        self.list_agents = to_streamed_response_wrapper(
-            projects.list_agents,
-        )
-        self.sync_agents = to_streamed_response_wrapper(
-            projects.sync_agents,
-        )
 
 
 class AsyncProjectsResourceWithStreamingResponse:
@@ -424,10 +273,4 @@ class AsyncProjectsResourceWithStreamingResponse:
         )
         self.get = async_to_streamed_response_wrapper(
             projects.get,
-        )
-        self.list_agents = async_to_streamed_response_wrapper(
-            projects.list_agents,
-        )
-        self.sync_agents = async_to_streamed_response_wrapper(
-            projects.sync_agents,
         )

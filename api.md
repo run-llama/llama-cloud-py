@@ -3,15 +3,13 @@
 Types:
 
 ```python
-from llama_cloud.types import AgentDeploymentList, Project, ProjectListResponse
+from llama_cloud.types import Project, ProjectListResponse
 ```
 
 Methods:
 
 - <code title="get /api/v1/projects">client.projects.<a href="./src/llama_cloud/resources/projects.py">list</a>(\*\*<a href="src/llama_cloud/types/project_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/project_list_response.py">ProjectListResponse</a></code>
 - <code title="get /api/v1/projects/{project_id}">client.projects.<a href="./src/llama_cloud/resources/projects.py">get</a>(project_id, \*\*<a href="src/llama_cloud/types/project_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/project.py">Project</a></code>
-- <code title="get /api/v1/projects/{project_id}/agents">client.projects.<a href="./src/llama_cloud/resources/projects.py">list_agents</a>(project_id) -> <a href="./src/llama_cloud/types/agent_deployment_list.py">AgentDeploymentList</a></code>
-- <code title="post /api/v1/projects/{project_id}/agents:sync">client.projects.<a href="./src/llama_cloud/resources/projects.py">sync_agents</a>(project_id) -> <a href="./src/llama_cloud/types/agent_deployment_list.py">AgentDeploymentList</a></code>
 
 # DataSinks
 
