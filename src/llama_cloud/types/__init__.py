@@ -8,6 +8,7 @@ from . import (
     metadata_filters,
     retriever_pipeline,
     preset_retrieval_params,
+    pipeline_search_response,
     pipeline_get_playground_session_response,
 )
 from .. import _compat
@@ -27,7 +28,6 @@ from .presigned_url import PresignedURL as PresignedURL
 from .fail_page_mode import FailPageMode as FailPageMode
 from .llm_parameters import LlmParameters as LlmParameters
 from .retrieval_mode import RetrievalMode as RetrievalMode
-from .usage_and_plan import UsageAndPlan as UsageAndPlan
 from .file_get_params import FileGetParams as FileGetParams
 from .metadata_filters import MetadataFilters as MetadataFilters
 from .parser_languages import ParserLanguages as ParserLanguages
@@ -47,17 +47,15 @@ from .agent_deployment_list import AgentDeploymentList as AgentDeploymentList
 from .auto_transform_config import AutoTransformConfig as AutoTransformConfig
 from .data_sink_list_params import DataSinkListParams as DataSinkListParams
 from .extraction_run_params import ExtractionRunParams as ExtractionRunParams
-from .project_create_params import ProjectCreateParams as ProjectCreateParams
-from .project_delete_params import ProjectDeleteParams as ProjectDeleteParams
 from .project_list_response import ProjectListResponse as ProjectListResponse
-from .project_update_params import ProjectUpdateParams as ProjectUpdateParams
-from .project_upsert_params import ProjectUpsertParams as ProjectUpsertParams
 from .retriever_list_params import RetrieverListParams as RetrieverListParams
 from .llama_parse_parameters import LlamaParseParameters as LlamaParseParameters
 from .metadata_filters_param import MetadataFiltersParam as MetadataFiltersParam
 from .pipeline_create_params import PipelineCreateParams as PipelineCreateParams
 from .pipeline_list_response import PipelineListResponse as PipelineListResponse
+from .pipeline_search_params import PipelineSearchParams as PipelineSearchParams
 from .pipeline_update_params import PipelineUpdateParams as PipelineUpdateParams
+from .pipeline_upsert_params import PipelineUpsertParams as PipelineUpsertParams
 from .data_sink_create_params import DataSinkCreateParams as DataSinkCreateParams
 from .data_sink_list_response import DataSinkListResponse as DataSinkListResponse
 from .data_sink_update_params import DataSinkUpdateParams as DataSinkUpdateParams
@@ -66,33 +64,29 @@ from .data_source_list_params import DataSourceListParams as DataSourceListParam
 from .preset_retrieval_params import PresetRetrievalParams as PresetRetrievalParams
 from .retriever_create_params import RetrieverCreateParams as RetrieverCreateParams
 from .retriever_list_response import RetrieverListResponse as RetrieverListResponse
+from .retriever_search_params import RetrieverSearchParams as RetrieverSearchParams
 from .retriever_update_params import RetrieverUpdateParams as RetrieverUpdateParams
 from .retriever_upsert_params import RetrieverUpsertParams as RetrieverUpsertParams
 from .composite_retrieval_mode import CompositeRetrievalMode as CompositeRetrievalMode
 from .file_read_content_params import FileReadContentParams as FileReadContentParams
 from .pipeline_metadata_config import PipelineMetadataConfig as PipelineMetadataConfig
-from .project_get_usage_params import ProjectGetUsageParams as ProjectGetUsageParams
+from .pipeline_search_response import PipelineSearchResponse as PipelineSearchResponse
 from .retriever_pipeline_param import RetrieverPipelineParam as RetrieverPipelineParam
 from .data_source_create_params import DataSourceCreateParams as DataSourceCreateParams
 from .data_source_list_response import DataSourceListResponse as DataSourceListResponse
 from .data_source_update_params import DataSourceUpdateParams as DataSourceUpdateParams
 from .data_source_upsert_params import DataSourceUpsertParams as DataSourceUpsertParams
-from .retriever_retrieve_params import RetrieverRetrieveParams as RetrieverRetrieveParams
 from .sparse_model_config_param import SparseModelConfigParam as SparseModelConfigParam
 from .composite_retrieval_result import CompositeRetrievalResult as CompositeRetrievalResult
-from .organization_create_params import OrganizationCreateParams as OrganizationCreateParams
 from .organization_list_response import OrganizationListResponse as OrganizationListResponse
-from .organization_update_params import OrganizationUpdateParams as OrganizationUpdateParams
 from .parsing_upload_file_params import ParsingUploadFileParams as ParsingUploadFileParams
 from .pipeline_get_files2_params import PipelineGetFiles2Params as PipelineGetFiles2Params
 from .pipeline_get_status_params import PipelineGetStatusParams as PipelineGetStatusParams
-from .project_get_current_params import ProjectGetCurrentParams as ProjectGetCurrentParams
 from .auto_transform_config_param import AutoTransformConfigParam as AutoTransformConfigParam
 from .file_upload_from_url_params import FileUploadFromURLParams as FileUploadFromURLParams
 from .page_figure_node_with_score import PageFigureNodeWithScore as PageFigureNodeWithScore
 from .llama_parse_parameters_param import LlamaParseParametersParam as LlamaParseParametersParam
 from .pipeline_get_files2_response import PipelineGetFiles2Response as PipelineGetFiles2Response
-from .organization_get_usage_params import OrganizationGetUsageParams as OrganizationGetUsageParams
 from .preset_retrieval_params_param import PresetRetrievalParamsParam as PresetRetrievalParamsParam
 from .advanced_mode_transform_config import AdvancedModeTransformConfig as AdvancedModeTransformConfig
 from .pipeline_metadata_config_param import PipelineMetadataConfigParam as PipelineMetadataConfigParam
@@ -123,6 +117,7 @@ if _compat.PYDANTIC_V1:
     pipeline.Pipeline.update_forward_refs()  # type: ignore
     preset_retrieval_params.PresetRetrievalParams.update_forward_refs()  # type: ignore
     pipeline_get_playground_session_response.PipelineGetPlaygroundSessionResponse.update_forward_refs()  # type: ignore
+    pipeline_search_response.PipelineSearchResponse.update_forward_refs()  # type: ignore
     retriever.Retriever.update_forward_refs()  # type: ignore
     retriever_pipeline.RetrieverPipeline.update_forward_refs()  # type: ignore
 else:
@@ -132,5 +127,6 @@ else:
     pipeline_get_playground_session_response.PipelineGetPlaygroundSessionResponse.model_rebuild(
         _parent_namespace_depth=0
     )
+    pipeline_search_response.PipelineSearchResponse.model_rebuild(_parent_namespace_depth=0)
     retriever.Retriever.model_rebuild(_parent_namespace_depth=0)
     retriever_pipeline.RetrieverPipeline.model_rebuild(_parent_namespace_depth=0)

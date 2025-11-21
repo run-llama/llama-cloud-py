@@ -10,4 +10,6 @@ from .file_get_response import FileGetResponse as FileGetResponse
 from .file_delete_params import FileDeleteParams as FileDeleteParams
 from .file_list_response import FileListResponse as FileListResponse
 from .file_update_params import FileUpdateParams as FileUpdateParams
+from .file_upload_params import FileUploadParams as FileUploadParams
 from .file_update_response import FileUpdateResponse as FileUpdateResponse
+from .file_upload_response import FileUploadResponse as FileUploadResponse

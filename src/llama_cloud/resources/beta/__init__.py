@@ -8,6 +8,14 @@ from .beta import (
     BetaResourceWithStreamingResponse,
     AsyncBetaResourceWithStreamingResponse,
 )
+from .batch import (
+    BatchResource,
+    AsyncBatchResource,
+    BatchResourceWithRawResponse,
+    AsyncBatchResourceWithRawResponse,
+    BatchResourceWithStreamingResponse,
+    AsyncBatchResourceWithStreamingResponse,
+)
 from .files import (
     FilesResource,
     AsyncFilesResource,
@@ -15,6 +23,14 @@ from .files import (
     AsyncFilesResourceWithRawResponse,
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
+)
+from .sheets import (
+    SheetsResource,
+    AsyncSheetsResource,
+    SheetsResourceWithRawResponse,
+    AsyncSheetsResourceWithRawResponse,
+    SheetsResourceWithStreamingResponse,
+    AsyncSheetsResourceWithStreamingResponse,
 )
 from .agent_data import (
     AgentDataResource,
@@ -60,12 +76,24 @@ __all__ = [
     "AsyncParseConfigurationsResourceWithRawResponse",
     "ParseConfigurationsResourceWithStreamingResponse",
     "AsyncParseConfigurationsResourceWithStreamingResponse",
+    "SheetsResource",
+    "AsyncSheetsResource",
+    "SheetsResourceWithRawResponse",
+    "AsyncSheetsResourceWithRawResponse",
+    "SheetsResourceWithStreamingResponse",
+    "AsyncSheetsResourceWithStreamingResponse",
     "DirectoriesResource",
     "AsyncDirectoriesResource",
     "DirectoriesResourceWithRawResponse",
     "AsyncDirectoriesResourceWithRawResponse",
     "DirectoriesResourceWithStreamingResponse",
     "AsyncDirectoriesResourceWithStreamingResponse",
+    "BatchResource",
+    "AsyncBatchResource",
+    "BatchResourceWithRawResponse",
+    "AsyncBatchResourceWithRawResponse",
+    "BatchResourceWithStreamingResponse",
+    "AsyncBatchResourceWithStreamingResponse",
     "BetaResource",
     "AsyncBetaResource",
     "BetaResourceWithRawResponse",

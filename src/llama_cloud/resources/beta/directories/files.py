@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Mapping, Optional, cast
 
 import httpx
 
-from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ...._utils import maybe_transform, async_maybe_transform
+from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, FileTypes, omit, not_given
+from ...._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
 from ...._response import (
@@ -24,11 +24,13 @@ from ....types.beta.directories import (
     file_list_params,
     file_delete_params,
     file_update_params,
+    file_upload_params,
 )
 from ....types.beta.directories.file_add_response import FileAddResponse
 from ....types.beta.directories.file_get_response import FileGetResponse
 from ....types.beta.directories.file_list_response import FileListResponse
 from ....types.beta.directories.file_update_response import FileUpdateResponse
+from ....types.beta.directories.file_upload_response import FileUploadResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -349,6 +351,74 @@ class FilesResource(SyncAPIResource):
             cast_to=FileGetResponse,
         )
 
+    def upload(
+        self,
+        directory_id: str,
+        *,
+        upload_file: FileTypes,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        display_name: Optional[str] | Omit = omit,
+        external_file_id: Optional[str] | Omit = omit,
+        unique_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> FileUploadResponse:
+        """
+        Upload a file directly to a directory.
+
+        Uploads a file and creates a directory file entry in a single operation. If
+        unique_id or display_name are not provided, they will be derived from the file
+        metadata.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not directory_id:
+            raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
+        body = deepcopy_minimal(
+            {
+                "upload_file": upload_file,
+                "display_name": display_name,
+                "external_file_id": external_file_id,
+                "unique_id": unique_id,
+            }
+        )
+        files = extract_files(cast(Mapping[str, object], body), paths=[["upload_file"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
+        return self._post(
+            f"/api/v1/beta/directories/{directory_id}/files/upload",
+            body=maybe_transform(body, file_upload_params.FileUploadParams),
+            files=files,
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    file_upload_params.FileUploadParams,
+                ),
+            ),
+            cast_to=FileUploadResponse,
+        )
+
 
 class AsyncFilesResource(AsyncAPIResource):
     @cached_property
@@ -666,6 +736,74 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=FileGetResponse,
         )
 
+    async def upload(
+        self,
+        directory_id: str,
+        *,
+        upload_file: FileTypes,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        display_name: Optional[str] | Omit = omit,
+        external_file_id: Optional[str] | Omit = omit,
+        unique_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> FileUploadResponse:
+        """
+        Upload a file directly to a directory.
+
+        Uploads a file and creates a directory file entry in a single operation. If
+        unique_id or display_name are not provided, they will be derived from the file
+        metadata.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not directory_id:
+            raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
+        body = deepcopy_minimal(
+            {
+                "upload_file": upload_file,
+                "display_name": display_name,
+                "external_file_id": external_file_id,
+                "unique_id": unique_id,
+            }
+        )
+        files = extract_files(cast(Mapping[str, object], body), paths=[["upload_file"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
+        return await self._post(
+            f"/api/v1/beta/directories/{directory_id}/files/upload",
+            body=await async_maybe_transform(body, file_upload_params.FileUploadParams),
+            files=files,
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    file_upload_params.FileUploadParams,
+                ),
+            ),
+            cast_to=FileUploadResponse,
+        )
+
 
 class FilesResourceWithRawResponse:
     def __init__(self, files: FilesResource) -> None:
@@ -685,6 +823,9 @@ class FilesResourceWithRawResponse:
         )
         self.get = to_raw_response_wrapper(
             files.get,
+        )
+        self.upload = to_raw_response_wrapper(
+            files.upload,
         )
 
 
@@ -707,6 +848,9 @@ class AsyncFilesResourceWithRawResponse:
         self.get = async_to_raw_response_wrapper(
             files.get,
         )
+        self.upload = async_to_raw_response_wrapper(
+            files.upload,
+        )
 
 
 class FilesResourceWithStreamingResponse:
@@ -728,6 +872,9 @@ class FilesResourceWithStreamingResponse:
         self.get = to_streamed_response_wrapper(
             files.get,
         )
+        self.upload = to_streamed_response_wrapper(
+            files.upload,
+        )
 
 
 class AsyncFilesResourceWithStreamingResponse:
@@ -748,4 +895,7 @@ class AsyncFilesResourceWithStreamingResponse:
         )
         self.get = async_to_streamed_response_wrapper(
             files.get,
+        )
+        self.upload = async_to_streamed_response_wrapper(
+            files.upload,
         )
