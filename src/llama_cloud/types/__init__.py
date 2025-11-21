@@ -43,7 +43,6 @@ from .pipeline_chat_params import PipelineChatParams as PipelineChatParams
 from .pipeline_list_params import PipelineListParams as PipelineListParams
 from .re_rank_config_param import ReRankConfigParam as ReRankConfigParam
 from .retriever_get_params import RetrieverGetParams as RetrieverGetParams
-from .agent_deployment_list import AgentDeploymentList as AgentDeploymentList
 from .auto_transform_config import AutoTransformConfig as AutoTransformConfig
 from .data_sink_list_params import DataSinkListParams as DataSinkListParams
 from .extraction_run_params import ExtractionRunParams as ExtractionRunParams

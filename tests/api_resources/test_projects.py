@@ -9,7 +9,7 @@ import pytest
 
 from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
-from llama_cloud.types import Project, AgentDeploymentList, ProjectListResponse
+from llama_cloud.types import Project, ProjectListResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -105,90 +105,6 @@ class TestProjects:
                 project_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_list_agents(self, client: LlamaCloud) -> None:
-        project = client.projects.list_agents(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(AgentDeploymentList, project, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_list_agents(self, client: LlamaCloud) -> None:
-        response = client.projects.with_raw_response.list_agents(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        project = response.parse()
-        assert_matches_type(AgentDeploymentList, project, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_list_agents(self, client: LlamaCloud) -> None:
-        with client.projects.with_streaming_response.list_agents(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            project = response.parse()
-            assert_matches_type(AgentDeploymentList, project, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_list_agents(self, client: LlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
-            client.projects.with_raw_response.list_agents(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_sync_agents(self, client: LlamaCloud) -> None:
-        project = client.projects.sync_agents(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(AgentDeploymentList, project, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_sync_agents(self, client: LlamaCloud) -> None:
-        response = client.projects.with_raw_response.sync_agents(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        project = response.parse()
-        assert_matches_type(AgentDeploymentList, project, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_sync_agents(self, client: LlamaCloud) -> None:
-        with client.projects.with_streaming_response.sync_agents(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            project = response.parse()
-            assert_matches_type(AgentDeploymentList, project, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_sync_agents(self, client: LlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
-            client.projects.with_raw_response.sync_agents(
-                "",
-            )
-
 
 class TestAsyncProjects:
     parametrize = pytest.mark.parametrize(
@@ -281,88 +197,4 @@ class TestAsyncProjects:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             await async_client.projects.with_raw_response.get(
                 project_id="",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_list_agents(self, async_client: AsyncLlamaCloud) -> None:
-        project = await async_client.projects.list_agents(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(AgentDeploymentList, project, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_list_agents(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.projects.with_raw_response.list_agents(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        project = await response.parse()
-        assert_matches_type(AgentDeploymentList, project, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_list_agents(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.projects.with_streaming_response.list_agents(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            project = await response.parse()
-            assert_matches_type(AgentDeploymentList, project, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_list_agents(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
-            await async_client.projects.with_raw_response.list_agents(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_sync_agents(self, async_client: AsyncLlamaCloud) -> None:
-        project = await async_client.projects.sync_agents(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(AgentDeploymentList, project, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_sync_agents(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.projects.with_raw_response.sync_agents(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        project = await response.parse()
-        assert_matches_type(AgentDeploymentList, project, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_sync_agents(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.projects.with_streaming_response.sync_agents(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            project = await response.parse()
-            assert_matches_type(AgentDeploymentList, project, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_sync_agents(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
-            await async_client.projects.with_raw_response.sync_agents(
-                "",
             )
