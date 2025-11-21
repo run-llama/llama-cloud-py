@@ -233,6 +233,8 @@ class LlamaParseParametersParam(TypedDict, total=False):
 
     target_pages: Optional[str]
 
+    tier: Optional[str]
+
     use_vendor_multimodal_model: Optional[bool]
 
     user_prompt: Optional[str]
@@ -240,6 +242,8 @@ class LlamaParseParametersParam(TypedDict, total=False):
     vendor_multimodal_api_key: Optional[str]
 
     vendor_multimodal_model_name: Optional[str]
+
+    version: Optional[str]
 
     webhook_configurations: Optional[Iterable[WebhookConfigurationParam]]
     """The outbound webhook configurations"""

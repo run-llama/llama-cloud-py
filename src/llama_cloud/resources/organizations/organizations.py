@@ -25,19 +25,10 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .users.users import (
-    UsersResource,
-    AsyncUsersResource,
-    UsersResourceWithRawResponse,
-    AsyncUsersResourceWithRawResponse,
-    UsersResourceWithStreamingResponse,
-    AsyncUsersResourceWithStreamingResponse,
-)
 from ..._base_client import make_request_options
 from ...types.organization import Organization
 from ...types.usage_and_plan import UsageAndPlan
 from ...types.organization_list_response import OrganizationListResponse
-from ...types.organization_get_roles_response import OrganizationGetRolesResponse
 
 __all__ = ["OrganizationsResource", "AsyncOrganizationsResource"]
 
@@ -46,10 +37,6 @@ class OrganizationsResource(SyncAPIResource):
     @cached_property
     def default(self) -> DefaultResource:
         return DefaultResource(self._client)
-
-    @cached_property
-    def users(self) -> UsersResource:
-        return UsersResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> OrganizationsResourceWithRawResponse:
@@ -236,39 +223,6 @@ class OrganizationsResource(SyncAPIResource):
             cast_to=Organization,
         )
 
-    def get_roles(
-        self,
-        organization_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationGetRolesResponse:
-        """
-        List all roles in an organization.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        return self._get(
-            f"/api/v1/organizations/{organization_id}/roles",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=OrganizationGetRolesResponse,
-        )
-
     def get_usage(
         self,
         organization_id: str,
@@ -315,10 +269,6 @@ class AsyncOrganizationsResource(AsyncAPIResource):
     @cached_property
     def default(self) -> AsyncDefaultResource:
         return AsyncDefaultResource(self._client)
-
-    @cached_property
-    def users(self) -> AsyncUsersResource:
-        return AsyncUsersResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncOrganizationsResourceWithRawResponse:
@@ -505,39 +455,6 @@ class AsyncOrganizationsResource(AsyncAPIResource):
             cast_to=Organization,
         )
 
-    async def get_roles(
-        self,
-        organization_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationGetRolesResponse:
-        """
-        List all roles in an organization.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        return await self._get(
-            f"/api/v1/organizations/{organization_id}/roles",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=OrganizationGetRolesResponse,
-        )
-
     async def get_usage(
         self,
         organization_id: str,
@@ -599,9 +516,6 @@ class OrganizationsResourceWithRawResponse:
         self.get = to_raw_response_wrapper(
             organizations.get,
         )
-        self.get_roles = to_raw_response_wrapper(
-            organizations.get_roles,
-        )
         self.get_usage = to_raw_response_wrapper(
             organizations.get_usage,
         )
@@ -609,10 +523,6 @@ class OrganizationsResourceWithRawResponse:
     @cached_property
     def default(self) -> DefaultResourceWithRawResponse:
         return DefaultResourceWithRawResponse(self._organizations.default)
-
-    @cached_property
-    def users(self) -> UsersResourceWithRawResponse:
-        return UsersResourceWithRawResponse(self._organizations.users)
 
 
 class AsyncOrganizationsResourceWithRawResponse:
@@ -634,9 +544,6 @@ class AsyncOrganizationsResourceWithRawResponse:
         self.get = async_to_raw_response_wrapper(
             organizations.get,
         )
-        self.get_roles = async_to_raw_response_wrapper(
-            organizations.get_roles,
-        )
         self.get_usage = async_to_raw_response_wrapper(
             organizations.get_usage,
         )
@@ -644,10 +551,6 @@ class AsyncOrganizationsResourceWithRawResponse:
     @cached_property
     def default(self) -> AsyncDefaultResourceWithRawResponse:
         return AsyncDefaultResourceWithRawResponse(self._organizations.default)
-
-    @cached_property
-    def users(self) -> AsyncUsersResourceWithRawResponse:
-        return AsyncUsersResourceWithRawResponse(self._organizations.users)
 
 
 class OrganizationsResourceWithStreamingResponse:
@@ -669,9 +572,6 @@ class OrganizationsResourceWithStreamingResponse:
         self.get = to_streamed_response_wrapper(
             organizations.get,
         )
-        self.get_roles = to_streamed_response_wrapper(
-            organizations.get_roles,
-        )
         self.get_usage = to_streamed_response_wrapper(
             organizations.get_usage,
         )
@@ -679,10 +579,6 @@ class OrganizationsResourceWithStreamingResponse:
     @cached_property
     def default(self) -> DefaultResourceWithStreamingResponse:
         return DefaultResourceWithStreamingResponse(self._organizations.default)
-
-    @cached_property
-    def users(self) -> UsersResourceWithStreamingResponse:
-        return UsersResourceWithStreamingResponse(self._organizations.users)
 
 
 class AsyncOrganizationsResourceWithStreamingResponse:
@@ -704,9 +600,6 @@ class AsyncOrganizationsResourceWithStreamingResponse:
         self.get = async_to_streamed_response_wrapper(
             organizations.get,
         )
-        self.get_roles = async_to_streamed_response_wrapper(
-            organizations.get_roles,
-        )
         self.get_usage = async_to_streamed_response_wrapper(
             organizations.get_usage,
         )
@@ -714,7 +607,3 @@ class AsyncOrganizationsResourceWithStreamingResponse:
     @cached_property
     def default(self) -> AsyncDefaultResourceWithStreamingResponse:
         return AsyncDefaultResourceWithStreamingResponse(self._organizations.default)
-
-    @cached_property
-    def users(self) -> AsyncUsersResourceWithStreamingResponse:
-        return AsyncUsersResourceWithStreamingResponse(self._organizations.users)

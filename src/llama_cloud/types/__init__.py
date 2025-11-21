@@ -12,7 +12,6 @@ from . import (
 )
 from .. import _compat
 from .file import File as File
-from .role import Role as Role
 from .project import Project as Project
 from .pipeline import Pipeline as Pipeline
 from .data_sink import DataSink as DataSink
@@ -97,13 +96,11 @@ from .organization_get_usage_params import OrganizationGetUsageParams as Organiz
 from .preset_retrieval_params_param import PresetRetrievalParamsParam as PresetRetrievalParamsParam
 from .advanced_mode_transform_config import AdvancedModeTransformConfig as AdvancedModeTransformConfig
 from .pipeline_metadata_config_param import PipelineMetadataConfigParam as PipelineMetadataConfigParam
-from .organization_get_roles_response import OrganizationGetRolesResponse as OrganizationGetRolesResponse
 from .page_screenshot_node_with_score import PageScreenshotNodeWithScore as PageScreenshotNodeWithScore
 from .parsing_create_screenshot_params import ParsingCreateScreenshotParams as ParsingCreateScreenshotParams
 from .managed_ingestion_status_response import ManagedIngestionStatusResponse as ManagedIngestionStatusResponse
 from .file_generate_presigned_url_params import FileGeneratePresignedURLParams as FileGeneratePresignedURLParams
 from .data_source_reader_version_metadata import DataSourceReaderVersionMetadata as DataSourceReaderVersionMetadata
-from .eval_list_supported_models_response import EvalListSupportedModelsResponse as EvalListSupportedModelsResponse
 from .advanced_mode_transform_config_param import AdvancedModeTransformConfigParam as AdvancedModeTransformConfigParam
 from .file_generate_presigned_url_response import FileGeneratePresignedURLResponse as FileGeneratePresignedURLResponse
 from .parsing_get_parsing_history_response import ParsingGetParsingHistoryResponse as ParsingGetParsingHistoryResponse

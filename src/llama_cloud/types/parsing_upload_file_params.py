@@ -227,6 +227,8 @@ class ParsingUploadFileParams(TypedDict, total=False):
 
     target_pages: str
 
+    tier: str
+
     use_vendor_multimodal_model: bool
 
     user_prompt: str
@@ -234,6 +236,8 @@ class ParsingUploadFileParams(TypedDict, total=False):
     vendor_multimodal_api_key: str
 
     vendor_multimodal_model_name: str
+
+    version: str
 
     webhook_configurations: str
 

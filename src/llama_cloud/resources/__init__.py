@@ -8,14 +8,6 @@ from .beta import (
     BetaResourceWithStreamingResponse,
     AsyncBetaResourceWithStreamingResponse,
 )
-from .evals import (
-    EvalsResource,
-    AsyncEvalsResource,
-    EvalsResourceWithRawResponse,
-    AsyncEvalsResourceWithRawResponse,
-    EvalsResourceWithStreamingResponse,
-    AsyncEvalsResourceWithStreamingResponse,
-)
 from .files import (
     FilesResource,
     AsyncFilesResource,
@@ -140,12 +132,6 @@ __all__ = [
     "AsyncRetrieversResourceWithRawResponse",
     "RetrieversResourceWithStreamingResponse",
     "AsyncRetrieversResourceWithStreamingResponse",
-    "EvalsResource",
-    "AsyncEvalsResource",
-    "EvalsResourceWithRawResponse",
-    "AsyncEvalsResourceWithRawResponse",
-    "EvalsResourceWithStreamingResponse",
-    "AsyncEvalsResourceWithStreamingResponse",
     "ParsingResource",
     "AsyncParsingResource",
     "ParsingResourceWithRawResponse",
