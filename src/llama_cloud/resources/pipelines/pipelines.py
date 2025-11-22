@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Iterable, Optional
+from typing import Optional
 
 import httpx
 
@@ -24,11 +24,8 @@ from .files import (
 )
 from ...types import (
     PipelineType,
-    RetrievalMode,
-    pipeline_chat_params,
     pipeline_list_params,
     pipeline_create_params,
-    pipeline_search_params,
     pipeline_update_params,
     pipeline_upsert_params,
     pipeline_get_status_params,
@@ -70,10 +67,7 @@ from .data_sources import (
 from ..._base_client import make_request_options
 from ...types.pipeline import Pipeline
 from ...types.pipeline_type import PipelineType
-from ...types.retrieval_mode import RetrievalMode
-from ...types.metadata_filters_param import MetadataFiltersParam
 from ...types.pipeline_list_response import PipelineListResponse
-from ...types.pipeline_search_response import PipelineSearchResponse
 from ...types.sparse_model_config_param import SparseModelConfigParam
 from ...types.llama_parse_parameters_param import LlamaParseParametersParam
 from ...types.preset_retrieval_params_param import PresetRetrievalParamsParam
@@ -398,50 +392,6 @@ class PipelinesResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
-    def chat(
-        self,
-        pipeline_id: str,
-        *,
-        class_name: str | Omit = omit,
-        data: pipeline_chat_params.Data | Omit = omit,
-        messages: Iterable[pipeline_chat_params.Message] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """
-        Make a retrieval query + chat completion for a managed pipeline.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._post(
-            f"/api/v1/pipelines/{pipeline_id}/chat",
-            body=maybe_transform(
-                {
-                    "class_name": class_name,
-                    "data": data,
-                    "messages": messages,
-                },
-                pipeline_chat_params.PipelineChatParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=object,
-        )
-
     def get(
         self,
         pipeline_id: str,
@@ -546,120 +496,6 @@ class PipelinesResource(SyncAPIResource):
                 ),
             ),
             cast_to=ManagedIngestionStatusResponse,
-        )
-
-    def search(
-        self,
-        pipeline_id: str,
-        *,
-        query: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        alpha: Optional[float] | Omit = omit,
-        class_name: str | Omit = omit,
-        dense_similarity_cutoff: Optional[float] | Omit = omit,
-        dense_similarity_top_k: Optional[int] | Omit = omit,
-        enable_reranking: Optional[bool] | Omit = omit,
-        files_top_k: Optional[int] | Omit = omit,
-        rerank_top_n: Optional[int] | Omit = omit,
-        retrieval_mode: RetrievalMode | Omit = omit,
-        retrieve_image_nodes: bool | Omit = omit,
-        retrieve_page_figure_nodes: bool | Omit = omit,
-        retrieve_page_screenshot_nodes: bool | Omit = omit,
-        search_filters: Optional[MetadataFiltersParam] | Omit = omit,
-        search_filters_inference_schema: Optional[
-            Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]
-        ]
-        | Omit = omit,
-        sparse_similarity_top_k: Optional[int] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PipelineSearchResponse:
-        """
-        Get retrieval results for a managed pipeline and a query
-
-        Args:
-          query: The query to retrieve against.
-
-          alpha: Alpha value for hybrid retrieval to determine the weights between dense and
-              sparse retrieval. 0 is sparse retrieval and 1 is dense retrieval.
-
-          dense_similarity_cutoff: Minimum similarity score wrt query for retrieval
-
-          dense_similarity_top_k: Number of nodes for dense retrieval.
-
-          enable_reranking: Enable reranking for retrieval
-
-          files_top_k: Number of files to retrieve (only for retrieval mode files_via_metadata and
-              files_via_content).
-
-          rerank_top_n: Number of reranked nodes for returning.
-
-          retrieval_mode: The retrieval mode for the query.
-
-          retrieve_image_nodes: Whether to retrieve image nodes.
-
-          retrieve_page_figure_nodes: Whether to retrieve page figure nodes.
-
-          retrieve_page_screenshot_nodes: Whether to retrieve page screenshot nodes.
-
-          search_filters: Metadata filters for vector stores.
-
-          search_filters_inference_schema: JSON Schema that will be used to infer search_filters. Omit or leave as null to
-              skip inference.
-
-          sparse_similarity_top_k: Number of nodes for sparse retrieval.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._post(
-            f"/api/v1/pipelines/{pipeline_id}/retrieve",
-            body=maybe_transform(
-                {
-                    "query": query,
-                    "alpha": alpha,
-                    "class_name": class_name,
-                    "dense_similarity_cutoff": dense_similarity_cutoff,
-                    "dense_similarity_top_k": dense_similarity_top_k,
-                    "enable_reranking": enable_reranking,
-                    "files_top_k": files_top_k,
-                    "rerank_top_n": rerank_top_n,
-                    "retrieval_mode": retrieval_mode,
-                    "retrieve_image_nodes": retrieve_image_nodes,
-                    "retrieve_page_figure_nodes": retrieve_page_figure_nodes,
-                    "retrieve_page_screenshot_nodes": retrieve_page_screenshot_nodes,
-                    "search_filters": search_filters,
-                    "search_filters_inference_schema": search_filters_inference_schema,
-                    "sparse_similarity_top_k": sparse_similarity_top_k,
-                },
-                pipeline_search_params.PipelineSearchParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    pipeline_search_params.PipelineSearchParams,
-                ),
-            ),
-            cast_to=PipelineSearchResponse,
         )
 
     def upsert(
@@ -1080,50 +916,6 @@ class AsyncPipelinesResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
-    async def chat(
-        self,
-        pipeline_id: str,
-        *,
-        class_name: str | Omit = omit,
-        data: pipeline_chat_params.Data | Omit = omit,
-        messages: Iterable[pipeline_chat_params.Message] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """
-        Make a retrieval query + chat completion for a managed pipeline.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return await self._post(
-            f"/api/v1/pipelines/{pipeline_id}/chat",
-            body=await async_maybe_transform(
-                {
-                    "class_name": class_name,
-                    "data": data,
-                    "messages": messages,
-                },
-                pipeline_chat_params.PipelineChatParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=object,
-        )
-
     async def get(
         self,
         pipeline_id: str,
@@ -1228,120 +1020,6 @@ class AsyncPipelinesResource(AsyncAPIResource):
                 ),
             ),
             cast_to=ManagedIngestionStatusResponse,
-        )
-
-    async def search(
-        self,
-        pipeline_id: str,
-        *,
-        query: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        alpha: Optional[float] | Omit = omit,
-        class_name: str | Omit = omit,
-        dense_similarity_cutoff: Optional[float] | Omit = omit,
-        dense_similarity_top_k: Optional[int] | Omit = omit,
-        enable_reranking: Optional[bool] | Omit = omit,
-        files_top_k: Optional[int] | Omit = omit,
-        rerank_top_n: Optional[int] | Omit = omit,
-        retrieval_mode: RetrievalMode | Omit = omit,
-        retrieve_image_nodes: bool | Omit = omit,
-        retrieve_page_figure_nodes: bool | Omit = omit,
-        retrieve_page_screenshot_nodes: bool | Omit = omit,
-        search_filters: Optional[MetadataFiltersParam] | Omit = omit,
-        search_filters_inference_schema: Optional[
-            Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]
-        ]
-        | Omit = omit,
-        sparse_similarity_top_k: Optional[int] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PipelineSearchResponse:
-        """
-        Get retrieval results for a managed pipeline and a query
-
-        Args:
-          query: The query to retrieve against.
-
-          alpha: Alpha value for hybrid retrieval to determine the weights between dense and
-              sparse retrieval. 0 is sparse retrieval and 1 is dense retrieval.
-
-          dense_similarity_cutoff: Minimum similarity score wrt query for retrieval
-
-          dense_similarity_top_k: Number of nodes for dense retrieval.
-
-          enable_reranking: Enable reranking for retrieval
-
-          files_top_k: Number of files to retrieve (only for retrieval mode files_via_metadata and
-              files_via_content).
-
-          rerank_top_n: Number of reranked nodes for returning.
-
-          retrieval_mode: The retrieval mode for the query.
-
-          retrieve_image_nodes: Whether to retrieve image nodes.
-
-          retrieve_page_figure_nodes: Whether to retrieve page figure nodes.
-
-          retrieve_page_screenshot_nodes: Whether to retrieve page screenshot nodes.
-
-          search_filters: Metadata filters for vector stores.
-
-          search_filters_inference_schema: JSON Schema that will be used to infer search_filters. Omit or leave as null to
-              skip inference.
-
-          sparse_similarity_top_k: Number of nodes for sparse retrieval.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return await self._post(
-            f"/api/v1/pipelines/{pipeline_id}/retrieve",
-            body=await async_maybe_transform(
-                {
-                    "query": query,
-                    "alpha": alpha,
-                    "class_name": class_name,
-                    "dense_similarity_cutoff": dense_similarity_cutoff,
-                    "dense_similarity_top_k": dense_similarity_top_k,
-                    "enable_reranking": enable_reranking,
-                    "files_top_k": files_top_k,
-                    "rerank_top_n": rerank_top_n,
-                    "retrieval_mode": retrieval_mode,
-                    "retrieve_image_nodes": retrieve_image_nodes,
-                    "retrieve_page_figure_nodes": retrieve_page_figure_nodes,
-                    "retrieve_page_screenshot_nodes": retrieve_page_screenshot_nodes,
-                    "search_filters": search_filters,
-                    "search_filters_inference_schema": search_filters_inference_schema,
-                    "sparse_similarity_top_k": sparse_similarity_top_k,
-                },
-                pipeline_search_params.PipelineSearchParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    pipeline_search_params.PipelineSearchParams,
-                ),
-            ),
-            cast_to=PipelineSearchResponse,
         )
 
     async def upsert(
@@ -1464,9 +1142,6 @@ class PipelinesResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             pipelines.delete,
         )
-        self.chat = to_raw_response_wrapper(
-            pipelines.chat,
-        )
         self.get = to_raw_response_wrapper(
             pipelines.get,
         )
@@ -1475,9 +1150,6 @@ class PipelinesResourceWithRawResponse:
         )
         self.get_status = to_raw_response_wrapper(
             pipelines.get_status,
-        )
-        self.search = to_raw_response_wrapper(
-            pipelines.search,
         )
         self.upsert = to_raw_response_wrapper(
             pipelines.upsert,
@@ -1520,9 +1192,6 @@ class AsyncPipelinesResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             pipelines.delete,
         )
-        self.chat = async_to_raw_response_wrapper(
-            pipelines.chat,
-        )
         self.get = async_to_raw_response_wrapper(
             pipelines.get,
         )
@@ -1531,9 +1200,6 @@ class AsyncPipelinesResourceWithRawResponse:
         )
         self.get_status = async_to_raw_response_wrapper(
             pipelines.get_status,
-        )
-        self.search = async_to_raw_response_wrapper(
-            pipelines.search,
         )
         self.upsert = async_to_raw_response_wrapper(
             pipelines.upsert,
@@ -1576,9 +1242,6 @@ class PipelinesResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             pipelines.delete,
         )
-        self.chat = to_streamed_response_wrapper(
-            pipelines.chat,
-        )
         self.get = to_streamed_response_wrapper(
             pipelines.get,
         )
@@ -1587,9 +1250,6 @@ class PipelinesResourceWithStreamingResponse:
         )
         self.get_status = to_streamed_response_wrapper(
             pipelines.get_status,
-        )
-        self.search = to_streamed_response_wrapper(
-            pipelines.search,
         )
         self.upsert = to_streamed_response_wrapper(
             pipelines.upsert,
@@ -1632,9 +1292,6 @@ class AsyncPipelinesResourceWithStreamingResponse:
         self.delete = async_to_streamed_response_wrapper(
             pipelines.delete,
         )
-        self.chat = async_to_streamed_response_wrapper(
-            pipelines.chat,
-        )
         self.get = async_to_streamed_response_wrapper(
             pipelines.get,
         )
@@ -1643,9 +1300,6 @@ class AsyncPipelinesResourceWithStreamingResponse:
         )
         self.get_status = async_to_streamed_response_wrapper(
             pipelines.get_status,
-        )
-        self.search = async_to_streamed_response_wrapper(
-            pipelines.search,
         )
         self.upsert = async_to_streamed_response_wrapper(
             pipelines.upsert,

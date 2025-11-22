@@ -21,7 +21,6 @@ from ..._base_client import make_request_options
 from ...types.pipelines import (
     document_list_params,
     document_get_paginated_params,
-    document_force_sync_all_params,
 )
 from ...types.pipelines.cloud_document import CloudDocument
 from ...types.pipelines.document_list_response import DocumentListResponse
@@ -182,56 +181,6 @@ class DocumentsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
-        )
-
-    def force_sync_all(
-        self,
-        pipeline_id: str,
-        *,
-        batch_size: int | Omit = omit,
-        only_failed: bool | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """
-        Force sync all documents in a pipeline by batching document ingestion jobs.
-
-        - Iterates all document refs for the pipeline
-        - Enqueues document ingestion jobs in batches of `batch_size`
-
-        Args:
-          only_failed: Only sync retriable documents (failed/cancelled/not-started/stalled-in-progress)
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._post(
-            f"/api/v1/pipelines/{pipeline_id}/documents/force-sync-all",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "batch_size": batch_size,
-                        "only_failed": only_failed,
-                    },
-                    document_force_sync_all_params.DocumentForceSyncAllParams,
-                ),
-            ),
-            cast_to=object,
         )
 
     def get(
@@ -616,56 +565,6 @@ class AsyncDocumentsResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
-    async def force_sync_all(
-        self,
-        pipeline_id: str,
-        *,
-        batch_size: int | Omit = omit,
-        only_failed: bool | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """
-        Force sync all documents in a pipeline by batching document ingestion jobs.
-
-        - Iterates all document refs for the pipeline
-        - Enqueues document ingestion jobs in batches of `batch_size`
-
-        Args:
-          only_failed: Only sync retriable documents (failed/cancelled/not-started/stalled-in-progress)
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return await self._post(
-            f"/api/v1/pipelines/{pipeline_id}/documents/force-sync-all",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "batch_size": batch_size,
-                        "only_failed": only_failed,
-                    },
-                    document_force_sync_all_params.DocumentForceSyncAllParams,
-                ),
-            ),
-            cast_to=object,
-        )
-
     async def get(
         self,
         document_id: str,
@@ -912,9 +811,6 @@ class DocumentsResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             documents.delete,
         )
-        self.force_sync_all = to_raw_response_wrapper(
-            documents.force_sync_all,
-        )
         self.get = to_raw_response_wrapper(
             documents.get,
         )
@@ -947,9 +843,6 @@ class AsyncDocumentsResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             documents.delete,
-        )
-        self.force_sync_all = async_to_raw_response_wrapper(
-            documents.force_sync_all,
         )
         self.get = async_to_raw_response_wrapper(
             documents.get,
@@ -984,9 +877,6 @@ class DocumentsResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             documents.delete,
         )
-        self.force_sync_all = to_streamed_response_wrapper(
-            documents.force_sync_all,
-        )
         self.get = to_streamed_response_wrapper(
             documents.get,
         )
@@ -1019,9 +909,6 @@ class AsyncDocumentsResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             documents.delete,
-        )
-        self.force_sync_all = async_to_streamed_response_wrapper(
-            documents.force_sync_all,
         )
         self.get = async_to_streamed_response_wrapper(
             documents.get,
