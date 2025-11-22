@@ -13,12 +13,9 @@ from llama_cloud.types import (
     Pipeline,
     PipelineListResponse,
     PipelineSearchResponse,
-    PipelineGetFiles2Response,
     ManagedIngestionStatusResponse,
     PipelineGetPlaygroundSessionResponse,
 )
-
-# pyright: reportDeprecated=false
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -682,90 +679,6 @@ class TestPipelines:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_copy(self, client: LlamaCloud) -> None:
-        pipeline = client.pipelines.copy(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(Pipeline, pipeline, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_copy(self, client: LlamaCloud) -> None:
-        response = client.pipelines.with_raw_response.copy(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        pipeline = response.parse()
-        assert_matches_type(Pipeline, pipeline, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_copy(self, client: LlamaCloud) -> None:
-        with client.pipelines.with_streaming_response.copy(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            pipeline = response.parse()
-            assert_matches_type(Pipeline, pipeline, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_copy(self, client: LlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
-            client.pipelines.with_raw_response.copy(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_force_delete(self, client: LlamaCloud) -> None:
-        pipeline = client.pipelines.force_delete(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert pipeline is None
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_force_delete(self, client: LlamaCloud) -> None:
-        response = client.pipelines.with_raw_response.force_delete(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        pipeline = response.parse()
-        assert pipeline is None
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_force_delete(self, client: LlamaCloud) -> None:
-        with client.pipelines.with_streaming_response.force_delete(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            pipeline = response.parse()
-            assert pipeline is None
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_force_delete(self, client: LlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
-            client.pipelines.with_raw_response.force_delete(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     def test_method_get(self, client: LlamaCloud) -> None:
         pipeline = client.pipelines.get(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -805,69 +718,6 @@ class TestPipelines:
             client.pipelines.with_raw_response.get(
                 "",
             )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_get_files2(self, client: LlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            pipeline = client.pipelines.get_files2(
-                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            )
-
-        assert_matches_type(PipelineGetFiles2Response, pipeline, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_get_files2_with_all_params(self, client: LlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            pipeline = client.pipelines.get_files2(
-                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-                data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-                file_name_contains="file_name_contains",
-                limit=0,
-                offset=0,
-                only_manually_uploaded=True,
-                order_by="order_by",
-            )
-
-        assert_matches_type(PipelineGetFiles2Response, pipeline, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_get_files2(self, client: LlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            response = client.pipelines.with_raw_response.get_files2(
-                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        pipeline = response.parse()
-        assert_matches_type(PipelineGetFiles2Response, pipeline, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_get_files2(self, client: LlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            with client.pipelines.with_streaming_response.get_files2(
-                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            ) as response:
-                assert not response.is_closed
-                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-                pipeline = response.parse()
-                assert_matches_type(PipelineGetFiles2Response, pipeline, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_get_files2(self, client: LlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
-                client.pipelines.with_raw_response.get_files2(
-                    pipeline_id="",
-                )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -1939,90 +1789,6 @@ class TestAsyncPipelines:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_copy(self, async_client: AsyncLlamaCloud) -> None:
-        pipeline = await async_client.pipelines.copy(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(Pipeline, pipeline, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_copy(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.pipelines.with_raw_response.copy(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        pipeline = await response.parse()
-        assert_matches_type(Pipeline, pipeline, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_copy(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.pipelines.with_streaming_response.copy(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            pipeline = await response.parse()
-            assert_matches_type(Pipeline, pipeline, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_copy(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
-            await async_client.pipelines.with_raw_response.copy(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_force_delete(self, async_client: AsyncLlamaCloud) -> None:
-        pipeline = await async_client.pipelines.force_delete(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert pipeline is None
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_force_delete(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.pipelines.with_raw_response.force_delete(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        pipeline = await response.parse()
-        assert pipeline is None
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_force_delete(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.pipelines.with_streaming_response.force_delete(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            pipeline = await response.parse()
-            assert pipeline is None
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_force_delete(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
-            await async_client.pipelines.with_raw_response.force_delete(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     async def test_method_get(self, async_client: AsyncLlamaCloud) -> None:
         pipeline = await async_client.pipelines.get(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -2062,69 +1828,6 @@ class TestAsyncPipelines:
             await async_client.pipelines.with_raw_response.get(
                 "",
             )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_get_files2(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            pipeline = await async_client.pipelines.get_files2(
-                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            )
-
-        assert_matches_type(PipelineGetFiles2Response, pipeline, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_get_files2_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            pipeline = await async_client.pipelines.get_files2(
-                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-                data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-                file_name_contains="file_name_contains",
-                limit=0,
-                offset=0,
-                only_manually_uploaded=True,
-                order_by="order_by",
-            )
-
-        assert_matches_type(PipelineGetFiles2Response, pipeline, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_get_files2(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            response = await async_client.pipelines.with_raw_response.get_files2(
-                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        pipeline = await response.parse()
-        assert_matches_type(PipelineGetFiles2Response, pipeline, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_get_files2(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            async with async_client.pipelines.with_streaming_response.get_files2(
-                pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            ) as response:
-                assert not response.is_closed
-                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-                pipeline = await response.parse()
-                assert_matches_type(PipelineGetFiles2Response, pipeline, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_get_files2(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
-                await async_client.pipelines.with_raw_response.get_files2(
-                    pipeline_id="",
-                )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize

@@ -129,7 +129,6 @@ from llama_cloud.types import (
     RetrievalMode,
     SparseModelConfig,
     PipelineListResponse,
-    PipelineGetFiles2Response,
     PipelineGetPlaygroundSessionResponse,
     PipelineSearchResponse,
 )
@@ -142,10 +141,7 @@ Methods:
 - <code title="get /api/v1/pipelines">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">list</a>(\*\*<a href="src/llama_cloud/types/pipeline_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline_list_response.py">PipelineListResponse</a></code>
 - <code title="delete /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">delete</a>(pipeline_id) -> None</code>
 - <code title="post /api/v1/pipelines/{pipeline_id}/chat">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">chat</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipeline_chat_params.py">params</a>) -> object</code>
-- <code title="post /api/v1/pipelines/{pipeline_id}/copy">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">copy</a>(pipeline_id) -> <a href="./src/llama_cloud/types/pipeline.py">Pipeline</a></code>
-- <code title="post /api/v1/pipelines/{pipeline_id}/force-delete">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">force_delete</a>(pipeline_id) -> None</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">get</a>(pipeline_id) -> <a href="./src/llama_cloud/types/pipeline.py">Pipeline</a></code>
-- <code title="get /api/v1/pipelines/{pipeline_id}/files2">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">get_files2</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipeline_get_files2_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline_get_files2_response.py">PipelineGetFiles2Response</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/playground-session">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">get_playground_session</a>(pipeline_id) -> <a href="./src/llama_cloud/types/pipeline_get_playground_session_response.py">PipelineGetPlaygroundSessionResponse</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/status">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">get_status</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipeline_get_status_params.py">params</a>) -> <a href="./src/llama_cloud/types/managed_ingestion_status_response.py">ManagedIngestionStatusResponse</a></code>
 - <code title="post /api/v1/pipelines/{pipeline_id}/retrieve">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">search</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipeline_search_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline_search_response.py">PipelineSearchResponse</a></code>
