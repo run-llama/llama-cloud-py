@@ -388,21 +388,6 @@ Methods:
 - <code title="get /api/v1/beta/agent-data/{item_id}">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">get</a>(item_id, \*\*<a href="src/llama_cloud/types/beta/agent_data_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data.py">AgentData</a></code>
 - <code title="post /api/v1/beta/agent-data/:search">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">search</a>(\*\*<a href="src/llama_cloud/types/beta/agent_data_search_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data_search_response.py">AgentDataSearchResponse</a></code>
 
-## Files
-
-Types:
-
-```python
-from llama_cloud.types.beta import FileQueryResponse
-```
-
-Methods:
-
-- <code title="post /api/v1/beta/files">client.beta.files.<a href="./src/llama_cloud/resources/beta/files.py">create</a>(\*\*<a href="src/llama_cloud/types/beta/file_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
-- <code title="delete /api/v1/beta/files/{file_id}">client.beta.files.<a href="./src/llama_cloud/resources/beta/files.py">delete</a>(file_id, \*\*<a href="src/llama_cloud/types/beta/file_delete_params.py">params</a>) -> None</code>
-- <code title="post /api/v1/beta/files/query">client.beta.files.<a href="./src/llama_cloud/resources/beta/files.py">query</a>(\*\*<a href="src/llama_cloud/types/beta/file_query_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/file_query_response.py">FileQueryResponse</a></code>
-- <code title="put /api/v1/beta/files">client.beta.files.<a href="./src/llama_cloud/resources/beta/files.py">upsert</a>(\*\*<a href="src/llama_cloud/types/beta/file_upsert_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
-
 ## ParseConfigurations
 
 Types:
