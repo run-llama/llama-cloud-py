@@ -7,12 +7,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..types import (
-    data_source_list_params,
-    data_source_create_params,
-    data_source_update_params,
-    data_source_upsert_params,
-)
+from ..types import data_source_list_params, data_source_create_params, data_source_update_params
 from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -300,82 +295,6 @@ class DataSourcesResource(SyncAPIResource):
             cast_to=DataSource,
         )
 
-    def upsert(
-        self,
-        *,
-        component: data_source_upsert_params.Component,
-        name: str,
-        source_type: Literal[
-            "S3",
-            "AZURE_STORAGE_BLOB",
-            "GOOGLE_DRIVE",
-            "MICROSOFT_ONEDRIVE",
-            "MICROSOFT_SHAREPOINT",
-            "SLACK",
-            "NOTION_PAGE",
-            "CONFLUENCE",
-            "JIRA",
-            "JIRA_V2",
-            "BOX",
-        ],
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        custom_metadata: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
-        | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DataSource:
-        """Upserts a data source.
-
-        Updates if a data source with the same name and
-        project_id already exists. Otherwise, creates a new data source.
-
-        Args:
-          component: Component that implements the data source
-
-          name: The name of the data source.
-
-          custom_metadata: Custom metadata that will be present on all data loaded from the data source
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._put(
-            "/api/v1/data-sources",
-            body=maybe_transform(
-                {
-                    "component": component,
-                    "name": name,
-                    "source_type": source_type,
-                    "custom_metadata": custom_metadata,
-                },
-                data_source_upsert_params.DataSourceUpsertParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    data_source_upsert_params.DataSourceUpsertParams,
-                ),
-            ),
-            cast_to=DataSource,
-        )
-
 
 class AsyncDataSourcesResource(AsyncAPIResource):
     @cached_property
@@ -647,82 +566,6 @@ class AsyncDataSourcesResource(AsyncAPIResource):
             cast_to=DataSource,
         )
 
-    async def upsert(
-        self,
-        *,
-        component: data_source_upsert_params.Component,
-        name: str,
-        source_type: Literal[
-            "S3",
-            "AZURE_STORAGE_BLOB",
-            "GOOGLE_DRIVE",
-            "MICROSOFT_ONEDRIVE",
-            "MICROSOFT_SHAREPOINT",
-            "SLACK",
-            "NOTION_PAGE",
-            "CONFLUENCE",
-            "JIRA",
-            "JIRA_V2",
-            "BOX",
-        ],
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        custom_metadata: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
-        | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DataSource:
-        """Upserts a data source.
-
-        Updates if a data source with the same name and
-        project_id already exists. Otherwise, creates a new data source.
-
-        Args:
-          component: Component that implements the data source
-
-          name: The name of the data source.
-
-          custom_metadata: Custom metadata that will be present on all data loaded from the data source
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._put(
-            "/api/v1/data-sources",
-            body=await async_maybe_transform(
-                {
-                    "component": component,
-                    "name": name,
-                    "source_type": source_type,
-                    "custom_metadata": custom_metadata,
-                },
-                data_source_upsert_params.DataSourceUpsertParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    data_source_upsert_params.DataSourceUpsertParams,
-                ),
-            ),
-            cast_to=DataSource,
-        )
-
 
 class DataSourcesResourceWithRawResponse:
     def __init__(self, data_sources: DataSourcesResource) -> None:
@@ -742,9 +585,6 @@ class DataSourcesResourceWithRawResponse:
         )
         self.get = to_raw_response_wrapper(
             data_sources.get,
-        )
-        self.upsert = to_raw_response_wrapper(
-            data_sources.upsert,
         )
 
 
@@ -767,9 +607,6 @@ class AsyncDataSourcesResourceWithRawResponse:
         self.get = async_to_raw_response_wrapper(
             data_sources.get,
         )
-        self.upsert = async_to_raw_response_wrapper(
-            data_sources.upsert,
-        )
 
 
 class DataSourcesResourceWithStreamingResponse:
@@ -791,9 +628,6 @@ class DataSourcesResourceWithStreamingResponse:
         self.get = to_streamed_response_wrapper(
             data_sources.get,
         )
-        self.upsert = to_streamed_response_wrapper(
-            data_sources.upsert,
-        )
 
 
 class AsyncDataSourcesResourceWithStreamingResponse:
@@ -814,7 +648,4 @@ class AsyncDataSourcesResourceWithStreamingResponse:
         )
         self.get = async_to_streamed_response_wrapper(
             data_sources.get,
-        )
-        self.upsert = async_to_streamed_response_wrapper(
-            data_sources.upsert,
         )
