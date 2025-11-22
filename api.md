@@ -54,7 +54,6 @@ from llama_cloud.types import Organization, OrganizationListResponse
 Methods:
 
 - <code title="get /api/v1/organizations">client.organizations.<a href="./src/llama_cloud/resources/organizations.py">list</a>() -> <a href="./src/llama_cloud/types/organization_list_response.py">OrganizationListResponse</a></code>
-- <code title="get /api/v1/organizations/{organization_id}">client.organizations.<a href="./src/llama_cloud/resources/organizations.py">get</a>(organization_id) -> <a href="./src/llama_cloud/types/organization.py">Organization</a></code>
 
 # Files
 
