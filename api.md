@@ -178,7 +178,6 @@ from llama_cloud.types.pipelines import (
     TextNode,
     DocumentCreateResponse,
     DocumentGetChunksResponse,
-    DocumentUpsertBatchResponse,
 )
 ```
 
@@ -191,7 +190,6 @@ Methods:
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}/chunks">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">get_chunks</a>(document_id, \*, pipeline_id) -> <a href="./src/llama_cloud/types/pipelines/document_get_chunks_response.py">DocumentGetChunksResponse</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}/status">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">get_status</a>(document_id, \*, pipeline_id) -> <a href="./src/llama_cloud/types/managed_ingestion_status_response.py">ManagedIngestionStatusResponse</a></code>
 - <code title="post /api/v1/pipelines/{pipeline_id}/documents/{document_id}/sync">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">sync</a>(document_id, \*, pipeline_id) -> object</code>
-- <code title="put /api/v1/pipelines/{pipeline_id}/documents">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">upsert_batch</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/document_upsert_batch_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/document_upsert_batch_response.py">DocumentUpsertBatchResponse</a></code>
 
 # Retrievers
 
