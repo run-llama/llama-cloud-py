@@ -73,7 +73,6 @@ from ...types.llama_parse_parameters_param import LlamaParseParametersParam
 from ...types.preset_retrieval_params_param import PresetRetrievalParamsParam
 from ...types.pipeline_metadata_config_param import PipelineMetadataConfigParam
 from ...types.managed_ingestion_status_response import ManagedIngestionStatusResponse
-from ...types.pipeline_get_playground_session_response import PipelineGetPlaygroundSessionResponse
 
 __all__ = ["PipelinesResource", "AsyncPipelinesResource"]
 
@@ -423,39 +422,6 @@ class PipelinesResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Pipeline,
-        )
-
-    def get_playground_session(
-        self,
-        pipeline_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PipelineGetPlaygroundSessionResponse:
-        """
-        Get a playground session for a user and pipeline.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/playground-session",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=PipelineGetPlaygroundSessionResponse,
         )
 
     def get_status(
@@ -949,39 +915,6 @@ class AsyncPipelinesResource(AsyncAPIResource):
             cast_to=Pipeline,
         )
 
-    async def get_playground_session(
-        self,
-        pipeline_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PipelineGetPlaygroundSessionResponse:
-        """
-        Get a playground session for a user and pipeline.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/playground-session",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=PipelineGetPlaygroundSessionResponse,
-        )
-
     async def get_status(
         self,
         pipeline_id: str,
@@ -1145,9 +1078,6 @@ class PipelinesResourceWithRawResponse:
         self.get = to_raw_response_wrapper(
             pipelines.get,
         )
-        self.get_playground_session = to_raw_response_wrapper(
-            pipelines.get_playground_session,
-        )
         self.get_status = to_raw_response_wrapper(
             pipelines.get_status,
         )
@@ -1194,9 +1124,6 @@ class AsyncPipelinesResourceWithRawResponse:
         )
         self.get = async_to_raw_response_wrapper(
             pipelines.get,
-        )
-        self.get_playground_session = async_to_raw_response_wrapper(
-            pipelines.get_playground_session,
         )
         self.get_status = async_to_raw_response_wrapper(
             pipelines.get_status,
@@ -1245,9 +1172,6 @@ class PipelinesResourceWithStreamingResponse:
         self.get = to_streamed_response_wrapper(
             pipelines.get,
         )
-        self.get_playground_session = to_streamed_response_wrapper(
-            pipelines.get_playground_session,
-        )
         self.get_status = to_streamed_response_wrapper(
             pipelines.get_status,
         )
@@ -1294,9 +1218,6 @@ class AsyncPipelinesResourceWithStreamingResponse:
         )
         self.get = async_to_streamed_response_wrapper(
             pipelines.get,
-        )
-        self.get_playground_session = async_to_streamed_response_wrapper(
-            pipelines.get_playground_session,
         )
         self.get_status = async_to_streamed_response_wrapper(
             pipelines.get_status,

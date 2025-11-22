@@ -14,7 +14,6 @@ from .pipeline_data_source import PipelineDataSource as PipelineDataSource
 from .document_create_params import DocumentCreateParams as DocumentCreateParams
 from .document_list_response import DocumentListResponse as DocumentListResponse
 from .metadata_create_params import MetadataCreateParams as MetadataCreateParams
-from .data_source_sync_params import DataSourceSyncParams as DataSourceSyncParams
 from .document_create_response import DocumentCreateResponse as DocumentCreateResponse
 from .metadata_create_response import MetadataCreateResponse as MetadataCreateResponse
 from .data_source_update_params import DataSourceUpdateParams as DataSourceUpdateParams

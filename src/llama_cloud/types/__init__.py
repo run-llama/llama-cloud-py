@@ -2,14 +2,7 @@
 
 from __future__ import annotations
 
-from . import (
-    pipeline,
-    retriever,
-    metadata_filters,
-    retriever_pipeline,
-    preset_retrieval_params,
-    pipeline_get_playground_session_response,
-)
+from . import pipeline, retriever, metadata_filters, retriever_pipeline, preset_retrieval_params
 from .. import _compat
 from .file import File as File
 from .project import Project as Project
@@ -25,7 +18,6 @@ from .parsing_mode import ParsingMode as ParsingMode
 from .pipeline_type import PipelineType as PipelineType
 from .presigned_url import PresignedURL as PresignedURL
 from .fail_page_mode import FailPageMode as FailPageMode
-from .llm_parameters import LlmParameters as LlmParameters
 from .retrieval_mode import RetrievalMode as RetrievalMode
 from .file_get_params import FileGetParams as FileGetParams
 from .metadata_filters import MetadataFilters as MetadataFilters
@@ -89,9 +81,6 @@ from .file_generate_presigned_url_response import FileGeneratePresignedURLRespon
 from .llama_parse_supported_file_extensions import (
     LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
 )
-from .pipeline_get_playground_session_response import (
-    PipelineGetPlaygroundSessionResponse as PipelineGetPlaygroundSessionResponse,
-)
 from .parsing_get_supported_file_extensions_response import (
     ParsingGetSupportedFileExtensionsResponse as ParsingGetSupportedFileExtensionsResponse,
 )
@@ -104,15 +93,11 @@ if _compat.PYDANTIC_V1:
     metadata_filters.MetadataFilters.update_forward_refs()  # type: ignore
     pipeline.Pipeline.update_forward_refs()  # type: ignore
     preset_retrieval_params.PresetRetrievalParams.update_forward_refs()  # type: ignore
-    pipeline_get_playground_session_response.PipelineGetPlaygroundSessionResponse.update_forward_refs()  # type: ignore
     retriever.Retriever.update_forward_refs()  # type: ignore
     retriever_pipeline.RetrieverPipeline.update_forward_refs()  # type: ignore
 else:
     metadata_filters.MetadataFilters.model_rebuild(_parent_namespace_depth=0)
     pipeline.Pipeline.model_rebuild(_parent_namespace_depth=0)
     preset_retrieval_params.PresetRetrievalParams.model_rebuild(_parent_namespace_depth=0)
-    pipeline_get_playground_session_response.PipelineGetPlaygroundSessionResponse.model_rebuild(
-        _parent_namespace_depth=0
-    )
     retriever.Retriever.model_rebuild(_parent_namespace_depth=0)
     retriever_pipeline.RetrieverPipeline.model_rebuild(_parent_namespace_depth=0)
