@@ -23,8 +23,6 @@ from .job_get_result_response import JobGetResultResponse as JobGetResultRespons
 from .webhook_configuration_param import WebhookConfigurationParam as WebhookConfigurationParam
 from .run_get_latest_from_ui_params import RunGetLatestFromUiParams as RunGetLatestFromUiParams
 from .extraction_agent_update_params import ExtractionAgentUpdateParams as ExtractionAgentUpdateParams
-from .extraction_agent_get_by_name_params import ExtractionAgentGetByNameParams as ExtractionAgentGetByNameParams
-from .extraction_agent_get_default_params import ExtractionAgentGetDefaultParams as ExtractionAgentGetDefaultParams
 from .extraction_agent_extraction_agents_params import (
     ExtractionAgentExtractionAgentsParams as ExtractionAgentExtractionAgentsParams,
 )

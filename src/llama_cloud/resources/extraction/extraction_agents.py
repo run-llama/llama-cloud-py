@@ -6,35 +6,25 @@ from typing import Dict, Union, Iterable, Optional
 
 import httpx
 
-from .schema import (
-    SchemaResource,
-    AsyncSchemaResource,
-    SchemaResourceWithRawResponse,
-    AsyncSchemaResourceWithRawResponse,
-    SchemaResourceWithStreamingResponse,
-    AsyncSchemaResourceWithStreamingResponse,
-)
-from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ...._utils import maybe_transform, async_maybe_transform
-from ...._compat import cached_property
-from ...._resource import SyncAPIResource, AsyncAPIResource
-from ...._response import (
+from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ..._utils import maybe_transform, async_maybe_transform
+from ..._compat import cached_property
+from ..._resource import SyncAPIResource, AsyncAPIResource
+from ..._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...._base_client import make_request_options
-from ....types.extraction import (
+from ..._base_client import make_request_options
+from ...types.extraction import (
     extraction_agent_update_params,
-    extraction_agent_get_by_name_params,
-    extraction_agent_get_default_params,
     extraction_agent_extraction_agents_params,
     extraction_agent_get_extraction_agents_params,
 )
-from ....types.extraction.extract_agent import ExtractAgent
-from ....types.extraction.extract_config_param import ExtractConfigParam
-from ....types.extraction.extraction_agent_get_extraction_agents_response import (
+from ...types.extraction.extract_agent import ExtractAgent
+from ...types.extraction.extract_config_param import ExtractConfigParam
+from ...types.extraction.extraction_agent_get_extraction_agents_response import (
     ExtractionAgentGetExtractionAgentsResponse,
 )
 
@@ -42,10 +32,6 @@ __all__ = ["ExtractionAgentsResource", "AsyncExtractionAgentsResource"]
 
 
 class ExtractionAgentsResource(SyncAPIResource):
-    @cached_property
-    def schema(self) -> SchemaResource:
-        return SchemaResource(self._client)
-
     @cached_property
     def with_raw_response(self) -> ExtractionAgentsResourceWithRawResponse:
         """
@@ -242,95 +228,6 @@ class ExtractionAgentsResource(SyncAPIResource):
             cast_to=ExtractAgent,
         )
 
-    def get_by_name(
-        self,
-        name: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractAgent:
-        """
-        Get Extraction Agent By Name
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not name:
-            raise ValueError(f"Expected a non-empty value for `name` but received {name!r}")
-        return self._get(
-            f"/api/v1/extraction/extraction-agents/by-name/{name}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    extraction_agent_get_by_name_params.ExtractionAgentGetByNameParams,
-                ),
-            ),
-            cast_to=ExtractAgent,
-        )
-
-    def get_default(
-        self,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractAgent:
-        """Get or create a default extraction agent for the current project.
-
-        The default
-        agent has an empty schema and default configuration.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._get(
-            "/api/v1/extraction/extraction-agents/default",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    extraction_agent_get_default_params.ExtractionAgentGetDefaultParams,
-                ),
-            ),
-            cast_to=ExtractAgent,
-        )
-
     def get_extraction_agents(
         self,
         *,
@@ -379,10 +276,6 @@ class ExtractionAgentsResource(SyncAPIResource):
 
 
 class AsyncExtractionAgentsResource(AsyncAPIResource):
-    @cached_property
-    def schema(self) -> AsyncSchemaResource:
-        return AsyncSchemaResource(self._client)
-
     @cached_property
     def with_raw_response(self) -> AsyncExtractionAgentsResourceWithRawResponse:
         """
@@ -579,95 +472,6 @@ class AsyncExtractionAgentsResource(AsyncAPIResource):
             cast_to=ExtractAgent,
         )
 
-    async def get_by_name(
-        self,
-        name: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractAgent:
-        """
-        Get Extraction Agent By Name
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not name:
-            raise ValueError(f"Expected a non-empty value for `name` but received {name!r}")
-        return await self._get(
-            f"/api/v1/extraction/extraction-agents/by-name/{name}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    extraction_agent_get_by_name_params.ExtractionAgentGetByNameParams,
-                ),
-            ),
-            cast_to=ExtractAgent,
-        )
-
-    async def get_default(
-        self,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractAgent:
-        """Get or create a default extraction agent for the current project.
-
-        The default
-        agent has an empty schema and default configuration.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._get(
-            "/api/v1/extraction/extraction-agents/default",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    extraction_agent_get_default_params.ExtractionAgentGetDefaultParams,
-                ),
-            ),
-            cast_to=ExtractAgent,
-        )
-
     async def get_extraction_agents(
         self,
         *,
@@ -731,19 +535,9 @@ class ExtractionAgentsResourceWithRawResponse:
         self.get = to_raw_response_wrapper(
             extraction_agents.get,
         )
-        self.get_by_name = to_raw_response_wrapper(
-            extraction_agents.get_by_name,
-        )
-        self.get_default = to_raw_response_wrapper(
-            extraction_agents.get_default,
-        )
         self.get_extraction_agents = to_raw_response_wrapper(
             extraction_agents.get_extraction_agents,
         )
-
-    @cached_property
-    def schema(self) -> SchemaResourceWithRawResponse:
-        return SchemaResourceWithRawResponse(self._extraction_agents.schema)
 
 
 class AsyncExtractionAgentsResourceWithRawResponse:
@@ -762,19 +556,9 @@ class AsyncExtractionAgentsResourceWithRawResponse:
         self.get = async_to_raw_response_wrapper(
             extraction_agents.get,
         )
-        self.get_by_name = async_to_raw_response_wrapper(
-            extraction_agents.get_by_name,
-        )
-        self.get_default = async_to_raw_response_wrapper(
-            extraction_agents.get_default,
-        )
         self.get_extraction_agents = async_to_raw_response_wrapper(
             extraction_agents.get_extraction_agents,
         )
-
-    @cached_property
-    def schema(self) -> AsyncSchemaResourceWithRawResponse:
-        return AsyncSchemaResourceWithRawResponse(self._extraction_agents.schema)
 
 
 class ExtractionAgentsResourceWithStreamingResponse:
@@ -793,19 +577,9 @@ class ExtractionAgentsResourceWithStreamingResponse:
         self.get = to_streamed_response_wrapper(
             extraction_agents.get,
         )
-        self.get_by_name = to_streamed_response_wrapper(
-            extraction_agents.get_by_name,
-        )
-        self.get_default = to_streamed_response_wrapper(
-            extraction_agents.get_default,
-        )
         self.get_extraction_agents = to_streamed_response_wrapper(
             extraction_agents.get_extraction_agents,
         )
-
-    @cached_property
-    def schema(self) -> SchemaResourceWithStreamingResponse:
-        return SchemaResourceWithStreamingResponse(self._extraction_agents.schema)
 
 
 class AsyncExtractionAgentsResourceWithStreamingResponse:
@@ -824,16 +598,6 @@ class AsyncExtractionAgentsResourceWithStreamingResponse:
         self.get = async_to_streamed_response_wrapper(
             extraction_agents.get,
         )
-        self.get_by_name = async_to_streamed_response_wrapper(
-            extraction_agents.get_by_name,
-        )
-        self.get_default = async_to_streamed_response_wrapper(
-            extraction_agents.get_default,
-        )
         self.get_extraction_agents = async_to_streamed_response_wrapper(
             extraction_agents.get_extraction_agents,
         )
-
-    @cached_property
-    def schema(self) -> AsyncSchemaResourceWithStreamingResponse:
-        return AsyncSchemaResourceWithStreamingResponse(self._extraction_agents.schema)
