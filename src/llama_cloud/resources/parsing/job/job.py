@@ -4,6 +4,14 @@ from __future__ import annotations
 
 import httpx
 
+from .result import (
+    ResultResource,
+    AsyncResultResource,
+    ResultResourceWithRawResponse,
+    AsyncResultResourceWithRawResponse,
+    ResultResourceWithStreamingResponse,
+    AsyncResultResourceWithStreamingResponse,
+)
 from ...._types import Body, Query, Headers, NotGiven, not_given
 from ...._compat import cached_property
 from ...._polling import (
@@ -17,14 +25,6 @@ from ...._response import (
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
-)
-from .result.result import (
-    ResultResource,
-    AsyncResultResource,
-    ResultResourceWithRawResponse,
-    AsyncResultResourceWithRawResponse,
-    ResultResourceWithStreamingResponse,
-    AsyncResultResourceWithStreamingResponse,
 )
 from ...._base_client import make_request_options
 from ....types.parsing_job import ParsingJob

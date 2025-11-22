@@ -6,11 +6,11 @@ from typing import Optional
 
 import httpx
 
-from ....._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ....._utils import maybe_transform, async_maybe_transform
-from ....._compat import cached_property
-from ....._resource import SyncAPIResource, AsyncAPIResource
-from ....._response import (
+from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ...._utils import maybe_transform, async_maybe_transform
+from ...._compat import cached_property
+from ...._resource import SyncAPIResource, AsyncAPIResource
+from ...._response import (
     BinaryAPIResponse,
     AsyncBinaryAPIResponse,
     StreamedBinaryAPIResponse,
@@ -24,17 +24,17 @@ from ....._response import (
     async_to_custom_raw_response_wrapper,
     async_to_custom_streamed_response_wrapper,
 )
-from ....._base_client import make_request_options
-from .....types.parsing.job import (
+from ...._base_client import make_request_options
+from ....types.parsing.job import (
     result_get_json_params,
     result_get_text_params,
     result_get_markdown_params,
     result_get_structured_params,
 )
-from .....types.parsing.job.parsing_job_json_result import ParsingJobJsonResult
-from .....types.parsing.job.parsing_job_text_result import ParsingJobTextResult
-from .....types.parsing.job.parsing_job_markdown_result import ParsingJobMarkdownResult
-from .....types.parsing.job.parsing_job_structured_result import ParsingJobStructuredResult
+from ....types.parsing.job.parsing_job_json_result import ParsingJobJsonResult
+from ....types.parsing.job.parsing_job_text_result import ParsingJobTextResult
+from ....types.parsing.job.parsing_job_markdown_result import ParsingJobMarkdownResult
+from ....types.parsing.job.parsing_job_structured_result import ParsingJobStructuredResult
 
 __all__ = ["ResultResource", "AsyncResultResource"]
 

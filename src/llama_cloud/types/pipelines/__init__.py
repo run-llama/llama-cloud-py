@@ -5,6 +5,7 @@ from __future__ import annotations
 from .text_node import TextNode as TextNode
 from .pipeline_file import PipelineFile as PipelineFile
 from .cloud_document import CloudDocument as CloudDocument
+from .file_list_params import FileListParams as FileListParams
 from .file_create_params import FileCreateParams as FileCreateParams
 from .file_update_params import FileUpdateParams as FileUpdateParams
 from .document_list_params import DocumentListParams as DocumentListParams
