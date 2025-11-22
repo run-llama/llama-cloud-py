@@ -15,7 +15,6 @@ from llama_cloud.types.pipelines import (
     CloudDocument,
     DocumentCreateResponse,
     DocumentGetChunksResponse,
-    DocumentUpsertBatchResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -406,72 +405,6 @@ class TestDocuments:
                 pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_upsert_batch(self, client: LlamaCloud) -> None:
-        document = client.pipelines.documents.upsert_batch(
-            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            body=[
-                {
-                    "metadata": {"foo": "bar"},
-                    "text": "text",
-                }
-            ],
-        )
-        assert_matches_type(DocumentUpsertBatchResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_upsert_batch(self, client: LlamaCloud) -> None:
-        response = client.pipelines.documents.with_raw_response.upsert_batch(
-            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            body=[
-                {
-                    "metadata": {"foo": "bar"},
-                    "text": "text",
-                }
-            ],
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        document = response.parse()
-        assert_matches_type(DocumentUpsertBatchResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_upsert_batch(self, client: LlamaCloud) -> None:
-        with client.pipelines.documents.with_streaming_response.upsert_batch(
-            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            body=[
-                {
-                    "metadata": {"foo": "bar"},
-                    "text": "text",
-                }
-            ],
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            document = response.parse()
-            assert_matches_type(DocumentUpsertBatchResponse, document, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_upsert_batch(self, client: LlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
-            client.pipelines.documents.with_raw_response.upsert_batch(
-                pipeline_id="",
-                body=[
-                    {
-                        "metadata": {"foo": "bar"},
-                        "text": "text",
-                    }
-                ],
-            )
-
 
 class TestAsyncDocuments:
     parametrize = pytest.mark.parametrize(
@@ -858,70 +791,4 @@ class TestAsyncDocuments:
             await async_client.pipelines.documents.with_raw_response.sync(
                 document_id="",
                 pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_upsert_batch(self, async_client: AsyncLlamaCloud) -> None:
-        document = await async_client.pipelines.documents.upsert_batch(
-            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            body=[
-                {
-                    "metadata": {"foo": "bar"},
-                    "text": "text",
-                }
-            ],
-        )
-        assert_matches_type(DocumentUpsertBatchResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_upsert_batch(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.pipelines.documents.with_raw_response.upsert_batch(
-            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            body=[
-                {
-                    "metadata": {"foo": "bar"},
-                    "text": "text",
-                }
-            ],
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        document = await response.parse()
-        assert_matches_type(DocumentUpsertBatchResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_upsert_batch(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.pipelines.documents.with_streaming_response.upsert_batch(
-            pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            body=[
-                {
-                    "metadata": {"foo": "bar"},
-                    "text": "text",
-                }
-            ],
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            document = await response.parse()
-            assert_matches_type(DocumentUpsertBatchResponse, document, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_upsert_batch(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
-            await async_client.pipelines.documents.with_raw_response.upsert_batch(
-                pipeline_id="",
-                body=[
-                    {
-                        "metadata": {"foo": "bar"},
-                        "text": "text",
-                    }
-                ],
             )
