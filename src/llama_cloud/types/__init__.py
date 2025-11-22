@@ -38,7 +38,6 @@ from .retriever_pipeline import RetrieverPipeline as RetrieverPipeline
 from .project_list_params import ProjectListParams as ProjectListParams
 from .sparse_model_config import SparseModelConfig as SparseModelConfig
 from .llm_parameters_param import LlmParametersParam as LlmParametersParam
-from .parsing_history_item import ParsingHistoryItem as ParsingHistoryItem
 from .pipeline_chat_params import PipelineChatParams as PipelineChatParams
 from .pipeline_list_params import PipelineListParams as PipelineListParams
 from .re_rank_config_param import ReRankConfigParam as ReRankConfigParam
@@ -58,7 +57,6 @@ from .pipeline_upsert_params import PipelineUpsertParams as PipelineUpsertParams
 from .data_sink_create_params import DataSinkCreateParams as DataSinkCreateParams
 from .data_sink_list_response import DataSinkListResponse as DataSinkListResponse
 from .data_sink_update_params import DataSinkUpdateParams as DataSinkUpdateParams
-from .data_sink_upsert_params import DataSinkUpsertParams as DataSinkUpsertParams
 from .data_source_list_params import DataSourceListParams as DataSourceListParams
 from .preset_retrieval_params import PresetRetrievalParams as PresetRetrievalParams
 from .retriever_create_params import RetrieverCreateParams as RetrieverCreateParams
@@ -74,7 +72,6 @@ from .retriever_pipeline_param import RetrieverPipelineParam as RetrieverPipelin
 from .data_source_create_params import DataSourceCreateParams as DataSourceCreateParams
 from .data_source_list_response import DataSourceListResponse as DataSourceListResponse
 from .data_source_update_params import DataSourceUpdateParams as DataSourceUpdateParams
-from .data_source_upsert_params import DataSourceUpsertParams as DataSourceUpsertParams
 from .sparse_model_config_param import SparseModelConfigParam as SparseModelConfigParam
 from .composite_retrieval_result import CompositeRetrievalResult as CompositeRetrievalResult
 from .organization_list_response import OrganizationListResponse as OrganizationListResponse
@@ -96,7 +93,6 @@ from .file_generate_presigned_url_params import FileGeneratePresignedURLParams a
 from .data_source_reader_version_metadata import DataSourceReaderVersionMetadata as DataSourceReaderVersionMetadata
 from .advanced_mode_transform_config_param import AdvancedModeTransformConfigParam as AdvancedModeTransformConfigParam
 from .file_generate_presigned_url_response import FileGeneratePresignedURLResponse as FileGeneratePresignedURLResponse
-from .parsing_get_parsing_history_response import ParsingGetParsingHistoryResponse as ParsingGetParsingHistoryResponse
 from .llama_parse_supported_file_extensions import (
     LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
 )
