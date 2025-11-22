@@ -1,15 +1,28 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import Dict, Optional
 
 from .._models import BaseModel
-from .files.page_screenshot_metadata import PageScreenshotMetadata
 
-__all__ = ["PageScreenshotNodeWithScore"]
+__all__ = ["PageScreenshotNodeWithScore", "Node"]
+
+
+class Node(BaseModel):
+    file_id: str
+    """The ID of the file that the page screenshot was taken from"""
+
+    image_size: int
+    """The size of the image in bytes"""
+
+    page_index: int
+    """The index of the page for which the screenshot is taken (0-indexed)"""
+
+    metadata: Optional[Dict[str, object]] = None
+    """Metadata for the screenshot"""
 
 
 class PageScreenshotNodeWithScore(BaseModel):
-    node: PageScreenshotMetadata
+    node: Node
 
     score: float
     """The score of the screenshot node"""
