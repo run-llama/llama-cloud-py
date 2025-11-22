@@ -5,7 +5,6 @@ from __future__ import annotations
 from . import pipeline, retriever, metadata_filters, retriever_pipeline, preset_retrieval_params
 from .. import _compat
 from .file import File as File
-from .project import Project as Project
 from .pipeline import Pipeline as Pipeline
 from .data_sink import DataSink as DataSink
 from .retriever import Retriever as Retriever
@@ -13,7 +12,6 @@ from .data_source import DataSource as DataSource
 from .parsing_job import ParsingJob as ParsingJob
 from .status_enum import StatusEnum as StatusEnum
 from .message_role import MessageRole as MessageRole
-from .organization import Organization as Organization
 from .parsing_mode import ParsingMode as ParsingMode
 from .pipeline_type import PipelineType as PipelineType
 from .presigned_url import PresignedURL as PresignedURL
@@ -25,7 +23,6 @@ from .parser_languages import ParserLanguages as ParserLanguages
 from .file_delete_params import FileDeleteParams as FileDeleteParams
 from .file_upload_params import FileUploadParams as FileUploadParams
 from .retriever_pipeline import RetrieverPipeline as RetrieverPipeline
-from .project_list_params import ProjectListParams as ProjectListParams
 from .sparse_model_config import SparseModelConfig as SparseModelConfig
 from .pipeline_list_params import PipelineListParams as PipelineListParams
 from .re_rank_config_param import ReRankConfigParam as ReRankConfigParam
@@ -33,7 +30,6 @@ from .retriever_get_params import RetrieverGetParams as RetrieverGetParams
 from .auto_transform_config import AutoTransformConfig as AutoTransformConfig
 from .data_sink_list_params import DataSinkListParams as DataSinkListParams
 from .extraction_run_params import ExtractionRunParams as ExtractionRunParams
-from .project_list_response import ProjectListResponse as ProjectListResponse
 from .retriever_list_params import RetrieverListParams as RetrieverListParams
 from .llama_parse_parameters import LlamaParseParameters as LlamaParseParameters
 from .metadata_filters_param import MetadataFiltersParam as MetadataFiltersParam
@@ -60,7 +56,6 @@ from .data_source_list_response import DataSourceListResponse as DataSourceListR
 from .data_source_update_params import DataSourceUpdateParams as DataSourceUpdateParams
 from .sparse_model_config_param import SparseModelConfigParam as SparseModelConfigParam
 from .composite_retrieval_result import CompositeRetrievalResult as CompositeRetrievalResult
-from .organization_list_response import OrganizationListResponse as OrganizationListResponse
 from .parsing_upload_file_params import ParsingUploadFileParams as ParsingUploadFileParams
 from .pipeline_get_status_params import PipelineGetStatusParams as PipelineGetStatusParams
 from .auto_transform_config_param import AutoTransformConfigParam as AutoTransformConfigParam
