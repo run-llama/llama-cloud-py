@@ -97,7 +97,6 @@ from llama_cloud.types import (
     SparseModelConfig,
     PipelineListResponse,
     PipelineGetPlaygroundSessionResponse,
-    PipelineSearchResponse,
 )
 ```
 
@@ -107,11 +106,9 @@ Methods:
 - <code title="put /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">update</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipeline_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline.py">Pipeline</a></code>
 - <code title="get /api/v1/pipelines">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">list</a>(\*\*<a href="src/llama_cloud/types/pipeline_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline_list_response.py">PipelineListResponse</a></code>
 - <code title="delete /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">delete</a>(pipeline_id) -> None</code>
-- <code title="post /api/v1/pipelines/{pipeline_id}/chat">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">chat</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipeline_chat_params.py">params</a>) -> object</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">get</a>(pipeline_id) -> <a href="./src/llama_cloud/types/pipeline.py">Pipeline</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/playground-session">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">get_playground_session</a>(pipeline_id) -> <a href="./src/llama_cloud/types/pipeline_get_playground_session_response.py">PipelineGetPlaygroundSessionResponse</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/status">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">get_status</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipeline_get_status_params.py">params</a>) -> <a href="./src/llama_cloud/types/managed_ingestion_status_response.py">ManagedIngestionStatusResponse</a></code>
-- <code title="post /api/v1/pipelines/{pipeline_id}/retrieve">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">search</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipeline_search_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline_search_response.py">PipelineSearchResponse</a></code>
 - <code title="put /api/v1/pipelines">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">upsert</a>(\*\*<a href="src/llama_cloud/types/pipeline_upsert_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline.py">Pipeline</a></code>
 
 ## Sync
@@ -197,7 +194,6 @@ Methods:
 - <code title="post /api/v1/pipelines/{pipeline_id}/documents">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">create</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/document_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/document_create_response.py">DocumentCreateResponse</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">list</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/document_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/document_list_response.py">DocumentListResponse</a></code>
 - <code title="delete /api/v1/pipelines/{pipeline_id}/documents/{document_id}">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">delete</a>(document_id, \*, pipeline_id) -> None</code>
-- <code title="post /api/v1/pipelines/{pipeline_id}/documents/force-sync-all">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">force_sync_all</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/document_force_sync_all_params.py">params</a>) -> object</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">get</a>(document_id, \*, pipeline_id) -> <a href="./src/llama_cloud/types/pipelines/cloud_document.py">CloudDocument</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}/chunks">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">get_chunks</a>(document_id, \*, pipeline_id) -> <a href="./src/llama_cloud/types/pipelines/document_get_chunks_response.py">DocumentGetChunksResponse</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/paginated">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">get_paginated</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/document_get_paginated_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/document_get_paginated_response.py">DocumentGetPaginatedResponse</a></code>

@@ -8,7 +8,6 @@ from . import (
     metadata_filters,
     retriever_pipeline,
     preset_retrieval_params,
-    pipeline_search_response,
     pipeline_get_playground_session_response,
 )
 from .. import _compat
@@ -37,8 +36,6 @@ from .project_get_params import ProjectGetParams as ProjectGetParams
 from .retriever_pipeline import RetrieverPipeline as RetrieverPipeline
 from .project_list_params import ProjectListParams as ProjectListParams
 from .sparse_model_config import SparseModelConfig as SparseModelConfig
-from .llm_parameters_param import LlmParametersParam as LlmParametersParam
-from .pipeline_chat_params import PipelineChatParams as PipelineChatParams
 from .pipeline_list_params import PipelineListParams as PipelineListParams
 from .re_rank_config_param import ReRankConfigParam as ReRankConfigParam
 from .retriever_get_params import RetrieverGetParams as RetrieverGetParams
@@ -51,7 +48,6 @@ from .llama_parse_parameters import LlamaParseParameters as LlamaParseParameters
 from .metadata_filters_param import MetadataFiltersParam as MetadataFiltersParam
 from .pipeline_create_params import PipelineCreateParams as PipelineCreateParams
 from .pipeline_list_response import PipelineListResponse as PipelineListResponse
-from .pipeline_search_params import PipelineSearchParams as PipelineSearchParams
 from .pipeline_update_params import PipelineUpdateParams as PipelineUpdateParams
 from .pipeline_upsert_params import PipelineUpsertParams as PipelineUpsertParams
 from .data_sink_create_params import DataSinkCreateParams as DataSinkCreateParams
@@ -67,7 +63,6 @@ from .retriever_upsert_params import RetrieverUpsertParams as RetrieverUpsertPar
 from .composite_retrieval_mode import CompositeRetrievalMode as CompositeRetrievalMode
 from .file_read_content_params import FileReadContentParams as FileReadContentParams
 from .pipeline_metadata_config import PipelineMetadataConfig as PipelineMetadataConfig
-from .pipeline_search_response import PipelineSearchResponse as PipelineSearchResponse
 from .retriever_pipeline_param import RetrieverPipelineParam as RetrieverPipelineParam
 from .data_source_create_params import DataSourceCreateParams as DataSourceCreateParams
 from .data_source_list_response import DataSourceListResponse as DataSourceListResponse
@@ -110,7 +105,6 @@ if _compat.PYDANTIC_V1:
     pipeline.Pipeline.update_forward_refs()  # type: ignore
     preset_retrieval_params.PresetRetrievalParams.update_forward_refs()  # type: ignore
     pipeline_get_playground_session_response.PipelineGetPlaygroundSessionResponse.update_forward_refs()  # type: ignore
-    pipeline_search_response.PipelineSearchResponse.update_forward_refs()  # type: ignore
     retriever.Retriever.update_forward_refs()  # type: ignore
     retriever_pipeline.RetrieverPipeline.update_forward_refs()  # type: ignore
 else:
@@ -120,6 +114,5 @@ else:
     pipeline_get_playground_session_response.PipelineGetPlaygroundSessionResponse.model_rebuild(
         _parent_namespace_depth=0
     )
-    pipeline_search_response.PipelineSearchResponse.model_rebuild(_parent_namespace_depth=0)
     retriever.Retriever.model_rebuild(_parent_namespace_depth=0)
     retriever_pipeline.RetrieverPipeline.model_rebuild(_parent_namespace_depth=0)
