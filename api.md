@@ -1,15 +1,3 @@
-# Projects
-
-Types:
-
-```python
-from llama_cloud.types import Project, ProjectListResponse
-```
-
-Methods:
-
-- <code title="get /api/v1/projects">client.projects.<a href="./src/llama_cloud/resources/projects.py">list</a>(\*\*<a href="src/llama_cloud/types/project_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/project_list_response.py">ProjectListResponse</a></code>
-
 # DataSinks
 
 Types:
@@ -41,18 +29,6 @@ Methods:
 - <code title="get /api/v1/data-sources">client.data_sources.<a href="./src/llama_cloud/resources/data_sources.py">list</a>(\*\*<a href="src/llama_cloud/types/data_source_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/data_source_list_response.py">DataSourceListResponse</a></code>
 - <code title="delete /api/v1/data-sources/{data_source_id}">client.data_sources.<a href="./src/llama_cloud/resources/data_sources.py">delete</a>(data_source_id) -> None</code>
 - <code title="get /api/v1/data-sources/{data_source_id}">client.data_sources.<a href="./src/llama_cloud/resources/data_sources.py">get</a>(data_source_id) -> <a href="./src/llama_cloud/types/data_source.py">DataSource</a></code>
-
-# Organizations
-
-Types:
-
-```python
-from llama_cloud.types import Organization, OrganizationListResponse
-```
-
-Methods:
-
-- <code title="get /api/v1/organizations">client.organizations.<a href="./src/llama_cloud/resources/organizations.py">list</a>() -> <a href="./src/llama_cloud/types/organization_list_response.py">OrganizationListResponse</a></code>
 
 # Files
 
