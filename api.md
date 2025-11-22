@@ -42,6 +42,7 @@ Methods:
 - <code title="get /api/v1/data-sources">client.data_sources.<a href="./src/llama_cloud/resources/data_sources.py">list</a>(\*\*<a href="src/llama_cloud/types/data_source_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/data_source_list_response.py">DataSourceListResponse</a></code>
 - <code title="delete /api/v1/data-sources/{data_source_id}">client.data_sources.<a href="./src/llama_cloud/resources/data_sources.py">delete</a>(data_source_id) -> None</code>
 - <code title="get /api/v1/data-sources/{data_source_id}">client.data_sources.<a href="./src/llama_cloud/resources/data_sources.py">get</a>(data_source_id) -> <a href="./src/llama_cloud/types/data_source.py">DataSource</a></code>
+- <code title="put /api/v1/data-sources">client.data_sources.<a href="./src/llama_cloud/resources/data_sources.py">upsert</a>(\*\*<a href="src/llama_cloud/types/data_source_upsert_params.py">params</a>) -> <a href="./src/llama_cloud/types/data_source.py">DataSource</a></code>
 
 # Organizations
 
@@ -186,6 +187,7 @@ Types:
 from llama_cloud.types.pipelines import (
     PipelineFile,
     FileCreateResponse,
+    FileListResponse,
     FileGetStatusCountsResponse,
 )
 ```
@@ -194,6 +196,7 @@ Methods:
 
 - <code title="put /api/v1/pipelines/{pipeline_id}/files">client.pipelines.files.<a href="./src/llama_cloud/resources/pipelines/files.py">create</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/file_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/file_create_response.py">FileCreateResponse</a></code>
 - <code title="put /api/v1/pipelines/{pipeline_id}/files/{file_id}">client.pipelines.files.<a href="./src/llama_cloud/resources/pipelines/files.py">update</a>(file_id, \*, pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/file_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/pipeline_file.py">PipelineFile</a></code>
+- <code title="get /api/v1/pipelines/{pipeline_id}/files">client.pipelines.files.<a href="./src/llama_cloud/resources/pipelines/files.py">list</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/file_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/file_list_response.py">FileListResponse</a></code>
 - <code title="delete /api/v1/pipelines/{pipeline_id}/files/{file_id}">client.pipelines.files.<a href="./src/llama_cloud/resources/pipelines/files.py">delete</a>(file_id, \*, pipeline_id) -> None</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/files/{file_id}/status">client.pipelines.files.<a href="./src/llama_cloud/resources/pipelines/files.py">get_status</a>(file_id, \*, pipeline_id) -> <a href="./src/llama_cloud/types/managed_ingestion_status_response.py">ManagedIngestionStatusResponse</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/files/status-counts">client.pipelines.files.<a href="./src/llama_cloud/resources/pipelines/files.py">get_status_counts</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/file_get_status_counts_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/file_get_status_counts_response.py">FileGetStatusCountsResponse</a></code>
@@ -282,9 +285,11 @@ from llama_cloud.types import (
     FailPageMode,
     LlamaParseSupportedFileExtensions,
     ParserLanguages,
+    ParsingHistoryItem,
     ParsingJob,
     ParsingMode,
     StatusEnum,
+    ParsingGetParsingHistoryResponse,
     ParsingGetSupportedFileExtensionsResponse,
 )
 ```
@@ -292,6 +297,7 @@ from llama_cloud.types import (
 Methods:
 
 - <code title="post /api/v1/parsing/screenshot">client.parsing.<a href="./src/llama_cloud/resources/parsing/parsing.py">create_screenshot</a>(\*\*<a href="src/llama_cloud/types/parsing_create_screenshot_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_job.py">ParsingJob</a></code>
+- <code title="get /api/v1/parsing/history">client.parsing.<a href="./src/llama_cloud/resources/parsing/parsing.py">get_parsing_history</a>() -> <a href="./src/llama_cloud/types/parsing_get_parsing_history_response.py">ParsingGetParsingHistoryResponse</a></code>
 - <code title="get /api/v1/parsing/supported_file_extensions">client.parsing.<a href="./src/llama_cloud/resources/parsing/parsing.py">get_supported_file_extensions</a>() -> <a href="./src/llama_cloud/types/parsing_get_supported_file_extensions_response.py">ParsingGetSupportedFileExtensionsResponse</a></code>
 - <code title="post /api/v1/parsing/upload">client.parsing.<a href="./src/llama_cloud/resources/parsing/parsing.py">upload_file</a>(\*\*<a href="src/llama_cloud/types/parsing_upload_file_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_job.py">ParsingJob</a></code>
 
@@ -326,6 +332,17 @@ Methods:
 - <code title="get /api/v1/parsing/job/{job_id}/result/structured">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result/result.py">get_structured</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_structured_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_structured_result.py">ParsingJobStructuredResult</a></code>
 - <code title="get /api/v1/parsing/job/{job_id}/result/text">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result/result.py">get_text</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_text_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_text_result.py">ParsingJobTextResult</a></code>
 - <code title="get /api/v1/parsing/job/{job_id}/result/xlsx">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result/result.py">get_xlsx</a>(job_id) -> object</code>
+
+#### Raw
+
+Methods:
+
+- <code title="get /api/v1/parsing/job/{job_id}/result/raw/json">client.parsing.job.result.raw.<a href="./src/llama_cloud/resources/parsing/job/result/raw.py">get_raw_json</a>(job_id) -> object</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/raw/markdown">client.parsing.job.result.raw.<a href="./src/llama_cloud/resources/parsing/job/result/raw.py">get_raw_markdown</a>(job_id) -> object</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/raw/pdf">client.parsing.job.result.raw.<a href="./src/llama_cloud/resources/parsing/job/result/raw.py">get_raw_pdf</a>(job_id) -> object</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/raw/structured">client.parsing.job.result.raw.<a href="./src/llama_cloud/resources/parsing/job/result/raw.py">get_raw_structured</a>(job_id) -> object</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/raw/text">client.parsing.job.result.raw.<a href="./src/llama_cloud/resources/parsing/job/result/raw.py">get_raw_text</a>(job_id) -> object</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/raw/xlsx">client.parsing.job.result.raw.<a href="./src/llama_cloud/resources/parsing/job/result/raw.py">get_raw_xlsx</a>(job_id) -> object</code>
 
 # Classifier
 

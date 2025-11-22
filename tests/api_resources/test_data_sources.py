@@ -252,6 +252,59 @@ class TestDataSources:
                 "",
             )
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_upsert(self, client: LlamaCloud) -> None:
+        data_source = client.data_sources.upsert(
+            component={"foo": "bar"},
+            name="name",
+            source_type="S3",
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_upsert_with_all_params(self, client: LlamaCloud) -> None:
+        data_source = client.data_sources.upsert(
+            component={"foo": "bar"},
+            name="name",
+            source_type="S3",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            custom_metadata={"foo": {"foo": "bar"}},
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_upsert(self, client: LlamaCloud) -> None:
+        response = client.data_sources.with_raw_response.upsert(
+            component={"foo": "bar"},
+            name="name",
+            source_type="S3",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        data_source = response.parse()
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_upsert(self, client: LlamaCloud) -> None:
+        with client.data_sources.with_streaming_response.upsert(
+            component={"foo": "bar"},
+            name="name",
+            source_type="S3",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            data_source = response.parse()
+            assert_matches_type(DataSource, data_source, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
 
 class TestAsyncDataSources:
     parametrize = pytest.mark.parametrize(
@@ -489,3 +542,56 @@ class TestAsyncDataSources:
             await async_client.data_sources.with_raw_response.get(
                 "",
             )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_upsert(self, async_client: AsyncLlamaCloud) -> None:
+        data_source = await async_client.data_sources.upsert(
+            component={"foo": "bar"},
+            name="name",
+            source_type="S3",
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_upsert_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        data_source = await async_client.data_sources.upsert(
+            component={"foo": "bar"},
+            name="name",
+            source_type="S3",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            custom_metadata={"foo": {"foo": "bar"}},
+        )
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_upsert(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.data_sources.with_raw_response.upsert(
+            component={"foo": "bar"},
+            name="name",
+            source_type="S3",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        data_source = await response.parse()
+        assert_matches_type(DataSource, data_source, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_upsert(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.data_sources.with_streaming_response.upsert(
+            component={"foo": "bar"},
+            name="name",
+            source_type="S3",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            data_source = await response.parse()
+            assert_matches_type(DataSource, data_source, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
