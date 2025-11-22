@@ -405,29 +405,11 @@ from llama_cloud.types.extraction import ExtractAgent, ExtractionAgentGetExtract
 
 Methods:
 
-- <code title="put /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">update</a>(extraction_agent_id, \*\*<a href="src/llama_cloud/types/extraction/extraction_agent_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
-- <code title="delete /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">delete</a>(extraction_agent_id) -> object</code>
-- <code title="post /api/v1/extraction/extraction-agents">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">extraction_agents</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agent_extraction_agents_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
-- <code title="get /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">get</a>(extraction_agent_id) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
-- <code title="get /api/v1/extraction/extraction-agents/by-name/{name}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">get_by_name</a>(name, \*\*<a href="src/llama_cloud/types/extraction/extraction_agent_get_by_name_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
-- <code title="get /api/v1/extraction/extraction-agents/default">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">get_default</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agent_get_default_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
-- <code title="get /api/v1/extraction/extraction-agents">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">get_extraction_agents</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agent_get_extraction_agents_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extraction_agent_get_extraction_agents_response.py">ExtractionAgentGetExtractionAgentsResponse</a></code>
-
-### Schema
-
-Types:
-
-```python
-from llama_cloud.types.extraction.extraction_agents import (
-    SchemaGenerateResponse,
-    SchemaValidationResponse,
-)
-```
-
-Methods:
-
-- <code title="post /api/v1/extraction/extraction-agents/schema/generate">client.extraction.extraction_agents.schema.<a href="./src/llama_cloud/resources/extraction/extraction_agents/schema.py">generate</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agents/schema_generate_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extraction_agents/schema_generate_response.py">SchemaGenerateResponse</a></code>
-- <code title="post /api/v1/extraction/extraction-agents/schema/validation">client.extraction.extraction_agents.schema.<a href="./src/llama_cloud/resources/extraction/extraction_agents/schema.py">validation</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agents/schema_validation_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extraction_agents/schema_validation_response.py">SchemaValidationResponse</a></code>
+- <code title="put /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents.py">update</a>(extraction_agent_id, \*\*<a href="src/llama_cloud/types/extraction/extraction_agent_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
+- <code title="delete /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents.py">delete</a>(extraction_agent_id) -> object</code>
+- <code title="post /api/v1/extraction/extraction-agents">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents.py">extraction_agents</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agent_extraction_agents_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
+- <code title="get /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents.py">get</a>(extraction_agent_id) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
+- <code title="get /api/v1/extraction/extraction-agents">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents.py">get_extraction_agents</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agent_get_extraction_agents_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extraction_agent_get_extraction_agents_response.py">ExtractionAgentGetExtractionAgentsResponse</a></code>
 
 # Beta
 
