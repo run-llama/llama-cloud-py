@@ -7,7 +7,7 @@ from datetime import datetime
 
 import httpx
 
-from ...types import (
+from ..types import (
     file_get_params,
     file_delete_params,
     file_upload_params,
@@ -15,49 +15,25 @@ from ...types import (
     file_upload_from_url_params,
     file_generate_presigned_url_params,
 )
-from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, FileTypes, omit, not_given
-from ..._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
-from ..._compat import cached_property
-from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
+from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, FileTypes, omit, not_given
+from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
+from .._compat import cached_property
+from .._resource import SyncAPIResource, AsyncAPIResource
+from .._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...types.file import File
-from .page_figures import (
-    PageFiguresResource,
-    AsyncPageFiguresResource,
-    PageFiguresResourceWithRawResponse,
-    AsyncPageFiguresResourceWithRawResponse,
-    PageFiguresResourceWithStreamingResponse,
-    AsyncPageFiguresResourceWithStreamingResponse,
-)
-from ..._base_client import make_request_options
-from .page_screenshots import (
-    PageScreenshotsResource,
-    AsyncPageScreenshotsResource,
-    PageScreenshotsResourceWithRawResponse,
-    AsyncPageScreenshotsResourceWithRawResponse,
-    PageScreenshotsResourceWithStreamingResponse,
-    AsyncPageScreenshotsResourceWithStreamingResponse,
-)
-from ...types.presigned_url import PresignedURL
-from ...types.file_generate_presigned_url_response import FileGeneratePresignedURLResponse
+from ..types.file import File
+from .._base_client import make_request_options
+from ..types.presigned_url import PresignedURL
+from ..types.file_generate_presigned_url_response import FileGeneratePresignedURLResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
 
 class FilesResource(SyncAPIResource):
-    @cached_property
-    def page_screenshots(self) -> PageScreenshotsResource:
-        return PageScreenshotsResource(self._client)
-
-    @cached_property
-    def page_figures(self) -> PageFiguresResource:
-        return PageFiguresResource(self._client)
-
     @cached_property
     def with_raw_response(self) -> FilesResourceWithRawResponse:
         """
@@ -438,14 +414,6 @@ class FilesResource(SyncAPIResource):
 
 
 class AsyncFilesResource(AsyncAPIResource):
-    @cached_property
-    def page_screenshots(self) -> AsyncPageScreenshotsResource:
-        return AsyncPageScreenshotsResource(self._client)
-
-    @cached_property
-    def page_figures(self) -> AsyncPageFiguresResource:
-        return AsyncPageFiguresResource(self._client)
-
     @cached_property
     def with_raw_response(self) -> AsyncFilesResourceWithRawResponse:
         """
@@ -848,14 +816,6 @@ class FilesResourceWithRawResponse:
             files.upload_from_url,
         )
 
-    @cached_property
-    def page_screenshots(self) -> PageScreenshotsResourceWithRawResponse:
-        return PageScreenshotsResourceWithRawResponse(self._files.page_screenshots)
-
-    @cached_property
-    def page_figures(self) -> PageFiguresResourceWithRawResponse:
-        return PageFiguresResourceWithRawResponse(self._files.page_figures)
-
 
 class AsyncFilesResourceWithRawResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
@@ -879,14 +839,6 @@ class AsyncFilesResourceWithRawResponse:
         self.upload_from_url = async_to_raw_response_wrapper(
             files.upload_from_url,
         )
-
-    @cached_property
-    def page_screenshots(self) -> AsyncPageScreenshotsResourceWithRawResponse:
-        return AsyncPageScreenshotsResourceWithRawResponse(self._files.page_screenshots)
-
-    @cached_property
-    def page_figures(self) -> AsyncPageFiguresResourceWithRawResponse:
-        return AsyncPageFiguresResourceWithRawResponse(self._files.page_figures)
 
 
 class FilesResourceWithStreamingResponse:
@@ -912,14 +864,6 @@ class FilesResourceWithStreamingResponse:
             files.upload_from_url,
         )
 
-    @cached_property
-    def page_screenshots(self) -> PageScreenshotsResourceWithStreamingResponse:
-        return PageScreenshotsResourceWithStreamingResponse(self._files.page_screenshots)
-
-    @cached_property
-    def page_figures(self) -> PageFiguresResourceWithStreamingResponse:
-        return PageFiguresResourceWithStreamingResponse(self._files.page_figures)
-
 
 class AsyncFilesResourceWithStreamingResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
@@ -943,11 +887,3 @@ class AsyncFilesResourceWithStreamingResponse:
         self.upload_from_url = async_to_streamed_response_wrapper(
             files.upload_from_url,
         )
-
-    @cached_property
-    def page_screenshots(self) -> AsyncPageScreenshotsResourceWithStreamingResponse:
-        return AsyncPageScreenshotsResourceWithStreamingResponse(self._files.page_screenshots)
-
-    @cached_property
-    def page_figures(self) -> AsyncPageFiguresResourceWithStreamingResponse:
-        return AsyncPageFiguresResourceWithStreamingResponse(self._files.page_figures)

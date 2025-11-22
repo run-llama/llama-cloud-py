@@ -66,45 +66,12 @@ from llama_cloud.types import File, FileCreate, PresignedURL, FileGeneratePresig
 
 Methods:
 
-- <code title="delete /api/v1/files/{id}">client.files.<a href="./src/llama_cloud/resources/files/files.py">delete</a>(id, \*\*<a href="src/llama_cloud/types/file_delete_params.py">params</a>) -> None</code>
-- <code title="put /api/v1/files">client.files.<a href="./src/llama_cloud/resources/files/files.py">generate_presigned_url</a>(\*\*<a href="src/llama_cloud/types/file_generate_presigned_url_params.py">params</a>) -> <a href="./src/llama_cloud/types/file_generate_presigned_url_response.py">FileGeneratePresignedURLResponse</a></code>
-- <code title="get /api/v1/files/{id}">client.files.<a href="./src/llama_cloud/resources/files/files.py">get</a>(id, \*\*<a href="src/llama_cloud/types/file_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
-- <code title="get /api/v1/files/{id}/content">client.files.<a href="./src/llama_cloud/resources/files/files.py">read_content</a>(id, \*\*<a href="src/llama_cloud/types/file_read_content_params.py">params</a>) -> <a href="./src/llama_cloud/types/presigned_url.py">PresignedURL</a></code>
-- <code title="post /api/v1/files">client.files.<a href="./src/llama_cloud/resources/files/files.py">upload</a>(\*\*<a href="src/llama_cloud/types/file_upload_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
-- <code title="put /api/v1/files/upload_from_url">client.files.<a href="./src/llama_cloud/resources/files/files.py">upload_from_url</a>(\*\*<a href="src/llama_cloud/types/file_upload_from_url_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
-
-## PageScreenshots
-
-Types:
-
-```python
-from llama_cloud.types.files import PageScreenshotMetadata, PageScreenshotListResponse
-```
-
-Methods:
-
-- <code title="get /api/v1/files/{id}/page_screenshots">client.files.page_screenshots.<a href="./src/llama_cloud/resources/files/page_screenshots.py">list</a>(id, \*\*<a href="src/llama_cloud/types/files/page_screenshot_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/files/page_screenshot_list_response.py">PageScreenshotListResponse</a></code>
-- <code title="post /api/v1/files/{id}/page_screenshots/{page_index}/presigned_url">client.files.page_screenshots.<a href="./src/llama_cloud/resources/files/page_screenshots.py">generate_presigned_url</a>(page_index, \*, id, \*\*<a href="src/llama_cloud/types/files/page_screenshot_generate_presigned_url_params.py">params</a>) -> <a href="./src/llama_cloud/types/presigned_url.py">PresignedURL</a></code>
-- <code title="get /api/v1/files/{id}/page_screenshots/{page_index}">client.files.page_screenshots.<a href="./src/llama_cloud/resources/files/page_screenshots.py">get</a>(page_index, \*, id, \*\*<a href="src/llama_cloud/types/files/page_screenshot_get_params.py">params</a>) -> object</code>
-
-## PageFigures
-
-Types:
-
-```python
-from llama_cloud.types.files import (
-    PageFigureMetadata,
-    PageFigureListResponse,
-    PageFigureGetFiguresResponse,
-)
-```
-
-Methods:
-
-- <code title="get /api/v1/files/{id}/page-figures">client.files.page_figures.<a href="./src/llama_cloud/resources/files/page_figures.py">list</a>(id, \*\*<a href="src/llama_cloud/types/files/page_figure_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/files/page_figure_list_response.py">PageFigureListResponse</a></code>
-- <code title="post /api/v1/files/{id}/page-figures/{page_index}/{figure_name}/presigned_url">client.files.page_figures.<a href="./src/llama_cloud/resources/files/page_figures.py">generate_presigned_url</a>(figure_name, \*, id, page_index, \*\*<a href="src/llama_cloud/types/files/page_figure_generate_presigned_url_params.py">params</a>) -> <a href="./src/llama_cloud/types/presigned_url.py">PresignedURL</a></code>
-- <code title="get /api/v1/files/{id}/page-figures/{page_index}/{figure_name}">client.files.page_figures.<a href="./src/llama_cloud/resources/files/page_figures.py">get_figure</a>(figure_name, \*, id, page_index, \*\*<a href="src/llama_cloud/types/files/page_figure_get_figure_params.py">params</a>) -> object</code>
-- <code title="get /api/v1/files/{id}/page-figures/{page_index}">client.files.page_figures.<a href="./src/llama_cloud/resources/files/page_figures.py">get_figures</a>(page_index, \*, id, \*\*<a href="src/llama_cloud/types/files/page_figure_get_figures_params.py">params</a>) -> <a href="./src/llama_cloud/types/files/page_figure_get_figures_response.py">PageFigureGetFiguresResponse</a></code>
+- <code title="delete /api/v1/files/{id}">client.files.<a href="./src/llama_cloud/resources/files.py">delete</a>(id, \*\*<a href="src/llama_cloud/types/file_delete_params.py">params</a>) -> None</code>
+- <code title="put /api/v1/files">client.files.<a href="./src/llama_cloud/resources/files.py">generate_presigned_url</a>(\*\*<a href="src/llama_cloud/types/file_generate_presigned_url_params.py">params</a>) -> <a href="./src/llama_cloud/types/file_generate_presigned_url_response.py">FileGeneratePresignedURLResponse</a></code>
+- <code title="get /api/v1/files/{id}">client.files.<a href="./src/llama_cloud/resources/files.py">get</a>(id, \*\*<a href="src/llama_cloud/types/file_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
+- <code title="get /api/v1/files/{id}/content">client.files.<a href="./src/llama_cloud/resources/files.py">read_content</a>(id, \*\*<a href="src/llama_cloud/types/file_read_content_params.py">params</a>) -> <a href="./src/llama_cloud/types/presigned_url.py">PresignedURL</a></code>
+- <code title="post /api/v1/files">client.files.<a href="./src/llama_cloud/resources/files.py">upload</a>(\*\*<a href="src/llama_cloud/types/file_upload_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
+- <code title="put /api/v1/files/upload_from_url">client.files.<a href="./src/llama_cloud/resources/files.py">upload_from_url</a>(\*\*<a href="src/llama_cloud/types/file_upload_from_url_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
 
 # Pipelines
 
