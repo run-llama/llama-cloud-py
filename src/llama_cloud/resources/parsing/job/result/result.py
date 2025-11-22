@@ -6,14 +6,6 @@ from typing import Optional
 
 import httpx
 
-from .raw import (
-    RawResource,
-    AsyncRawResource,
-    RawResourceWithRawResponse,
-    AsyncRawResourceWithRawResponse,
-    RawResourceWithStreamingResponse,
-    AsyncRawResourceWithStreamingResponse,
-)
 from ....._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ....._utils import maybe_transform, async_maybe_transform
 from ....._compat import cached_property
@@ -48,10 +40,6 @@ __all__ = ["ResultResource", "AsyncResultResource"]
 
 
 class ResultResource(SyncAPIResource):
-    @cached_property
-    def raw(self) -> RawResource:
-        return RawResource(self._client)
-
     @cached_property
     def with_raw_response(self) -> ResultResourceWithRawResponse:
         """
@@ -344,10 +332,6 @@ class ResultResource(SyncAPIResource):
 
 
 class AsyncResultResource(AsyncAPIResource):
-    @cached_property
-    def raw(self) -> AsyncRawResource:
-        return AsyncRawResource(self._client)
-
     @cached_property
     def with_raw_response(self) -> AsyncResultResourceWithRawResponse:
         """
@@ -670,10 +654,6 @@ class ResultResourceWithRawResponse:
             result.get_xlsx,
         )
 
-    @cached_property
-    def raw(self) -> RawResourceWithRawResponse:
-        return RawResourceWithRawResponse(self._result.raw)
-
 
 class AsyncResultResourceWithRawResponse:
     def __init__(self, result: AsyncResultResource) -> None:
@@ -701,10 +681,6 @@ class AsyncResultResourceWithRawResponse:
         self.get_xlsx = async_to_raw_response_wrapper(
             result.get_xlsx,
         )
-
-    @cached_property
-    def raw(self) -> AsyncRawResourceWithRawResponse:
-        return AsyncRawResourceWithRawResponse(self._result.raw)
 
 
 class ResultResourceWithStreamingResponse:
@@ -734,10 +710,6 @@ class ResultResourceWithStreamingResponse:
             result.get_xlsx,
         )
 
-    @cached_property
-    def raw(self) -> RawResourceWithStreamingResponse:
-        return RawResourceWithStreamingResponse(self._result.raw)
-
 
 class AsyncResultResourceWithStreamingResponse:
     def __init__(self, result: AsyncResultResource) -> None:
@@ -765,7 +737,3 @@ class AsyncResultResourceWithStreamingResponse:
         self.get_xlsx = async_to_streamed_response_wrapper(
             result.get_xlsx,
         )
-
-    @cached_property
-    def raw(self) -> AsyncRawResourceWithStreamingResponse:
-        return AsyncRawResourceWithStreamingResponse(self._result.raw)
