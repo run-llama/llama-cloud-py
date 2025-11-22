@@ -6,15 +6,10 @@ from .agent_data import AgentData as AgentData
 from .sheets_job import SheetsJob as SheetsJob
 from .sheet_get_params import SheetGetParams as SheetGetParams
 from .batch_list_params import BatchListParams as BatchListParams
-from .file_query_params import FileQueryParams as FileQueryParams
 from .sheet_list_params import SheetListParams as SheetListParams
-from .file_create_params import FileCreateParams as FileCreateParams
-from .file_delete_params import FileDeleteParams as FileDeleteParams
-from .file_upsert_params import FileUpsertParams as FileUpsertParams
 from .batch_cancel_params import BatchCancelParams as BatchCancelParams
 from .batch_create_params import BatchCreateParams as BatchCreateParams
 from .batch_list_response import BatchListResponse as BatchListResponse
-from .file_query_response import FileQueryResponse as FileQueryResponse
 from .parse_configuration import ParseConfiguration as ParseConfiguration
 from .sheet_create_params import SheetCreateParams as SheetCreateParams
 from .directory_get_params import DirectoryGetParams as DirectoryGetParams

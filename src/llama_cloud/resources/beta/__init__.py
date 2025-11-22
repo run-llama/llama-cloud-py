@@ -16,14 +16,6 @@ from .batch import (
     BatchResourceWithStreamingResponse,
     AsyncBatchResourceWithStreamingResponse,
 )
-from .files import (
-    FilesResource,
-    AsyncFilesResource,
-    FilesResourceWithRawResponse,
-    AsyncFilesResourceWithRawResponse,
-    FilesResourceWithStreamingResponse,
-    AsyncFilesResourceWithStreamingResponse,
-)
 from .sheets import (
     SheetsResource,
     AsyncSheetsResource,
@@ -64,12 +56,6 @@ __all__ = [
     "AsyncAgentDataResourceWithRawResponse",
     "AgentDataResourceWithStreamingResponse",
     "AsyncAgentDataResourceWithStreamingResponse",
-    "FilesResource",
-    "AsyncFilesResource",
-    "FilesResourceWithRawResponse",
-    "AsyncFilesResourceWithRawResponse",
-    "FilesResourceWithStreamingResponse",
-    "AsyncFilesResourceWithStreamingResponse",
     "ParseConfigurationsResource",
     "AsyncParseConfigurationsResource",
     "ParseConfigurationsResourceWithRawResponse",
