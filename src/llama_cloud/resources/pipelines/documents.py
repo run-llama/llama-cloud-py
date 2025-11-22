@@ -17,19 +17,15 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
-from ...types.pipelines import (
-    document_list_params,
-    document_get_paginated_params,
-)
+from ...pagination import SyncPaginatedCloudDocuments, AsyncPaginatedCloudDocuments
+from ..._base_client import AsyncPaginator, make_request_options
+from ...types.pipelines import document_list_params
 from ...types.pipelines.cloud_document import CloudDocument
-from ...types.pipelines.document_list_response import DocumentListResponse
 from ...types.managed_ingestion_status_response import ManagedIngestionStatusResponse
 from ...types.pipelines.document_create_response import DocumentCreateResponse
 from ...types.pipelines.cloud_document_create_param import CloudDocumentCreateParam
 from ...types.pipelines.document_get_chunks_response import DocumentGetChunksResponse
 from ...types.pipelines.document_upsert_batch_response import DocumentUpsertBatchResponse
-from ...types.pipelines.document_get_paginated_response import DocumentGetPaginatedResponse
 
 __all__ = ["DocumentsResource", "AsyncDocumentsResource"]
 
@@ -105,7 +101,7 @@ class DocumentsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DocumentListResponse:
+    ) -> SyncPaginatedCloudDocuments[CloudDocument]:
         """
         Return a list of documents for a pipeline.
 
@@ -120,8 +116,9 @@ class DocumentsResource(SyncAPIResource):
         """
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/documents",
+        return self._get_api_list(
+            f"/api/v1/pipelines/{pipeline_id}/documents/paginated",
+            page=SyncPaginatedCloudDocuments[CloudDocument],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -139,7 +136,7 @@ class DocumentsResource(SyncAPIResource):
                     document_list_params.DocumentListParams,
                 ),
             ),
-            cast_to=DocumentListResponse,
+            model=CloudDocument,
         )
 
     def delete(
@@ -253,59 +250,6 @@ class DocumentsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=DocumentGetChunksResponse,
-        )
-
-    def get_paginated(
-        self,
-        pipeline_id: str,
-        *,
-        file_id: Optional[str] | Omit = omit,
-        limit: int | Omit = omit,
-        only_api_data_source_documents: Optional[bool] | Omit = omit,
-        only_direct_upload: Optional[bool] | Omit = omit,
-        skip: int | Omit = omit,
-        status_refresh_policy: Literal["cached", "ttl"] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DocumentGetPaginatedResponse:
-        """
-        Return a list of documents for a pipeline.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/documents/paginated",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "file_id": file_id,
-                        "limit": limit,
-                        "only_api_data_source_documents": only_api_data_source_documents,
-                        "only_direct_upload": only_direct_upload,
-                        "skip": skip,
-                        "status_refresh_policy": status_refresh_policy,
-                    },
-                    document_get_paginated_params.DocumentGetPaginatedParams,
-                ),
-            ),
-            cast_to=DocumentGetPaginatedResponse,
         )
 
     def get_status(
@@ -471,7 +415,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
             cast_to=DocumentCreateResponse,
         )
 
-    async def list(
+    def list(
         self,
         pipeline_id: str,
         *,
@@ -487,7 +431,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DocumentListResponse:
+    ) -> AsyncPaginator[CloudDocument, AsyncPaginatedCloudDocuments[CloudDocument]]:
         """
         Return a list of documents for a pipeline.
 
@@ -502,14 +446,15 @@ class AsyncDocumentsResource(AsyncAPIResource):
         """
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/documents",
+        return self._get_api_list(
+            f"/api/v1/pipelines/{pipeline_id}/documents/paginated",
+            page=AsyncPaginatedCloudDocuments[CloudDocument],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "file_id": file_id,
                         "limit": limit,
@@ -521,7 +466,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
                     document_list_params.DocumentListParams,
                 ),
             ),
-            cast_to=DocumentListResponse,
+            model=CloudDocument,
         )
 
     async def delete(
@@ -635,59 +580,6 @@ class AsyncDocumentsResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=DocumentGetChunksResponse,
-        )
-
-    async def get_paginated(
-        self,
-        pipeline_id: str,
-        *,
-        file_id: Optional[str] | Omit = omit,
-        limit: int | Omit = omit,
-        only_api_data_source_documents: Optional[bool] | Omit = omit,
-        only_direct_upload: Optional[bool] | Omit = omit,
-        skip: int | Omit = omit,
-        status_refresh_policy: Literal["cached", "ttl"] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DocumentGetPaginatedResponse:
-        """
-        Return a list of documents for a pipeline.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/documents/paginated",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "file_id": file_id,
-                        "limit": limit,
-                        "only_api_data_source_documents": only_api_data_source_documents,
-                        "only_direct_upload": only_direct_upload,
-                        "skip": skip,
-                        "status_refresh_policy": status_refresh_policy,
-                    },
-                    document_get_paginated_params.DocumentGetPaginatedParams,
-                ),
-            ),
-            cast_to=DocumentGetPaginatedResponse,
         )
 
     async def get_status(
@@ -817,9 +709,6 @@ class DocumentsResourceWithRawResponse:
         self.get_chunks = to_raw_response_wrapper(
             documents.get_chunks,
         )
-        self.get_paginated = to_raw_response_wrapper(
-            documents.get_paginated,
-        )
         self.get_status = to_raw_response_wrapper(
             documents.get_status,
         )
@@ -849,9 +738,6 @@ class AsyncDocumentsResourceWithRawResponse:
         )
         self.get_chunks = async_to_raw_response_wrapper(
             documents.get_chunks,
-        )
-        self.get_paginated = async_to_raw_response_wrapper(
-            documents.get_paginated,
         )
         self.get_status = async_to_raw_response_wrapper(
             documents.get_status,
@@ -883,9 +769,6 @@ class DocumentsResourceWithStreamingResponse:
         self.get_chunks = to_streamed_response_wrapper(
             documents.get_chunks,
         )
-        self.get_paginated = to_streamed_response_wrapper(
-            documents.get_paginated,
-        )
         self.get_status = to_streamed_response_wrapper(
             documents.get_status,
         )
@@ -915,9 +798,6 @@ class AsyncDocumentsResourceWithStreamingResponse:
         )
         self.get_chunks = async_to_streamed_response_wrapper(
             documents.get_chunks,
-        )
-        self.get_paginated = async_to_streamed_response_wrapper(
-            documents.get_paginated,
         )
         self.get_status = async_to_streamed_response_wrapper(
             documents.get_status,

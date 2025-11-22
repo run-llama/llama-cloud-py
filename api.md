@@ -9,7 +9,6 @@ from llama_cloud.types import Project, ProjectListResponse
 Methods:
 
 - <code title="get /api/v1/projects">client.projects.<a href="./src/llama_cloud/resources/projects.py">list</a>(\*\*<a href="src/llama_cloud/types/project_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/project_list_response.py">ProjectListResponse</a></code>
-- <code title="get /api/v1/projects/{project_id}">client.projects.<a href="./src/llama_cloud/resources/projects.py">get</a>(project_id, \*\*<a href="src/llama_cloud/types/project_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/project.py">Project</a></code>
 
 # DataSinks
 
@@ -178,9 +177,7 @@ from llama_cloud.types.pipelines import (
     CloudDocumentCreate,
     TextNode,
     DocumentCreateResponse,
-    DocumentListResponse,
     DocumentGetChunksResponse,
-    DocumentGetPaginatedResponse,
     DocumentUpsertBatchResponse,
 )
 ```
@@ -188,11 +185,10 @@ from llama_cloud.types.pipelines import (
 Methods:
 
 - <code title="post /api/v1/pipelines/{pipeline_id}/documents">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">create</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/document_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/document_create_response.py">DocumentCreateResponse</a></code>
-- <code title="get /api/v1/pipelines/{pipeline_id}/documents">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">list</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/document_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/document_list_response.py">DocumentListResponse</a></code>
+- <code title="get /api/v1/pipelines/{pipeline_id}/documents/paginated">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">list</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/document_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/cloud_document.py">SyncPaginatedCloudDocuments[CloudDocument]</a></code>
 - <code title="delete /api/v1/pipelines/{pipeline_id}/documents/{document_id}">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">delete</a>(document_id, \*, pipeline_id) -> None</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">get</a>(document_id, \*, pipeline_id) -> <a href="./src/llama_cloud/types/pipelines/cloud_document.py">CloudDocument</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}/chunks">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">get_chunks</a>(document_id, \*, pipeline_id) -> <a href="./src/llama_cloud/types/pipelines/document_get_chunks_response.py">DocumentGetChunksResponse</a></code>
-- <code title="get /api/v1/pipelines/{pipeline_id}/documents/paginated">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">get_paginated</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/document_get_paginated_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/document_get_paginated_response.py">DocumentGetPaginatedResponse</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}/status">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">get_status</a>(document_id, \*, pipeline_id) -> <a href="./src/llama_cloud/types/managed_ingestion_status_response.py">ManagedIngestionStatusResponse</a></code>
 - <code title="post /api/v1/pipelines/{pipeline_id}/documents/{document_id}/sync">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">sync</a>(document_id, \*, pipeline_id) -> object</code>
 - <code title="put /api/v1/pipelines/{pipeline_id}/documents">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">upsert_batch</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/document_upsert_batch_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/document_upsert_batch_response.py">DocumentUpsertBatchResponse</a></code>

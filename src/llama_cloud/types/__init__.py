@@ -24,7 +24,6 @@ from .metadata_filters import MetadataFilters as MetadataFilters
 from .parser_languages import ParserLanguages as ParserLanguages
 from .file_delete_params import FileDeleteParams as FileDeleteParams
 from .file_upload_params import FileUploadParams as FileUploadParams
-from .project_get_params import ProjectGetParams as ProjectGetParams
 from .retriever_pipeline import RetrieverPipeline as RetrieverPipeline
 from .project_list_params import ProjectListParams as ProjectListParams
 from .sparse_model_config import SparseModelConfig as SparseModelConfig
