@@ -228,7 +228,6 @@ Methods:
 - <code title="get /api/v1/parsing/job/{job_id}/read/{filename}">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">generate_presigned_url</a>(filename, \*, job_id) -> <a href="./src/llama_cloud/types/presigned_url.py">PresignedURL</a></code>
 - <code title="get /api/v1/parsing/job/{job_id}">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">get</a>(job_id) -> <a href="./src/llama_cloud/types/parsing_job.py">ParsingJob</a></code>
 - <code title="get /api/v1/parsing/job/{job_id}/details">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">get_details</a>(job_id) -> object</code>
-- <code title="get /api/v1/parsing/job/{job_id}/parameters">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">get_parameters</a>(job_id) -> object</code>
 
 ### Result
 

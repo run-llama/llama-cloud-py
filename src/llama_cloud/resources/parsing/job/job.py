@@ -159,39 +159,6 @@ class JobResource(SyncAPIResource):
             cast_to=object,
         )
 
-    def get_parameters(
-        self,
-        job_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """
-        Get a job by id
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not job_id:
-            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
-        return self._get(
-            f"/api/v1/parsing/job/{job_id}/parameters",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=object,
-        )
-
     def wait_for_completion(
         self,
         job_id: str,
@@ -424,39 +391,6 @@ class AsyncJobResource(AsyncAPIResource):
             cast_to=object,
         )
 
-    async def get_parameters(
-        self,
-        job_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """
-        Get a job by id
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not job_id:
-            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
-        return await self._get(
-            f"/api/v1/parsing/job/{job_id}/parameters",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=object,
-        )
-
     async def wait_for_completion(
         self,
         job_id: str,
@@ -576,9 +510,6 @@ class JobResourceWithRawResponse:
         self.get_details = to_raw_response_wrapper(
             job.get_details,
         )
-        self.get_parameters = to_raw_response_wrapper(
-            job.get_parameters,
-        )
 
     @cached_property
     def result(self) -> ResultResourceWithRawResponse:
@@ -597,9 +528,6 @@ class AsyncJobResourceWithRawResponse:
         )
         self.get_details = async_to_raw_response_wrapper(
             job.get_details,
-        )
-        self.get_parameters = async_to_raw_response_wrapper(
-            job.get_parameters,
         )
 
     @cached_property
@@ -620,9 +548,6 @@ class JobResourceWithStreamingResponse:
         self.get_details = to_streamed_response_wrapper(
             job.get_details,
         )
-        self.get_parameters = to_streamed_response_wrapper(
-            job.get_parameters,
-        )
 
     @cached_property
     def result(self) -> ResultResourceWithStreamingResponse:
@@ -641,9 +566,6 @@ class AsyncJobResourceWithStreamingResponse:
         )
         self.get_details = async_to_streamed_response_wrapper(
             job.get_details,
-        )
-        self.get_parameters = async_to_streamed_response_wrapper(
-            job.get_parameters,
         )
 
     @cached_property
