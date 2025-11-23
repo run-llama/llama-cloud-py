@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.3.0 (2025-11-23)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/run-llama/llama-cloud-py/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** Add missing api endpoints ([c8e9c07](https://github.com/run-llama/llama-cloud-py/commit/c8e9c0775a1fa6409e6fab5429d9fbaffed0526b))
+* **api:** api update ([c4dac52](https://github.com/run-llama/llama-cloud-py/commit/c4dac5205f77ce7cf256a27b3c86d8a2b49828e7))
+* **api:** api update ([e1ff8b1](https://github.com/run-llama/llama-cloud-py/commit/e1ff8b12c0759cd0750f68c84bd5a6a3730e95f1))
+* **api:** api update ([01f2af5](https://github.com/run-llama/llama-cloud-py/commit/01f2af5dbe77c6203c80368f239b0e9e14d041a6))
+* **api:** manual updates ([e6efd22](https://github.com/run-llama/llama-cloud-py/commit/e6efd22383c2c3a4b26e50534be25683fdfcf246))
+* **api:** manual updates ([2a52d8c](https://github.com/run-llama/llama-cloud-py/commit/2a52d8c87e940d558198cf434f0400e97a8af144))
+* **api:** manual updates ([088fbcc](https://github.com/run-llama/llama-cloud-py/commit/088fbccd80a975ea05ca3d5ff44a77497fdb52f2))
+* **api:** manual updates ([70248a5](https://github.com/run-llama/llama-cloud-py/commit/70248a5c9198c455c3a704cb24790da8524af07b))
+* **api:** manual updates ([ffc9c2c](https://github.com/run-llama/llama-cloud-py/commit/ffc9c2cfa2dde27f05507fd1922c2ea1787f3d6c))
+* **api:** manual updates ([571deab](https://github.com/run-llama/llama-cloud-py/commit/571deab5d900476ac4c1dbb0bf71f11ec381ba1f))
+* **api:** manual updates ([8f19b18](https://github.com/run-llama/llama-cloud-py/commit/8f19b18152ddb24bbbc7e467d6ca1e6e78335853))
+* **api:** manual updates ([8794d62](https://github.com/run-llama/llama-cloud-py/commit/8794d62ca0dc827f2f5cd00f42fe6272c34cd442))
+* **api:** manual updates ([6f90a08](https://github.com/run-llama/llama-cloud-py/commit/6f90a0856da964070c061225c189b14bb635634f))
+* **api:** manual updates ([2f47fa9](https://github.com/run-llama/llama-cloud-py/commit/2f47fa9713ea35bcb02bc80d9e36415a97cf7a58))
+* **api:** manual updates ([82bcafa](https://github.com/run-llama/llama-cloud-py/commit/82bcafa88fbcedfaea163e5b95d3da50b878c011))
+* **api:** manual updates ([abed126](https://github.com/run-llama/llama-cloud-py/commit/abed1261c6dbc0cb1a8fc07191516c34e947ea72))
+* **api:** manual updates ([d4c400b](https://github.com/run-llama/llama-cloud-py/commit/d4c400bfd30e982b6cbccee7f5dbac6215bd5da9))
+* **api:** remove some agent items ([8282fa2](https://github.com/run-llama/llama-cloud-py/commit/8282fa2a7d37ae04d8d68091eb99ab124ff1e425))
+
+
+### Chores
+
+* add Python 3.14 classifier and testing ([5c8f944](https://github.com/run-llama/llama-cloud-py/commit/5c8f944ce59e39565f5fcba65fb65d33e9f6d732))
+
 ## 0.2.0 (2025-11-19)
 
 Full Changelog: [v0.1.1...v0.2.0](https://github.com/run-llama/llama-cloud-py/compare/v0.1.1...v0.2.0)
