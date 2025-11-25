@@ -18,13 +18,10 @@ from ..._response import (
 )
 from ...types.beta import (
     parse_configuration_get_params,
-    parse_configuration_query_params,
     parse_configuration_delete_params,
     parse_configuration_update_params,
-    parse_configuration_get_latest_params,
     parse_configuration_parse_configurations_params,
     parse_configuration_get_parse_configurations_params,
-    parse_configuration_update_parse_configurations_params,
 )
 from ..._base_client import make_request_options
 from ...types.beta.parse_configuration import ParseConfiguration
@@ -211,55 +208,6 @@ class ParseConfigurationsResource(SyncAPIResource):
             cast_to=ParseConfiguration,
         )
 
-    def get_latest(
-        self,
-        *,
-        creator: Optional[str] | Omit = omit,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Optional[ParseConfiguration]:
-        """
-        Get the latest parse configuration for the current project.
-
-        Args: project: Validated project from dependency user: Current user db: Database
-        session creator: Optional creator filter
-
-        Returns: The latest parse configuration or None if not found
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._get(
-            "/api/v1/beta/parse-configurations/latest",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "creator": creator,
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    parse_configuration_get_latest_params.ParseConfigurationGetLatestParams,
-                ),
-            ),
-            cast_to=ParseConfiguration,
-        )
-
     def get_parse_configurations(
         self,
         *,
@@ -390,154 +338,6 @@ class ParseConfigurationsResource(SyncAPIResource):
                         "project_id": project_id,
                     },
                     parse_configuration_parse_configurations_params.ParseConfigurationParseConfigurationsParams,
-                ),
-            ),
-            cast_to=ParseConfiguration,
-        )
-
-    def query(
-        self,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        filter: Optional[parse_configuration_query_params.Filter] | Omit = omit,
-        order_by: Optional[str] | Omit = omit,
-        page_size: Optional[int] | Omit = omit,
-        page_token: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ParseConfigurationQueryResponse:
-        """
-        Query parse configurations with filtering and pagination.
-
-        Args: query_request: Query request with filters and pagination project:
-        Validated project from dependency user: Current user db: Database session
-
-        Returns: Paginated response with parse configurations
-
-        Args:
-          filter: Filter parameters for parse configuration queries.
-
-          order_by: A comma-separated list of fields to order by, sorted in ascending order. Use
-              'field_name desc' to specify descending order.
-
-          page_size: The maximum number of items to return. The service may return fewer than this
-              value. If unspecified, a default page size will be used. The maximum value is
-              typically 1000; values above this will be coerced to the maximum.
-
-          page_token: A page token, received from a previous list call. Provide this to retrieve the
-              subsequent page.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/api/v1/beta/parse-configurations/query",
-            body=maybe_transform(
-                {
-                    "filter": filter,
-                    "order_by": order_by,
-                    "page_size": page_size,
-                    "page_token": page_token,
-                },
-                parse_configuration_query_params.ParseConfigurationQueryParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    parse_configuration_query_params.ParseConfigurationQueryParams,
-                ),
-            ),
-            cast_to=ParseConfigurationQueryResponse,
-        )
-
-    def update_parse_configurations(
-        self,
-        *,
-        name: str,
-        parameters: LlamaParseParametersParam,
-        version: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        creator: Optional[str] | Omit = omit,
-        source_id: Optional[str] | Omit = omit,
-        source_type: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ParseConfiguration:
-        """
-        Create or update a parse configuration by name.
-
-        Args: config_create: Parse configuration creation data project: Validated
-        project from dependency user: Current user db: Database session
-
-        Returns: The created or updated parse configuration
-
-        Args:
-          name: Name of the parse configuration
-
-          parameters: LlamaParseParameters configuration
-
-          version: Version of the configuration
-
-          creator: Creator of the configuration
-
-          source_id: ID of the source
-
-          source_type: Type of the source (e.g., 'project')
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._put(
-            "/api/v1/beta/parse-configurations",
-            body=maybe_transform(
-                {
-                    "name": name,
-                    "parameters": parameters,
-                    "version": version,
-                    "creator": creator,
-                    "source_id": source_id,
-                    "source_type": source_type,
-                },
-                parse_configuration_update_parse_configurations_params.ParseConfigurationUpdateParseConfigurationsParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    parse_configuration_update_parse_configurations_params.ParseConfigurationUpdateParseConfigurationsParams,
                 ),
             ),
             cast_to=ParseConfiguration,
@@ -721,55 +521,6 @@ class AsyncParseConfigurationsResource(AsyncAPIResource):
             cast_to=ParseConfiguration,
         )
 
-    async def get_latest(
-        self,
-        *,
-        creator: Optional[str] | Omit = omit,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Optional[ParseConfiguration]:
-        """
-        Get the latest parse configuration for the current project.
-
-        Args: project: Validated project from dependency user: Current user db: Database
-        session creator: Optional creator filter
-
-        Returns: The latest parse configuration or None if not found
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._get(
-            "/api/v1/beta/parse-configurations/latest",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "creator": creator,
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    parse_configuration_get_latest_params.ParseConfigurationGetLatestParams,
-                ),
-            ),
-            cast_to=ParseConfiguration,
-        )
-
     async def get_parse_configurations(
         self,
         *,
@@ -905,154 +656,6 @@ class AsyncParseConfigurationsResource(AsyncAPIResource):
             cast_to=ParseConfiguration,
         )
 
-    async def query(
-        self,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        filter: Optional[parse_configuration_query_params.Filter] | Omit = omit,
-        order_by: Optional[str] | Omit = omit,
-        page_size: Optional[int] | Omit = omit,
-        page_token: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ParseConfigurationQueryResponse:
-        """
-        Query parse configurations with filtering and pagination.
-
-        Args: query_request: Query request with filters and pagination project:
-        Validated project from dependency user: Current user db: Database session
-
-        Returns: Paginated response with parse configurations
-
-        Args:
-          filter: Filter parameters for parse configuration queries.
-
-          order_by: A comma-separated list of fields to order by, sorted in ascending order. Use
-              'field_name desc' to specify descending order.
-
-          page_size: The maximum number of items to return. The service may return fewer than this
-              value. If unspecified, a default page size will be used. The maximum value is
-              typically 1000; values above this will be coerced to the maximum.
-
-          page_token: A page token, received from a previous list call. Provide this to retrieve the
-              subsequent page.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/api/v1/beta/parse-configurations/query",
-            body=await async_maybe_transform(
-                {
-                    "filter": filter,
-                    "order_by": order_by,
-                    "page_size": page_size,
-                    "page_token": page_token,
-                },
-                parse_configuration_query_params.ParseConfigurationQueryParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    parse_configuration_query_params.ParseConfigurationQueryParams,
-                ),
-            ),
-            cast_to=ParseConfigurationQueryResponse,
-        )
-
-    async def update_parse_configurations(
-        self,
-        *,
-        name: str,
-        parameters: LlamaParseParametersParam,
-        version: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        creator: Optional[str] | Omit = omit,
-        source_id: Optional[str] | Omit = omit,
-        source_type: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ParseConfiguration:
-        """
-        Create or update a parse configuration by name.
-
-        Args: config_create: Parse configuration creation data project: Validated
-        project from dependency user: Current user db: Database session
-
-        Returns: The created or updated parse configuration
-
-        Args:
-          name: Name of the parse configuration
-
-          parameters: LlamaParseParameters configuration
-
-          version: Version of the configuration
-
-          creator: Creator of the configuration
-
-          source_id: ID of the source
-
-          source_type: Type of the source (e.g., 'project')
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._put(
-            "/api/v1/beta/parse-configurations",
-            body=await async_maybe_transform(
-                {
-                    "name": name,
-                    "parameters": parameters,
-                    "version": version,
-                    "creator": creator,
-                    "source_id": source_id,
-                    "source_type": source_type,
-                },
-                parse_configuration_update_parse_configurations_params.ParseConfigurationUpdateParseConfigurationsParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    parse_configuration_update_parse_configurations_params.ParseConfigurationUpdateParseConfigurationsParams,
-                ),
-            ),
-            cast_to=ParseConfiguration,
-        )
-
 
 class ParseConfigurationsResourceWithRawResponse:
     def __init__(self, parse_configurations: ParseConfigurationsResource) -> None:
@@ -1067,20 +670,11 @@ class ParseConfigurationsResourceWithRawResponse:
         self.get = to_raw_response_wrapper(
             parse_configurations.get,
         )
-        self.get_latest = to_raw_response_wrapper(
-            parse_configurations.get_latest,
-        )
         self.get_parse_configurations = to_raw_response_wrapper(
             parse_configurations.get_parse_configurations,
         )
         self.parse_configurations = to_raw_response_wrapper(
             parse_configurations.parse_configurations,
-        )
-        self.query = to_raw_response_wrapper(
-            parse_configurations.query,
-        )
-        self.update_parse_configurations = to_raw_response_wrapper(
-            parse_configurations.update_parse_configurations,
         )
 
 
@@ -1097,20 +691,11 @@ class AsyncParseConfigurationsResourceWithRawResponse:
         self.get = async_to_raw_response_wrapper(
             parse_configurations.get,
         )
-        self.get_latest = async_to_raw_response_wrapper(
-            parse_configurations.get_latest,
-        )
         self.get_parse_configurations = async_to_raw_response_wrapper(
             parse_configurations.get_parse_configurations,
         )
         self.parse_configurations = async_to_raw_response_wrapper(
             parse_configurations.parse_configurations,
-        )
-        self.query = async_to_raw_response_wrapper(
-            parse_configurations.query,
-        )
-        self.update_parse_configurations = async_to_raw_response_wrapper(
-            parse_configurations.update_parse_configurations,
         )
 
 
@@ -1127,20 +712,11 @@ class ParseConfigurationsResourceWithStreamingResponse:
         self.get = to_streamed_response_wrapper(
             parse_configurations.get,
         )
-        self.get_latest = to_streamed_response_wrapper(
-            parse_configurations.get_latest,
-        )
         self.get_parse_configurations = to_streamed_response_wrapper(
             parse_configurations.get_parse_configurations,
         )
         self.parse_configurations = to_streamed_response_wrapper(
             parse_configurations.parse_configurations,
-        )
-        self.query = to_streamed_response_wrapper(
-            parse_configurations.query,
-        )
-        self.update_parse_configurations = to_streamed_response_wrapper(
-            parse_configurations.update_parse_configurations,
         )
 
 
@@ -1157,18 +733,9 @@ class AsyncParseConfigurationsResourceWithStreamingResponse:
         self.get = async_to_streamed_response_wrapper(
             parse_configurations.get,
         )
-        self.get_latest = async_to_streamed_response_wrapper(
-            parse_configurations.get_latest,
-        )
         self.get_parse_configurations = async_to_streamed_response_wrapper(
             parse_configurations.get_parse_configurations,
         )
         self.parse_configurations = async_to_streamed_response_wrapper(
             parse_configurations.parse_configurations,
-        )
-        self.query = async_to_streamed_response_wrapper(
-            parse_configurations.query,
-        )
-        self.update_parse_configurations = async_to_streamed_response_wrapper(
-            parse_configurations.update_parse_configurations,
         )

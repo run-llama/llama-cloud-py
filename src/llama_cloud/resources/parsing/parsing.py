@@ -2,12 +2,9 @@
 
 from __future__ import annotations
 
-import typing_extensions
 from typing import List, Union, Mapping, Optional, cast
 from typing_extensions import Unpack, Literal
-
 import httpx
-
 from ...types import ParsingMode, FailPageMode, parsing_upload_file_params, parsing_create_screenshot_params
 from .job.job import (
     JobResource,
@@ -36,7 +33,6 @@ from ...types.parser_languages import ParserLanguages
 from ...types.parsing_upload_file_params import ParsingUploadFileParams
 from ...types.parsing.job.parsing_job_json_result import ParsingJobJsonResult
 from ...types.parsing.job.parsing_job_text_result import ParsingJobTextResult
-from ...types.parsing_get_parsing_history_response import ParsingGetParsingHistoryResponse
 from ...types.parsing.job.parsing_job_markdown_result import ParsingJobMarkdownResult
 from ...types.parsing.job.parsing_job_structured_result import ParsingJobStructuredResult
 from ...types.parsing_get_supported_file_extensions_response import ParsingGetSupportedFileExtensionsResponse
@@ -149,32 +145,6 @@ class ParsingResource(SyncAPIResource):
                 ),
             ),
             cast_to=ParsingJob,
-        )
-
-    @typing_extensions.deprecated("deprecated")
-    def get_parsing_history(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ParsingGetParsingHistoryResponse:
-        """Get parsing history for user
-
-        This endpoint is deprecated.
-
-        Use
-        /api/v1/jobs/?job_name=parsing&project_id=YOUR_PROJECT_ID instead.
-        """
-        return self._get(
-            "/api/v1/parsing/history",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ParsingGetParsingHistoryResponse,
         )
 
     def get_supported_file_extensions(
@@ -304,10 +274,12 @@ class ParsingResource(SyncAPIResource):
         system_prompt_append: str | Omit = omit,
         take_screenshot: bool | Omit = omit,
         target_pages: str | Omit = omit,
+        tier: str | Omit = omit,
         use_vendor_multimodal_model: bool | Omit = omit,
         user_prompt: str | Omit = omit,
         vendor_multimodal_api_key: str | Omit = omit,
         vendor_multimodal_model_name: str | Omit = omit,
+        version: str | Omit = omit,
         webhook_configurations: str | Omit = omit,
         webhook_url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -438,10 +410,12 @@ class ParsingResource(SyncAPIResource):
                 "system_prompt_append": system_prompt_append,
                 "take_screenshot": take_screenshot,
                 "target_pages": target_pages,
+                "tier": tier,
                 "use_vendor_multimodal_model": use_vendor_multimodal_model,
                 "user_prompt": user_prompt,
                 "vendor_multimodal_api_key": vendor_multimodal_api_key,
                 "vendor_multimodal_model_name": vendor_multimodal_model_name,
+                "version": version,
                 "webhook_configurations": webhook_configurations,
                 "webhook_url": webhook_url,
             }
@@ -671,32 +645,6 @@ class AsyncParsingResource(AsyncAPIResource):
             cast_to=ParsingJob,
         )
 
-    @typing_extensions.deprecated("deprecated")
-    async def get_parsing_history(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ParsingGetParsingHistoryResponse:
-        """Get parsing history for user
-
-        This endpoint is deprecated.
-
-        Use
-        /api/v1/jobs/?job_name=parsing&project_id=YOUR_PROJECT_ID instead.
-        """
-        return await self._get(
-            "/api/v1/parsing/history",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ParsingGetParsingHistoryResponse,
-        )
-
     async def get_supported_file_extensions(
         self,
         *,
@@ -824,10 +772,12 @@ class AsyncParsingResource(AsyncAPIResource):
         system_prompt_append: str | Omit = omit,
         take_screenshot: bool | Omit = omit,
         target_pages: str | Omit = omit,
+        tier: str | Omit = omit,
         use_vendor_multimodal_model: bool | Omit = omit,
         user_prompt: str | Omit = omit,
         vendor_multimodal_api_key: str | Omit = omit,
         vendor_multimodal_model_name: str | Omit = omit,
+        version: str | Omit = omit,
         webhook_configurations: str | Omit = omit,
         webhook_url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -958,10 +908,12 @@ class AsyncParsingResource(AsyncAPIResource):
                 "system_prompt_append": system_prompt_append,
                 "take_screenshot": take_screenshot,
                 "target_pages": target_pages,
+                "tier": tier,
                 "use_vendor_multimodal_model": use_vendor_multimodal_model,
                 "user_prompt": user_prompt,
                 "vendor_multimodal_api_key": vendor_multimodal_api_key,
                 "vendor_multimodal_model_name": vendor_multimodal_model_name,
+                "version": version,
                 "webhook_configurations": webhook_configurations,
                 "webhook_url": webhook_url,
             }
@@ -1091,11 +1043,6 @@ class ParsingResourceWithRawResponse:
         self.create_screenshot = to_raw_response_wrapper(
             parsing.create_screenshot,
         )
-        self.get_parsing_history = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                parsing.get_parsing_history,  # pyright: ignore[reportDeprecated],
-            )
-        )
         self.get_supported_file_extensions = to_raw_response_wrapper(
             parsing.get_supported_file_extensions,
         )
@@ -1114,11 +1061,6 @@ class AsyncParsingResourceWithRawResponse:
 
         self.create_screenshot = async_to_raw_response_wrapper(
             parsing.create_screenshot,
-        )
-        self.get_parsing_history = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                parsing.get_parsing_history,  # pyright: ignore[reportDeprecated],
-            )
         )
         self.get_supported_file_extensions = async_to_raw_response_wrapper(
             parsing.get_supported_file_extensions,
@@ -1139,11 +1081,6 @@ class ParsingResourceWithStreamingResponse:
         self.create_screenshot = to_streamed_response_wrapper(
             parsing.create_screenshot,
         )
-        self.get_parsing_history = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                parsing.get_parsing_history,  # pyright: ignore[reportDeprecated],
-            )
-        )
         self.get_supported_file_extensions = to_streamed_response_wrapper(
             parsing.get_supported_file_extensions,
         )
@@ -1162,11 +1099,6 @@ class AsyncParsingResourceWithStreamingResponse:
 
         self.create_screenshot = async_to_streamed_response_wrapper(
             parsing.create_screenshot,
-        )
-        self.get_parsing_history = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                parsing.get_parsing_history,  # pyright: ignore[reportDeprecated],
-            )
         )
         self.get_supported_file_extensions = async_to_streamed_response_wrapper(
             parsing.get_supported_file_extensions,

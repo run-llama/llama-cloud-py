@@ -23,12 +23,14 @@ from ...types.beta import (
     agent_data_update_params,
     agent_data_aggregate_params,
     agent_data_agent_data_params,
+    agent_data_delete_by_query_params,
 )
 from ..._base_client import make_request_options
 from ...types.beta.agent_data import AgentData
 from ...types.beta.agent_data_delete_response import AgentDataDeleteResponse
 from ...types.beta.agent_data_search_response import AgentDataSearchResponse
 from ...types.beta.agent_data_aggregate_response import AgentDataAggregateResponse
+from ...types.beta.agent_data_delete_by_query_response import AgentDataDeleteByQueryResponse
 
 __all__ = ["AgentDataResource", "AsyncAgentDataResource"]
 
@@ -288,6 +290,65 @@ class AgentDataResource(SyncAPIResource):
                 ),
             ),
             cast_to=AgentDataAggregateResponse,
+        )
+
+    def delete_by_query(
+        self,
+        *,
+        deployment_name: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        collection: str | Omit = omit,
+        filter: Optional[Dict[str, agent_data_delete_by_query_params.Filter]] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AgentDataDeleteByQueryResponse:
+        """
+        Bulk delete agent data by query (deployment_name, collection, optional filters).
+
+        Args:
+          deployment_name: The agent deployment's name to delete data for
+
+          collection: The logical agent data collection to delete from
+
+          filter: Optional filters to select which items to delete
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/api/v1/beta/agent-data/:delete",
+            body=maybe_transform(
+                {
+                    "deployment_name": deployment_name,
+                    "collection": collection,
+                    "filter": filter,
+                },
+                agent_data_delete_by_query_params.AgentDataDeleteByQueryParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    agent_data_delete_by_query_params.AgentDataDeleteByQueryParams,
+                ),
+            ),
+            cast_to=AgentDataDeleteByQueryResponse,
         )
 
     def get(
@@ -676,6 +737,65 @@ class AsyncAgentDataResource(AsyncAPIResource):
             cast_to=AgentDataAggregateResponse,
         )
 
+    async def delete_by_query(
+        self,
+        *,
+        deployment_name: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        collection: str | Omit = omit,
+        filter: Optional[Dict[str, agent_data_delete_by_query_params.Filter]] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AgentDataDeleteByQueryResponse:
+        """
+        Bulk delete agent data by query (deployment_name, collection, optional filters).
+
+        Args:
+          deployment_name: The agent deployment's name to delete data for
+
+          collection: The logical agent data collection to delete from
+
+          filter: Optional filters to select which items to delete
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/api/v1/beta/agent-data/:delete",
+            body=await async_maybe_transform(
+                {
+                    "deployment_name": deployment_name,
+                    "collection": collection,
+                    "filter": filter,
+                },
+                agent_data_delete_by_query_params.AgentDataDeleteByQueryParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    agent_data_delete_by_query_params.AgentDataDeleteByQueryParams,
+                ),
+            ),
+            cast_to=AgentDataDeleteByQueryResponse,
+        )
+
     async def get(
         self,
         item_id: str,
@@ -821,6 +941,9 @@ class AgentDataResourceWithRawResponse:
         self.aggregate = to_raw_response_wrapper(
             agent_data.aggregate,
         )
+        self.delete_by_query = to_raw_response_wrapper(
+            agent_data.delete_by_query,
+        )
         self.get = to_raw_response_wrapper(
             agent_data.get,
         )
@@ -844,6 +967,9 @@ class AsyncAgentDataResourceWithRawResponse:
         )
         self.aggregate = async_to_raw_response_wrapper(
             agent_data.aggregate,
+        )
+        self.delete_by_query = async_to_raw_response_wrapper(
+            agent_data.delete_by_query,
         )
         self.get = async_to_raw_response_wrapper(
             agent_data.get,
@@ -869,6 +995,9 @@ class AgentDataResourceWithStreamingResponse:
         self.aggregate = to_streamed_response_wrapper(
             agent_data.aggregate,
         )
+        self.delete_by_query = to_streamed_response_wrapper(
+            agent_data.delete_by_query,
+        )
         self.get = to_streamed_response_wrapper(
             agent_data.get,
         )
@@ -892,6 +1021,9 @@ class AsyncAgentDataResourceWithStreamingResponse:
         )
         self.aggregate = async_to_streamed_response_wrapper(
             agent_data.aggregate,
+        )
+        self.delete_by_query = async_to_streamed_response_wrapper(
+            agent_data.delete_by_query,
         )
         self.get = async_to_streamed_response_wrapper(
             agent_data.get,

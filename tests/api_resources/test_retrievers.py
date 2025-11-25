@@ -99,88 +99,6 @@ class TestRetrievers:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: LlamaCloud) -> None:
-        retriever = client.retrievers.retrieve(
-            query="x",
-        )
-        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_retrieve_with_all_params(self, client: LlamaCloud) -> None:
-        retriever = client.retrievers.retrieve(
-            query="x",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            mode="routing",
-            pipelines=[
-                {
-                    "description": "description",
-                    "name": "x",
-                    "pipeline_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-                    "preset_retrieval_parameters": {
-                        "alpha": 0,
-                        "class_name": "class_name",
-                        "dense_similarity_cutoff": 0,
-                        "dense_similarity_top_k": 1,
-                        "enable_reranking": True,
-                        "files_top_k": 1,
-                        "rerank_top_n": 1,
-                        "retrieval_mode": "chunks",
-                        "retrieve_image_nodes": True,
-                        "retrieve_page_figure_nodes": True,
-                        "retrieve_page_screenshot_nodes": True,
-                        "search_filters": {
-                            "filters": [
-                                {
-                                    "key": "key",
-                                    "value": 0,
-                                    "operator": "==",
-                                }
-                            ],
-                            "condition": "and",
-                        },
-                        "search_filters_inference_schema": {"foo": {"foo": "bar"}},
-                        "sparse_similarity_top_k": 1,
-                    },
-                }
-            ],
-            rerank_config={
-                "top_n": 0,
-                "type": "system_default",
-            },
-            rerank_top_n=0,
-        )
-        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve(self, client: LlamaCloud) -> None:
-        response = client.retrievers.with_raw_response.retrieve(
-            query="x",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        retriever = response.parse()
-        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve(self, client: LlamaCloud) -> None:
-        with client.retrievers.with_streaming_response.retrieve(
-            query="x",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            retriever = response.parse()
-            assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     def test_method_update(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.update(
             retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -424,6 +342,88 @@ class TestRetrievers:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
+    def test_method_search(self, client: LlamaCloud) -> None:
+        retriever = client.retrievers.search(
+            query="x",
+        )
+        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_search_with_all_params(self, client: LlamaCloud) -> None:
+        retriever = client.retrievers.search(
+            query="x",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            mode="routing",
+            pipelines=[
+                {
+                    "description": "description",
+                    "name": "x",
+                    "pipeline_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "preset_retrieval_parameters": {
+                        "alpha": 0,
+                        "class_name": "class_name",
+                        "dense_similarity_cutoff": 0,
+                        "dense_similarity_top_k": 1,
+                        "enable_reranking": True,
+                        "files_top_k": 1,
+                        "rerank_top_n": 1,
+                        "retrieval_mode": "chunks",
+                        "retrieve_image_nodes": True,
+                        "retrieve_page_figure_nodes": True,
+                        "retrieve_page_screenshot_nodes": True,
+                        "search_filters": {
+                            "filters": [
+                                {
+                                    "key": "key",
+                                    "value": 0,
+                                    "operator": "==",
+                                }
+                            ],
+                            "condition": "and",
+                        },
+                        "search_filters_inference_schema": {"foo": {"foo": "bar"}},
+                        "sparse_similarity_top_k": 1,
+                    },
+                }
+            ],
+            rerank_config={
+                "top_n": 0,
+                "type": "system_default",
+            },
+            rerank_top_n=0,
+        )
+        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_search(self, client: LlamaCloud) -> None:
+        response = client.retrievers.with_raw_response.search(
+            query="x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        retriever = response.parse()
+        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_search(self, client: LlamaCloud) -> None:
+        with client.retrievers.with_streaming_response.search(
+            query="x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            retriever = response.parse()
+            assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
     def test_method_upsert(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.upsert(
             name="x",
@@ -577,88 +577,6 @@ class TestAsyncRetrievers:
 
             retriever = await response.parse()
             assert_matches_type(Retriever, retriever, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        retriever = await async_client.retrievers.retrieve(
-            query="x",
-        )
-        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_retrieve_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        retriever = await async_client.retrievers.retrieve(
-            query="x",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            mode="routing",
-            pipelines=[
-                {
-                    "description": "description",
-                    "name": "x",
-                    "pipeline_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-                    "preset_retrieval_parameters": {
-                        "alpha": 0,
-                        "class_name": "class_name",
-                        "dense_similarity_cutoff": 0,
-                        "dense_similarity_top_k": 1,
-                        "enable_reranking": True,
-                        "files_top_k": 1,
-                        "rerank_top_n": 1,
-                        "retrieval_mode": "chunks",
-                        "retrieve_image_nodes": True,
-                        "retrieve_page_figure_nodes": True,
-                        "retrieve_page_screenshot_nodes": True,
-                        "search_filters": {
-                            "filters": [
-                                {
-                                    "key": "key",
-                                    "value": 0,
-                                    "operator": "==",
-                                }
-                            ],
-                            "condition": "and",
-                        },
-                        "search_filters_inference_schema": {"foo": {"foo": "bar"}},
-                        "sparse_similarity_top_k": 1,
-                    },
-                }
-            ],
-            rerank_config={
-                "top_n": 0,
-                "type": "system_default",
-            },
-            rerank_top_n=0,
-        )
-        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.retrievers.with_raw_response.retrieve(
-            query="x",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        retriever = await response.parse()
-        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.retrievers.with_streaming_response.retrieve(
-            query="x",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            retriever = await response.parse()
-            assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -904,6 +822,88 @@ class TestAsyncRetrievers:
             await async_client.retrievers.with_raw_response.get(
                 retriever_id="",
             )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_search(self, async_client: AsyncLlamaCloud) -> None:
+        retriever = await async_client.retrievers.search(
+            query="x",
+        )
+        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_search_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        retriever = await async_client.retrievers.search(
+            query="x",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            mode="routing",
+            pipelines=[
+                {
+                    "description": "description",
+                    "name": "x",
+                    "pipeline_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "preset_retrieval_parameters": {
+                        "alpha": 0,
+                        "class_name": "class_name",
+                        "dense_similarity_cutoff": 0,
+                        "dense_similarity_top_k": 1,
+                        "enable_reranking": True,
+                        "files_top_k": 1,
+                        "rerank_top_n": 1,
+                        "retrieval_mode": "chunks",
+                        "retrieve_image_nodes": True,
+                        "retrieve_page_figure_nodes": True,
+                        "retrieve_page_screenshot_nodes": True,
+                        "search_filters": {
+                            "filters": [
+                                {
+                                    "key": "key",
+                                    "value": 0,
+                                    "operator": "==",
+                                }
+                            ],
+                            "condition": "and",
+                        },
+                        "search_filters_inference_schema": {"foo": {"foo": "bar"}},
+                        "sparse_similarity_top_k": 1,
+                    },
+                }
+            ],
+            rerank_config={
+                "top_n": 0,
+                "type": "system_default",
+            },
+            rerank_top_n=0,
+        )
+        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_search(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.retrievers.with_raw_response.search(
+            query="x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        retriever = await response.parse()
+        assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_search(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.retrievers.with_streaming_response.search(
+            query="x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            retriever = await response.parse()
+            assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize

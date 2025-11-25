@@ -11,4 +11,12 @@ __all__ = ["FileListParams"]
 class FileListParams(TypedDict, total=False):
     data_source_id: Optional[str]
 
+    file_name_contains: Optional[str]
+
+    limit: Optional[int]
+
+    offset: Optional[int]
+
     only_manually_uploaded: bool
+
+    order_by: Optional[str]

@@ -11,11 +11,8 @@ from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
 from llama_cloud.types import (
     ParsingJob,
-    ParsingGetParsingHistoryResponse,
     ParsingGetSupportedFileExtensionsResponse,
 )
-
-# pyright: reportDeprecated=false
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -72,38 +69,6 @@ class TestParsing:
 
             parsing = response.parse()
             assert_matches_type(ParsingJob, parsing, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_get_parsing_history(self, client: LlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            parsing = client.parsing.get_parsing_history()
-
-        assert_matches_type(ParsingGetParsingHistoryResponse, parsing, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_get_parsing_history(self, client: LlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            response = client.parsing.with_raw_response.get_parsing_history()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        parsing = response.parse()
-        assert_matches_type(ParsingGetParsingHistoryResponse, parsing, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_get_parsing_history(self, client: LlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            with client.parsing.with_streaming_response.get_parsing_history() as response:
-                assert not response.is_closed
-                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-                parsing = response.parse()
-                assert_matches_type(ParsingGetParsingHistoryResponse, parsing, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -250,10 +215,12 @@ class TestParsing:
             system_prompt_append="system_prompt_append",
             take_screenshot=True,
             target_pages="target_pages",
+            tier="tier",
             use_vendor_multimodal_model=True,
             user_prompt="user_prompt",
             vendor_multimodal_api_key="vendor_multimodal_api_key",
             vendor_multimodal_model_name="vendor_multimodal_model_name",
+            version="version",
             webhook_configurations="webhook_configurations",
             webhook_url="webhook_url",
         )
@@ -336,38 +303,6 @@ class TestAsyncParsing:
 
             parsing = await response.parse()
             assert_matches_type(ParsingJob, parsing, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_get_parsing_history(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            parsing = await async_client.parsing.get_parsing_history()
-
-        assert_matches_type(ParsingGetParsingHistoryResponse, parsing, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_get_parsing_history(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            response = await async_client.parsing.with_raw_response.get_parsing_history()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        parsing = await response.parse()
-        assert_matches_type(ParsingGetParsingHistoryResponse, parsing, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_get_parsing_history(self, async_client: AsyncLlamaCloud) -> None:
-        with pytest.warns(DeprecationWarning):
-            async with async_client.parsing.with_streaming_response.get_parsing_history() as response:
-                assert not response.is_closed
-                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-                parsing = await response.parse()
-                assert_matches_type(ParsingGetParsingHistoryResponse, parsing, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -514,10 +449,12 @@ class TestAsyncParsing:
             system_prompt_append="system_prompt_append",
             take_screenshot=True,
             target_pages="target_pages",
+            tier="tier",
             use_vendor_multimodal_model=True,
             user_prompt="user_prompt",
             vendor_multimodal_api_key="vendor_multimodal_api_key",
             vendor_multimodal_model_name="vendor_multimodal_model_name",
+            version="version",
             webhook_configurations="webhook_configurations",
             webhook_url="webhook_url",
         )

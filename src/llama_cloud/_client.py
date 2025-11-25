@@ -21,7 +21,7 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
-from .resources import evals, projects, data_sinks, retrievers, data_sources
+from .resources import files, data_sinks, data_sources
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, LlamaCloudError
 from ._base_client import (
@@ -30,12 +30,11 @@ from ._base_client import (
     AsyncAPIClient,
 )
 from .resources.beta import beta
-from .resources.files import files
 from .resources.parsing import parsing
 from .resources.pipelines import pipelines
 from .resources.classifier import classifier
 from .resources.extraction import extraction
-from .resources.organizations import organizations
+from .resources.retrievers import retrievers
 
 __all__ = [
     "Timeout",
@@ -50,14 +49,11 @@ __all__ = [
 
 
 class LlamaCloud(SyncAPIClient):
-    projects: projects.ProjectsResource
     data_sinks: data_sinks.DataSinksResource
     data_sources: data_sources.DataSourcesResource
-    organizations: organizations.OrganizationsResource
     files: files.FilesResource
     pipelines: pipelines.PipelinesResource
     retrievers: retrievers.RetrieversResource
-    evals: evals.EvalsResource
     parsing: parsing.ParsingResource
     classifier: classifier.ClassifierResource
     extraction: extraction.ExtractionResource
@@ -119,14 +115,11 @@ class LlamaCloud(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.projects = projects.ProjectsResource(self)
         self.data_sinks = data_sinks.DataSinksResource(self)
         self.data_sources = data_sources.DataSourcesResource(self)
-        self.organizations = organizations.OrganizationsResource(self)
         self.files = files.FilesResource(self)
         self.pipelines = pipelines.PipelinesResource(self)
         self.retrievers = retrievers.RetrieversResource(self)
-        self.evals = evals.EvalsResource(self)
         self.parsing = parsing.ParsingResource(self)
         self.classifier = classifier.ClassifierResource(self)
         self.extraction = extraction.ExtractionResource(self)
@@ -240,14 +233,11 @@ class LlamaCloud(SyncAPIClient):
 
 
 class AsyncLlamaCloud(AsyncAPIClient):
-    projects: projects.AsyncProjectsResource
     data_sinks: data_sinks.AsyncDataSinksResource
     data_sources: data_sources.AsyncDataSourcesResource
-    organizations: organizations.AsyncOrganizationsResource
     files: files.AsyncFilesResource
     pipelines: pipelines.AsyncPipelinesResource
     retrievers: retrievers.AsyncRetrieversResource
-    evals: evals.AsyncEvalsResource
     parsing: parsing.AsyncParsingResource
     classifier: classifier.AsyncClassifierResource
     extraction: extraction.AsyncExtractionResource
@@ -309,14 +299,11 @@ class AsyncLlamaCloud(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.projects = projects.AsyncProjectsResource(self)
         self.data_sinks = data_sinks.AsyncDataSinksResource(self)
         self.data_sources = data_sources.AsyncDataSourcesResource(self)
-        self.organizations = organizations.AsyncOrganizationsResource(self)
         self.files = files.AsyncFilesResource(self)
         self.pipelines = pipelines.AsyncPipelinesResource(self)
         self.retrievers = retrievers.AsyncRetrieversResource(self)
-        self.evals = evals.AsyncEvalsResource(self)
         self.parsing = parsing.AsyncParsingResource(self)
         self.classifier = classifier.AsyncClassifierResource(self)
         self.extraction = extraction.AsyncExtractionResource(self)
@@ -431,14 +418,11 @@ class AsyncLlamaCloud(AsyncAPIClient):
 
 class LlamaCloudWithRawResponse:
     def __init__(self, client: LlamaCloud) -> None:
-        self.projects = projects.ProjectsResourceWithRawResponse(client.projects)
         self.data_sinks = data_sinks.DataSinksResourceWithRawResponse(client.data_sinks)
         self.data_sources = data_sources.DataSourcesResourceWithRawResponse(client.data_sources)
-        self.organizations = organizations.OrganizationsResourceWithRawResponse(client.organizations)
         self.files = files.FilesResourceWithRawResponse(client.files)
         self.pipelines = pipelines.PipelinesResourceWithRawResponse(client.pipelines)
         self.retrievers = retrievers.RetrieversResourceWithRawResponse(client.retrievers)
-        self.evals = evals.EvalsResourceWithRawResponse(client.evals)
         self.parsing = parsing.ParsingResourceWithRawResponse(client.parsing)
         self.classifier = classifier.ClassifierResourceWithRawResponse(client.classifier)
         self.extraction = extraction.ExtractionResourceWithRawResponse(client.extraction)
@@ -447,14 +431,11 @@ class LlamaCloudWithRawResponse:
 
 class AsyncLlamaCloudWithRawResponse:
     def __init__(self, client: AsyncLlamaCloud) -> None:
-        self.projects = projects.AsyncProjectsResourceWithRawResponse(client.projects)
         self.data_sinks = data_sinks.AsyncDataSinksResourceWithRawResponse(client.data_sinks)
         self.data_sources = data_sources.AsyncDataSourcesResourceWithRawResponse(client.data_sources)
-        self.organizations = organizations.AsyncOrganizationsResourceWithRawResponse(client.organizations)
         self.files = files.AsyncFilesResourceWithRawResponse(client.files)
         self.pipelines = pipelines.AsyncPipelinesResourceWithRawResponse(client.pipelines)
         self.retrievers = retrievers.AsyncRetrieversResourceWithRawResponse(client.retrievers)
-        self.evals = evals.AsyncEvalsResourceWithRawResponse(client.evals)
         self.parsing = parsing.AsyncParsingResourceWithRawResponse(client.parsing)
         self.classifier = classifier.AsyncClassifierResourceWithRawResponse(client.classifier)
         self.extraction = extraction.AsyncExtractionResourceWithRawResponse(client.extraction)
@@ -463,14 +444,11 @@ class AsyncLlamaCloudWithRawResponse:
 
 class LlamaCloudWithStreamedResponse:
     def __init__(self, client: LlamaCloud) -> None:
-        self.projects = projects.ProjectsResourceWithStreamingResponse(client.projects)
         self.data_sinks = data_sinks.DataSinksResourceWithStreamingResponse(client.data_sinks)
         self.data_sources = data_sources.DataSourcesResourceWithStreamingResponse(client.data_sources)
-        self.organizations = organizations.OrganizationsResourceWithStreamingResponse(client.organizations)
         self.files = files.FilesResourceWithStreamingResponse(client.files)
         self.pipelines = pipelines.PipelinesResourceWithStreamingResponse(client.pipelines)
         self.retrievers = retrievers.RetrieversResourceWithStreamingResponse(client.retrievers)
-        self.evals = evals.EvalsResourceWithStreamingResponse(client.evals)
         self.parsing = parsing.ParsingResourceWithStreamingResponse(client.parsing)
         self.classifier = classifier.ClassifierResourceWithStreamingResponse(client.classifier)
         self.extraction = extraction.ExtractionResourceWithStreamingResponse(client.extraction)
@@ -479,14 +457,11 @@ class LlamaCloudWithStreamedResponse:
 
 class AsyncLlamaCloudWithStreamedResponse:
     def __init__(self, client: AsyncLlamaCloud) -> None:
-        self.projects = projects.AsyncProjectsResourceWithStreamingResponse(client.projects)
         self.data_sinks = data_sinks.AsyncDataSinksResourceWithStreamingResponse(client.data_sinks)
         self.data_sources = data_sources.AsyncDataSourcesResourceWithStreamingResponse(client.data_sources)
-        self.organizations = organizations.AsyncOrganizationsResourceWithStreamingResponse(client.organizations)
         self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
         self.pipelines = pipelines.AsyncPipelinesResourceWithStreamingResponse(client.pipelines)
         self.retrievers = retrievers.AsyncRetrieversResourceWithStreamingResponse(client.retrievers)
-        self.evals = evals.AsyncEvalsResourceWithStreamingResponse(client.evals)
         self.parsing = parsing.AsyncParsingResourceWithStreamingResponse(client.parsing)
         self.classifier = classifier.AsyncClassifierResourceWithStreamingResponse(client.classifier)
         self.extraction = extraction.AsyncExtractionResourceWithStreamingResponse(client.extraction)

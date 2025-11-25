@@ -1,24 +1,3 @@
-# Projects
-
-Types:
-
-```python
-from llama_cloud.types import AgentDeploymentList, Project, ProjectCreate, ProjectListResponse
-```
-
-Methods:
-
-- <code title="post /api/v1/projects">client.projects.<a href="./src/llama_cloud/resources/projects.py">create</a>(\*\*<a href="src/llama_cloud/types/project_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/project.py">Project</a></code>
-- <code title="put /api/v1/projects/{project_id}">client.projects.<a href="./src/llama_cloud/resources/projects.py">update</a>(project_id, \*\*<a href="src/llama_cloud/types/project_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/project.py">Project</a></code>
-- <code title="get /api/v1/projects">client.projects.<a href="./src/llama_cloud/resources/projects.py">list</a>(\*\*<a href="src/llama_cloud/types/project_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/project_list_response.py">ProjectListResponse</a></code>
-- <code title="delete /api/v1/projects/{project_id}">client.projects.<a href="./src/llama_cloud/resources/projects.py">delete</a>(project_id, \*\*<a href="src/llama_cloud/types/project_delete_params.py">params</a>) -> None</code>
-- <code title="get /api/v1/projects/{project_id}">client.projects.<a href="./src/llama_cloud/resources/projects.py">get</a>(project_id, \*\*<a href="src/llama_cloud/types/project_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/project.py">Project</a></code>
-- <code title="get /api/v1/projects/current">client.projects.<a href="./src/llama_cloud/resources/projects.py">get_current</a>(\*\*<a href="src/llama_cloud/types/project_get_current_params.py">params</a>) -> <a href="./src/llama_cloud/types/project.py">Project</a></code>
-- <code title="get /api/v1/projects/{project_id}/usage">client.projects.<a href="./src/llama_cloud/resources/projects.py">get_usage</a>(project_id, \*\*<a href="src/llama_cloud/types/project_get_usage_params.py">params</a>) -> <a href="./src/llama_cloud/types/usage_and_plan.py">UsageAndPlan</a></code>
-- <code title="get /api/v1/projects/{project_id}/agents">client.projects.<a href="./src/llama_cloud/resources/projects.py">list_agents</a>(project_id) -> <a href="./src/llama_cloud/types/agent_deployment_list.py">AgentDeploymentList</a></code>
-- <code title="post /api/v1/projects/{project_id}/agents:sync">client.projects.<a href="./src/llama_cloud/resources/projects.py">sync_agents</a>(project_id) -> <a href="./src/llama_cloud/types/agent_deployment_list.py">AgentDeploymentList</a></code>
-- <code title="put /api/v1/projects">client.projects.<a href="./src/llama_cloud/resources/projects.py">upsert</a>(\*\*<a href="src/llama_cloud/types/project_upsert_params.py">params</a>) -> <a href="./src/llama_cloud/types/project.py">Project</a></code>
-
 # DataSinks
 
 Types:
@@ -34,7 +13,6 @@ Methods:
 - <code title="get /api/v1/data-sinks">client.data_sinks.<a href="./src/llama_cloud/resources/data_sinks.py">list</a>(\*\*<a href="src/llama_cloud/types/data_sink_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/data_sink_list_response.py">DataSinkListResponse</a></code>
 - <code title="delete /api/v1/data-sinks/{data_sink_id}">client.data_sinks.<a href="./src/llama_cloud/resources/data_sinks.py">delete</a>(data_sink_id) -> None</code>
 - <code title="get /api/v1/data-sinks/{data_sink_id}">client.data_sinks.<a href="./src/llama_cloud/resources/data_sinks.py">get</a>(data_sink_id) -> <a href="./src/llama_cloud/types/data_sink.py">DataSink</a></code>
-- <code title="put /api/v1/data-sinks">client.data_sinks.<a href="./src/llama_cloud/resources/data_sinks.py">upsert</a>(\*\*<a href="src/llama_cloud/types/data_sink_upsert_params.py">params</a>) -> <a href="./src/llama_cloud/types/data_sink.py">DataSink</a></code>
 
 # DataSources
 
@@ -51,79 +29,6 @@ Methods:
 - <code title="get /api/v1/data-sources">client.data_sources.<a href="./src/llama_cloud/resources/data_sources.py">list</a>(\*\*<a href="src/llama_cloud/types/data_source_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/data_source_list_response.py">DataSourceListResponse</a></code>
 - <code title="delete /api/v1/data-sources/{data_source_id}">client.data_sources.<a href="./src/llama_cloud/resources/data_sources.py">delete</a>(data_source_id) -> None</code>
 - <code title="get /api/v1/data-sources/{data_source_id}">client.data_sources.<a href="./src/llama_cloud/resources/data_sources.py">get</a>(data_source_id) -> <a href="./src/llama_cloud/types/data_source.py">DataSource</a></code>
-- <code title="put /api/v1/data-sources">client.data_sources.<a href="./src/llama_cloud/resources/data_sources.py">upsert</a>(\*\*<a href="src/llama_cloud/types/data_source_upsert_params.py">params</a>) -> <a href="./src/llama_cloud/types/data_source.py">DataSource</a></code>
-
-# Organizations
-
-Types:
-
-```python
-from llama_cloud.types import (
-    Organization,
-    OrganizationCreate,
-    Role,
-    UsageAndPlan,
-    OrganizationListResponse,
-    OrganizationGetRolesResponse,
-)
-```
-
-Methods:
-
-- <code title="post /api/v1/organizations">client.organizations.<a href="./src/llama_cloud/resources/organizations/organizations.py">create</a>(\*\*<a href="src/llama_cloud/types/organization_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/organization.py">Organization</a></code>
-- <code title="put /api/v1/organizations/{organization_id}">client.organizations.<a href="./src/llama_cloud/resources/organizations/organizations.py">update</a>(organization_id, \*\*<a href="src/llama_cloud/types/organization_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/organization.py">Organization</a></code>
-- <code title="get /api/v1/organizations">client.organizations.<a href="./src/llama_cloud/resources/organizations/organizations.py">list</a>() -> <a href="./src/llama_cloud/types/organization_list_response.py">OrganizationListResponse</a></code>
-- <code title="delete /api/v1/organizations/{organization_id}">client.organizations.<a href="./src/llama_cloud/resources/organizations/organizations.py">delete</a>(organization_id) -> None</code>
-- <code title="get /api/v1/organizations/{organization_id}">client.organizations.<a href="./src/llama_cloud/resources/organizations/organizations.py">get</a>(organization_id) -> <a href="./src/llama_cloud/types/organization.py">Organization</a></code>
-- <code title="get /api/v1/organizations/{organization_id}/roles">client.organizations.<a href="./src/llama_cloud/resources/organizations/organizations.py">get_roles</a>(organization_id) -> <a href="./src/llama_cloud/types/organization_get_roles_response.py">OrganizationGetRolesResponse</a></code>
-- <code title="get /api/v1/organizations/{organization_id}/usage">client.organizations.<a href="./src/llama_cloud/resources/organizations/organizations.py">get_usage</a>(organization_id, \*\*<a href="src/llama_cloud/types/organization_get_usage_params.py">params</a>) -> <a href="./src/llama_cloud/types/usage_and_plan.py">UsageAndPlan</a></code>
-
-## Default
-
-Methods:
-
-- <code title="get /api/v1/organizations/default">client.organizations.default.<a href="./src/llama_cloud/resources/organizations/default.py">list</a>() -> <a href="./src/llama_cloud/types/organization.py">Organization</a></code>
-
-## Users
-
-Types:
-
-```python
-from llama_cloud.types.organizations import UserOrganization, UserCreateResponse, UserListResponse
-```
-
-Methods:
-
-- <code title="put /api/v1/organizations/{organization_id}/users">client.organizations.users.<a href="./src/llama_cloud/resources/organizations/users/users.py">create</a>(organization_id, \*\*<a href="src/llama_cloud/types/organizations/user_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/organizations/user_create_response.py">UserCreateResponse</a></code>
-- <code title="get /api/v1/organizations/{organization_id}/users">client.organizations.users.<a href="./src/llama_cloud/resources/organizations/users/users.py">list</a>(organization_id) -> <a href="./src/llama_cloud/types/organizations/user_list_response.py">UserListResponse</a></code>
-- <code title="delete /api/v1/organizations/{organization_id}/users/{member_user_id}">client.organizations.users.<a href="./src/llama_cloud/resources/organizations/users/users.py">delete</a>(member_user_id, \*, organization_id, \*\*<a href="src/llama_cloud/types/organizations/user_delete_params.py">params</a>) -> None</code>
-
-### Roles
-
-Types:
-
-```python
-from llama_cloud.types.organizations.users import UserOrganizationRole
-```
-
-Methods:
-
-- <code title="put /api/v1/organizations/{organization_id}/users/roles">client.organizations.users.roles.<a href="./src/llama_cloud/resources/organizations/users/roles.py">create</a>(path_organization_id, \*\*<a href="src/llama_cloud/types/organizations/users/role_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/organizations/users/user_organization_role.py">UserOrganizationRole</a></code>
-- <code title="get /api/v1/organizations/{organization_id}/users/roles">client.organizations.users.roles.<a href="./src/llama_cloud/resources/organizations/users/roles.py">list</a>(organization_id, \*\*<a href="src/llama_cloud/types/organizations/users/role_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/organizations/users/user_organization_role.py">Optional[UserOrganizationRole]</a></code>
-
-### Projects
-
-Types:
-
-```python
-from llama_cloud.types.organizations.users import ProjectListResponse
-```
-
-Methods:
-
-- <code title="put /api/v1/organizations/{organization_id}/users/{user_id}/projects">client.organizations.users.projects.<a href="./src/llama_cloud/resources/organizations/users/projects.py">create</a>(user_id, \*, organization_id, \*\*<a href="src/llama_cloud/types/organizations/users/project_create_params.py">params</a>) -> object</code>
-- <code title="get /api/v1/organizations/{organization_id}/users/{user_id}/projects">client.organizations.users.projects.<a href="./src/llama_cloud/resources/organizations/users/projects.py">list</a>(user_id, \*, organization_id) -> <a href="./src/llama_cloud/types/organizations/users/project_list_response.py">ProjectListResponse</a></code>
-- <code title="delete /api/v1/organizations/{organization_id}/users/{user_id}/projects/{project_id}">client.organizations.users.projects.<a href="./src/llama_cloud/resources/organizations/users/projects.py">delete</a>(project_id, \*, organization_id, user_id) -> object</code>
 
 # Files
 
@@ -135,40 +40,12 @@ from llama_cloud.types import File, FileCreate, PresignedURL, FileGeneratePresig
 
 Methods:
 
-- <code title="delete /api/v1/files/{id}">client.files.<a href="./src/llama_cloud/resources/files/files.py">delete</a>(id, \*\*<a href="src/llama_cloud/types/file_delete_params.py">params</a>) -> None</code>
-- <code title="put /api/v1/files">client.files.<a href="./src/llama_cloud/resources/files/files.py">generate_presigned_url</a>(\*\*<a href="src/llama_cloud/types/file_generate_presigned_url_params.py">params</a>) -> <a href="./src/llama_cloud/types/file_generate_presigned_url_response.py">FileGeneratePresignedURLResponse</a></code>
-- <code title="get /api/v1/files/{id}">client.files.<a href="./src/llama_cloud/resources/files/files.py">get</a>(id, \*\*<a href="src/llama_cloud/types/file_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
-- <code title="get /api/v1/files/{id}/content">client.files.<a href="./src/llama_cloud/resources/files/files.py">read_content</a>(id, \*\*<a href="src/llama_cloud/types/file_read_content_params.py">params</a>) -> <a href="./src/llama_cloud/types/presigned_url.py">PresignedURL</a></code>
-- <code title="post /api/v1/files">client.files.<a href="./src/llama_cloud/resources/files/files.py">upload</a>(\*\*<a href="src/llama_cloud/types/file_upload_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
-- <code title="put /api/v1/files/upload_from_url">client.files.<a href="./src/llama_cloud/resources/files/files.py">upload_from_url</a>(\*\*<a href="src/llama_cloud/types/file_upload_from_url_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
-
-## PageScreenshots
-
-Types:
-
-```python
-from llama_cloud.types.files import PageScreenshotMetadata, PageScreenshotListResponse
-```
-
-Methods:
-
-- <code title="get /api/v1/files/{id}/page_screenshots">client.files.page_screenshots.<a href="./src/llama_cloud/resources/files/page_screenshots.py">list</a>(id, \*\*<a href="src/llama_cloud/types/files/page_screenshot_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/files/page_screenshot_list_response.py">PageScreenshotListResponse</a></code>
-- <code title="post /api/v1/files/{id}/page_screenshots/{page_index}/presigned_url">client.files.page_screenshots.<a href="./src/llama_cloud/resources/files/page_screenshots.py">generate_presigned_url</a>(page_index, \*, id, \*\*<a href="src/llama_cloud/types/files/page_screenshot_generate_presigned_url_params.py">params</a>) -> <a href="./src/llama_cloud/types/presigned_url.py">PresignedURL</a></code>
-- <code title="get /api/v1/files/{id}/page_screenshots/{page_index}">client.files.page_screenshots.<a href="./src/llama_cloud/resources/files/page_screenshots.py">get</a>(page_index, \*, id, \*\*<a href="src/llama_cloud/types/files/page_screenshot_get_params.py">params</a>) -> object</code>
-
-## PageFigures
-
-Types:
-
-```python
-from llama_cloud.types.files import PageFigureMetadata, PageFigureListResponse
-```
-
-Methods:
-
-- <code title="get /api/v1/files/{id}/page-figures">client.files.page_figures.<a href="./src/llama_cloud/resources/files/page_figures.py">list</a>(id, \*\*<a href="src/llama_cloud/types/files/page_figure_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/files/page_figure_list_response.py">PageFigureListResponse</a></code>
-- <code title="post /api/v1/files/{id}/page-figures/{page_index}/{figure_name}/presigned_url">client.files.page_figures.<a href="./src/llama_cloud/resources/files/page_figures.py">generate_presigned_url</a>(figure_name, \*, id, page_index, \*\*<a href="src/llama_cloud/types/files/page_figure_generate_presigned_url_params.py">params</a>) -> <a href="./src/llama_cloud/types/presigned_url.py">PresignedURL</a></code>
-- <code title="get /api/v1/files/{id}/page-figures/{page_index}/{figure_name}">client.files.page_figures.<a href="./src/llama_cloud/resources/files/page_figures.py">get</a>(figure_name, \*, id, page_index, \*\*<a href="src/llama_cloud/types/files/page_figure_get_params.py">params</a>) -> object</code>
+- <code title="delete /api/v1/files/{id}">client.files.<a href="./src/llama_cloud/resources/files.py">delete</a>(id, \*\*<a href="src/llama_cloud/types/file_delete_params.py">params</a>) -> None</code>
+- <code title="put /api/v1/files">client.files.<a href="./src/llama_cloud/resources/files.py">generate_presigned_url</a>(\*\*<a href="src/llama_cloud/types/file_generate_presigned_url_params.py">params</a>) -> <a href="./src/llama_cloud/types/file_generate_presigned_url_response.py">FileGeneratePresignedURLResponse</a></code>
+- <code title="get /api/v1/files/{id}">client.files.<a href="./src/llama_cloud/resources/files.py">get</a>(id, \*\*<a href="src/llama_cloud/types/file_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
+- <code title="get /api/v1/files/{id}/content">client.files.<a href="./src/llama_cloud/resources/files.py">read_content</a>(id, \*\*<a href="src/llama_cloud/types/file_read_content_params.py">params</a>) -> <a href="./src/llama_cloud/types/presigned_url.py">PresignedURL</a></code>
+- <code title="post /api/v1/files">client.files.<a href="./src/llama_cloud/resources/files.py">upload</a>(\*\*<a href="src/llama_cloud/types/file_upload_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
+- <code title="put /api/v1/files/upload_from_url">client.files.<a href="./src/llama_cloud/resources/files.py">upload_from_url</a>(\*\*<a href="src/llama_cloud/types/file_upload_from_url_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
 
 # Pipelines
 
@@ -193,8 +70,6 @@ from llama_cloud.types import (
     RetrievalMode,
     SparseModelConfig,
     PipelineListResponse,
-    PipelineGetFiles2Response,
-    PipelineGetPlaygroundSessionResponse,
 )
 ```
 
@@ -204,13 +79,9 @@ Methods:
 - <code title="put /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">update</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipeline_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline.py">Pipeline</a></code>
 - <code title="get /api/v1/pipelines">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">list</a>(\*\*<a href="src/llama_cloud/types/pipeline_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline_list_response.py">PipelineListResponse</a></code>
 - <code title="delete /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">delete</a>(pipeline_id) -> None</code>
-- <code title="post /api/v1/pipelines/{pipeline_id}/chat">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">chat</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipeline_chat_params.py">params</a>) -> object</code>
-- <code title="post /api/v1/pipelines/{pipeline_id}/copy">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">copy</a>(pipeline_id) -> <a href="./src/llama_cloud/types/pipeline.py">Pipeline</a></code>
-- <code title="post /api/v1/pipelines/{pipeline_id}/force-delete">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">force_delete</a>(pipeline_id) -> None</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">get</a>(pipeline_id) -> <a href="./src/llama_cloud/types/pipeline.py">Pipeline</a></code>
-- <code title="get /api/v1/pipelines/{pipeline_id}/files2">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">get_files2</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipeline_get_files2_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline_get_files2_response.py">PipelineGetFiles2Response</a></code>
-- <code title="get /api/v1/pipelines/{pipeline_id}/playground-session">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">get_playground_session</a>(pipeline_id) -> <a href="./src/llama_cloud/types/pipeline_get_playground_session_response.py">PipelineGetPlaygroundSessionResponse</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/status">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">get_status</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipeline_get_status_params.py">params</a>) -> <a href="./src/llama_cloud/types/managed_ingestion_status_response.py">ManagedIngestionStatusResponse</a></code>
+- <code title="put /api/v1/pipelines">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">upsert</a>(\*\*<a href="src/llama_cloud/types/pipeline_upsert_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline.py">Pipeline</a></code>
 
 ## Sync
 
@@ -236,7 +107,6 @@ Methods:
 - <code title="put /api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}">client.pipelines.data_sources.<a href="./src/llama_cloud/resources/pipelines/data_sources.py">update</a>(data_source_id, \*, pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/data_source_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/pipeline_data_source.py">PipelineDataSource</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/data-sources">client.pipelines.data_sources.<a href="./src/llama_cloud/resources/pipelines/data_sources.py">get_data_sources</a>(pipeline_id) -> <a href="./src/llama_cloud/types/pipelines/data_source_get_data_sources_response.py">DataSourceGetDataSourcesResponse</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/status">client.pipelines.data_sources.<a href="./src/llama_cloud/resources/pipelines/data_sources.py">get_status</a>(data_source_id, \*, pipeline_id) -> <a href="./src/llama_cloud/types/managed_ingestion_status_response.py">ManagedIngestionStatusResponse</a></code>
-- <code title="post /api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/sync">client.pipelines.data_sources.<a href="./src/llama_cloud/resources/pipelines/data_sources.py">sync</a>(data_source_id, \*, pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/data_source_sync_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline.py">Pipeline</a></code>
 - <code title="put /api/v1/pipelines/{pipeline_id}/data-sources">client.pipelines.data_sources.<a href="./src/llama_cloud/resources/pipelines/data_sources.py">update_data_sources</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/data_source_update_data_sources_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/data_source_update_data_sources_response.py">DataSourceUpdateDataSourcesResponse</a></code>
 
 ## Files
@@ -247,7 +117,6 @@ Types:
 from llama_cloud.types.pipelines import (
     PipelineFile,
     FileCreateResponse,
-    FileListResponse,
     FileGetStatusCountsResponse,
 )
 ```
@@ -256,7 +125,7 @@ Methods:
 
 - <code title="put /api/v1/pipelines/{pipeline_id}/files">client.pipelines.files.<a href="./src/llama_cloud/resources/pipelines/files.py">create</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/file_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/file_create_response.py">FileCreateResponse</a></code>
 - <code title="put /api/v1/pipelines/{pipeline_id}/files/{file_id}">client.pipelines.files.<a href="./src/llama_cloud/resources/pipelines/files.py">update</a>(file_id, \*, pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/file_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/pipeline_file.py">PipelineFile</a></code>
-- <code title="get /api/v1/pipelines/{pipeline_id}/files">client.pipelines.files.<a href="./src/llama_cloud/resources/pipelines/files.py">list</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/file_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/file_list_response.py">FileListResponse</a></code>
+- <code title="get /api/v1/pipelines/{pipeline_id}/files2">client.pipelines.files.<a href="./src/llama_cloud/resources/pipelines/files.py">list</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/file_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/pipeline_file.py">SyncPaginatedPipelineFiles[PipelineFile]</a></code>
 - <code title="delete /api/v1/pipelines/{pipeline_id}/files/{file_id}">client.pipelines.files.<a href="./src/llama_cloud/resources/pipelines/files.py">delete</a>(file_id, \*, pipeline_id) -> None</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/files/{file_id}/status">client.pipelines.files.<a href="./src/llama_cloud/resources/pipelines/files.py">get_status</a>(file_id, \*, pipeline_id) -> <a href="./src/llama_cloud/types/managed_ingestion_status_response.py">ManagedIngestionStatusResponse</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/files/status-counts">client.pipelines.files.<a href="./src/llama_cloud/resources/pipelines/files.py">get_status_counts</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/file_get_status_counts_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/file_get_status_counts_response.py">FileGetStatusCountsResponse</a></code>
@@ -284,21 +153,17 @@ from llama_cloud.types.pipelines import (
     CloudDocumentCreate,
     TextNode,
     DocumentCreateResponse,
-    DocumentListResponse,
     DocumentGetChunksResponse,
-    DocumentGetPaginatedResponse,
 )
 ```
 
 Methods:
 
 - <code title="post /api/v1/pipelines/{pipeline_id}/documents">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">create</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/document_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/document_create_response.py">DocumentCreateResponse</a></code>
-- <code title="get /api/v1/pipelines/{pipeline_id}/documents">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">list</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/document_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/document_list_response.py">DocumentListResponse</a></code>
+- <code title="get /api/v1/pipelines/{pipeline_id}/documents/paginated">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">list</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/document_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/cloud_document.py">SyncPaginatedCloudDocuments[CloudDocument]</a></code>
 - <code title="delete /api/v1/pipelines/{pipeline_id}/documents/{document_id}">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">delete</a>(document_id, \*, pipeline_id) -> None</code>
-- <code title="post /api/v1/pipelines/{pipeline_id}/documents/force-sync-all">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">force_sync_all</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/document_force_sync_all_params.py">params</a>) -> object</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">get</a>(document_id, \*, pipeline_id) -> <a href="./src/llama_cloud/types/pipelines/cloud_document.py">CloudDocument</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}/chunks">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">get_chunks</a>(document_id, \*, pipeline_id) -> <a href="./src/llama_cloud/types/pipelines/document_get_chunks_response.py">DocumentGetChunksResponse</a></code>
-- <code title="get /api/v1/pipelines/{pipeline_id}/documents/paginated">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">get_paginated</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/document_get_paginated_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/document_get_paginated_response.py">DocumentGetPaginatedResponse</a></code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/documents/{document_id}/status">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">get_status</a>(document_id, \*, pipeline_id) -> <a href="./src/llama_cloud/types/managed_ingestion_status_response.py">ManagedIngestionStatusResponse</a></code>
 - <code title="post /api/v1/pipelines/{pipeline_id}/documents/{document_id}/sync">client.pipelines.documents.<a href="./src/llama_cloud/resources/pipelines/documents.py">sync</a>(document_id, \*, pipeline_id) -> object</code>
 
@@ -320,25 +185,19 @@ from llama_cloud.types import (
 
 Methods:
 
-- <code title="post /api/v1/retrievers">client.retrievers.<a href="./src/llama_cloud/resources/retrievers.py">create</a>(\*\*<a href="src/llama_cloud/types/retriever_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/retriever.py">Retriever</a></code>
-- <code title="post /api/v1/retrievers/retrieve">client.retrievers.<a href="./src/llama_cloud/resources/retrievers.py">retrieve</a>(\*\*<a href="src/llama_cloud/types/retriever_retrieve_params.py">params</a>) -> <a href="./src/llama_cloud/types/composite_retrieval_result.py">CompositeRetrievalResult</a></code>
-- <code title="put /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/llama_cloud/resources/retrievers.py">update</a>(retriever_id, \*\*<a href="src/llama_cloud/types/retriever_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/retriever.py">Retriever</a></code>
-- <code title="get /api/v1/retrievers">client.retrievers.<a href="./src/llama_cloud/resources/retrievers.py">list</a>(\*\*<a href="src/llama_cloud/types/retriever_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/retriever_list_response.py">RetrieverListResponse</a></code>
-- <code title="delete /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/llama_cloud/resources/retrievers.py">delete</a>(retriever_id) -> None</code>
-- <code title="get /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/llama_cloud/resources/retrievers.py">get</a>(retriever_id, \*\*<a href="src/llama_cloud/types/retriever_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/retriever.py">Retriever</a></code>
-- <code title="put /api/v1/retrievers">client.retrievers.<a href="./src/llama_cloud/resources/retrievers.py">upsert</a>(\*\*<a href="src/llama_cloud/types/retriever_upsert_params.py">params</a>) -> <a href="./src/llama_cloud/types/retriever.py">Retriever</a></code>
+- <code title="post /api/v1/retrievers">client.retrievers.<a href="./src/llama_cloud/resources/retrievers/retrievers.py">create</a>(\*\*<a href="src/llama_cloud/types/retriever_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/retriever.py">Retriever</a></code>
+- <code title="put /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/llama_cloud/resources/retrievers/retrievers.py">update</a>(retriever_id, \*\*<a href="src/llama_cloud/types/retriever_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/retriever.py">Retriever</a></code>
+- <code title="get /api/v1/retrievers">client.retrievers.<a href="./src/llama_cloud/resources/retrievers/retrievers.py">list</a>(\*\*<a href="src/llama_cloud/types/retriever_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/retriever_list_response.py">RetrieverListResponse</a></code>
+- <code title="delete /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/llama_cloud/resources/retrievers/retrievers.py">delete</a>(retriever_id) -> None</code>
+- <code title="get /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/llama_cloud/resources/retrievers/retrievers.py">get</a>(retriever_id, \*\*<a href="src/llama_cloud/types/retriever_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/retriever.py">Retriever</a></code>
+- <code title="post /api/v1/retrievers/retrieve">client.retrievers.<a href="./src/llama_cloud/resources/retrievers/retrievers.py">search</a>(\*\*<a href="src/llama_cloud/types/retriever_search_params.py">params</a>) -> <a href="./src/llama_cloud/types/composite_retrieval_result.py">CompositeRetrievalResult</a></code>
+- <code title="put /api/v1/retrievers">client.retrievers.<a href="./src/llama_cloud/resources/retrievers/retrievers.py">upsert</a>(\*\*<a href="src/llama_cloud/types/retriever_upsert_params.py">params</a>) -> <a href="./src/llama_cloud/types/retriever.py">Retriever</a></code>
 
-# Evals
-
-Types:
-
-```python
-from llama_cloud.types import EvalListSupportedModelsResponse
-```
+## Retriever
 
 Methods:
 
-- <code title="get /api/v1/evals/models">client.evals.<a href="./src/llama_cloud/resources/evals.py">list_supported_models</a>() -> <a href="./src/llama_cloud/types/eval_list_supported_models_response.py">EvalListSupportedModelsResponse</a></code>
+- <code title="post /api/v1/retrievers/{retriever_id}/retrieve">client.retrievers.retriever.<a href="./src/llama_cloud/resources/retrievers/retriever.py">search</a>(retriever_id, \*\*<a href="src/llama_cloud/types/retrievers/retriever_search_params.py">params</a>) -> <a href="./src/llama_cloud/types/composite_retrieval_result.py">CompositeRetrievalResult</a></code>
 
 # Parsing
 
@@ -349,11 +208,9 @@ from llama_cloud.types import (
     FailPageMode,
     LlamaParseSupportedFileExtensions,
     ParserLanguages,
-    ParsingHistoryItem,
     ParsingJob,
     ParsingMode,
     StatusEnum,
-    ParsingGetParsingHistoryResponse,
     ParsingGetSupportedFileExtensionsResponse,
 )
 ```
@@ -361,7 +218,6 @@ from llama_cloud.types import (
 Methods:
 
 - <code title="post /api/v1/parsing/screenshot">client.parsing.<a href="./src/llama_cloud/resources/parsing/parsing.py">create_screenshot</a>(\*\*<a href="src/llama_cloud/types/parsing_create_screenshot_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_job.py">ParsingJob</a></code>
-- <code title="get /api/v1/parsing/history">client.parsing.<a href="./src/llama_cloud/resources/parsing/parsing.py">get_parsing_history</a>() -> <a href="./src/llama_cloud/types/parsing_get_parsing_history_response.py">ParsingGetParsingHistoryResponse</a></code>
 - <code title="get /api/v1/parsing/supported_file_extensions">client.parsing.<a href="./src/llama_cloud/resources/parsing/parsing.py">get_supported_file_extensions</a>() -> <a href="./src/llama_cloud/types/parsing_get_supported_file_extensions_response.py">ParsingGetSupportedFileExtensionsResponse</a></code>
 - <code title="post /api/v1/parsing/upload">client.parsing.<a href="./src/llama_cloud/resources/parsing/parsing.py">upload_file</a>(\*\*<a href="src/llama_cloud/types/parsing_upload_file_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_job.py">ParsingJob</a></code>
 
@@ -372,7 +228,6 @@ Methods:
 - <code title="get /api/v1/parsing/job/{job_id}/read/{filename}">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">generate_presigned_url</a>(filename, \*, job_id) -> <a href="./src/llama_cloud/types/presigned_url.py">PresignedURL</a></code>
 - <code title="get /api/v1/parsing/job/{job_id}">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">get</a>(job_id) -> <a href="./src/llama_cloud/types/parsing_job.py">ParsingJob</a></code>
 - <code title="get /api/v1/parsing/job/{job_id}/details">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">get_details</a>(job_id) -> object</code>
-- <code title="get /api/v1/parsing/job/{job_id}/parameters">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">get_parameters</a>(job_id) -> object</code>
 
 ### Result
 
@@ -389,24 +244,13 @@ from llama_cloud.types.parsing.job import (
 
 Methods:
 
-- <code title="get /api/v1/parsing/job/{job_id}/result/image/{name}">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result/result.py">get_image</a>(name, \*, job_id) -> BinaryAPIResponse</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/json">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result/result.py">get_json</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_json_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_json_result.py">ParsingJobJsonResult</a></code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/markdown">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result/result.py">get_markdown</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_markdown_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_markdown_result.py">ParsingJobMarkdownResult</a></code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/pdf">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result/result.py">get_pdf</a>(job_id) -> object</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/structured">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result/result.py">get_structured</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_structured_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_structured_result.py">ParsingJobStructuredResult</a></code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/text">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result/result.py">get_text</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_text_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_text_result.py">ParsingJobTextResult</a></code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/xlsx">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result/result.py">get_xlsx</a>(job_id) -> object</code>
-
-#### Raw
-
-Methods:
-
-- <code title="get /api/v1/parsing/job/{job_id}/result/raw/json">client.parsing.job.result.raw.<a href="./src/llama_cloud/resources/parsing/job/result/raw.py">get_raw_json</a>(job_id) -> object</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/raw/markdown">client.parsing.job.result.raw.<a href="./src/llama_cloud/resources/parsing/job/result/raw.py">get_raw_markdown</a>(job_id) -> object</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/raw/pdf">client.parsing.job.result.raw.<a href="./src/llama_cloud/resources/parsing/job/result/raw.py">get_raw_pdf</a>(job_id) -> object</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/raw/structured">client.parsing.job.result.raw.<a href="./src/llama_cloud/resources/parsing/job/result/raw.py">get_raw_structured</a>(job_id) -> object</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/raw/text">client.parsing.job.result.raw.<a href="./src/llama_cloud/resources/parsing/job/result/raw.py">get_raw_text</a>(job_id) -> object</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/raw/xlsx">client.parsing.job.result.raw.<a href="./src/llama_cloud/resources/parsing/job/result/raw.py">get_raw_xlsx</a>(job_id) -> object</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/image/{name}">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_image</a>(name, \*, job_id) -> BinaryAPIResponse</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/json">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_json</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_json_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_json_result.py">ParsingJobJsonResult</a></code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/markdown">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_markdown</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_markdown_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_markdown_result.py">ParsingJobMarkdownResult</a></code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/pdf">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_pdf</a>(job_id) -> object</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/structured">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_structured</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_structured_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_structured_result.py">ParsingJobStructuredResult</a></code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/text">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_text</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_text_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_text_result.py">ParsingJobTextResult</a></code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/xlsx">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_xlsx</a>(job_id) -> object</code>
 
 # Classifier
 
@@ -485,29 +329,11 @@ from llama_cloud.types.extraction import ExtractAgent, ExtractionAgentGetExtract
 
 Methods:
 
-- <code title="put /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">update</a>(extraction_agent_id, \*\*<a href="src/llama_cloud/types/extraction/extraction_agent_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
-- <code title="delete /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">delete</a>(extraction_agent_id) -> object</code>
-- <code title="post /api/v1/extraction/extraction-agents">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">extraction_agents</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agent_extraction_agents_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
-- <code title="get /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">get</a>(extraction_agent_id) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
-- <code title="get /api/v1/extraction/extraction-agents/by-name/{name}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">get_by_name</a>(name, \*\*<a href="src/llama_cloud/types/extraction/extraction_agent_get_by_name_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
-- <code title="get /api/v1/extraction/extraction-agents/default">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">get_default</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agent_get_default_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
-- <code title="get /api/v1/extraction/extraction-agents">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">get_extraction_agents</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agent_get_extraction_agents_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extraction_agent_get_extraction_agents_response.py">ExtractionAgentGetExtractionAgentsResponse</a></code>
-
-### Schema
-
-Types:
-
-```python
-from llama_cloud.types.extraction.extraction_agents import (
-    SchemaGenerateResponse,
-    SchemaValidationResponse,
-)
-```
-
-Methods:
-
-- <code title="post /api/v1/extraction/extraction-agents/schema/generate">client.extraction.extraction_agents.schema.<a href="./src/llama_cloud/resources/extraction/extraction_agents/schema.py">generate</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agents/schema_generate_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extraction_agents/schema_generate_response.py">SchemaGenerateResponse</a></code>
-- <code title="post /api/v1/extraction/extraction-agents/schema/validation">client.extraction.extraction_agents.schema.<a href="./src/llama_cloud/resources/extraction/extraction_agents/schema.py">validation</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agents/schema_validation_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extraction_agents/schema_validation_response.py">SchemaValidationResponse</a></code>
+- <code title="put /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents.py">update</a>(extraction_agent_id, \*\*<a href="src/llama_cloud/types/extraction/extraction_agent_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
+- <code title="delete /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents.py">delete</a>(extraction_agent_id) -> object</code>
+- <code title="post /api/v1/extraction/extraction-agents">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents.py">extraction_agents</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agent_extraction_agents_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
+- <code title="get /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents.py">get</a>(extraction_agent_id) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
+- <code title="get /api/v1/extraction/extraction-agents">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents.py">get_extraction_agents</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agent_get_extraction_agents_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extraction_agent_get_extraction_agents_response.py">ExtractionAgentGetExtractionAgentsResponse</a></code>
 
 # Beta
 
@@ -520,6 +346,7 @@ from llama_cloud.types.beta import (
     AgentData,
     AgentDataDeleteResponse,
     AgentDataAggregateResponse,
+    AgentDataDeleteByQueryResponse,
     AgentDataSearchResponse,
 )
 ```
@@ -530,22 +357,9 @@ Methods:
 - <code title="delete /api/v1/beta/agent-data/{item_id}">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">delete</a>(item_id, \*\*<a href="src/llama_cloud/types/beta/agent_data_delete_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data_delete_response.py">AgentDataDeleteResponse</a></code>
 - <code title="post /api/v1/beta/agent-data">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">agent_data</a>(\*\*<a href="src/llama_cloud/types/beta/agent_data_agent_data_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data.py">AgentData</a></code>
 - <code title="post /api/v1/beta/agent-data/:aggregate">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">aggregate</a>(\*\*<a href="src/llama_cloud/types/beta/agent_data_aggregate_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data_aggregate_response.py">AgentDataAggregateResponse</a></code>
+- <code title="post /api/v1/beta/agent-data/:delete">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">delete_by_query</a>(\*\*<a href="src/llama_cloud/types/beta/agent_data_delete_by_query_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data_delete_by_query_response.py">AgentDataDeleteByQueryResponse</a></code>
 - <code title="get /api/v1/beta/agent-data/{item_id}">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">get</a>(item_id, \*\*<a href="src/llama_cloud/types/beta/agent_data_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data.py">AgentData</a></code>
 - <code title="post /api/v1/beta/agent-data/:search">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">search</a>(\*\*<a href="src/llama_cloud/types/beta/agent_data_search_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data_search_response.py">AgentDataSearchResponse</a></code>
-
-## Files
-
-Types:
-
-```python
-from llama_cloud.types.beta import FileQueryResponse
-```
-
-Methods:
-
-- <code title="post /api/v1/beta/files">client.beta.files.<a href="./src/llama_cloud/resources/beta/files.py">create</a>(\*\*<a href="src/llama_cloud/types/beta/file_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
-- <code title="delete /api/v1/beta/files/{file_id}">client.beta.files.<a href="./src/llama_cloud/resources/beta/files.py">delete</a>(file_id, \*\*<a href="src/llama_cloud/types/beta/file_delete_params.py">params</a>) -> None</code>
-- <code title="post /api/v1/beta/files/query">client.beta.files.<a href="./src/llama_cloud/resources/beta/files.py">query</a>(\*\*<a href="src/llama_cloud/types/beta/file_query_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/file_query_response.py">FileQueryResponse</a></code>
 
 ## ParseConfigurations
 
@@ -564,19 +378,24 @@ Methods:
 - <code title="put /api/v1/beta/parse-configurations/{config_id}">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">update</a>(config_id, \*\*<a href="src/llama_cloud/types/beta/parse_configuration_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration.py">ParseConfiguration</a></code>
 - <code title="delete /api/v1/beta/parse-configurations/{config_id}">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">delete</a>(config_id, \*\*<a href="src/llama_cloud/types/beta/parse_configuration_delete_params.py">params</a>) -> None</code>
 - <code title="get /api/v1/beta/parse-configurations/{config_id}">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">get</a>(config_id, \*\*<a href="src/llama_cloud/types/beta/parse_configuration_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration.py">ParseConfiguration</a></code>
-- <code title="get /api/v1/beta/parse-configurations/latest">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">get_latest</a>(\*\*<a href="src/llama_cloud/types/beta/parse_configuration_get_latest_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration.py">Optional[ParseConfiguration]</a></code>
 - <code title="get /api/v1/beta/parse-configurations">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">get_parse_configurations</a>(\*\*<a href="src/llama_cloud/types/beta/parse_configuration_get_parse_configurations_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration_query_response.py">ParseConfigurationQueryResponse</a></code>
 - <code title="post /api/v1/beta/parse-configurations">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">parse_configurations</a>(\*\*<a href="src/llama_cloud/types/beta/parse_configuration_parse_configurations_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration.py">ParseConfiguration</a></code>
-- <code title="post /api/v1/beta/parse-configurations/query">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">query</a>(\*\*<a href="src/llama_cloud/types/beta/parse_configuration_query_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration_query_response.py">ParseConfigurationQueryResponse</a></code>
-- <code title="put /api/v1/beta/parse-configurations">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">update_parse_configurations</a>(\*\*<a href="src/llama_cloud/types/beta/parse_configuration_update_parse_configurations_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration.py">ParseConfiguration</a></code>
 
-## Spreadsheet
+## Sheets
 
 Types:
 
 ```python
-from llama_cloud.types.beta import SpreadsheetJob, SpreadsheetParsingConfig
+from llama_cloud.types.beta import SheetsJob, SheetsParsingConfig
 ```
+
+Methods:
+
+- <code title="post /api/v1/beta/sheets/jobs">client.beta.sheets.<a href="./src/llama_cloud/resources/beta/sheets.py">create</a>(\*\*<a href="src/llama_cloud/types/beta/sheet_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/sheets_job.py">SheetsJob</a></code>
+- <code title="get /api/v1/beta/sheets/jobs">client.beta.sheets.<a href="./src/llama_cloud/resources/beta/sheets.py">list</a>(\*\*<a href="src/llama_cloud/types/beta/sheet_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/sheets_job.py">SyncPaginatedClassifyJobs[SheetsJob]</a></code>
+- <code title="delete /api/v1/beta/sheets/jobs/{spreadsheet_job_id}">client.beta.sheets.<a href="./src/llama_cloud/resources/beta/sheets.py">delete_job</a>(spreadsheet_job_id, \*\*<a href="src/llama_cloud/types/beta/sheet_delete_job_params.py">params</a>) -> object</code>
+- <code title="get /api/v1/beta/sheets/jobs/{spreadsheet_job_id}">client.beta.sheets.<a href="./src/llama_cloud/resources/beta/sheets.py">get</a>(spreadsheet_job_id, \*\*<a href="src/llama_cloud/types/beta/sheet_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/sheets_job.py">SheetsJob</a></code>
+- <code title="get /api/v1/beta/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}">client.beta.sheets.<a href="./src/llama_cloud/resources/beta/sheets.py">get_result_table</a>(region_type, \*, spreadsheet_job_id, region_id, \*\*<a href="src/llama_cloud/types/beta/sheet_get_result_table_params.py">params</a>) -> <a href="./src/llama_cloud/types/presigned_url.py">PresignedURL</a></code>
 
 ## Directories
 
@@ -609,6 +428,7 @@ from llama_cloud.types.beta.directories import (
     FileListResponse,
     FileAddResponse,
     FileGetResponse,
+    FileUploadResponse,
 )
 ```
 
@@ -619,3 +439,37 @@ Methods:
 - <code title="delete /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.beta.directories.files.<a href="./src/llama_cloud/resources/beta/directories/files.py">delete</a>(directory_file_id, \*, directory_id, \*\*<a href="src/llama_cloud/types/beta/directories/file_delete_params.py">params</a>) -> None</code>
 - <code title="post /api/v1/beta/directories/{directory_id}/files">client.beta.directories.files.<a href="./src/llama_cloud/resources/beta/directories/files.py">add</a>(directory_id, \*\*<a href="src/llama_cloud/types/beta/directories/file_add_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/directories/file_add_response.py">FileAddResponse</a></code>
 - <code title="get /api/v1/beta/directories/{directory_id}/files/{directory_file_id}">client.beta.directories.files.<a href="./src/llama_cloud/resources/beta/directories/files.py">get</a>(directory_file_id, \*, directory_id, \*\*<a href="src/llama_cloud/types/beta/directories/file_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/directories/file_get_response.py">FileGetResponse</a></code>
+- <code title="post /api/v1/beta/directories/{directory_id}/files/upload">client.beta.directories.files.<a href="./src/llama_cloud/resources/beta/directories/files.py">upload</a>(directory_id, \*\*<a href="src/llama_cloud/types/beta/directories/file_upload_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/directories/file_upload_response.py">FileUploadResponse</a></code>
+
+## Batch
+
+Types:
+
+```python
+from llama_cloud.types.beta import (
+    BatchCreateResponse,
+    BatchListResponse,
+    BatchCancelResponse,
+    BatchGetStatusResponse,
+)
+```
+
+Methods:
+
+- <code title="post /api/v1/beta/batch-processing">client.beta.batch.<a href="./src/llama_cloud/resources/beta/batch/batch.py">create</a>(\*\*<a href="src/llama_cloud/types/beta/batch_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/batch_create_response.py">BatchCreateResponse</a></code>
+- <code title="get /api/v1/beta/batch-processing">client.beta.batch.<a href="./src/llama_cloud/resources/beta/batch/batch.py">list</a>(\*\*<a href="src/llama_cloud/types/beta/batch_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/batch_list_response.py">SyncPaginatedBatchItems[BatchListResponse]</a></code>
+- <code title="post /api/v1/beta/batch-processing/{job_id}/cancel">client.beta.batch.<a href="./src/llama_cloud/resources/beta/batch/batch.py">cancel</a>(job_id, \*\*<a href="src/llama_cloud/types/beta/batch_cancel_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/batch_cancel_response.py">BatchCancelResponse</a></code>
+- <code title="get /api/v1/beta/batch-processing/{job_id}">client.beta.batch.<a href="./src/llama_cloud/resources/beta/batch/batch.py">get_status</a>(job_id, \*\*<a href="src/llama_cloud/types/beta/batch_get_status_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/batch_get_status_response.py">BatchGetStatusResponse</a></code>
+
+### JobItems
+
+Types:
+
+```python
+from llama_cloud.types.beta.batch import JobItemListResponse, JobItemGetProcessingResultsResponse
+```
+
+Methods:
+
+- <code title="get /api/v1/beta/batch-processing/{job_id}/items">client.beta.batch.job_items.<a href="./src/llama_cloud/resources/beta/batch/job_items.py">list</a>(job_id, \*\*<a href="src/llama_cloud/types/beta/batch/job_item_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/batch/job_item_list_response.py">SyncPaginatedBatchItems[JobItemListResponse]</a></code>
+- <code title="get /api/v1/beta/batch-processing/items/{item_id}/processing-results">client.beta.batch.job_items.<a href="./src/llama_cloud/resources/beta/batch/job_items.py">get_processing_results</a>(item_id, \*\*<a href="src/llama_cloud/types/beta/batch/job_item_get_processing_results_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/batch/job_item_get_processing_results_response.py">JobItemGetProcessingResultsResponse</a></code>

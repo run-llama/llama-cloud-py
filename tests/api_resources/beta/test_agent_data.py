@@ -14,6 +14,7 @@ from llama_cloud.types.beta import (
     AgentDataDeleteResponse,
     AgentDataSearchResponse,
     AgentDataAggregateResponse,
+    AgentDataDeleteByQueryResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -239,6 +240,61 @@ class TestAgentData:
 
             agent_data = response.parse()
             assert_matches_type(AgentDataAggregateResponse, agent_data, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_delete_by_query(self, client: LlamaCloud) -> None:
+        agent_data = client.beta.agent_data.delete_by_query(
+            deployment_name="deployment_name",
+        )
+        assert_matches_type(AgentDataDeleteByQueryResponse, agent_data, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_delete_by_query_with_all_params(self, client: LlamaCloud) -> None:
+        agent_data = client.beta.agent_data.delete_by_query(
+            deployment_name="deployment_name",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            collection="collection",
+            filter={
+                "foo": {
+                    "eq": 0,
+                    "gt": 0,
+                    "gte": 0,
+                    "includes": [0],
+                    "lt": 0,
+                    "lte": 0,
+                }
+            },
+        )
+        assert_matches_type(AgentDataDeleteByQueryResponse, agent_data, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_delete_by_query(self, client: LlamaCloud) -> None:
+        response = client.beta.agent_data.with_raw_response.delete_by_query(
+            deployment_name="deployment_name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        agent_data = response.parse()
+        assert_matches_type(AgentDataDeleteByQueryResponse, agent_data, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_delete_by_query(self, client: LlamaCloud) -> None:
+        with client.beta.agent_data.with_streaming_response.delete_by_query(
+            deployment_name="deployment_name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            agent_data = response.parse()
+            assert_matches_type(AgentDataDeleteByQueryResponse, agent_data, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -577,6 +633,61 @@ class TestAsyncAgentData:
 
             agent_data = await response.parse()
             assert_matches_type(AgentDataAggregateResponse, agent_data, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_delete_by_query(self, async_client: AsyncLlamaCloud) -> None:
+        agent_data = await async_client.beta.agent_data.delete_by_query(
+            deployment_name="deployment_name",
+        )
+        assert_matches_type(AgentDataDeleteByQueryResponse, agent_data, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_delete_by_query_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        agent_data = await async_client.beta.agent_data.delete_by_query(
+            deployment_name="deployment_name",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            collection="collection",
+            filter={
+                "foo": {
+                    "eq": 0,
+                    "gt": 0,
+                    "gte": 0,
+                    "includes": [0],
+                    "lt": 0,
+                    "lte": 0,
+                }
+            },
+        )
+        assert_matches_type(AgentDataDeleteByQueryResponse, agent_data, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_delete_by_query(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.beta.agent_data.with_raw_response.delete_by_query(
+            deployment_name="deployment_name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        agent_data = await response.parse()
+        assert_matches_type(AgentDataDeleteByQueryResponse, agent_data, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_delete_by_query(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.beta.agent_data.with_streaming_response.delete_by_query(
+            deployment_name="deployment_name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            agent_data = await response.parse()
+            assert_matches_type(AgentDataDeleteByQueryResponse, agent_data, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

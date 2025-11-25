@@ -10,9 +10,9 @@ import pytest
 from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
 from llama_cloud.types import ManagedIngestionStatusResponse
+from llama_cloud.pagination import SyncPaginatedPipelineFiles, AsyncPaginatedPipelineFiles
 from llama_cloud.types.pipelines import (
     PipelineFile,
-    FileListResponse,
     FileCreateResponse,
     FileGetStatusCountsResponse,
 )
@@ -141,7 +141,7 @@ class TestFiles:
                 pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             )
 
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(SyncPaginatedPipelineFiles[PipelineFile], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -150,10 +150,14 @@ class TestFiles:
             file = client.pipelines.files.list(
                 pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
                 data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                file_name_contains="file_name_contains",
+                limit=0,
+                offset=0,
                 only_manually_uploaded=True,
+                order_by="order_by",
             )
 
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(SyncPaginatedPipelineFiles[PipelineFile], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -166,7 +170,7 @@ class TestFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = response.parse()
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(SyncPaginatedPipelineFiles[PipelineFile], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -179,7 +183,7 @@ class TestFiles:
                 assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
                 file = response.parse()
-                assert_matches_type(FileListResponse, file, path=["response"])
+                assert_matches_type(SyncPaginatedPipelineFiles[PipelineFile], file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -470,7 +474,7 @@ class TestAsyncFiles:
                 pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             )
 
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(AsyncPaginatedPipelineFiles[PipelineFile], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -479,10 +483,14 @@ class TestAsyncFiles:
             file = await async_client.pipelines.files.list(
                 pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
                 data_source_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                file_name_contains="file_name_contains",
+                limit=0,
+                offset=0,
                 only_manually_uploaded=True,
+                order_by="order_by",
             )
 
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(AsyncPaginatedPipelineFiles[PipelineFile], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -495,7 +503,7 @@ class TestAsyncFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = await response.parse()
-        assert_matches_type(FileListResponse, file, path=["response"])
+        assert_matches_type(AsyncPaginatedPipelineFiles[PipelineFile], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -508,7 +516,7 @@ class TestAsyncFiles:
                 assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
                 file = await response.parse()
-                assert_matches_type(FileListResponse, file, path=["response"])
+                assert_matches_type(AsyncPaginatedPipelineFiles[PipelineFile], file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

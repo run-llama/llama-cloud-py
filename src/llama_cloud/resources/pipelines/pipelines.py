@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-import typing_extensions
-from typing import Iterable, Optional
+from typing import Optional
 
 import httpx
 
@@ -25,11 +24,10 @@ from .files import (
 )
 from ...types import (
     PipelineType,
-    pipeline_chat_params,
     pipeline_list_params,
     pipeline_create_params,
     pipeline_update_params,
-    pipeline_get_files2_params,
+    pipeline_upsert_params,
     pipeline_get_status_params,
 )
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
@@ -72,11 +70,9 @@ from ...types.pipeline_type import PipelineType
 from ...types.pipeline_list_response import PipelineListResponse
 from ...types.sparse_model_config_param import SparseModelConfigParam
 from ...types.llama_parse_parameters_param import LlamaParseParametersParam
-from ...types.pipeline_get_files2_response import PipelineGetFiles2Response
 from ...types.preset_retrieval_params_param import PresetRetrievalParamsParam
 from ...types.pipeline_metadata_config_param import PipelineMetadataConfigParam
 from ...types.managed_ingestion_status_response import ManagedIngestionStatusResponse
-from ...types.pipeline_get_playground_session_response import PipelineGetPlaygroundSessionResponse
 
 __all__ = ["PipelinesResource", "AsyncPipelinesResource"]
 
@@ -395,117 +391,6 @@ class PipelinesResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
-    def chat(
-        self,
-        pipeline_id: str,
-        *,
-        class_name: str | Omit = omit,
-        data: pipeline_chat_params.Data | Omit = omit,
-        messages: Iterable[pipeline_chat_params.Message] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """
-        Make a retrieval query + chat completion for a managed pipeline.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._post(
-            f"/api/v1/pipelines/{pipeline_id}/chat",
-            body=maybe_transform(
-                {
-                    "class_name": class_name,
-                    "data": data,
-                    "messages": messages,
-                },
-                pipeline_chat_params.PipelineChatParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=object,
-        )
-
-    def copy(
-        self,
-        pipeline_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Pipeline:
-        """
-        Copy a pipeline by ID.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._post(
-            f"/api/v1/pipelines/{pipeline_id}/copy",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Pipeline,
-        )
-
-    def force_delete(
-        self,
-        pipeline_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
-        """
-        Force Delete Pipeline
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return self._post(
-            f"/api/v1/pipelines/{pipeline_id}/force-delete",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
     def get(
         self,
         pipeline_id: str,
@@ -537,98 +422,6 @@ class PipelinesResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Pipeline,
-        )
-
-    @typing_extensions.deprecated("deprecated")
-    def get_files2(
-        self,
-        pipeline_id: str,
-        *,
-        data_source_id: Optional[str] | Omit = omit,
-        file_name_contains: Optional[str] | Omit = omit,
-        limit: Optional[int] | Omit = omit,
-        offset: Optional[int] | Omit = omit,
-        only_manually_uploaded: bool | Omit = omit,
-        order_by: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PipelineGetFiles2Response:
-        """
-        Get files for a pipeline.
-
-        Args: pipeline_id: ID of the pipeline data_source_id: Optional filter by data
-        source ID only_manually_uploaded: Filter for only manually uploaded files
-        file_name_contains: Optional filter by file name (substring match) limit: Limit
-        number of results offset: Offset for pagination order_by: Field to order by
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/files2",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "data_source_id": data_source_id,
-                        "file_name_contains": file_name_contains,
-                        "limit": limit,
-                        "offset": offset,
-                        "only_manually_uploaded": only_manually_uploaded,
-                        "order_by": order_by,
-                    },
-                    pipeline_get_files2_params.PipelineGetFiles2Params,
-                ),
-            ),
-            cast_to=PipelineGetFiles2Response,
-        )
-
-    def get_playground_session(
-        self,
-        pipeline_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PipelineGetPlaygroundSessionResponse:
-        """
-        Get a playground session for a user and pipeline.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/playground-session",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=PipelineGetPlaygroundSessionResponse,
         )
 
     def get_status(
@@ -669,6 +462,109 @@ class PipelinesResource(SyncAPIResource):
                 ),
             ),
             cast_to=ManagedIngestionStatusResponse,
+        )
+
+    def upsert(
+        self,
+        *,
+        name: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        data_sink: Optional[pipeline_upsert_params.DataSink] | Omit = omit,
+        data_sink_id: Optional[str] | Omit = omit,
+        embedding_config: Optional[pipeline_upsert_params.EmbeddingConfig] | Omit = omit,
+        embedding_model_config_id: Optional[str] | Omit = omit,
+        llama_parse_parameters: LlamaParseParametersParam | Omit = omit,
+        managed_pipeline_id: Optional[str] | Omit = omit,
+        metadata_config: Optional[PipelineMetadataConfigParam] | Omit = omit,
+        pipeline_type: PipelineType | Omit = omit,
+        preset_retrieval_parameters: PresetRetrievalParamsParam | Omit = omit,
+        sparse_model_config: Optional[SparseModelConfigParam] | Omit = omit,
+        status: Optional[str] | Omit = omit,
+        transform_config: Optional[pipeline_upsert_params.TransformConfig] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Pipeline:
+        """Upsert a pipeline for a project.
+
+        Updates if a pipeline with the same name and
+        project_id already exists. Otherwise, creates a new pipeline.
+
+        Args:
+          data_sink: Schema for creating a data sink.
+
+          data_sink_id: Data sink ID. When provided instead of data_sink, the data sink will be looked
+              up by ID.
+
+          embedding_model_config_id: Embedding model config ID. When provided instead of embedding_config, the
+              embedding model config will be looked up by ID.
+
+          llama_parse_parameters: Settings that can be configured for how to use LlamaParse to parse files within
+              a LlamaCloud pipeline.
+
+          managed_pipeline_id: The ID of the ManagedPipeline this playground pipeline is linked to.
+
+          metadata_config: Metadata configuration for the pipeline.
+
+          pipeline_type: Type of pipeline. Either PLAYGROUND or MANAGED.
+
+          preset_retrieval_parameters: Preset retrieval parameters for the pipeline.
+
+          sparse_model_config: Configuration for sparse embedding models used in hybrid search.
+
+              This allows users to choose between Splade and BM25 models for sparse retrieval
+              in managed data sinks.
+
+          status: Status of the pipeline deployment.
+
+          transform_config: Configuration for the transformation.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._put(
+            "/api/v1/pipelines",
+            body=maybe_transform(
+                {
+                    "name": name,
+                    "data_sink": data_sink,
+                    "data_sink_id": data_sink_id,
+                    "embedding_config": embedding_config,
+                    "embedding_model_config_id": embedding_model_config_id,
+                    "llama_parse_parameters": llama_parse_parameters,
+                    "managed_pipeline_id": managed_pipeline_id,
+                    "metadata_config": metadata_config,
+                    "pipeline_type": pipeline_type,
+                    "preset_retrieval_parameters": preset_retrieval_parameters,
+                    "sparse_model_config": sparse_model_config,
+                    "status": status,
+                    "transform_config": transform_config,
+                },
+                pipeline_upsert_params.PipelineUpsertParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    pipeline_upsert_params.PipelineUpsertParams,
+                ),
+            ),
+            cast_to=Pipeline,
         )
 
 
@@ -986,117 +882,6 @@ class AsyncPipelinesResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
-    async def chat(
-        self,
-        pipeline_id: str,
-        *,
-        class_name: str | Omit = omit,
-        data: pipeline_chat_params.Data | Omit = omit,
-        messages: Iterable[pipeline_chat_params.Message] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """
-        Make a retrieval query + chat completion for a managed pipeline.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return await self._post(
-            f"/api/v1/pipelines/{pipeline_id}/chat",
-            body=await async_maybe_transform(
-                {
-                    "class_name": class_name,
-                    "data": data,
-                    "messages": messages,
-                },
-                pipeline_chat_params.PipelineChatParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=object,
-        )
-
-    async def copy(
-        self,
-        pipeline_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Pipeline:
-        """
-        Copy a pipeline by ID.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return await self._post(
-            f"/api/v1/pipelines/{pipeline_id}/copy",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Pipeline,
-        )
-
-    async def force_delete(
-        self,
-        pipeline_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
-        """
-        Force Delete Pipeline
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return await self._post(
-            f"/api/v1/pipelines/{pipeline_id}/force-delete",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
     async def get(
         self,
         pipeline_id: str,
@@ -1128,98 +913,6 @@ class AsyncPipelinesResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Pipeline,
-        )
-
-    @typing_extensions.deprecated("deprecated")
-    async def get_files2(
-        self,
-        pipeline_id: str,
-        *,
-        data_source_id: Optional[str] | Omit = omit,
-        file_name_contains: Optional[str] | Omit = omit,
-        limit: Optional[int] | Omit = omit,
-        offset: Optional[int] | Omit = omit,
-        only_manually_uploaded: bool | Omit = omit,
-        order_by: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PipelineGetFiles2Response:
-        """
-        Get files for a pipeline.
-
-        Args: pipeline_id: ID of the pipeline data_source_id: Optional filter by data
-        source ID only_manually_uploaded: Filter for only manually uploaded files
-        file_name_contains: Optional filter by file name (substring match) limit: Limit
-        number of results offset: Offset for pagination order_by: Field to order by
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/files2",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "data_source_id": data_source_id,
-                        "file_name_contains": file_name_contains,
-                        "limit": limit,
-                        "offset": offset,
-                        "only_manually_uploaded": only_manually_uploaded,
-                        "order_by": order_by,
-                    },
-                    pipeline_get_files2_params.PipelineGetFiles2Params,
-                ),
-            ),
-            cast_to=PipelineGetFiles2Response,
-        )
-
-    async def get_playground_session(
-        self,
-        pipeline_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PipelineGetPlaygroundSessionResponse:
-        """
-        Get a playground session for a user and pipeline.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/playground-session",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=PipelineGetPlaygroundSessionResponse,
         )
 
     async def get_status(
@@ -1262,6 +955,109 @@ class AsyncPipelinesResource(AsyncAPIResource):
             cast_to=ManagedIngestionStatusResponse,
         )
 
+    async def upsert(
+        self,
+        *,
+        name: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        data_sink: Optional[pipeline_upsert_params.DataSink] | Omit = omit,
+        data_sink_id: Optional[str] | Omit = omit,
+        embedding_config: Optional[pipeline_upsert_params.EmbeddingConfig] | Omit = omit,
+        embedding_model_config_id: Optional[str] | Omit = omit,
+        llama_parse_parameters: LlamaParseParametersParam | Omit = omit,
+        managed_pipeline_id: Optional[str] | Omit = omit,
+        metadata_config: Optional[PipelineMetadataConfigParam] | Omit = omit,
+        pipeline_type: PipelineType | Omit = omit,
+        preset_retrieval_parameters: PresetRetrievalParamsParam | Omit = omit,
+        sparse_model_config: Optional[SparseModelConfigParam] | Omit = omit,
+        status: Optional[str] | Omit = omit,
+        transform_config: Optional[pipeline_upsert_params.TransformConfig] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Pipeline:
+        """Upsert a pipeline for a project.
+
+        Updates if a pipeline with the same name and
+        project_id already exists. Otherwise, creates a new pipeline.
+
+        Args:
+          data_sink: Schema for creating a data sink.
+
+          data_sink_id: Data sink ID. When provided instead of data_sink, the data sink will be looked
+              up by ID.
+
+          embedding_model_config_id: Embedding model config ID. When provided instead of embedding_config, the
+              embedding model config will be looked up by ID.
+
+          llama_parse_parameters: Settings that can be configured for how to use LlamaParse to parse files within
+              a LlamaCloud pipeline.
+
+          managed_pipeline_id: The ID of the ManagedPipeline this playground pipeline is linked to.
+
+          metadata_config: Metadata configuration for the pipeline.
+
+          pipeline_type: Type of pipeline. Either PLAYGROUND or MANAGED.
+
+          preset_retrieval_parameters: Preset retrieval parameters for the pipeline.
+
+          sparse_model_config: Configuration for sparse embedding models used in hybrid search.
+
+              This allows users to choose between Splade and BM25 models for sparse retrieval
+              in managed data sinks.
+
+          status: Status of the pipeline deployment.
+
+          transform_config: Configuration for the transformation.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._put(
+            "/api/v1/pipelines",
+            body=await async_maybe_transform(
+                {
+                    "name": name,
+                    "data_sink": data_sink,
+                    "data_sink_id": data_sink_id,
+                    "embedding_config": embedding_config,
+                    "embedding_model_config_id": embedding_model_config_id,
+                    "llama_parse_parameters": llama_parse_parameters,
+                    "managed_pipeline_id": managed_pipeline_id,
+                    "metadata_config": metadata_config,
+                    "pipeline_type": pipeline_type,
+                    "preset_retrieval_parameters": preset_retrieval_parameters,
+                    "sparse_model_config": sparse_model_config,
+                    "status": status,
+                    "transform_config": transform_config,
+                },
+                pipeline_upsert_params.PipelineUpsertParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    pipeline_upsert_params.PipelineUpsertParams,
+                ),
+            ),
+            cast_to=Pipeline,
+        )
+
 
 class PipelinesResourceWithRawResponse:
     def __init__(self, pipelines: PipelinesResource) -> None:
@@ -1279,28 +1075,14 @@ class PipelinesResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             pipelines.delete,
         )
-        self.chat = to_raw_response_wrapper(
-            pipelines.chat,
-        )
-        self.copy = to_raw_response_wrapper(
-            pipelines.copy,
-        )
-        self.force_delete = to_raw_response_wrapper(
-            pipelines.force_delete,
-        )
         self.get = to_raw_response_wrapper(
             pipelines.get,
         )
-        self.get_files2 = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                pipelines.get_files2,  # pyright: ignore[reportDeprecated],
-            )
-        )
-        self.get_playground_session = to_raw_response_wrapper(
-            pipelines.get_playground_session,
-        )
         self.get_status = to_raw_response_wrapper(
             pipelines.get_status,
+        )
+        self.upsert = to_raw_response_wrapper(
+            pipelines.upsert,
         )
 
     @cached_property
@@ -1340,28 +1122,14 @@ class AsyncPipelinesResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             pipelines.delete,
         )
-        self.chat = async_to_raw_response_wrapper(
-            pipelines.chat,
-        )
-        self.copy = async_to_raw_response_wrapper(
-            pipelines.copy,
-        )
-        self.force_delete = async_to_raw_response_wrapper(
-            pipelines.force_delete,
-        )
         self.get = async_to_raw_response_wrapper(
             pipelines.get,
         )
-        self.get_files2 = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                pipelines.get_files2,  # pyright: ignore[reportDeprecated],
-            )
-        )
-        self.get_playground_session = async_to_raw_response_wrapper(
-            pipelines.get_playground_session,
-        )
         self.get_status = async_to_raw_response_wrapper(
             pipelines.get_status,
+        )
+        self.upsert = async_to_raw_response_wrapper(
+            pipelines.upsert,
         )
 
     @cached_property
@@ -1401,28 +1169,14 @@ class PipelinesResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             pipelines.delete,
         )
-        self.chat = to_streamed_response_wrapper(
-            pipelines.chat,
-        )
-        self.copy = to_streamed_response_wrapper(
-            pipelines.copy,
-        )
-        self.force_delete = to_streamed_response_wrapper(
-            pipelines.force_delete,
-        )
         self.get = to_streamed_response_wrapper(
             pipelines.get,
         )
-        self.get_files2 = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                pipelines.get_files2,  # pyright: ignore[reportDeprecated],
-            )
-        )
-        self.get_playground_session = to_streamed_response_wrapper(
-            pipelines.get_playground_session,
-        )
         self.get_status = to_streamed_response_wrapper(
             pipelines.get_status,
+        )
+        self.upsert = to_streamed_response_wrapper(
+            pipelines.upsert,
         )
 
     @cached_property
@@ -1462,28 +1216,14 @@ class AsyncPipelinesResourceWithStreamingResponse:
         self.delete = async_to_streamed_response_wrapper(
             pipelines.delete,
         )
-        self.chat = async_to_streamed_response_wrapper(
-            pipelines.chat,
-        )
-        self.copy = async_to_streamed_response_wrapper(
-            pipelines.copy,
-        )
-        self.force_delete = async_to_streamed_response_wrapper(
-            pipelines.force_delete,
-        )
         self.get = async_to_streamed_response_wrapper(
             pipelines.get,
         )
-        self.get_files2 = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                pipelines.get_files2,  # pyright: ignore[reportDeprecated],
-            )
-        )
-        self.get_playground_session = async_to_streamed_response_wrapper(
-            pipelines.get_playground_session,
-        )
         self.get_status = async_to_streamed_response_wrapper(
             pipelines.get_status,
+        )
+        self.upsert = async_to_streamed_response_wrapper(
+            pipelines.upsert,
         )
 
     @cached_property

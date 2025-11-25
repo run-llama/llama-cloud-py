@@ -17,10 +17,10 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
+from ...pagination import SyncPaginatedPipelineFiles, AsyncPaginatedPipelineFiles
+from ..._base_client import AsyncPaginator, make_request_options
 from ...types.pipelines import file_list_params, file_create_params, file_update_params, file_get_status_counts_params
 from ...types.pipelines.pipeline_file import PipelineFile
-from ...types.pipelines.file_list_response import FileListResponse
 from ...types.pipelines.file_create_response import FileCreateResponse
 from ...types.managed_ingestion_status_response import ManagedIngestionStatusResponse
 from ...types.pipelines.file_get_status_counts_response import FileGetStatusCountsResponse
@@ -130,16 +130,25 @@ class FilesResource(SyncAPIResource):
         pipeline_id: str,
         *,
         data_source_id: Optional[str] | Omit = omit,
+        file_name_contains: Optional[str] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        offset: Optional[int] | Omit = omit,
         only_manually_uploaded: bool | Omit = omit,
+        order_by: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListResponse:
+    ) -> SyncPaginatedPipelineFiles[PipelineFile]:
         """
         Get files for a pipeline.
+
+        Args: pipeline_id: ID of the pipeline data_source_id: Optional filter by data
+        source ID only_manually_uploaded: Filter for only manually uploaded files
+        file_name_contains: Optional filter by file name (substring match) limit: Limit
+        number of results offset: Offset for pagination order_by: Field to order by
 
         Args:
           extra_headers: Send extra headers
@@ -152,8 +161,9 @@ class FilesResource(SyncAPIResource):
         """
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/files",
+        return self._get_api_list(
+            f"/api/v1/pipelines/{pipeline_id}/files2",
+            page=SyncPaginatedPipelineFiles[PipelineFile],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -162,12 +172,16 @@ class FilesResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "data_source_id": data_source_id,
+                        "file_name_contains": file_name_contains,
+                        "limit": limit,
+                        "offset": offset,
                         "only_manually_uploaded": only_manually_uploaded,
+                        "order_by": order_by,
                     },
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            model=PipelineFile,
         )
 
     def delete(
@@ -386,21 +400,30 @@ class AsyncFilesResource(AsyncAPIResource):
         )
 
     @typing_extensions.deprecated("deprecated")
-    async def list(
+    def list(
         self,
         pipeline_id: str,
         *,
         data_source_id: Optional[str] | Omit = omit,
+        file_name_contains: Optional[str] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        offset: Optional[int] | Omit = omit,
         only_manually_uploaded: bool | Omit = omit,
+        order_by: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListResponse:
+    ) -> AsyncPaginator[PipelineFile, AsyncPaginatedPipelineFiles[PipelineFile]]:
         """
         Get files for a pipeline.
+
+        Args: pipeline_id: ID of the pipeline data_source_id: Optional filter by data
+        source ID only_manually_uploaded: Filter for only manually uploaded files
+        file_name_contains: Optional filter by file name (substring match) limit: Limit
+        number of results offset: Offset for pagination order_by: Field to order by
 
         Args:
           extra_headers: Send extra headers
@@ -413,22 +436,27 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/files",
+        return self._get_api_list(
+            f"/api/v1/pipelines/{pipeline_id}/files2",
+            page=AsyncPaginatedPipelineFiles[PipelineFile],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "data_source_id": data_source_id,
+                        "file_name_contains": file_name_contains,
+                        "limit": limit,
+                        "offset": offset,
                         "only_manually_uploaded": only_manually_uploaded,
+                        "order_by": order_by,
                     },
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            model=PipelineFile,
         )
 
     async def delete(

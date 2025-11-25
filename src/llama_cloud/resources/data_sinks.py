@@ -7,7 +7,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..types import data_sink_list_params, data_sink_create_params, data_sink_update_params, data_sink_upsert_params
+from ..types import data_sink_list_params, data_sink_create_params, data_sink_update_params
 from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -259,65 +259,6 @@ class DataSinksResource(SyncAPIResource):
             cast_to=DataSink,
         )
 
-    def upsert(
-        self,
-        *,
-        component: data_sink_upsert_params.Component,
-        name: str,
-        sink_type: Literal["PINECONE", "POSTGRES", "QDRANT", "AZUREAI_SEARCH", "MONGODB_ATLAS", "MILVUS", "ASTRA_DB"],
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DataSink:
-        """Upserts a data sink.
-
-        Updates if a data sink with the same name and project_id
-        already exists. Otherwise, creates a new data sink.
-
-        Args:
-          component: Component that implements the data sink
-
-          name: The name of the data sink.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._put(
-            "/api/v1/data-sinks",
-            body=maybe_transform(
-                {
-                    "component": component,
-                    "name": name,
-                    "sink_type": sink_type,
-                },
-                data_sink_upsert_params.DataSinkUpsertParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    data_sink_upsert_params.DataSinkUpsertParams,
-                ),
-            ),
-            cast_to=DataSink,
-        )
-
 
 class AsyncDataSinksResource(AsyncAPIResource):
     @cached_property
@@ -553,65 +494,6 @@ class AsyncDataSinksResource(AsyncAPIResource):
             cast_to=DataSink,
         )
 
-    async def upsert(
-        self,
-        *,
-        component: data_sink_upsert_params.Component,
-        name: str,
-        sink_type: Literal["PINECONE", "POSTGRES", "QDRANT", "AZUREAI_SEARCH", "MONGODB_ATLAS", "MILVUS", "ASTRA_DB"],
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DataSink:
-        """Upserts a data sink.
-
-        Updates if a data sink with the same name and project_id
-        already exists. Otherwise, creates a new data sink.
-
-        Args:
-          component: Component that implements the data sink
-
-          name: The name of the data sink.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._put(
-            "/api/v1/data-sinks",
-            body=await async_maybe_transform(
-                {
-                    "component": component,
-                    "name": name,
-                    "sink_type": sink_type,
-                },
-                data_sink_upsert_params.DataSinkUpsertParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    data_sink_upsert_params.DataSinkUpsertParams,
-                ),
-            ),
-            cast_to=DataSink,
-        )
-
 
 class DataSinksResourceWithRawResponse:
     def __init__(self, data_sinks: DataSinksResource) -> None:
@@ -631,9 +513,6 @@ class DataSinksResourceWithRawResponse:
         )
         self.get = to_raw_response_wrapper(
             data_sinks.get,
-        )
-        self.upsert = to_raw_response_wrapper(
-            data_sinks.upsert,
         )
 
 
@@ -656,9 +535,6 @@ class AsyncDataSinksResourceWithRawResponse:
         self.get = async_to_raw_response_wrapper(
             data_sinks.get,
         )
-        self.upsert = async_to_raw_response_wrapper(
-            data_sinks.upsert,
-        )
 
 
 class DataSinksResourceWithStreamingResponse:
@@ -680,9 +556,6 @@ class DataSinksResourceWithStreamingResponse:
         self.get = to_streamed_response_wrapper(
             data_sinks.get,
         )
-        self.upsert = to_streamed_response_wrapper(
-            data_sinks.upsert,
-        )
 
 
 class AsyncDataSinksResourceWithStreamingResponse:
@@ -703,7 +576,4 @@ class AsyncDataSinksResourceWithStreamingResponse:
         )
         self.get = async_to_streamed_response_wrapper(
             data_sinks.get,
-        )
-        self.upsert = async_to_streamed_response_wrapper(
-            data_sinks.upsert,
         )

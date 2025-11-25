@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from .files import (
-    FilesResource,
-    AsyncFilesResource,
-    FilesResourceWithRawResponse,
-    AsyncFilesResourceWithRawResponse,
-    FilesResourceWithStreamingResponse,
-    AsyncFilesResourceWithStreamingResponse,
+from .sheets import (
+    SheetsResource,
+    AsyncSheetsResource,
+    SheetsResourceWithRawResponse,
+    AsyncSheetsResourceWithRawResponse,
+    SheetsResourceWithStreamingResponse,
+    AsyncSheetsResourceWithStreamingResponse,
 )
 from ..._compat import cached_property
 from .agent_data import (
@@ -20,6 +20,14 @@ from .agent_data import (
     AsyncAgentDataResourceWithStreamingResponse,
 )
 from ..._resource import SyncAPIResource, AsyncAPIResource
+from .batch.batch import (
+    BatchResource,
+    AsyncBatchResource,
+    BatchResourceWithRawResponse,
+    AsyncBatchResourceWithRawResponse,
+    BatchResourceWithStreamingResponse,
+    AsyncBatchResourceWithStreamingResponse,
+)
 from .parse_configurations import (
     ParseConfigurationsResource,
     AsyncParseConfigurationsResource,
@@ -46,16 +54,20 @@ class BetaResource(SyncAPIResource):
         return AgentDataResource(self._client)
 
     @cached_property
-    def files(self) -> FilesResource:
-        return FilesResource(self._client)
-
-    @cached_property
     def parse_configurations(self) -> ParseConfigurationsResource:
         return ParseConfigurationsResource(self._client)
 
     @cached_property
+    def sheets(self) -> SheetsResource:
+        return SheetsResource(self._client)
+
+    @cached_property
     def directories(self) -> DirectoriesResource:
         return DirectoriesResource(self._client)
+
+    @cached_property
+    def batch(self) -> BatchResource:
+        return BatchResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> BetaResourceWithRawResponse:
@@ -83,16 +95,20 @@ class AsyncBetaResource(AsyncAPIResource):
         return AsyncAgentDataResource(self._client)
 
     @cached_property
-    def files(self) -> AsyncFilesResource:
-        return AsyncFilesResource(self._client)
-
-    @cached_property
     def parse_configurations(self) -> AsyncParseConfigurationsResource:
         return AsyncParseConfigurationsResource(self._client)
 
     @cached_property
+    def sheets(self) -> AsyncSheetsResource:
+        return AsyncSheetsResource(self._client)
+
+    @cached_property
     def directories(self) -> AsyncDirectoriesResource:
         return AsyncDirectoriesResource(self._client)
+
+    @cached_property
+    def batch(self) -> AsyncBatchResource:
+        return AsyncBatchResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncBetaResourceWithRawResponse:
@@ -123,16 +139,20 @@ class BetaResourceWithRawResponse:
         return AgentDataResourceWithRawResponse(self._beta.agent_data)
 
     @cached_property
-    def files(self) -> FilesResourceWithRawResponse:
-        return FilesResourceWithRawResponse(self._beta.files)
-
-    @cached_property
     def parse_configurations(self) -> ParseConfigurationsResourceWithRawResponse:
         return ParseConfigurationsResourceWithRawResponse(self._beta.parse_configurations)
 
     @cached_property
+    def sheets(self) -> SheetsResourceWithRawResponse:
+        return SheetsResourceWithRawResponse(self._beta.sheets)
+
+    @cached_property
     def directories(self) -> DirectoriesResourceWithRawResponse:
         return DirectoriesResourceWithRawResponse(self._beta.directories)
+
+    @cached_property
+    def batch(self) -> BatchResourceWithRawResponse:
+        return BatchResourceWithRawResponse(self._beta.batch)
 
 
 class AsyncBetaResourceWithRawResponse:
@@ -144,16 +164,20 @@ class AsyncBetaResourceWithRawResponse:
         return AsyncAgentDataResourceWithRawResponse(self._beta.agent_data)
 
     @cached_property
-    def files(self) -> AsyncFilesResourceWithRawResponse:
-        return AsyncFilesResourceWithRawResponse(self._beta.files)
-
-    @cached_property
     def parse_configurations(self) -> AsyncParseConfigurationsResourceWithRawResponse:
         return AsyncParseConfigurationsResourceWithRawResponse(self._beta.parse_configurations)
 
     @cached_property
+    def sheets(self) -> AsyncSheetsResourceWithRawResponse:
+        return AsyncSheetsResourceWithRawResponse(self._beta.sheets)
+
+    @cached_property
     def directories(self) -> AsyncDirectoriesResourceWithRawResponse:
         return AsyncDirectoriesResourceWithRawResponse(self._beta.directories)
+
+    @cached_property
+    def batch(self) -> AsyncBatchResourceWithRawResponse:
+        return AsyncBatchResourceWithRawResponse(self._beta.batch)
 
 
 class BetaResourceWithStreamingResponse:
@@ -165,16 +189,20 @@ class BetaResourceWithStreamingResponse:
         return AgentDataResourceWithStreamingResponse(self._beta.agent_data)
 
     @cached_property
-    def files(self) -> FilesResourceWithStreamingResponse:
-        return FilesResourceWithStreamingResponse(self._beta.files)
-
-    @cached_property
     def parse_configurations(self) -> ParseConfigurationsResourceWithStreamingResponse:
         return ParseConfigurationsResourceWithStreamingResponse(self._beta.parse_configurations)
 
     @cached_property
+    def sheets(self) -> SheetsResourceWithStreamingResponse:
+        return SheetsResourceWithStreamingResponse(self._beta.sheets)
+
+    @cached_property
     def directories(self) -> DirectoriesResourceWithStreamingResponse:
         return DirectoriesResourceWithStreamingResponse(self._beta.directories)
+
+    @cached_property
+    def batch(self) -> BatchResourceWithStreamingResponse:
+        return BatchResourceWithStreamingResponse(self._beta.batch)
 
 
 class AsyncBetaResourceWithStreamingResponse:
@@ -186,13 +214,17 @@ class AsyncBetaResourceWithStreamingResponse:
         return AsyncAgentDataResourceWithStreamingResponse(self._beta.agent_data)
 
     @cached_property
-    def files(self) -> AsyncFilesResourceWithStreamingResponse:
-        return AsyncFilesResourceWithStreamingResponse(self._beta.files)
-
-    @cached_property
     def parse_configurations(self) -> AsyncParseConfigurationsResourceWithStreamingResponse:
         return AsyncParseConfigurationsResourceWithStreamingResponse(self._beta.parse_configurations)
 
     @cached_property
+    def sheets(self) -> AsyncSheetsResourceWithStreamingResponse:
+        return AsyncSheetsResourceWithStreamingResponse(self._beta.sheets)
+
+    @cached_property
     def directories(self) -> AsyncDirectoriesResourceWithStreamingResponse:
         return AsyncDirectoriesResourceWithStreamingResponse(self._beta.directories)
+
+    @cached_property
+    def batch(self) -> AsyncBatchResourceWithStreamingResponse:
+        return AsyncBatchResourceWithStreamingResponse(self._beta.batch)

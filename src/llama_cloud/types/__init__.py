@@ -2,18 +2,9 @@
 
 from __future__ import annotations
 
-from . import (
-    pipeline,
-    retriever,
-    metadata_filters,
-    retriever_pipeline,
-    preset_retrieval_params,
-    pipeline_get_playground_session_response,
-)
+from . import pipeline, retriever, metadata_filters, retriever_pipeline, preset_retrieval_params
 from .. import _compat
 from .file import File as File
-from .role import Role as Role
-from .project import Project as Project
 from .pipeline import Pipeline as Pipeline
 from .data_sink import DataSink as DataSink
 from .retriever import Retriever as Retriever
@@ -21,97 +12,68 @@ from .data_source import DataSource as DataSource
 from .parsing_job import ParsingJob as ParsingJob
 from .status_enum import StatusEnum as StatusEnum
 from .message_role import MessageRole as MessageRole
-from .organization import Organization as Organization
 from .parsing_mode import ParsingMode as ParsingMode
 from .pipeline_type import PipelineType as PipelineType
 from .presigned_url import PresignedURL as PresignedURL
 from .fail_page_mode import FailPageMode as FailPageMode
-from .llm_parameters import LlmParameters as LlmParameters
 from .retrieval_mode import RetrievalMode as RetrievalMode
-from .usage_and_plan import UsageAndPlan as UsageAndPlan
 from .file_get_params import FileGetParams as FileGetParams
 from .metadata_filters import MetadataFilters as MetadataFilters
 from .parser_languages import ParserLanguages as ParserLanguages
 from .file_delete_params import FileDeleteParams as FileDeleteParams
 from .file_upload_params import FileUploadParams as FileUploadParams
-from .project_get_params import ProjectGetParams as ProjectGetParams
 from .retriever_pipeline import RetrieverPipeline as RetrieverPipeline
-from .project_list_params import ProjectListParams as ProjectListParams
 from .sparse_model_config import SparseModelConfig as SparseModelConfig
-from .llm_parameters_param import LlmParametersParam as LlmParametersParam
-from .parsing_history_item import ParsingHistoryItem as ParsingHistoryItem
-from .pipeline_chat_params import PipelineChatParams as PipelineChatParams
 from .pipeline_list_params import PipelineListParams as PipelineListParams
 from .re_rank_config_param import ReRankConfigParam as ReRankConfigParam
 from .retriever_get_params import RetrieverGetParams as RetrieverGetParams
-from .agent_deployment_list import AgentDeploymentList as AgentDeploymentList
 from .auto_transform_config import AutoTransformConfig as AutoTransformConfig
 from .data_sink_list_params import DataSinkListParams as DataSinkListParams
 from .extraction_run_params import ExtractionRunParams as ExtractionRunParams
-from .project_create_params import ProjectCreateParams as ProjectCreateParams
-from .project_delete_params import ProjectDeleteParams as ProjectDeleteParams
-from .project_list_response import ProjectListResponse as ProjectListResponse
-from .project_update_params import ProjectUpdateParams as ProjectUpdateParams
-from .project_upsert_params import ProjectUpsertParams as ProjectUpsertParams
 from .retriever_list_params import RetrieverListParams as RetrieverListParams
 from .llama_parse_parameters import LlamaParseParameters as LlamaParseParameters
 from .metadata_filters_param import MetadataFiltersParam as MetadataFiltersParam
 from .pipeline_create_params import PipelineCreateParams as PipelineCreateParams
 from .pipeline_list_response import PipelineListResponse as PipelineListResponse
 from .pipeline_update_params import PipelineUpdateParams as PipelineUpdateParams
+from .pipeline_upsert_params import PipelineUpsertParams as PipelineUpsertParams
 from .data_sink_create_params import DataSinkCreateParams as DataSinkCreateParams
 from .data_sink_list_response import DataSinkListResponse as DataSinkListResponse
 from .data_sink_update_params import DataSinkUpdateParams as DataSinkUpdateParams
-from .data_sink_upsert_params import DataSinkUpsertParams as DataSinkUpsertParams
 from .data_source_list_params import DataSourceListParams as DataSourceListParams
 from .preset_retrieval_params import PresetRetrievalParams as PresetRetrievalParams
 from .retriever_create_params import RetrieverCreateParams as RetrieverCreateParams
 from .retriever_list_response import RetrieverListResponse as RetrieverListResponse
+from .retriever_search_params import RetrieverSearchParams as RetrieverSearchParams
 from .retriever_update_params import RetrieverUpdateParams as RetrieverUpdateParams
 from .retriever_upsert_params import RetrieverUpsertParams as RetrieverUpsertParams
 from .composite_retrieval_mode import CompositeRetrievalMode as CompositeRetrievalMode
 from .file_read_content_params import FileReadContentParams as FileReadContentParams
 from .pipeline_metadata_config import PipelineMetadataConfig as PipelineMetadataConfig
-from .project_get_usage_params import ProjectGetUsageParams as ProjectGetUsageParams
 from .retriever_pipeline_param import RetrieverPipelineParam as RetrieverPipelineParam
 from .data_source_create_params import DataSourceCreateParams as DataSourceCreateParams
 from .data_source_list_response import DataSourceListResponse as DataSourceListResponse
 from .data_source_update_params import DataSourceUpdateParams as DataSourceUpdateParams
-from .data_source_upsert_params import DataSourceUpsertParams as DataSourceUpsertParams
-from .retriever_retrieve_params import RetrieverRetrieveParams as RetrieverRetrieveParams
 from .sparse_model_config_param import SparseModelConfigParam as SparseModelConfigParam
 from .composite_retrieval_result import CompositeRetrievalResult as CompositeRetrievalResult
-from .organization_create_params import OrganizationCreateParams as OrganizationCreateParams
-from .organization_list_response import OrganizationListResponse as OrganizationListResponse
-from .organization_update_params import OrganizationUpdateParams as OrganizationUpdateParams
 from .parsing_upload_file_params import ParsingUploadFileParams as ParsingUploadFileParams
-from .pipeline_get_files2_params import PipelineGetFiles2Params as PipelineGetFiles2Params
 from .pipeline_get_status_params import PipelineGetStatusParams as PipelineGetStatusParams
-from .project_get_current_params import ProjectGetCurrentParams as ProjectGetCurrentParams
 from .auto_transform_config_param import AutoTransformConfigParam as AutoTransformConfigParam
 from .file_upload_from_url_params import FileUploadFromURLParams as FileUploadFromURLParams
 from .page_figure_node_with_score import PageFigureNodeWithScore as PageFigureNodeWithScore
 from .llama_parse_parameters_param import LlamaParseParametersParam as LlamaParseParametersParam
-from .pipeline_get_files2_response import PipelineGetFiles2Response as PipelineGetFiles2Response
-from .organization_get_usage_params import OrganizationGetUsageParams as OrganizationGetUsageParams
 from .preset_retrieval_params_param import PresetRetrievalParamsParam as PresetRetrievalParamsParam
 from .advanced_mode_transform_config import AdvancedModeTransformConfig as AdvancedModeTransformConfig
 from .pipeline_metadata_config_param import PipelineMetadataConfigParam as PipelineMetadataConfigParam
-from .organization_get_roles_response import OrganizationGetRolesResponse as OrganizationGetRolesResponse
 from .page_screenshot_node_with_score import PageScreenshotNodeWithScore as PageScreenshotNodeWithScore
 from .parsing_create_screenshot_params import ParsingCreateScreenshotParams as ParsingCreateScreenshotParams
 from .managed_ingestion_status_response import ManagedIngestionStatusResponse as ManagedIngestionStatusResponse
 from .file_generate_presigned_url_params import FileGeneratePresignedURLParams as FileGeneratePresignedURLParams
 from .data_source_reader_version_metadata import DataSourceReaderVersionMetadata as DataSourceReaderVersionMetadata
-from .eval_list_supported_models_response import EvalListSupportedModelsResponse as EvalListSupportedModelsResponse
 from .advanced_mode_transform_config_param import AdvancedModeTransformConfigParam as AdvancedModeTransformConfigParam
 from .file_generate_presigned_url_response import FileGeneratePresignedURLResponse as FileGeneratePresignedURLResponse
-from .parsing_get_parsing_history_response import ParsingGetParsingHistoryResponse as ParsingGetParsingHistoryResponse
 from .llama_parse_supported_file_extensions import (
     LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
-)
-from .pipeline_get_playground_session_response import (
-    PipelineGetPlaygroundSessionResponse as PipelineGetPlaygroundSessionResponse,
 )
 from .parsing_get_supported_file_extensions_response import (
     ParsingGetSupportedFileExtensionsResponse as ParsingGetSupportedFileExtensionsResponse,
@@ -125,15 +87,11 @@ if _compat.PYDANTIC_V1:
     metadata_filters.MetadataFilters.update_forward_refs()  # type: ignore
     pipeline.Pipeline.update_forward_refs()  # type: ignore
     preset_retrieval_params.PresetRetrievalParams.update_forward_refs()  # type: ignore
-    pipeline_get_playground_session_response.PipelineGetPlaygroundSessionResponse.update_forward_refs()  # type: ignore
     retriever.Retriever.update_forward_refs()  # type: ignore
     retriever_pipeline.RetrieverPipeline.update_forward_refs()  # type: ignore
 else:
     metadata_filters.MetadataFilters.model_rebuild(_parent_namespace_depth=0)
     pipeline.Pipeline.model_rebuild(_parent_namespace_depth=0)
     preset_retrieval_params.PresetRetrievalParams.model_rebuild(_parent_namespace_depth=0)
-    pipeline_get_playground_session_response.PipelineGetPlaygroundSessionResponse.model_rebuild(
-        _parent_namespace_depth=0
-    )
     retriever.Retriever.model_rebuild(_parent_namespace_depth=0)
     retriever_pipeline.RetrieverPipeline.model_rebuild(_parent_namespace_depth=0)

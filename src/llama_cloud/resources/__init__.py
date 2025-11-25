@@ -8,14 +8,6 @@ from .beta import (
     BetaResourceWithStreamingResponse,
     AsyncBetaResourceWithStreamingResponse,
 )
-from .evals import (
-    EvalsResource,
-    AsyncEvalsResource,
-    EvalsResourceWithRawResponse,
-    AsyncEvalsResourceWithRawResponse,
-    EvalsResourceWithStreamingResponse,
-    AsyncEvalsResourceWithStreamingResponse,
-)
 from .files import (
     FilesResource,
     AsyncFilesResource,
@@ -31,14 +23,6 @@ from .parsing import (
     AsyncParsingResourceWithRawResponse,
     ParsingResourceWithStreamingResponse,
     AsyncParsingResourceWithStreamingResponse,
-)
-from .projects import (
-    ProjectsResource,
-    AsyncProjectsResource,
-    ProjectsResourceWithRawResponse,
-    AsyncProjectsResourceWithRawResponse,
-    ProjectsResourceWithStreamingResponse,
-    AsyncProjectsResourceWithStreamingResponse,
 )
 from .pipelines import (
     PipelinesResource,
@@ -88,22 +72,8 @@ from .data_sources import (
     DataSourcesResourceWithStreamingResponse,
     AsyncDataSourcesResourceWithStreamingResponse,
 )
-from .organizations import (
-    OrganizationsResource,
-    AsyncOrganizationsResource,
-    OrganizationsResourceWithRawResponse,
-    AsyncOrganizationsResourceWithRawResponse,
-    OrganizationsResourceWithStreamingResponse,
-    AsyncOrganizationsResourceWithStreamingResponse,
-)
 
 __all__ = [
-    "ProjectsResource",
-    "AsyncProjectsResource",
-    "ProjectsResourceWithRawResponse",
-    "AsyncProjectsResourceWithRawResponse",
-    "ProjectsResourceWithStreamingResponse",
-    "AsyncProjectsResourceWithStreamingResponse",
     "DataSinksResource",
     "AsyncDataSinksResource",
     "DataSinksResourceWithRawResponse",
@@ -116,12 +86,6 @@ __all__ = [
     "AsyncDataSourcesResourceWithRawResponse",
     "DataSourcesResourceWithStreamingResponse",
     "AsyncDataSourcesResourceWithStreamingResponse",
-    "OrganizationsResource",
-    "AsyncOrganizationsResource",
-    "OrganizationsResourceWithRawResponse",
-    "AsyncOrganizationsResourceWithRawResponse",
-    "OrganizationsResourceWithStreamingResponse",
-    "AsyncOrganizationsResourceWithStreamingResponse",
     "FilesResource",
     "AsyncFilesResource",
     "FilesResourceWithRawResponse",
@@ -140,12 +104,6 @@ __all__ = [
     "AsyncRetrieversResourceWithRawResponse",
     "RetrieversResourceWithStreamingResponse",
     "AsyncRetrieversResourceWithStreamingResponse",
-    "EvalsResource",
-    "AsyncEvalsResource",
-    "EvalsResourceWithRawResponse",
-    "AsyncEvalsResourceWithRawResponse",
-    "EvalsResourceWithStreamingResponse",
-    "AsyncEvalsResourceWithStreamingResponse",
     "ParsingResource",
     "AsyncParsingResource",
     "ParsingResourceWithRawResponse",
