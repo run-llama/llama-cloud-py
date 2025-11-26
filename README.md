@@ -32,7 +32,7 @@ import os
 from llama_cloud import LlamaCloud
 
 client = LlamaCloud(
-    api_key=os.environ.get("LLAMACLOUD_API_KEY"),  # This is the default and can be omitted
+    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted
 )
 
 parsing_job = client.parsing.upload_file(
@@ -43,7 +43,7 @@ print(parsing_job.id)
 
 While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `LLAMACLOUD_API_KEY="My API Key"` to your `.env` file
+to add `LLAMA_CLOUD_API_KEY="My API Key"` to your `.env` file
 so that your API Key is not stored in source control.
 
 ## Async usage
@@ -56,7 +56,7 @@ import asyncio
 from llama_cloud import AsyncLlamaCloud
 
 client = AsyncLlamaCloud(
-    api_key=os.environ.get("LLAMACLOUD_API_KEY"),  # This is the default and can be omitted
+    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted
 )
 
 
