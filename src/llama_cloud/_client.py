@@ -89,13 +89,13 @@ class LlamaCloud(SyncAPIClient):
     ) -> None:
         """Construct a new synchronous LlamaCloud client instance.
 
-        This automatically infers the `api_key` argument from the `LLAMACLOUD_API_KEY` environment variable if it is not provided.
+        This automatically infers the `api_key` argument from the `LLAMA_CLOUD_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
-            api_key = os.environ.get("LLAMACLOUD_API_KEY")
+            api_key = os.environ.get("LLAMA_CLOUD_API_KEY")
         if api_key is None:
             raise LlamaCloudError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the LLAMACLOUD_API_KEY environment variable"
+                "The api_key client option must be set either by passing api_key to the client or by setting the LLAMA_CLOUD_API_KEY environment variable"
             )
         self.api_key = api_key
 
@@ -273,13 +273,13 @@ class AsyncLlamaCloud(AsyncAPIClient):
     ) -> None:
         """Construct a new async AsyncLlamaCloud client instance.
 
-        This automatically infers the `api_key` argument from the `LLAMACLOUD_API_KEY` environment variable if it is not provided.
+        This automatically infers the `api_key` argument from the `LLAMA_CLOUD_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
-            api_key = os.environ.get("LLAMACLOUD_API_KEY")
+            api_key = os.environ.get("LLAMA_CLOUD_API_KEY")
         if api_key is None:
             raise LlamaCloudError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the LLAMACLOUD_API_KEY environment variable"
+                "The api_key client option must be set either by passing api_key to the client or by setting the LLAMA_CLOUD_API_KEY environment variable"
             )
         self.api_key = api_key
 

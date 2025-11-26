@@ -352,7 +352,7 @@ class TestLlamaCloud:
         assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
         with pytest.raises(LlamaCloudError):
-            with update_env(**{"LLAMACLOUD_API_KEY": Omit()}):
+            with update_env(**{"LLAMA_CLOUD_API_KEY": Omit()}):
                 client2 = LlamaCloud(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
@@ -1179,7 +1179,7 @@ class TestAsyncLlamaCloud:
         assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
         with pytest.raises(LlamaCloudError):
-            with update_env(**{"LLAMACLOUD_API_KEY": Omit()}):
+            with update_env(**{"LLAMA_CLOUD_API_KEY": Omit()}):
                 client2 = AsyncLlamaCloud(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
