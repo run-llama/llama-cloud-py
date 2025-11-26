@@ -24,9 +24,6 @@ class ExtractRun(BaseModel):
     extraction_agent_id: str
     """The id of the extraction agent"""
 
-    file: File
-    """The file that the extract was extracted from"""
-
     from_ui: bool
     """Whether this extraction run was triggered from the UI"""
 
@@ -51,6 +48,12 @@ class ExtractRun(BaseModel):
 
     extraction_metadata: Optional[Dict[str, Union[Dict[str, object], List[object], str, float, bool, None]]] = None
     """The metadata extracted from the file"""
+
+    file: Optional[File] = None
+    """Schema for a file."""
+
+    file_id: Optional[str] = None
+    """The id of the file that the extract was extracted from"""
 
     job_id: Optional[str] = None
     """The id of the job that the extraction run belongs to"""

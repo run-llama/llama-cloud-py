@@ -17,11 +17,14 @@ class ExtractJob(BaseModel):
     extraction_agent: ExtractAgent
     """The agent that the job was run on."""
 
-    file: File
-    """The file that the extract was extracted from"""
-
     status: StatusEnum
     """The status of the extraction job"""
 
     error: Optional[str] = None
     """The error that occurred during extraction"""
+
+    file: Optional[File] = None
+    """Schema for a file."""
+
+    file_id: Optional[str] = None
+    """The id of the file that the extract was extracted from"""
