@@ -19,8 +19,8 @@ class TestExtraction:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_extract(self, client: LlamaCloud) -> None:
-        extraction = client.extraction.extract(
+    def test_method_run(self, client: LlamaCloud) -> None:
+        extraction = client.extraction.run(
             config={},
             data_schema={"foo": {"foo": "bar"}},
         )
@@ -28,8 +28,8 @@ class TestExtraction:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_extract_with_all_params(self, client: LlamaCloud) -> None:
-        extraction = client.extraction.extract(
+    def test_method_run_with_all_params(self, client: LlamaCloud) -> None:
+        extraction = client.extraction.run(
             config={
                 "chunk_mode": "PAGE",
                 "citation_bbox": True,
@@ -70,8 +70,8 @@ class TestExtraction:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_extract(self, client: LlamaCloud) -> None:
-        response = client.extraction.with_raw_response.extract(
+    def test_raw_response_run(self, client: LlamaCloud) -> None:
+        response = client.extraction.with_raw_response.run(
             config={},
             data_schema={"foo": {"foo": "bar"}},
         )
@@ -83,8 +83,8 @@ class TestExtraction:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_extract(self, client: LlamaCloud) -> None:
-        with client.extraction.with_streaming_response.extract(
+    def test_streaming_response_run(self, client: LlamaCloud) -> None:
+        with client.extraction.with_streaming_response.run(
             config={},
             data_schema={"foo": {"foo": "bar"}},
         ) as response:
@@ -104,8 +104,8 @@ class TestAsyncExtraction:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_extract(self, async_client: AsyncLlamaCloud) -> None:
-        extraction = await async_client.extraction.extract(
+    async def test_method_run(self, async_client: AsyncLlamaCloud) -> None:
+        extraction = await async_client.extraction.run(
             config={},
             data_schema={"foo": {"foo": "bar"}},
         )
@@ -113,8 +113,8 @@ class TestAsyncExtraction:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_extract_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        extraction = await async_client.extraction.extract(
+    async def test_method_run_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        extraction = await async_client.extraction.run(
             config={
                 "chunk_mode": "PAGE",
                 "citation_bbox": True,
@@ -155,8 +155,8 @@ class TestAsyncExtraction:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_extract(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.extraction.with_raw_response.extract(
+    async def test_raw_response_run(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.extraction.with_raw_response.run(
             config={},
             data_schema={"foo": {"foo": "bar"}},
         )
@@ -168,8 +168,8 @@ class TestAsyncExtraction:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_extract(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.extraction.with_streaming_response.extract(
+    async def test_streaming_response_run(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.extraction.with_streaming_response.run(
             config={},
             data_schema={"foo": {"foo": "bar"}},
         ) as response:

@@ -278,7 +278,7 @@ Methods:
 
 Methods:
 
-- <code title="post /api/v1/extraction/run">client.extraction.<a href="./src/llama_cloud/resources/extraction/extraction.py">extract</a>(\*\*<a href="src/llama_cloud/types/extraction_extract_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_job.py">ExtractJob</a></code>
+- <code title="post /api/v1/extraction/run">client.extraction.<a href="./src/llama_cloud/resources/extraction/extraction.py">run</a>(\*\*<a href="src/llama_cloud/types/extraction_run_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_job.py">ExtractJob</a></code>
 
 ## Jobs
 
