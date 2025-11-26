@@ -154,6 +154,13 @@ class ComponentCloudSharepointDataSource(TypedDict, total=False):
     drive_name: Optional[str]
     """The name of the Sharepoint drive to read from."""
 
+    exclude_path_patterns: Optional[SequenceNotStr[str]]
+    """List of regex patterns for file paths to exclude.
+
+    Files whose paths (including filename) match any pattern will be excluded.
+    Example: ['/temp/', '/backup/', '\\..git/', '\\..tmp$', '^~']
+    """
+
     folder_id: Optional[str]
     """The ID of the Sharepoint folder to read from."""
 
@@ -162,6 +169,13 @@ class ComponentCloudSharepointDataSource(TypedDict, total=False):
 
     get_permissions: Optional[bool]
     """Whether to get permissions for the sharepoint site."""
+
+    include_path_patterns: Optional[SequenceNotStr[str]]
+    """List of regex patterns for file paths to include.
+
+    Full paths (including filename) must match at least one pattern to be included.
+    Example: ['/reports/', '/docs/.*\\..pdf$', '^Report.*\\..pdf$']
+    """
 
     required_exts: Optional[SequenceNotStr[str]]
     """The list of required file extensions."""

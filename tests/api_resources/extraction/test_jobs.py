@@ -40,6 +40,7 @@ class TestJobs:
             from_ui=True,
             config_override={
                 "chunk_mode": "PAGE",
+                "citation_bbox": True,
                 "cite_sources": True,
                 "confidence_scores": True,
                 "extract_model": "openai-gpt-4-1",
@@ -148,6 +149,7 @@ class TestJobs:
             from_ui=True,
             config_override={
                 "chunk_mode": "PAGE",
+                "citation_bbox": True,
                 "cite_sources": True,
                 "confidence_scores": True,
                 "extract_model": "openai-gpt-4-1",
@@ -370,6 +372,7 @@ class TestAsyncJobs:
             from_ui=True,
             config_override={
                 "chunk_mode": "PAGE",
+                "citation_bbox": True,
                 "cite_sources": True,
                 "confidence_scores": True,
                 "extract_model": "openai-gpt-4-1",
@@ -478,6 +481,7 @@ class TestAsyncJobs:
             from_ui=True,
             config_override={
                 "chunk_mode": "PAGE",
+                "citation_bbox": True,
                 "cite_sources": True,
                 "confidence_scores": True,
                 "extract_model": "openai-gpt-4-1",

@@ -37,6 +37,7 @@ class TestExtractionAgents:
             extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             config={
                 "chunk_mode": "PAGE",
+                "citation_bbox": True,
                 "cite_sources": True,
                 "confidence_scores": True,
                 "extract_model": "openai-gpt-4-1",
@@ -154,6 +155,7 @@ class TestExtractionAgents:
         extraction_agent = client.extraction.extraction_agents.extraction_agents(
             config={
                 "chunk_mode": "PAGE",
+                "citation_bbox": True,
                 "cite_sources": True,
                 "confidence_scores": True,
                 "extract_model": "openai-gpt-4-1",
@@ -309,6 +311,7 @@ class TestAsyncExtractionAgents:
             extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             config={
                 "chunk_mode": "PAGE",
+                "citation_bbox": True,
                 "cite_sources": True,
                 "confidence_scores": True,
                 "extract_model": "openai-gpt-4-1",
@@ -426,6 +429,7 @@ class TestAsyncExtractionAgents:
         extraction_agent = await async_client.extraction.extraction_agents.extraction_agents(
             config={
                 "chunk_mode": "PAGE",
+                "citation_bbox": True,
                 "cite_sources": True,
                 "confidence_scores": True,
                 "extract_model": "openai-gpt-4-1",

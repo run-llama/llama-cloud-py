@@ -129,6 +129,8 @@ class ParsingUploadFileParams(TypedDict, total=False):
 
     layout_aware: bool
 
+    line_level_bounding_box: bool
+
     markdown_table_multiline_header_separator: str
 
     max_pages: Optional[int]

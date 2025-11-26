@@ -139,6 +139,8 @@ class ProcessingResultJobConfigBatchParseJobRecordCreateParameters(BaseModel):
 
     layout_aware: Optional[bool] = None
 
+    line_level_bounding_box: Optional[bool] = None
+
     markdown_table_multiline_header_separator: Optional[str] = None
 
     max_pages: Optional[int] = None
