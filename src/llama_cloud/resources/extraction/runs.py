@@ -18,13 +18,7 @@ from ..._response import (
 )
 from ...pagination import SyncPaginatedExtractRuns, AsyncPaginatedExtractRuns
 from ..._base_client import AsyncPaginator, make_request_options
-from ...types.extraction import (
-    run_get_params,
-    run_list_params,
-    run_delete_params,
-    run_get_by_job_params,
-    run_get_latest_from_ui_params,
-)
+from ...types.extraction import run_get_params, run_list_params, run_delete_params, run_get_by_job_params
 from ...types.extraction.extract_run import ExtractRun
 
 __all__ = ["RunsResource", "AsyncRunsResource"]
@@ -225,43 +219,6 @@ class RunsResource(SyncAPIResource):
                         "project_id": project_id,
                     },
                     run_get_by_job_params.RunGetByJobParams,
-                ),
-            ),
-            cast_to=ExtractRun,
-        )
-
-    def get_latest_from_ui(
-        self,
-        *,
-        extraction_agent_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Optional[ExtractRun]:
-        """
-        Get Latest Run From Ui
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._get(
-            "/api/v1/extraction/runs/latest-from-ui",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {"extraction_agent_id": extraction_agent_id}, run_get_latest_from_ui_params.RunGetLatestFromUiParams
                 ),
             ),
             cast_to=ExtractRun,
@@ -468,43 +425,6 @@ class AsyncRunsResource(AsyncAPIResource):
             cast_to=ExtractRun,
         )
 
-    async def get_latest_from_ui(
-        self,
-        *,
-        extraction_agent_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Optional[ExtractRun]:
-        """
-        Get Latest Run From Ui
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._get(
-            "/api/v1/extraction/runs/latest-from-ui",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {"extraction_agent_id": extraction_agent_id}, run_get_latest_from_ui_params.RunGetLatestFromUiParams
-                ),
-            ),
-            cast_to=ExtractRun,
-        )
-
 
 class RunsResourceWithRawResponse:
     def __init__(self, runs: RunsResource) -> None:
@@ -521,9 +441,6 @@ class RunsResourceWithRawResponse:
         )
         self.get_by_job = to_raw_response_wrapper(
             runs.get_by_job,
-        )
-        self.get_latest_from_ui = to_raw_response_wrapper(
-            runs.get_latest_from_ui,
         )
 
 
@@ -543,9 +460,6 @@ class AsyncRunsResourceWithRawResponse:
         self.get_by_job = async_to_raw_response_wrapper(
             runs.get_by_job,
         )
-        self.get_latest_from_ui = async_to_raw_response_wrapper(
-            runs.get_latest_from_ui,
-        )
 
 
 class RunsResourceWithStreamingResponse:
@@ -564,9 +478,6 @@ class RunsResourceWithStreamingResponse:
         self.get_by_job = to_streamed_response_wrapper(
             runs.get_by_job,
         )
-        self.get_latest_from_ui = to_streamed_response_wrapper(
-            runs.get_latest_from_ui,
-        )
 
 
 class AsyncRunsResourceWithStreamingResponse:
@@ -584,7 +495,4 @@ class AsyncRunsResourceWithStreamingResponse:
         )
         self.get_by_job = async_to_streamed_response_wrapper(
             runs.get_by_job,
-        )
-        self.get_latest_from_ui = async_to_streamed_response_wrapper(
-            runs.get_latest_from_ui,
         )

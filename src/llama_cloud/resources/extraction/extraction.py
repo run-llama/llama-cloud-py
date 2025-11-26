@@ -22,7 +22,7 @@ from .runs import (
     RunsResourceWithStreamingResponse,
     AsyncRunsResourceWithStreamingResponse,
 )
-from ...types import extraction_run_params
+from ...types import extraction_extract_params
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
@@ -81,14 +81,14 @@ class ExtractionResource(SyncAPIResource):
         """
         return ExtractionResourceWithStreamingResponse(self)
 
-    def run(
+    def extract(
         self,
         *,
         config: ExtractConfigParam,
         data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        file: Optional[extraction_run_params.File] | Omit = omit,
+        file: Optional[extraction_extract_params.File] | Omit = omit,
         file_id: Optional[str] | Omit = omit,
         text: Optional[str] | Omit = omit,
         webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
@@ -136,7 +136,7 @@ class ExtractionResource(SyncAPIResource):
                     "text": text,
                     "webhook_configurations": webhook_configurations,
                 },
-                extraction_run_params.ExtractionRunParams,
+                extraction_extract_params.ExtractionExtractParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -148,7 +148,7 @@ class ExtractionResource(SyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    extraction_run_params.ExtractionRunParams,
+                    extraction_extract_params.ExtractionExtractParams,
                 ),
             ),
             cast_to=ExtractJob,
@@ -187,14 +187,14 @@ class AsyncExtractionResource(AsyncAPIResource):
         """
         return AsyncExtractionResourceWithStreamingResponse(self)
 
-    async def run(
+    async def extract(
         self,
         *,
         config: ExtractConfigParam,
         data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        file: Optional[extraction_run_params.File] | Omit = omit,
+        file: Optional[extraction_extract_params.File] | Omit = omit,
         file_id: Optional[str] | Omit = omit,
         text: Optional[str] | Omit = omit,
         webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
@@ -242,7 +242,7 @@ class AsyncExtractionResource(AsyncAPIResource):
                     "text": text,
                     "webhook_configurations": webhook_configurations,
                 },
-                extraction_run_params.ExtractionRunParams,
+                extraction_extract_params.ExtractionExtractParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -254,7 +254,7 @@ class AsyncExtractionResource(AsyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    extraction_run_params.ExtractionRunParams,
+                    extraction_extract_params.ExtractionExtractParams,
                 ),
             ),
             cast_to=ExtractJob,
@@ -265,8 +265,8 @@ class ExtractionResourceWithRawResponse:
     def __init__(self, extraction: ExtractionResource) -> None:
         self._extraction = extraction
 
-        self.run = to_raw_response_wrapper(
-            extraction.run,
+        self.extract = to_raw_response_wrapper(
+            extraction.extract,
         )
 
     @cached_property
@@ -286,8 +286,8 @@ class AsyncExtractionResourceWithRawResponse:
     def __init__(self, extraction: AsyncExtractionResource) -> None:
         self._extraction = extraction
 
-        self.run = async_to_raw_response_wrapper(
-            extraction.run,
+        self.extract = async_to_raw_response_wrapper(
+            extraction.extract,
         )
 
     @cached_property
@@ -307,8 +307,8 @@ class ExtractionResourceWithStreamingResponse:
     def __init__(self, extraction: ExtractionResource) -> None:
         self._extraction = extraction
 
-        self.run = to_streamed_response_wrapper(
-            extraction.run,
+        self.extract = to_streamed_response_wrapper(
+            extraction.extract,
         )
 
     @cached_property
@@ -328,8 +328,8 @@ class AsyncExtractionResourceWithStreamingResponse:
     def __init__(self, extraction: AsyncExtractionResource) -> None:
         self._extraction = extraction
 
-        self.run = async_to_streamed_response_wrapper(
-            extraction.run,
+        self.extract = async_to_streamed_response_wrapper(
+            extraction.extract,
         )
 
     @cached_property

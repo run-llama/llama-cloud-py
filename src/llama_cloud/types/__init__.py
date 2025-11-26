@@ -29,7 +29,6 @@ from .re_rank_config_param import ReRankConfigParam as ReRankConfigParam
 from .retriever_get_params import RetrieverGetParams as RetrieverGetParams
 from .auto_transform_config import AutoTransformConfig as AutoTransformConfig
 from .data_sink_list_params import DataSinkListParams as DataSinkListParams
-from .extraction_run_params import ExtractionRunParams as ExtractionRunParams
 from .retriever_list_params import RetrieverListParams as RetrieverListParams
 from .llama_parse_parameters import LlamaParseParameters as LlamaParseParameters
 from .metadata_filters_param import MetadataFiltersParam as MetadataFiltersParam
@@ -54,6 +53,7 @@ from .retriever_pipeline_param import RetrieverPipelineParam as RetrieverPipelin
 from .data_source_create_params import DataSourceCreateParams as DataSourceCreateParams
 from .data_source_list_response import DataSourceListResponse as DataSourceListResponse
 from .data_source_update_params import DataSourceUpdateParams as DataSourceUpdateParams
+from .extraction_extract_params import ExtractionExtractParams as ExtractionExtractParams
 from .sparse_model_config_param import SparseModelConfigParam as SparseModelConfigParam
 from .composite_retrieval_result import CompositeRetrievalResult as CompositeRetrievalResult
 from .parsing_upload_file_params import ParsingUploadFileParams as ParsingUploadFileParams
