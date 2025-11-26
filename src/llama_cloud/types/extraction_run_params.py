@@ -8,10 +8,10 @@ from typing_extensions import Required, TypedDict
 from .extraction.extract_config_param import ExtractConfigParam
 from .extraction.webhook_configuration_param import WebhookConfigurationParam
 
-__all__ = ["ExtractionExtractParams", "File"]
+__all__ = ["ExtractionRunParams", "File"]
 
 
-class ExtractionExtractParams(TypedDict, total=False):
+class ExtractionRunParams(TypedDict, total=False):
     config: Required[ExtractConfigParam]
     """The configuration parameters for the extraction"""
 
