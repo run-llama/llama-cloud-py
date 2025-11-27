@@ -13,7 +13,7 @@ class Models(BaseModel):
     model_names: Optional[list[str]] = Field(description="List of models mentioned.")
 
 
-async def extract_stateless():
+async def extract_stateless() -> None:
     client = AsyncLlamaCloud()
 
     file_obj = await client.files.upload(upload_file="../example_files/attention_is_all_you_need.pdf")
@@ -44,7 +44,7 @@ async def extract_stateless():
     print("Extracted model names:", extracted_model.model_names)
 
 
-async def extract_with_agent():
+async def extract_with_agent() -> None:
     client = AsyncLlamaCloud()
 
     file_obj = await client.files.upload(upload_file="../example_files/attention_is_all_you_need.pdf")

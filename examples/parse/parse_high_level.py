@@ -4,7 +4,7 @@ from llama_cloud import AsyncLlamaCloud
 from llama_cloud.types.parsing.job import ParsingJobJsonResult, ParsingJobTextResult, ParsingJobMarkdownResult
 
 
-async def get_json():
+async def get_json() -> None:
     client = AsyncLlamaCloud()
 
     # Upload and wait for completion
@@ -29,7 +29,7 @@ async def get_json():
     print(result.pages[0]["images"][0])
 
 
-async def get_markdown():
+async def get_markdown() -> None:
     client = AsyncLlamaCloud()
 
     # Upload and wait for completion
@@ -50,7 +50,7 @@ async def get_markdown():
     print(result.markdown)  # Markdown result
 
 
-async def get_text():
+async def get_text() -> None:
     client = AsyncLlamaCloud()
 
     # Upload and wait for completion

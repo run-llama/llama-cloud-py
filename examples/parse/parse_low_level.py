@@ -3,7 +3,7 @@ import asyncio
 from llama_cloud import AsyncLlamaCloud
 
 
-async def main():
+async def main() -> None:
     client = AsyncLlamaCloud()
 
     # Or, upload without directly waiting

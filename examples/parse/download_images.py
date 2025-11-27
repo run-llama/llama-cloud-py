@@ -8,7 +8,7 @@ def is_page_screenshot(name: str) -> bool:
     return bool(re.match(r"^page_\d+\.(png|jpg|jpeg)$", name))
 
 
-async def main():
+async def main() -> None:
     client = AsyncLlamaCloud()
 
     # Or, upload without directly waiting

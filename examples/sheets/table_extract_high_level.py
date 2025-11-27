@@ -6,7 +6,7 @@ from llama_cloud import AsyncLlamaCloud
 from llama_cloud.types.beta import SheetsParsingConfigParam
 
 
-async def extract_tables():
+async def extract_tables() -> None:
     client = AsyncLlamaCloud()
 
     # Upload a spreadsheet

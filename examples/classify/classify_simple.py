@@ -4,7 +4,7 @@ from llama_cloud import AsyncLlamaCloud
 from llama_cloud.types.classifier import ClassifierRuleParam
 
 
-async def classify_document():
+async def classify_document() -> None:
     client = AsyncLlamaCloud()
 
     # Upload a file
