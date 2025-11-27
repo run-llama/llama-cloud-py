@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import TypedDict
 
-__all__ = ["ExtractionAgentGetExtractionAgentsParams"]
+__all__ = ["ExtractionAgentListParams"]
 
 
-class ExtractionAgentGetExtractionAgentsParams(TypedDict, total=False):
+class ExtractionAgentListParams(TypedDict, total=False):
     include_default: bool
     """Whether to include default agents in the results"""
 

@@ -7,10 +7,10 @@ from typing_extensions import Required, TypedDict
 
 from .extract_config_param import ExtractConfigParam
 
-__all__ = ["ExtractionAgentExtractionAgentsParams"]
+__all__ = ["ExtractionAgentCreateParams"]
 
 
-class ExtractionAgentExtractionAgentsParams(TypedDict, total=False):
+class ExtractionAgentCreateParams(TypedDict, total=False):
     config: Required[ExtractConfigParam]
     """The configuration parameters for the extraction agent."""
 

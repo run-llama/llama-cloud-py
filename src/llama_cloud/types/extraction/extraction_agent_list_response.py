@@ -5,6 +5,6 @@ from typing_extensions import TypeAlias
 
 from .extract_agent import ExtractAgent
 
-__all__ = ["ExtractionAgentGetExtractionAgentsResponse"]
+__all__ = ["ExtractionAgentListResponse"]
 
-ExtractionAgentGetExtractionAgentsResponse: TypeAlias = List[ExtractAgent]
+ExtractionAgentListResponse: TypeAlias = List[ExtractAgent]

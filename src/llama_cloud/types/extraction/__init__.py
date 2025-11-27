@@ -21,13 +21,7 @@ from .run_get_by_job_params import RunGetByJobParams as RunGetByJobParams
 from .webhook_configuration import WebhookConfiguration as WebhookConfiguration
 from .job_get_result_response import JobGetResultResponse as JobGetResultResponse
 from .webhook_configuration_param import WebhookConfigurationParam as WebhookConfigurationParam
+from .extraction_agent_list_params import ExtractionAgentListParams as ExtractionAgentListParams
+from .extraction_agent_create_params import ExtractionAgentCreateParams as ExtractionAgentCreateParams
+from .extraction_agent_list_response import ExtractionAgentListResponse as ExtractionAgentListResponse
 from .extraction_agent_update_params import ExtractionAgentUpdateParams as ExtractionAgentUpdateParams
-from .extraction_agent_extraction_agents_params import (
-    ExtractionAgentExtractionAgentsParams as ExtractionAgentExtractionAgentsParams,
-)
-from .extraction_agent_get_extraction_agents_params import (
-    ExtractionAgentGetExtractionAgentsParams as ExtractionAgentGetExtractionAgentsParams,
-)
-from .extraction_agent_get_extraction_agents_response import (
-    ExtractionAgentGetExtractionAgentsResponse as ExtractionAgentGetExtractionAgentsResponse,
-)
