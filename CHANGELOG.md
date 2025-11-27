@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0 (2025-11-27)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/run-llama/llama-cloud-py/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **api:** api update ([652a7a8](https://github.com/run-llama/llama-cloud-py/commit/652a7a8ad5ada51a312c965d04e7726895f44f8c))
+
 ## 0.5.0 (2025-11-27)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/run-llama/llama-cloud-py/compare/v0.4.0...v0.5.0)
