@@ -26,7 +26,11 @@ def is_base64_file_input(obj: object) -> TypeGuard[Base64FileInput]:
 
 def is_file_content(obj: object) -> TypeGuard[FileContent]:
     return (
-        isinstance(obj, bytes) or isinstance(obj, tuple) or isinstance(obj, io.IOBase) or isinstance(obj, os.PathLike)
+        isinstance(obj, bytes)
+        or isinstance(obj, tuple)
+        or isinstance(obj, io.IOBase)
+        or isinstance(obj, os.PathLike)
+        or isinstance(obj, str)
     )
 
 
@@ -62,7 +66,7 @@ def to_httpx_files(files: RequestFiles | None) -> HttpxRequestFiles | None:
 
 def _transform_file(file: FileTypes) -> HttpxFileTypes:
     if is_file_content(file):
-        if isinstance(file, os.PathLike):
+        if isinstance(file, (os.PathLike, str)):
             path = pathlib.Path(file)
             return (path.name, path.read_bytes())
 
@@ -75,7 +79,7 @@ def _transform_file(file: FileTypes) -> HttpxFileTypes:
 
 
 def read_file_content(file: FileContent) -> HttpxFileContent:
-    if isinstance(file, os.PathLike):
+    if isinstance(file, (os.PathLike, str)):
         return pathlib.Path(file).read_bytes()
     return file
 
@@ -104,7 +108,7 @@ async def async_to_httpx_files(files: RequestFiles | None) -> HttpxRequestFiles 
 
 async def _async_transform_file(file: FileTypes) -> HttpxFileTypes:
     if is_file_content(file):
-        if isinstance(file, os.PathLike):
+        if isinstance(file, (os.PathLike, str)):
             path = anyio.Path(file)
             return (path.name, await path.read_bytes())
 
@@ -117,7 +121,7 @@ async def _async_transform_file(file: FileTypes) -> HttpxFileTypes:
 
 
 async def async_read_file_content(file: FileContent) -> HttpxFileContent:
-    if isinstance(file, os.PathLike):
+    if isinstance(file, (os.PathLike, str)):
         return await anyio.Path(file).read_bytes()
 
     return file

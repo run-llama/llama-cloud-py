@@ -26,6 +26,7 @@ from ...types import extraction_run_params
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
+from ..._polling import BackoffStrategy
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
     to_raw_response_wrapper,
@@ -44,6 +45,7 @@ from .extraction_agents import (
 )
 from ...types.extraction.extract_job import ExtractJob
 from ...types.extraction.extract_config_param import ExtractConfigParam
+from ...types.extraction.job_get_result_response import JobGetResultResponse
 from ...types.extraction.webhook_configuration_param import WebhookConfigurationParam
 
 __all__ = ["ExtractionResource", "AsyncExtractionResource"]
@@ -154,6 +156,137 @@ class ExtractionResource(SyncAPIResource):
             cast_to=ExtractJob,
         )
 
+    def extract(
+        self,
+        *,
+        config: ExtractConfigParam,
+        data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str],
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        file: Optional[extraction_run_params.File] | Omit = omit,
+        file_id: Optional[str] | Omit = omit,
+        text: Optional[str] | Omit = omit,
+        webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
+        # Polling parameters
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        timeout: float = 2000.0,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+    ) -> JobGetResultResponse:
+        """
+        Run a stateless extraction and wait for it to complete, returning the result.
+
+        This is a convenience method that combines run(), wait_for_completion(),
+        and get_result() into a single call for the most common end-to-end workflow.
+
+        This endpoint uses a default extraction agent in the user's default project.
+
+        Args:
+            config: The configuration parameters for the extraction
+
+            data_schema: The schema of the data to extract
+
+            organization_id: The organization ID to use for the extraction
+
+            project_id: The project ID to use for the extraction
+
+            file: Schema for file data with base64 content and MIME type.
+
+            file_id: The ID of the file to extract from
+
+            text: The text content to extract from
+
+            webhook_configurations: The outbound webhook configurations
+
+            polling_interval: Initial polling interval in seconds (default: 1.0)
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0)
+
+            timeout: Maximum time to wait in seconds (default: 2000.0)
+
+            backoff: Backoff strategy for polling intervals. Options:
+                - "constant": Keep the same polling interval
+                - "linear": Increase interval by 1 second each poll (default)
+                - "exponential": Double the interval each poll
+
+            verbose: Print progress indicators every 10 polls (default: False)
+
+            extra_headers: Send extra headers
+
+            extra_query: Add additional query parameters to the request
+
+            extra_body: Add additional JSON properties to the request
+
+        Returns:
+            The extraction result (JobGetResultResponse)
+
+        Raises:
+            PollingTimeoutError: If the job doesn't complete within the timeout period
+
+            PollingError: If the job fails or is cancelled
+
+        Example:
+            ```python
+            from llama_cloud import LlamaCloud
+
+            client = LlamaCloud(api_key="...")
+
+            # One-shot: run stateless extraction, wait for completion, and get result
+            result = client.extraction.extract(
+                config={"llm_model": "gpt-4"},
+                data_schema={"name": "string", "age": "number"},
+                file_id="file_id",
+                verbose=True,
+            )
+
+            # Result is ready to use immediately
+            print(result.data)
+            ```
+        """
+        # Run the extraction job
+        job = self.run(
+            config=config,
+            data_schema=data_schema,
+            organization_id=organization_id,
+            project_id=project_id,
+            file=file,
+            file_id=file_id,
+            text=text,
+            webhook_configurations=webhook_configurations,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+        )
+
+        # Wait for completion
+        self.jobs.wait_for_completion(
+            job.id,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=timeout,
+            backoff=backoff,
+            verbose=verbose,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+        )
+
+        # Get and return the result
+        return self.jobs.get_result(
+            job.id,
+            organization_id=organization_id,
+            project_id=project_id,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+        )
+
 
 class AsyncExtractionResource(AsyncAPIResource):
     @cached_property
@@ -258,6 +391,137 @@ class AsyncExtractionResource(AsyncAPIResource):
                 ),
             ),
             cast_to=ExtractJob,
+        )
+
+    async def extract(
+        self,
+        *,
+        config: ExtractConfigParam,
+        data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str],
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        file: Optional[extraction_run_params.File] | Omit = omit,
+        file_id: Optional[str] | Omit = omit,
+        text: Optional[str] | Omit = omit,
+        webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
+        # Polling parameters
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        timeout: float = 2000.0,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+    ) -> JobGetResultResponse:
+        """
+        Run a stateless extraction and wait for it to complete, returning the result.
+
+        This is a convenience method that combines run(), wait_for_completion(),
+        and get_result() into a single call for the most common end-to-end workflow.
+
+        This endpoint uses a default extraction agent in the user's default project.
+
+        Args:
+            config: The configuration parameters for the extraction
+
+            data_schema: The schema of the data to extract
+
+            organization_id: The organization ID to use for the extraction
+
+            project_id: The project ID to use for the extraction
+
+            file: Schema for file data with base64 content and MIME type.
+
+            file_id: The ID of the file to extract from
+
+            text: The text content to extract from
+
+            webhook_configurations: The outbound webhook configurations
+
+            polling_interval: Initial polling interval in seconds (default: 1.0)
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0)
+
+            timeout: Maximum time to wait in seconds (default: 2000.0)
+
+            backoff: Backoff strategy for polling intervals. Options:
+                - "constant": Keep the same polling interval
+                - "linear": Increase interval by 1 second each poll (default)
+                - "exponential": Double the interval each poll
+
+            verbose: Print progress indicators every 10 polls (default: False)
+
+            extra_headers: Send extra headers
+
+            extra_query: Add additional query parameters to the request
+
+            extra_body: Add additional JSON properties to the request
+
+        Returns:
+            The extraction result (JobGetResultResponse)
+
+        Raises:
+            PollingTimeoutError: If the job doesn't complete within the timeout period
+
+            PollingError: If the job fails or is cancelled
+
+        Example:
+            ```python
+            from llama_cloud import AsyncLlamaCloud
+
+            client = AsyncLlamaCloud(api_key="...")
+
+            # One-shot: run stateless extraction, wait for completion, and get result
+            result = await client.extraction.extract(
+                config={"llm_model": "gpt-4"},
+                data_schema={"name": "string", "age": "number"},
+                file_id="file_id",
+                verbose=True,
+            )
+
+            # Result is ready to use immediately
+            print(result.data)
+            ```
+        """
+        # Run the extraction job
+        job = await self.run(
+            config=config,
+            data_schema=data_schema,
+            organization_id=organization_id,
+            project_id=project_id,
+            file=file,
+            file_id=file_id,
+            text=text,
+            webhook_configurations=webhook_configurations,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+        )
+
+        # Wait for completion
+        await self.jobs.wait_for_completion(
+            job.id,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=timeout,
+            backoff=backoff,
+            verbose=verbose,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+        )
+
+        # Get and return the result
+        return await self.jobs.get_result(
+            job.id,
+            organization_id=organization_id,
+            project_id=project_id,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
         )
 
 
