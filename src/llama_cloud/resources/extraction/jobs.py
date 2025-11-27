@@ -377,7 +377,7 @@ class JobsResource(SyncAPIResource):
             cast_to=JobGetResultResponse,
         )
 
-    def create_and_wait(
+    def extract(
         self,
         *,
         extraction_agent_id: str,
@@ -458,7 +458,7 @@ class JobsResource(SyncAPIResource):
             client = LlamaCloud(api_key="...")
 
             # One-shot: create job, wait for completion, and get result
-            result = client.extraction.jobs.create_and_wait(
+            result = client.extraction.jobs.extract(
                 extraction_agent_id="agent_id", file_id="file_id", verbose=True
             )
 
@@ -934,7 +934,7 @@ class AsyncJobsResource(AsyncAPIResource):
             cast_to=JobGetResultResponse,
         )
 
-    async def create_and_wait(
+    async def extract(
         self,
         *,
         extraction_agent_id: str,
@@ -1015,7 +1015,7 @@ class AsyncJobsResource(AsyncAPIResource):
             client = AsyncLlamaCloud(api_key="...")
 
             # One-shot: create job, wait for completion, and get result
-            result = await client.extraction.jobs.create_and_wait(
+            result = await client.extraction.jobs.extract(
                 extraction_agent_id="agent_id", file_id="file_id", verbose=True
             )
 

@@ -445,7 +445,7 @@ class ParsingResource(SyncAPIResource):
             cast_to=ParsingJob,
         )
 
-    def upload_file_and_wait(
+    def parse(
         self,
         *,
         result_type: Literal["markdown", "text", "json", "structured"] = "markdown",
@@ -526,7 +526,9 @@ class ParsingResource(SyncAPIResource):
 
         # Get and return the result in the requested format
         organization_id = upload_params.get("organization_id")
-        if result_type == "markdown":
+        if job.status != "SUCCESS":
+            return self.job.result.get_json(job.id, organization_id=organization_id)
+        elif result_type == "markdown":
             return self.job.result.get_markdown(job.id, organization_id=organization_id)
         elif result_type == "text":
             return self.job.result.get_text(job.id, organization_id=organization_id)
@@ -943,7 +945,7 @@ class AsyncParsingResource(AsyncAPIResource):
             cast_to=ParsingJob,
         )
 
-    async def upload_file_and_wait(
+    async def parse(
         self,
         *,
         result_type: Literal["markdown", "text", "json", "structured"] = "markdown",
@@ -1013,7 +1015,7 @@ class AsyncParsingResource(AsyncAPIResource):
         job = await self.upload_file(**upload_params)
 
         # Wait for completion
-        await self.job.wait_for_completion(
+        job = await self.job.wait_for_completion(
             job.id,
             polling_interval=polling_interval,
             max_interval=max_interval,
@@ -1024,7 +1026,9 @@ class AsyncParsingResource(AsyncAPIResource):
 
         # Get and return the result in the requested format
         organization_id = upload_params.get("organization_id")
-        if result_type == "markdown":
+        if job.status != "SUCCESS":
+            return await self.job.result.get_json(job.id, organization_id=organization_id)
+        elif result_type == "markdown":
             return await self.job.result.get_markdown(job.id, organization_id=organization_id)
         elif result_type == "text":
             return await self.job.result.get_text(job.id, organization_id=organization_id)

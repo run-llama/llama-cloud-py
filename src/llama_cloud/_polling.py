@@ -164,13 +164,16 @@ async def poll_until_complete_async(
         # Check if error
         if is_error_fn(status):
             error_msg = get_error_message_fn(status)
-            raise PollingError(error_msg)
+            logger.error(f"A job failed with error: {error_msg}")
+            return status
 
         # Check timeout
         elapsed = time.time() - start_time
         if elapsed > timeout:
-            raise PollingTimeoutError(f"Polling timed out after {elapsed:.1f}s (timeout: {timeout}s)")
-
+            error_msg = f"Polling timed out after {elapsed:.1f}s (timeout: {timeout}s)"
+            logger.error(error_msg)
+            return status
+        
         # Print progress
         if verbose and tries % 10 == 0:
             logger.info(".")
