@@ -10,7 +10,7 @@ async def get_json():
     # Upload and wait for completion
     result = await client.parsing.parse(
         # The file to parse
-        file="../files/attention_is_all_you_need.pdf",
+        file="../example_files/attention_is_all_you_need.pdf",
         parse_mode="parse_page_with_agent",
         model="openai-gpt-4-1-mini",
         high_res_ocr=True,
@@ -35,7 +35,7 @@ async def get_markdown():
     # Upload and wait for completion
     result = await client.parsing.parse(
         # The file to parse
-        file="../files/attention_is_all_you_need.pdf",
+        file="../example_files/attention_is_all_you_need.pdf",
         parse_mode="parse_page_with_agent",
         model="openai-gpt-4-1-mini",
         high_res_ocr=True,
@@ -56,7 +56,7 @@ async def get_text():
     # Upload and wait for completion
     result = await client.parsing.parse(
         # The file to parse
-        file="../files/attention_is_all_you_need.pdf",
+        file="../example_files/attention_is_all_you_need.pdf",
         parse_mode="parse_page_with_agent",
         model="openai-gpt-4-1-mini",
         high_res_ocr=True,

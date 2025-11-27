@@ -16,11 +16,11 @@ class Models(BaseModel):
 async def extract_stateless():
     client = AsyncLlamaCloud()
 
-    file_obj = await client.files.upload(upload_file="../files/attention_is_all_you_need.pdf")
+    file_obj = await client.files.upload(upload_file="../example_files/attention_is_all_you_need.pdf")
     file_id = file_obj.id
 
     # Stateless one-shot extraction
-    extract_job = await client.extraction.run(
+    result = await client.extraction.extract(
         file_id=file_id,
         config=ExtractConfigParam(
             chunk_mode="PAGE",
@@ -31,15 +31,6 @@ async def extract_stateless():
         data_schema=Models.model_json_schema(),
     )
 
-    while True:
-        job_result = await client.extraction.jobs.get(job_id=extract_job.id)
-        if job_result.status != "PENDING":
-            break
-        print(f"Job status: {job_result.status}. Waiting...")
-        await asyncio.sleep(3)
-
-    result = await client.extraction.jobs.get_result(job_id=extract_job.id)
-
     extracted_model = Models.model_validate(result.data)
     print("Extracted model names:", extracted_model.model_names)
 
@@ -47,7 +38,7 @@ async def extract_stateless():
 async def extract_with_agent():
     client = AsyncLlamaCloud()
 
-    file_obj = await client.files.upload(upload_file="../files/attention_is_all_you_need.pdf")
+    file_obj = await client.files.upload(upload_file="../example_files/attention_is_all_you_need.pdf")
     file_id = file_obj.id
 
     # Create an extraction agent
@@ -63,19 +54,10 @@ async def extract_with_agent():
     )
 
     # Use the extraction agent
-    extract_job = await client.extraction.jobs.create(
+    result = await client.extraction.jobs.extract(
         extraction_agent_id=agent.id,
         file_id=file_id,
     )
-
-    while True:
-        job_result = await client.extraction.jobs.get(job_id=extract_job.id)
-        if job_result.status != "PENDING":
-            break
-        print(f"Job status: {job_result.status}. Waiting...")
-        await asyncio.sleep(3)
-
-    result = await client.extraction.jobs.get_result(job_id=extract_job.id)
 
     extracted_model = Models.model_validate(result.data)
     print("Extracted model names with agent:", extracted_model.model_names)
