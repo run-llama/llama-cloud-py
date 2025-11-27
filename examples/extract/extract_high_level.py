@@ -42,7 +42,7 @@ async def extract_with_agent() -> None:
     file_id = file_obj.id
 
     # Create an extraction agent
-    agent = await client.extraction.extraction_agents.extraction_agents(
+    agent = await client.extraction.extraction_agents.create(
         config=ExtractConfigParam(
             chunk_mode="PAGE",
             cite_sources=True,
