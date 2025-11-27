@@ -18,15 +18,13 @@ from ..._response import (
 )
 from ..._base_client import make_request_options
 from ...types.extraction import (
+    extraction_agent_list_params,
+    extraction_agent_create_params,
     extraction_agent_update_params,
-    extraction_agent_extraction_agents_params,
-    extraction_agent_get_extraction_agents_params,
 )
 from ...types.extraction.extract_agent import ExtractAgent
 from ...types.extraction.extract_config_param import ExtractConfigParam
-from ...types.extraction.extraction_agent_get_extraction_agents_response import (
-    ExtractionAgentGetExtractionAgentsResponse,
-)
+from ...types.extraction.extraction_agent_list_response import ExtractionAgentListResponse
 
 __all__ = ["ExtractionAgentsResource", "AsyncExtractionAgentsResource"]
 
@@ -50,6 +48,65 @@ class ExtractionAgentsResource(SyncAPIResource):
         For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
         """
         return ExtractionAgentsResourceWithStreamingResponse(self)
+
+    def create(
+        self,
+        *,
+        config: ExtractConfigParam,
+        data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str],
+        name: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ExtractAgent:
+        """
+        Create Extraction Agent
+
+        Args:
+          config: The configuration parameters for the extraction agent.
+
+          data_schema: The schema of the data.
+
+          name: The name of the extraction schema
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/api/v1/extraction/extraction-agents",
+            body=maybe_transform(
+                {
+                    "config": config,
+                    "data_schema": data_schema,
+                    "name": name,
+                },
+                extraction_agent_create_params.ExtractionAgentCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    extraction_agent_create_params.ExtractionAgentCreateParams,
+                ),
+            ),
+            cast_to=ExtractAgent,
+        )
 
     def update(
         self,
@@ -99,6 +156,52 @@ class ExtractionAgentsResource(SyncAPIResource):
             cast_to=ExtractAgent,
         )
 
+    def list(
+        self,
+        *,
+        include_default: bool | Omit = omit,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ExtractionAgentListResponse:
+        """
+        List Extraction Agents
+
+        Args:
+          include_default: Whether to include default agents in the results
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/api/v1/extraction/extraction-agents",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "include_default": include_default,
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    extraction_agent_list_params.ExtractionAgentListParams,
+                ),
+            ),
+            cast_to=ExtractionAgentListResponse,
+        )
+
     def delete(
         self,
         extraction_agent_id: str,
@@ -132,65 +235,6 @@ class ExtractionAgentsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=object,
-        )
-
-    def extraction_agents(
-        self,
-        *,
-        config: ExtractConfigParam,
-        data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str],
-        name: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractAgent:
-        """
-        Create Extraction Agent
-
-        Args:
-          config: The configuration parameters for the extraction agent.
-
-          data_schema: The schema of the data.
-
-          name: The name of the extraction schema
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/api/v1/extraction/extraction-agents",
-            body=maybe_transform(
-                {
-                    "config": config,
-                    "data_schema": data_schema,
-                    "name": name,
-                },
-                extraction_agent_extraction_agents_params.ExtractionAgentExtractionAgentsParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    extraction_agent_extraction_agents_params.ExtractionAgentExtractionAgentsParams,
-                ),
-            ),
-            cast_to=ExtractAgent,
         )
 
     def get(
@@ -228,52 +272,6 @@ class ExtractionAgentsResource(SyncAPIResource):
             cast_to=ExtractAgent,
         )
 
-    def get_extraction_agents(
-        self,
-        *,
-        include_default: bool | Omit = omit,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractionAgentGetExtractionAgentsResponse:
-        """
-        List Extraction Agents
-
-        Args:
-          include_default: Whether to include default agents in the results
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._get(
-            "/api/v1/extraction/extraction-agents",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "include_default": include_default,
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    extraction_agent_get_extraction_agents_params.ExtractionAgentGetExtractionAgentsParams,
-                ),
-            ),
-            cast_to=ExtractionAgentGetExtractionAgentsResponse,
-        )
-
 
 class AsyncExtractionAgentsResource(AsyncAPIResource):
     @cached_property
@@ -294,6 +292,65 @@ class AsyncExtractionAgentsResource(AsyncAPIResource):
         For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
         """
         return AsyncExtractionAgentsResourceWithStreamingResponse(self)
+
+    async def create(
+        self,
+        *,
+        config: ExtractConfigParam,
+        data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str],
+        name: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ExtractAgent:
+        """
+        Create Extraction Agent
+
+        Args:
+          config: The configuration parameters for the extraction agent.
+
+          data_schema: The schema of the data.
+
+          name: The name of the extraction schema
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/api/v1/extraction/extraction-agents",
+            body=await async_maybe_transform(
+                {
+                    "config": config,
+                    "data_schema": data_schema,
+                    "name": name,
+                },
+                extraction_agent_create_params.ExtractionAgentCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    extraction_agent_create_params.ExtractionAgentCreateParams,
+                ),
+            ),
+            cast_to=ExtractAgent,
+        )
 
     async def update(
         self,
@@ -343,6 +400,52 @@ class AsyncExtractionAgentsResource(AsyncAPIResource):
             cast_to=ExtractAgent,
         )
 
+    async def list(
+        self,
+        *,
+        include_default: bool | Omit = omit,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ExtractionAgentListResponse:
+        """
+        List Extraction Agents
+
+        Args:
+          include_default: Whether to include default agents in the results
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/api/v1/extraction/extraction-agents",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "include_default": include_default,
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    extraction_agent_list_params.ExtractionAgentListParams,
+                ),
+            ),
+            cast_to=ExtractionAgentListResponse,
+        )
+
     async def delete(
         self,
         extraction_agent_id: str,
@@ -376,65 +479,6 @@ class AsyncExtractionAgentsResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=object,
-        )
-
-    async def extraction_agents(
-        self,
-        *,
-        config: ExtractConfigParam,
-        data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str],
-        name: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractAgent:
-        """
-        Create Extraction Agent
-
-        Args:
-          config: The configuration parameters for the extraction agent.
-
-          data_schema: The schema of the data.
-
-          name: The name of the extraction schema
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/api/v1/extraction/extraction-agents",
-            body=await async_maybe_transform(
-                {
-                    "config": config,
-                    "data_schema": data_schema,
-                    "name": name,
-                },
-                extraction_agent_extraction_agents_params.ExtractionAgentExtractionAgentsParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    extraction_agent_extraction_agents_params.ExtractionAgentExtractionAgentsParams,
-                ),
-            ),
-            cast_to=ExtractAgent,
         )
 
     async def get(
@@ -472,71 +516,25 @@ class AsyncExtractionAgentsResource(AsyncAPIResource):
             cast_to=ExtractAgent,
         )
 
-    async def get_extraction_agents(
-        self,
-        *,
-        include_default: bool | Omit = omit,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractionAgentGetExtractionAgentsResponse:
-        """
-        List Extraction Agents
-
-        Args:
-          include_default: Whether to include default agents in the results
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._get(
-            "/api/v1/extraction/extraction-agents",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "include_default": include_default,
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    extraction_agent_get_extraction_agents_params.ExtractionAgentGetExtractionAgentsParams,
-                ),
-            ),
-            cast_to=ExtractionAgentGetExtractionAgentsResponse,
-        )
-
 
 class ExtractionAgentsResourceWithRawResponse:
     def __init__(self, extraction_agents: ExtractionAgentsResource) -> None:
         self._extraction_agents = extraction_agents
 
+        self.create = to_raw_response_wrapper(
+            extraction_agents.create,
+        )
         self.update = to_raw_response_wrapper(
             extraction_agents.update,
+        )
+        self.list = to_raw_response_wrapper(
+            extraction_agents.list,
         )
         self.delete = to_raw_response_wrapper(
             extraction_agents.delete,
         )
-        self.extraction_agents = to_raw_response_wrapper(
-            extraction_agents.extraction_agents,
-        )
         self.get = to_raw_response_wrapper(
             extraction_agents.get,
-        )
-        self.get_extraction_agents = to_raw_response_wrapper(
-            extraction_agents.get_extraction_agents,
         )
 
 
@@ -544,20 +542,20 @@ class AsyncExtractionAgentsResourceWithRawResponse:
     def __init__(self, extraction_agents: AsyncExtractionAgentsResource) -> None:
         self._extraction_agents = extraction_agents
 
+        self.create = async_to_raw_response_wrapper(
+            extraction_agents.create,
+        )
         self.update = async_to_raw_response_wrapper(
             extraction_agents.update,
+        )
+        self.list = async_to_raw_response_wrapper(
+            extraction_agents.list,
         )
         self.delete = async_to_raw_response_wrapper(
             extraction_agents.delete,
         )
-        self.extraction_agents = async_to_raw_response_wrapper(
-            extraction_agents.extraction_agents,
-        )
         self.get = async_to_raw_response_wrapper(
             extraction_agents.get,
-        )
-        self.get_extraction_agents = async_to_raw_response_wrapper(
-            extraction_agents.get_extraction_agents,
         )
 
 
@@ -565,20 +563,20 @@ class ExtractionAgentsResourceWithStreamingResponse:
     def __init__(self, extraction_agents: ExtractionAgentsResource) -> None:
         self._extraction_agents = extraction_agents
 
+        self.create = to_streamed_response_wrapper(
+            extraction_agents.create,
+        )
         self.update = to_streamed_response_wrapper(
             extraction_agents.update,
+        )
+        self.list = to_streamed_response_wrapper(
+            extraction_agents.list,
         )
         self.delete = to_streamed_response_wrapper(
             extraction_agents.delete,
         )
-        self.extraction_agents = to_streamed_response_wrapper(
-            extraction_agents.extraction_agents,
-        )
         self.get = to_streamed_response_wrapper(
             extraction_agents.get,
-        )
-        self.get_extraction_agents = to_streamed_response_wrapper(
-            extraction_agents.get_extraction_agents,
         )
 
 
@@ -586,18 +584,18 @@ class AsyncExtractionAgentsResourceWithStreamingResponse:
     def __init__(self, extraction_agents: AsyncExtractionAgentsResource) -> None:
         self._extraction_agents = extraction_agents
 
+        self.create = async_to_streamed_response_wrapper(
+            extraction_agents.create,
+        )
         self.update = async_to_streamed_response_wrapper(
             extraction_agents.update,
+        )
+        self.list = async_to_streamed_response_wrapper(
+            extraction_agents.list,
         )
         self.delete = async_to_streamed_response_wrapper(
             extraction_agents.delete,
         )
-        self.extraction_agents = async_to_streamed_response_wrapper(
-            extraction_agents.extraction_agents,
-        )
         self.get = async_to_streamed_response_wrapper(
             extraction_agents.get,
-        )
-        self.get_extraction_agents = async_to_streamed_response_wrapper(
-            extraction_agents.get_extraction_agents,
         )
