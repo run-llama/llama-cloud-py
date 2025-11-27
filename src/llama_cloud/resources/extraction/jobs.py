@@ -458,9 +458,7 @@ class JobsResource(SyncAPIResource):
             client = LlamaCloud(api_key="...")
 
             # One-shot: create job, wait for completion, and get result
-            result = client.extraction.jobs.extract(
-                extraction_agent_id="agent_id", file_id="file_id", verbose=True
-            )
+            result = client.extraction.jobs.extract(extraction_agent_id="agent_id", file_id="file_id", verbose=True)
 
             # Result is ready to use immediately
             print(result.data)

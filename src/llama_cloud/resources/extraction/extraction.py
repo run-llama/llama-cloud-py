@@ -242,7 +242,7 @@ class ExtractionResource(SyncAPIResource):
                 config={"llm_model": "gpt-4"},
                 data_schema={"name": "string", "age": "number"},
                 file_id="file_id",
-                verbose=True
+                verbose=True,
             )
 
             # Result is ready to use immediately
@@ -479,7 +479,7 @@ class AsyncExtractionResource(AsyncAPIResource):
                 config={"llm_model": "gpt-4"},
                 data_schema={"name": "string", "age": "number"},
                 file_id="file_id",
-                verbose=True
+                verbose=True,
             )
 
             # Result is ready to use immediately

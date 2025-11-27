@@ -1,6 +1,8 @@
 import asyncio
+
 from llama_cloud import AsyncLlamaCloud
-from llama_cloud.types.parsing.job import ParsingJobJsonResult, ParsingJobMarkdownResult, ParsingJobTextResult
+from llama_cloud.types.parsing.job import ParsingJobJsonResult, ParsingJobTextResult, ParsingJobMarkdownResult
+
 
 async def get_json():
     client = AsyncLlamaCloud()
@@ -15,16 +17,16 @@ async def get_json():
         adaptive_long_table=True,
         outlined_table_extraction=True,
         precise_bounding_box=True,
-        result_type="json"
+        result_type="json",
     )
 
     # Print various formats of the parsed result
     assert isinstance(result, ParsingJobJsonResult)
     print(result.pages)  # JSON result
-    print(result.pages[0]['text'])
+    print(result.pages[0]["text"])
     breakpoint()
-    print(result.pages[0]['markdown'])
-    print(result.pages[0]['images'][0])
+    print(result.pages[0]["markdown"])
+    print(result.pages[0]["images"][0])
 
 
 async def get_markdown():
@@ -40,7 +42,7 @@ async def get_markdown():
         adaptive_long_table=True,
         outlined_table_extraction=True,
         precise_bounding_box=True,
-        result_type="markdown"
+        result_type="markdown",
     )
 
     # Print various formats of the parsed result
@@ -61,12 +63,13 @@ async def get_text():
         adaptive_long_table=True,
         outlined_table_extraction=True,
         precise_bounding_box=True,
-        result_type="text"
+        result_type="text",
     )
 
     # Print various formats of the parsed result
     assert isinstance(result, ParsingJobTextResult)
     print(result.text)  # text result
+
 
 if __name__ == "__main__":
     asyncio.run(get_json())

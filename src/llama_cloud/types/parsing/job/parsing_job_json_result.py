@@ -1,7 +1,8 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from typing import Any, Dict, List
+
 from ...._models import BaseModel
-from typing import Any, List, Dict
 
 __all__ = ["ParsingJobJsonResult"]
 

@@ -1,9 +1,12 @@
-import asyncio
 import re
+import asyncio
+
 from llama_cloud import AsyncLlamaCloud
+
 
 def is_page_screenshot(name: str) -> bool:
     return bool(re.match(r"^page_\d+\.(png|jpg|jpeg)$", name))
+
 
 async def main():
     client = AsyncLlamaCloud()
@@ -31,17 +34,15 @@ async def main():
     # Get the images from the json result
     json_data = await client.parsing.job.result.get_json(job_id=job.id)
     for page in json_data.pages:
-        for image in page['images']:
+        for image in page["images"]:
             # Only download page screenshots for now
-            if not is_page_screenshot(image['name']):
+            if not is_page_screenshot(image["name"]):
                 continue
 
-            image_resp = await client.parsing.job.result.get_image(
-                name=image['name'],
-                job_id=job.id
-            )
+            image_resp = await client.parsing.job.result.get_image(name=image["name"], job_id=job.id)
             await image_resp.write_to_file(f"./downloaded_{image['name']}")
             print(f"Downloaded image: {image['name']}")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

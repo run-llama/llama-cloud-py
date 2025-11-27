@@ -173,7 +173,7 @@ async def poll_until_complete_async(
             error_msg = f"Polling timed out after {elapsed:.1f}s (timeout: {timeout}s)"
             logger.error(error_msg)
             return status
-        
+
         # Print progress
         if verbose and tries % 10 == 0:
             logger.info(".")

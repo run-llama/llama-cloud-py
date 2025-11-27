@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 import asyncio
-from pydantic import BaseModel, Field
 from typing import Optional
+
+from pydantic import Field, BaseModel
 
 from llama_cloud import AsyncLlamaCloud
 from llama_cloud.types.extraction import ExtractConfigParam
@@ -58,6 +61,7 @@ async def extract_with_agent():
 
     extracted_model = Models.model_validate(result.data)
     print("Extracted model names with agent:", extracted_model.model_names)
+
 
 if __name__ == "__main__":
     asyncio.run(extract_stateless())

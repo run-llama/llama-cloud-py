@@ -4,7 +4,9 @@ from __future__ import annotations
 
 from typing import List, Union, Mapping, Optional, cast
 from typing_extensions import Unpack, Literal
+
 import httpx
+
 from ...types import ParsingMode, FailPageMode, parsing_upload_file_params, parsing_create_screenshot_params
 from .job.job import (
     JobResource,
