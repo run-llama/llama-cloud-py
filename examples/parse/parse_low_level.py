@@ -3,13 +3,13 @@ import asyncio
 from llama_cloud import AsyncLlamaCloud
 
 
-async def main():
+async def main() -> None:
     client = AsyncLlamaCloud()
 
     # Or, upload without directly waiting
     job = await client.parsing.upload_file(
         # The file to parse
-        file="../files/attention_is_all_you_need.pdf",
+        file="../example_files/attention_is_all_you_need.pdf",
         parse_mode="parse_page_with_agent",
         model="openai-gpt-4-1-mini",
         high_res_ocr=True,

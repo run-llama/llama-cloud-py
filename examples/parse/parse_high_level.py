@@ -4,13 +4,13 @@ from llama_cloud import AsyncLlamaCloud
 from llama_cloud.types.parsing.job import ParsingJobJsonResult, ParsingJobTextResult, ParsingJobMarkdownResult
 
 
-async def get_json():
+async def get_json() -> None:
     client = AsyncLlamaCloud()
 
     # Upload and wait for completion
     result = await client.parsing.parse(
         # The file to parse
-        file="../files/attention_is_all_you_need.pdf",
+        file="../example_files/attention_is_all_you_need.pdf",
         parse_mode="parse_page_with_agent",
         model="openai-gpt-4-1-mini",
         high_res_ocr=True,
@@ -29,13 +29,13 @@ async def get_json():
     print(result.pages[0]["images"][0])
 
 
-async def get_markdown():
+async def get_markdown() -> None:
     client = AsyncLlamaCloud()
 
     # Upload and wait for completion
     result = await client.parsing.parse(
         # The file to parse
-        file="../files/attention_is_all_you_need.pdf",
+        file="../example_files/attention_is_all_you_need.pdf",
         parse_mode="parse_page_with_agent",
         model="openai-gpt-4-1-mini",
         high_res_ocr=True,
@@ -50,13 +50,13 @@ async def get_markdown():
     print(result.markdown)  # Markdown result
 
 
-async def get_text():
+async def get_text() -> None:
     client = AsyncLlamaCloud()
 
     # Upload and wait for completion
     result = await client.parsing.parse(
         # The file to parse
-        file="../files/attention_is_all_you_need.pdf",
+        file="../example_files/attention_is_all_you_need.pdf",
         parse_mode="parse_page_with_agent",
         model="openai-gpt-4-1-mini",
         high_res_ocr=True,
