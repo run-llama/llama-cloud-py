@@ -259,8 +259,8 @@ class SheetsResource(SyncAPIResource):
 
         def get_error_message(job: SheetsJob) -> str:
             error_parts = [f"Job {spreadsheet_job_id} failed with status: {job.status}"]
-            if job.error_message:
-                error_parts.append(f"Error: {job.error_message}")
+            if job.errors:
+                error_parts.append(f"Errors: {job.errors}")
             return " | ".join(error_parts)
 
         return poll_until_complete(
@@ -763,8 +763,8 @@ class AsyncSheetsResource(AsyncAPIResource):
 
         def get_error_message(job: SheetsJob) -> str:
             error_parts = [f"Job {spreadsheet_job_id} failed with status: {job.status}"]
-            if job.error_message:
-                error_parts.append(f"Error: {job.error_message}")
+            if job.errors:
+                error_parts.append(f"Errors: {job.errors}")
             return " | ".join(error_parts)
 
         return await poll_until_complete_async(
