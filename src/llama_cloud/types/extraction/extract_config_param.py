@@ -12,6 +12,12 @@ class ExtractConfigParam(TypedDict, total=False):
     chunk_mode: Literal["PAGE", "SECTION"]
     """The mode to use for chunking the document."""
 
+    citation_bbox: bool
+    """Whether to fetch citation bounding boxes for the extraction.
+
+    Only available in PREMIUM mode.
+    """
+
     cite_sources: bool
     """Whether to cite sources for the extraction."""
 

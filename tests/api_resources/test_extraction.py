@@ -32,6 +32,7 @@ class TestExtraction:
         extraction = client.extraction.run(
             config={
                 "chunk_mode": "PAGE",
+                "citation_bbox": True,
                 "cite_sources": True,
                 "confidence_scores": True,
                 "extract_model": "openai-gpt-4-1",
@@ -116,6 +117,7 @@ class TestAsyncExtraction:
         extraction = await async_client.extraction.run(
             config={
                 "chunk_mode": "PAGE",
+                "citation_bbox": True,
                 "cite_sources": True,
                 "confidence_scores": True,
                 "extract_model": "openai-gpt-4-1",

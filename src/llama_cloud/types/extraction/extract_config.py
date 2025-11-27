@@ -12,6 +12,12 @@ class ExtractConfig(BaseModel):
     chunk_mode: Optional[Literal["PAGE", "SECTION"]] = None
     """The mode to use for chunking the document."""
 
+    citation_bbox: Optional[bool] = None
+    """Whether to fetch citation bounding boxes for the extraction.
+
+    Only available in PREMIUM mode.
+    """
+
     cite_sources: Optional[bool] = None
     """Whether to cite sources for the extraction."""
 

@@ -317,7 +317,6 @@ Methods:
 - <code title="delete /api/v1/extraction/runs/{run_id}">client.extraction.runs.<a href="./src/llama_cloud/resources/extraction/runs.py">delete</a>(run_id, \*\*<a href="src/llama_cloud/types/extraction/run_delete_params.py">params</a>) -> object</code>
 - <code title="get /api/v1/extraction/runs/{run_id}">client.extraction.runs.<a href="./src/llama_cloud/resources/extraction/runs.py">get</a>(run_id, \*\*<a href="src/llama_cloud/types/extraction/run_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_run.py">ExtractRun</a></code>
 - <code title="get /api/v1/extraction/runs/by-job/{job_id}">client.extraction.runs.<a href="./src/llama_cloud/resources/extraction/runs.py">get_by_job</a>(job_id, \*\*<a href="src/llama_cloud/types/extraction/run_get_by_job_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_run.py">ExtractRun</a></code>
-- <code title="get /api/v1/extraction/runs/latest-from-ui">client.extraction.runs.<a href="./src/llama_cloud/resources/extraction/runs.py">get_latest_from_ui</a>(\*\*<a href="src/llama_cloud/types/extraction/run_get_latest_from_ui_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_run.py">Optional[ExtractRun]</a></code>
 
 ## ExtractionAgents
 

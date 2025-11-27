@@ -125,6 +125,8 @@ class LlamaParseParametersParam(TypedDict, total=False):
 
     layout_aware: Optional[bool]
 
+    line_level_bounding_box: Optional[bool]
+
     markdown_table_multiline_header_separator: Optional[str]
 
     max_pages: Optional[int]
