@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.7.0 (2025-11-28)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/run-llama/llama-cloud-py/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** add back projects list/get ([b6b41a1](https://github.com/run-llama/llama-cloud-py/commit/b6b41a1d0289452e64c3440d9c414854155d82dd))
+* **api:** api update ([fdd82e0](https://github.com/run-llama/llama-cloud-py/commit/fdd82e082bdfc3b237a815dc9255b469fdb19dfe))
+
+
+### Bug Fixes
+
+* ensure streams are always closed ([7f1be5b](https://github.com/run-llama/llama-cloud-py/commit/7f1be5b2c486da8f17dd2315eceb9d1ea465172f))
+
+
+### Chores
+
+* **deps:** mypy 1.18.1 has a regression, pin to 1.17 ([9a79655](https://github.com/run-llama/llama-cloud-py/commit/9a796552cca42dcfc3b58a15afe350fed4eb7c83))
+
 ## 0.6.0 (2025-11-27)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/run-llama/llama-cloud-py/compare/v0.5.0...v0.6.0)
