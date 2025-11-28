@@ -1,3 +1,16 @@
+# Projects
+
+Types:
+
+```python
+from llama_cloud.types import Project, ProjectListResponse
+```
+
+Methods:
+
+- <code title="get /api/v1/projects">client.projects.<a href="./src/llama_cloud/resources/projects.py">list</a>(\*\*<a href="src/llama_cloud/types/project_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/project_list_response.py">ProjectListResponse</a></code>
+- <code title="get /api/v1/projects/{project_id}">client.projects.<a href="./src/llama_cloud/resources/projects.py">get</a>(project_id, \*\*<a href="src/llama_cloud/types/project_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/project.py">Project</a></code>
+
 # DataSinks
 
 Types:

@@ -24,6 +24,14 @@ from .parsing import (
     ParsingResourceWithStreamingResponse,
     AsyncParsingResourceWithStreamingResponse,
 )
+from .projects import (
+    ProjectsResource,
+    AsyncProjectsResource,
+    ProjectsResourceWithRawResponse,
+    AsyncProjectsResourceWithRawResponse,
+    ProjectsResourceWithStreamingResponse,
+    AsyncProjectsResourceWithStreamingResponse,
+)
 from .pipelines import (
     PipelinesResource,
     AsyncPipelinesResource,
@@ -74,6 +82,12 @@ from .data_sources import (
 )
 
 __all__ = [
+    "ProjectsResource",
+    "AsyncProjectsResource",
+    "ProjectsResourceWithRawResponse",
+    "AsyncProjectsResourceWithRawResponse",
+    "ProjectsResourceWithStreamingResponse",
+    "AsyncProjectsResourceWithStreamingResponse",
     "DataSinksResource",
     "AsyncDataSinksResource",
     "DataSinksResourceWithRawResponse",

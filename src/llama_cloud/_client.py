@@ -21,7 +21,7 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
-from .resources import files, data_sinks, data_sources
+from .resources import files, projects, data_sinks, data_sources
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, LlamaCloudError
 from ._base_client import (
@@ -49,6 +49,7 @@ __all__ = [
 
 
 class LlamaCloud(SyncAPIClient):
+    projects: projects.ProjectsResource
     data_sinks: data_sinks.DataSinksResource
     data_sources: data_sources.DataSourcesResource
     files: files.FilesResource
@@ -115,6 +116,7 @@ class LlamaCloud(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
+        self.projects = projects.ProjectsResource(self)
         self.data_sinks = data_sinks.DataSinksResource(self)
         self.data_sources = data_sources.DataSourcesResource(self)
         self.files = files.FilesResource(self)
@@ -233,6 +235,7 @@ class LlamaCloud(SyncAPIClient):
 
 
 class AsyncLlamaCloud(AsyncAPIClient):
+    projects: projects.AsyncProjectsResource
     data_sinks: data_sinks.AsyncDataSinksResource
     data_sources: data_sources.AsyncDataSourcesResource
     files: files.AsyncFilesResource
@@ -299,6 +302,7 @@ class AsyncLlamaCloud(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
+        self.projects = projects.AsyncProjectsResource(self)
         self.data_sinks = data_sinks.AsyncDataSinksResource(self)
         self.data_sources = data_sources.AsyncDataSourcesResource(self)
         self.files = files.AsyncFilesResource(self)
@@ -418,6 +422,7 @@ class AsyncLlamaCloud(AsyncAPIClient):
 
 class LlamaCloudWithRawResponse:
     def __init__(self, client: LlamaCloud) -> None:
+        self.projects = projects.ProjectsResourceWithRawResponse(client.projects)
         self.data_sinks = data_sinks.DataSinksResourceWithRawResponse(client.data_sinks)
         self.data_sources = data_sources.DataSourcesResourceWithRawResponse(client.data_sources)
         self.files = files.FilesResourceWithRawResponse(client.files)
@@ -431,6 +436,7 @@ class LlamaCloudWithRawResponse:
 
 class AsyncLlamaCloudWithRawResponse:
     def __init__(self, client: AsyncLlamaCloud) -> None:
+        self.projects = projects.AsyncProjectsResourceWithRawResponse(client.projects)
         self.data_sinks = data_sinks.AsyncDataSinksResourceWithRawResponse(client.data_sinks)
         self.data_sources = data_sources.AsyncDataSourcesResourceWithRawResponse(client.data_sources)
         self.files = files.AsyncFilesResourceWithRawResponse(client.files)
@@ -444,6 +450,7 @@ class AsyncLlamaCloudWithRawResponse:
 
 class LlamaCloudWithStreamedResponse:
     def __init__(self, client: LlamaCloud) -> None:
+        self.projects = projects.ProjectsResourceWithStreamingResponse(client.projects)
         self.data_sinks = data_sinks.DataSinksResourceWithStreamingResponse(client.data_sinks)
         self.data_sources = data_sources.DataSourcesResourceWithStreamingResponse(client.data_sources)
         self.files = files.FilesResourceWithStreamingResponse(client.files)
@@ -457,6 +464,7 @@ class LlamaCloudWithStreamedResponse:
 
 class AsyncLlamaCloudWithStreamedResponse:
     def __init__(self, client: AsyncLlamaCloud) -> None:
+        self.projects = projects.AsyncProjectsResourceWithStreamingResponse(client.projects)
         self.data_sinks = data_sinks.AsyncDataSinksResourceWithStreamingResponse(client.data_sinks)
         self.data_sources = data_sources.AsyncDataSourcesResourceWithStreamingResponse(client.data_sources)
         self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
