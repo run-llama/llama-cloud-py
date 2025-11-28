@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0 (2025-11-28)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/run-llama/llama-cloud-py/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **api:** add get page figure/screenshot methods ([388d86e](https://github.com/run-llama/llama-cloud-py/commit/388d86e0d6a749632ef2deb00ee1917b00df9aba))
+
 ## 0.7.0 (2025-11-28)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/run-llama/llama-cloud-py/compare/v0.6.0...v0.7.0)
