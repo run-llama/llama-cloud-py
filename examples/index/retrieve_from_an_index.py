@@ -51,8 +51,12 @@ async def retrieve_from_existing_index_pipeline() -> None:
         rerank_top_n=3,
     )
 
-    for n in combined_results.nodes or []:
-        print(f"Score: {n.score}, Text: {n.node.text}")
+    if combined_results.nodes is None:
+        print("No results found.")
+        return
+
+    for combined_n in combined_results.nodes:
+        print(f"Score: {combined_n.score}, Text: {combined_n.node.text}")
 
 
 if __name__ == "__main__":

@@ -20,7 +20,7 @@ import httpx
 from llama_index.core.schema import BaseNode, Document, TransformComponent
 from llama_index.core.settings import Settings
 from llama_index.core.constants import DEFAULT_APP_URL, DEFAULT_PROJECT_NAME
-from llama_index.core.llms.utils import LLMType
+from llama_index.core.llms.utils import LLMType  # type: ignore
 from llama_index.core.data_structs import IndexDict
 from llama_index.core.callbacks.base import CallbackManager
 from llama_index.core.base.base_retriever import BaseRetriever
@@ -634,13 +634,13 @@ class LlamaCloudIndex(BaseManagedIndex):
         )
 
     @override
-    def as_query_engine(self, llm: Optional[LLMType] = None, **kwargs: Any) -> BaseQueryEngine:
+    def as_query_engine(self, llm: Optional[LLMType] = None, **kwargs: Any) -> BaseQueryEngine:  # type: ignore
         from llama_index.core.query_engine.retriever_query_engine import (
             RetrieverQueryEngine,
         )
 
         kwargs["retriever"] = self.as_retriever(**kwargs)
-        return RetrieverQueryEngine.from_args(llm=llm, **kwargs)
+        return RetrieverQueryEngine.from_args(llm=llm, **kwargs)  # type: ignore
 
     @property
     @override

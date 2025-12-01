@@ -95,12 +95,11 @@ class LlamaCloudRetriever(BaseRetriever):
         self._alpha = alpha if alpha is not None else None
 
         # Convert filters to MetadataFiltersParam
+        self._filters: Optional[MetadataFiltersParam] = None
         if filters:
             self._filters = MetadataFiltersParam(
-                filters=[FilterMetadataFilter(**f.model_dump()) for f in filters.filters]
+                filters=[FilterMetadataFilter(**f.model_dump()) for f in filters.filters]  # type: ignore[typeddict-item]
             )
-        else:
-            self._filters = None
 
         self._retrieval_mode = retrieval_mode if retrieval_mode is not None else None
         self._files_top_k = files_top_k if files_top_k is not None else None
@@ -144,7 +143,7 @@ class LlamaCloudRetriever(BaseRetriever):
     @override
     def _retrieve(self, query_bundle: QueryBundle) -> List[NodeWithScore]:
         """Retrieve from the platform."""
-        search_filters_inference_schema = omit
+        search_filters_inference_schema: Optional[Dict[str, Any]] = None
         if self._search_filters_inference_schema is not None:
             search_filters_inference_schema = self._search_filters_inference_schema.model_json_schema()
 
@@ -160,7 +159,7 @@ class LlamaCloudRetriever(BaseRetriever):
             retrieve_page_figure_nodes=self._retrieve_page_figure_nodes,
             retrieve_page_screenshot_nodes=self._retrieve_page_screenshot_nodes,
             search_filters=self._filters,
-            search_filters_inference_schema=search_filters_inference_schema,  # type: ignore
+            search_filters_inference_schema=search_filters_inference_schema or omit,  # type: ignore
             sparse_similarity_top_k=self._sparse_similarity_top_k,
         )
 
@@ -189,7 +188,7 @@ class LlamaCloudRetriever(BaseRetriever):
     @override
     async def _aretrieve(self, query_bundle: QueryBundle) -> List[NodeWithScore]:
         """Asynchronously retrieve from the platform."""
-        search_filters_inference_schema = omit
+        search_filters_inference_schema: Optional[Dict[str, Any]] = None
         if self._search_filters_inference_schema is not None:
             search_filters_inference_schema = self._search_filters_inference_schema.model_json_schema()
 

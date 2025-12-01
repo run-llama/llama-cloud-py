@@ -98,7 +98,7 @@ class LlamaCloudCompositeRetriever(BaseRetriever):
         if self._persisted:
             self.retriever = self._client.retrievers.update(
                 retriever_id=self.retriever.id,
-                pipelines=[RetrieverPipelineParam(**pipeline.model_dump()) for pipeline in pipelines],
+                pipelines=[RetrieverPipelineParam(**pipeline.model_dump()) for pipeline in pipelines],  # type: ignore [typeddict-item]
             )
         else:
             # Update in-memory retriever for non-persisted case using copy
@@ -137,7 +137,7 @@ class LlamaCloudCompositeRetriever(BaseRetriever):
         if self._persisted:
             self.retriever = await self._aclient.retrievers.update(
                 retriever_id=self.retriever.id,
-                pipelines=pipelines,  # type: ignore [union-attr]
+                pipelines=pipelines,  # type: ignore [arg-type]
             )
         else:
             # Update in-memory retriever for non-persisted case using copy
@@ -197,8 +197,8 @@ class LlamaCloudCompositeRetriever(BaseRetriever):
         )
 
         # Inject rerank_top_n into rerank_config if specified
-        if rerank_top_n is not None and rerank_top_n != omit:
-            if rerank_config is None or rerank_config == omit:
+        if rerank_top_n is not None:
+            if rerank_config is None:
                 rerank_config = ReRankConfigParam(top_n=rerank_top_n)
             else:
                 # Update existing rerank_config with top_n
@@ -241,8 +241,8 @@ class LlamaCloudCompositeRetriever(BaseRetriever):
         )
 
         # Inject rerank_top_n into rerank_config if specified
-        if rerank_top_n is not None and rerank_top_n != omit:
-            if rerank_config is None or rerank_config == omit:
+        if rerank_top_n is not None:
+            if rerank_config is None:
                 rerank_config = ReRankConfigParam(top_n=rerank_top_n)
             else:
                 # Update existing rerank_config with top_n
@@ -261,7 +261,7 @@ class LlamaCloudCompositeRetriever(BaseRetriever):
                 mode=mode,  # type: ignore
                 rerank_config=rerank_config,  # type: ignore
                 query=query_bundle.query_str,
-                pipelines=self.retriever.pipelines,  # type: ignore [union-attr]
+                pipelines=self.retriever.pipelines,  # type: ignore [arg-type]
             )
         node_w_scores = [self._result_nodes_to_node_with_score(node) for node in result.nodes or []]
         image_nodes_w_scores = await apage_screenshot_nodes_to_node_with_score(

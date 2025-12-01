@@ -47,6 +47,7 @@ def resolve_project(
     project_id: Optional[str],
     organization_id: Optional[str],
 ) -> Project:
+    project: Optional[Project] = None
     if project_id is not None:
         project = client.projects.get(project_id=project_id)
     elif project_name is not None:
@@ -75,6 +76,7 @@ def resolve_project_and_pipeline(
         organization_id=organization_id,
     )
 
+    pipeline: Optional[Pipeline] = None
     if pipeline_id is not None:
         pipeline = client.pipelines.get(pipeline_id=pipeline_id)
     elif name is not None:
