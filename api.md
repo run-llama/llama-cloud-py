@@ -84,6 +84,7 @@ from llama_cloud.types import (
     PresetRetrievalParams,
     RetrievalMode,
     SparseModelConfig,
+    PipelineRetrieveResponse,
     PipelineListResponse,
 )
 ```
@@ -91,6 +92,7 @@ from llama_cloud.types import (
 Methods:
 
 - <code title="post /api/v1/pipelines">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">create</a>(\*\*<a href="src/llama_cloud/types/pipeline_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline.py">Pipeline</a></code>
+- <code title="post /api/v1/pipelines/{pipeline_id}/retrieve">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">retrieve</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipeline_retrieve_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline_retrieve_response.py">PipelineRetrieveResponse</a></code>
 - <code title="put /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">update</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipeline_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline.py">Pipeline</a></code>
 - <code title="get /api/v1/pipelines">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">list</a>(\*\*<a href="src/llama_cloud/types/pipeline_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline_list_response.py">PipelineListResponse</a></code>
 - <code title="delete /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/llama_cloud/resources/pipelines/pipelines.py">delete</a>(pipeline_id) -> None</code>
