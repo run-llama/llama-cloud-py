@@ -57,6 +57,7 @@ dev-dependencies = [
     "importlib-metadata>=6.7.0",
     "rich>=13.7.1",
     "pytest-xdist>=3.6.1",
+    "llama-index-core>=0.14.0",
 ]
 
 [tool.rye.scripts]
