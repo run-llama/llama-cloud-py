@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.0 (2025-12-01)
+
+Full Changelog: [v0.8.0...v0.9.0](https://github.com/run-llama/llama-cloud-py/compare/v0.8.0...v0.9.0)
+
+### Features
+
+* **api:** add pipeline.retrieve method ([cd02c34](https://github.com/run-llama/llama-cloud-py/commit/cd02c34bd8fc89c08a1baf05432fccef2bb2aee7))
+* **api:** api update ([c86b1a4](https://github.com/run-llama/llama-cloud-py/commit/c86b1a48c483384179e8fa9aff1adecac8c11149))
+
 ## 0.8.0 (2025-11-28)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/run-llama/llama-cloud-py/compare/v0.7.0...v0.8.0)

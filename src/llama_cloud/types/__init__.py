@@ -2,7 +2,14 @@
 
 from __future__ import annotations
 
-from . import pipeline, retriever, metadata_filters, retriever_pipeline, preset_retrieval_params
+from . import (
+    pipeline,
+    retriever,
+    metadata_filters,
+    retriever_pipeline,
+    preset_retrieval_params,
+    pipeline_retrieve_response,
+)
 from .. import _compat
 from .file import File as File
 from .project import Project as Project
@@ -54,6 +61,7 @@ from .retriever_upsert_params import RetrieverUpsertParams as RetrieverUpsertPar
 from .composite_retrieval_mode import CompositeRetrievalMode as CompositeRetrievalMode
 from .file_read_content_params import FileReadContentParams as FileReadContentParams
 from .pipeline_metadata_config import PipelineMetadataConfig as PipelineMetadataConfig
+from .pipeline_retrieve_params import PipelineRetrieveParams as PipelineRetrieveParams
 from .retriever_pipeline_param import RetrieverPipelineParam as RetrieverPipelineParam
 from .data_source_create_params import DataSourceCreateParams as DataSourceCreateParams
 from .data_source_list_response import DataSourceListResponse as DataSourceListResponse
@@ -62,6 +70,7 @@ from .sparse_model_config_param import SparseModelConfigParam as SparseModelConf
 from .composite_retrieval_result import CompositeRetrievalResult as CompositeRetrievalResult
 from .parsing_upload_file_params import ParsingUploadFileParams as ParsingUploadFileParams
 from .pipeline_get_status_params import PipelineGetStatusParams as PipelineGetStatusParams
+from .pipeline_retrieve_response import PipelineRetrieveResponse as PipelineRetrieveResponse
 from .auto_transform_config_param import AutoTransformConfigParam as AutoTransformConfigParam
 from .file_get_page_figure_params import FileGetPageFigureParams as FileGetPageFigureParams
 from .file_upload_from_url_params import FileUploadFromURLParams as FileUploadFromURLParams
@@ -93,11 +102,13 @@ if _compat.PYDANTIC_V1:
     metadata_filters.MetadataFilters.update_forward_refs()  # type: ignore
     pipeline.Pipeline.update_forward_refs()  # type: ignore
     preset_retrieval_params.PresetRetrievalParams.update_forward_refs()  # type: ignore
+    pipeline_retrieve_response.PipelineRetrieveResponse.update_forward_refs()  # type: ignore
     retriever.Retriever.update_forward_refs()  # type: ignore
     retriever_pipeline.RetrieverPipeline.update_forward_refs()  # type: ignore
 else:
     metadata_filters.MetadataFilters.model_rebuild(_parent_namespace_depth=0)
     pipeline.Pipeline.model_rebuild(_parent_namespace_depth=0)
     preset_retrieval_params.PresetRetrievalParams.model_rebuild(_parent_namespace_depth=0)
+    pipeline_retrieve_response.PipelineRetrieveResponse.model_rebuild(_parent_namespace_depth=0)
     retriever.Retriever.model_rebuild(_parent_namespace_depth=0)
     retriever_pipeline.RetrieverPipeline.model_rebuild(_parent_namespace_depth=0)
