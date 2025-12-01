@@ -128,8 +128,9 @@ client = LlamaCloud()
 all_runs = []
 # Automatically fetches more pages as needed.
 for run in client.extraction.runs.list(
-    extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+    extraction_agent_id="30988414-9163-4a0b-a7e0-35dd760109d7",
     limit=20,
+    skip=0,
 ):
     # Do something with run here
     all_runs.append(run)
@@ -149,8 +150,9 @@ async def main() -> None:
     all_runs = []
     # Iterate through items across all pages, issuing requests as needed.
     async for run in client.extraction.runs.list(
-        extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        extraction_agent_id="30988414-9163-4a0b-a7e0-35dd760109d7",
         limit=20,
+        skip=0,
     ):
         all_runs.append(run)
     print(all_runs)
@@ -163,8 +165,9 @@ Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get
 
 ```python
 first_page = await client.extraction.runs.list(
-    extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+    extraction_agent_id="30988414-9163-4a0b-a7e0-35dd760109d7",
     limit=20,
+    skip=0,
 )
 if first_page.has_next_page():
     print(f"will fetch next page using these details: {first_page.next_page_info()}")
@@ -178,8 +181,9 @@ Or just work directly with the returned data:
 
 ```python
 first_page = await client.extraction.runs.list(
-    extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+    extraction_agent_id="30988414-9163-4a0b-a7e0-35dd760109d7",
     limit=20,
+    skip=0,
 )
 
 print(
