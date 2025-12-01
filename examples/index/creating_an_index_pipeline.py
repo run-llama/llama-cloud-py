@@ -1,9 +1,15 @@
 import asyncio
+
 from llama_cloud import AsyncLlamaCloud
 from llama_cloud.types import (
-    LlamaParseParametersParam,
     AutoTransformConfigParam,
     # AdvancedModeTransformConfigParam,
+    LlamaParseParametersParam,
+)
+from llama_cloud.types.pipelines import CloudDocumentCreateParam
+from llama_cloud.types.pipeline_create_params import (
+    EmbeddingConfigOpenAIEmbeddingConfig,
+    EmbeddingConfigOpenAIEmbeddingConfigComponent,
 )
 from llama_cloud.types.data_sink_create_params import (
     ComponentCloudPineconeVectorStore,
@@ -20,11 +26,7 @@ from llama_cloud.types.data_source_create_params import (
     # ComponentCloudSharepointDataSource,
     # ComponentCloudOneDriveDataSource,
 )
-from llama_cloud.types.pipeline_create_params import (
-    EmbeddingConfigOpenAIEmbeddingConfig,
-    EmbeddingConfigOpenAIEmbeddingConfigComponent,
-)
-from llama_cloud.types.pipelines import CloudDocumentCreateParam
+
 
 async def create_index() -> None:
     client = AsyncLlamaCloud()
@@ -47,7 +49,7 @@ async def create_index() -> None:
             type="OPENAI_EMBEDDING",
         ),
         llama_parse_parameters=LlamaParseParametersParam(),
-        transform_config=AutoTransformConfigParam(chunk_overlap=128, chunk_size=1028)
+        transform_config=AutoTransformConfigParam(chunk_overlap=128, chunk_size=1028),
     )
 
     print(pipeline.id)
@@ -60,7 +62,7 @@ async def create_index() -> None:
                 text="This is my first document to be indexed.",
                 metadata={"source": "generated"},
             )
-        ]
+        ],
     )
     print(f"Uploaded {len(documents)} documents to the index.")
 
@@ -69,7 +71,7 @@ async def create_index() -> None:
     while status_resp.status not in ("NOT_STARTED", "IN_PROGRESS"):
         await asyncio.sleep(5)
         status_resp = await client.pipelines.get_status(pipeline_id=pipeline.id)
-    
+
     print(f"Indexing completed with status: {status_resp.status}")
 
 
@@ -88,6 +90,7 @@ async def create_data_sink() -> str:
 
     return data_sink.id
 
+
 async def create_data_source() -> str:
     client = AsyncLlamaCloud()
 
@@ -104,6 +107,7 @@ async def create_data_source() -> str:
     )
 
     return data_source.id
+
 
 if __name__ == "__main__":
     asyncio.run(create_index())

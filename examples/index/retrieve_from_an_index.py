@@ -1,4 +1,5 @@
 import asyncio
+
 from llama_cloud import AsyncLlamaCloud
 from llama_cloud.types import RetrieverPipelineParam, PresetRetrievalParamsParam
 
@@ -20,7 +21,6 @@ async def retrieve_from_existing_index_pipeline() -> None:
     for n in results.retrieval_nodes:
         print(f"Score: {n.score}, Text: {n.node.text}")
 
-    
     # Create a named retrieval configuration for reuse
     # Can combine one or more pipelines in a single retriever
     retriver = await client.retrievers.create(
@@ -36,7 +36,7 @@ async def retrieve_from_existing_index_pipeline() -> None:
                     alpha=0.5,
                     enable_reranking=True,
                     rerank_top_n=5,
-                )
+                ),
             )
         ],
     )
@@ -53,6 +53,7 @@ async def retrieve_from_existing_index_pipeline() -> None:
 
     for n in combined_results.nodes or []:
         print(f"Score: {n.score}, Text: {n.node.text}")
+
 
 if __name__ == "__main__":
     asyncio.run(retrieve_from_existing_index_pipeline())

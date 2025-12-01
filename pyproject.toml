@@ -242,6 +242,7 @@ select = [
 ignore = [
   # mutable defaults
   "B006",
+  "T201",
 ]
 unfixable = [
   # disable auto fix for print statements
