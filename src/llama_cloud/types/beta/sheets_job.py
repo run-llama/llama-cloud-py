@@ -51,8 +51,8 @@ class SheetsJob(BaseModel):
     created_at: str
     """When the job was created"""
 
-    file_id: Optional[str] = None
-    """The ID of the input file"""
+    file: File
+    """The file to process"""
 
     project_id: str
     """The ID of the project"""
@@ -68,9 +68,6 @@ class SheetsJob(BaseModel):
 
     errors: Optional[List[str]] = None
     """Any errors encountered"""
-
-    file: Optional[File] = None
-    """Schema for a file."""
 
     regions: Optional[List[Region]] = None
     """All extracted regions (populated when job is complete)"""
