@@ -93,7 +93,7 @@ class JobsResource(SyncAPIResource):
 
           file_id: The id of the file
 
-          config_override: Additional parameters for the extraction agent.
+          config_override: Configuration parameters for the extraction agent.
 
           data_schema_override: The data schema to override the extraction agent's data schema with
 
@@ -195,7 +195,7 @@ class JobsResource(SyncAPIResource):
 
           file_ids: The ids of the files
 
-          config_override: Additional parameters for the extraction agent.
+          config_override: Configuration parameters for the extraction agent.
 
           data_schema_override: The data schema to override the extraction agent's data schema with
 
@@ -421,7 +421,7 @@ class AsyncJobsResource(AsyncAPIResource):
 
           file_id: The id of the file
 
-          config_override: Additional parameters for the extraction agent.
+          config_override: Configuration parameters for the extraction agent.
 
           data_schema_override: The data schema to override the extraction agent's data schema with
 
@@ -525,7 +525,7 @@ class AsyncJobsResource(AsyncAPIResource):
 
           file_ids: The ids of the files
 
-          config_override: Additional parameters for the extraction agent.
+          config_override: Configuration parameters for the extraction agent.
 
           data_schema_override: The data schema to override the extraction agent's data schema with
 
