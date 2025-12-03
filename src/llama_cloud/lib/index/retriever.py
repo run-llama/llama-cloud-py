@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 from typing import Any, Dict, List, Optional
 from typing_extensions import override
@@ -150,17 +152,17 @@ class LlamaCloudRetriever(BaseRetriever):
         results = self._client.pipelines.retrieve(
             pipeline_id=self.pipeline.id,
             query=query_bundle.query_str,
-            alpha=self._alpha,
-            dense_similarity_top_k=self._dense_similarity_top_k,
-            enable_reranking=self._enable_reranking,
-            files_top_k=self._files_top_k,
-            rerank_top_n=self._rerank_top_n,
-            retrieval_mode=self._retrieval_mode,  # type: ignore
-            retrieve_page_figure_nodes=self._retrieve_page_figure_nodes,
-            retrieve_page_screenshot_nodes=self._retrieve_page_screenshot_nodes,
-            search_filters=self._filters,
+            alpha=self._alpha or omit,
+            dense_similarity_top_k=self._dense_similarity_top_k or omit,
+            enable_reranking=self._enable_reranking or omit,
+            files_top_k=self._files_top_k or omit,
+            rerank_top_n=self._rerank_top_n or omit,
+            retrieval_mode=self._retrieval_mode or "chunks",  # type: ignore
+            retrieve_page_figure_nodes=self._retrieve_page_figure_nodes or omit,
+            retrieve_page_screenshot_nodes=self._retrieve_page_screenshot_nodes or omit,
+            search_filters=self._filters or omit,
             search_filters_inference_schema=search_filters_inference_schema or omit,  # type: ignore
-            sparse_similarity_top_k=self._sparse_similarity_top_k,
+            sparse_similarity_top_k=self._sparse_similarity_top_k or omit,
         )
 
         result_nodes = self._result_nodes_to_node_with_score(results.retrieval_nodes, metadata=results.metadata)
@@ -195,17 +197,17 @@ class LlamaCloudRetriever(BaseRetriever):
         results = await self._aclient.pipelines.retrieve(
             pipeline_id=self.pipeline.id,
             query=query_bundle.query_str,
-            alpha=self._alpha,
-            dense_similarity_top_k=self._dense_similarity_top_k,
-            enable_reranking=self._enable_reranking,
-            files_top_k=self._files_top_k,
-            rerank_top_n=self._rerank_top_n,
-            retrieval_mode=self._retrieval_mode,  # type: ignore
-            retrieve_page_figure_nodes=self._retrieve_page_figure_nodes,
-            retrieve_page_screenshot_nodes=self._retrieve_page_screenshot_nodes,
-            search_filters=self._filters,
-            search_filters_inference_schema=search_filters_inference_schema,  # type: ignore
-            sparse_similarity_top_k=self._sparse_similarity_top_k,
+            alpha=self._alpha or omit,
+            dense_similarity_top_k=self._dense_similarity_top_k or omit,
+            enable_reranking=self._enable_reranking or omit,
+            files_top_k=self._files_top_k or omit,
+            rerank_top_n=self._rerank_top_n or omit,
+            retrieval_mode=self._retrieval_mode or "chunks",  # type: ignore
+            retrieve_page_figure_nodes=self._retrieve_page_figure_nodes or omit,
+            retrieve_page_screenshot_nodes=self._retrieve_page_screenshot_nodes or omit,
+            search_filters=self._filters or omit,
+            search_filters_inference_schema=search_filters_inference_schema or omit,  # type: ignore
+            sparse_similarity_top_k=self._sparse_similarity_top_k or omit,
         )
 
         result_nodes = self._result_nodes_to_node_with_score(results.retrieval_nodes, metadata=results.metadata)

@@ -7,6 +7,6 @@ from typing_extensions import TypeAlias
 
 __all__ = ["RetrieverListResponse"]
 
-RetrieverListResponse: TypeAlias = List["Retriever"]
-
 from .retriever import Retriever
+
+RetrieverListResponse: TypeAlias = List[Retriever]

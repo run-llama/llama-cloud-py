@@ -24,7 +24,6 @@ async def get_json() -> None:
     assert isinstance(result, ParsingJobJsonResult)
     print(result.pages)  # JSON result
     print(result.pages[0]["text"])
-    breakpoint()
     print(result.pages[0]["markdown"])
     print(result.pages[0]["images"][0])
 

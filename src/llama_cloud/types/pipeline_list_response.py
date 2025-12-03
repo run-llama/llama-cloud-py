@@ -7,6 +7,6 @@ from typing_extensions import TypeAlias
 
 __all__ = ["PipelineListResponse"]
 
-PipelineListResponse: TypeAlias = List["Pipeline"]
-
 from .pipeline import Pipeline
+
+PipelineListResponse: TypeAlias = List[Pipeline]
