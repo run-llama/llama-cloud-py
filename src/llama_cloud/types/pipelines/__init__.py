@@ -12,8 +12,11 @@ from .document_list_params import DocumentListParams as DocumentListParams
 from .file_create_response import FileCreateResponse as FileCreateResponse
 from .pipeline_data_source import PipelineDataSource as PipelineDataSource
 from .document_create_params import DocumentCreateParams as DocumentCreateParams
+from .document_upsert_params import DocumentUpsertParams as DocumentUpsertParams
 from .metadata_create_params import MetadataCreateParams as MetadataCreateParams
+from .data_source_sync_params import DataSourceSyncParams as DataSourceSyncParams
 from .document_create_response import DocumentCreateResponse as DocumentCreateResponse
+from .document_upsert_response import DocumentUpsertResponse as DocumentUpsertResponse
 from .metadata_create_response import MetadataCreateResponse as MetadataCreateResponse
 from .data_source_update_params import DataSourceUpdateParams as DataSourceUpdateParams
 from .cloud_document_create_param import CloudDocumentCreateParam as CloudDocumentCreateParam

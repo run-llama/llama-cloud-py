@@ -23,6 +23,7 @@ from ...types.pipelines import document_list_params
 from ...types.pipelines.cloud_document import CloudDocument
 from ...types.managed_ingestion_status_response import ManagedIngestionStatusResponse
 from ...types.pipelines.document_create_response import DocumentCreateResponse
+from ...types.pipelines.document_upsert_response import DocumentUpsertResponse
 from ...types.pipelines.cloud_document_create_param import CloudDocumentCreateParam
 from ...types.pipelines.document_get_chunks_response import DocumentGetChunksResponse
 
@@ -323,6 +324,41 @@ class DocumentsResource(SyncAPIResource):
             cast_to=object,
         )
 
+    def upsert(
+        self,
+        pipeline_id: str,
+        *,
+        body: Iterable[CloudDocumentCreateParam],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentUpsertResponse:
+        """
+        Batch create or update a document for a pipeline.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        return self._put(
+            f"/api/v1/pipelines/{pipeline_id}/documents",
+            body=maybe_transform(body, Iterable[CloudDocumentCreateParam]),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentUpsertResponse,
+        )
+
 
 class AsyncDocumentsResource(AsyncAPIResource):
     @cached_property
@@ -618,6 +654,41 @@ class AsyncDocumentsResource(AsyncAPIResource):
             cast_to=object,
         )
 
+    async def upsert(
+        self,
+        pipeline_id: str,
+        *,
+        body: Iterable[CloudDocumentCreateParam],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentUpsertResponse:
+        """
+        Batch create or update a document for a pipeline.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not pipeline_id:
+            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
+        return await self._put(
+            f"/api/v1/pipelines/{pipeline_id}/documents",
+            body=await async_maybe_transform(body, Iterable[CloudDocumentCreateParam]),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentUpsertResponse,
+        )
+
 
 class DocumentsResourceWithRawResponse:
     def __init__(self, documents: DocumentsResource) -> None:
@@ -643,6 +714,9 @@ class DocumentsResourceWithRawResponse:
         )
         self.sync = to_raw_response_wrapper(
             documents.sync,
+        )
+        self.upsert = to_raw_response_wrapper(
+            documents.upsert,
         )
 
 
@@ -671,6 +745,9 @@ class AsyncDocumentsResourceWithRawResponse:
         self.sync = async_to_raw_response_wrapper(
             documents.sync,
         )
+        self.upsert = async_to_raw_response_wrapper(
+            documents.upsert,
+        )
 
 
 class DocumentsResourceWithStreamingResponse:
@@ -698,6 +775,9 @@ class DocumentsResourceWithStreamingResponse:
         self.sync = to_streamed_response_wrapper(
             documents.sync,
         )
+        self.upsert = to_streamed_response_wrapper(
+            documents.upsert,
+        )
 
 
 class AsyncDocumentsResourceWithStreamingResponse:
@@ -724,4 +804,7 @@ class AsyncDocumentsResourceWithStreamingResponse:
         )
         self.sync = async_to_streamed_response_wrapper(
             documents.sync,
+        )
+        self.upsert = async_to_streamed_response_wrapper(
+            documents.upsert,
         )
