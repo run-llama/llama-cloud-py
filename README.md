@@ -86,6 +86,7 @@ pip install 'llama_cloud[aiohttp] @ git+ssh://git@github.com/run-llama/llama-clo
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from llama_cloud import DefaultAioHttpClient
 from llama_cloud import AsyncLlamaCloud
@@ -93,7 +94,7 @@ from llama_cloud import AsyncLlamaCloud
 
 async def main() -> None:
     async with AsyncLlamaCloud(
-        api_key="My API Key",
+        api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         parsing_job = await client.parsing.upload_file(
