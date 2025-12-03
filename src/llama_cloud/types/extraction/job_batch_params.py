@@ -22,7 +22,7 @@ class JobBatchParams(TypedDict, total=False):
     from_ui: bool
 
     config_override: Optional[ExtractConfigParam]
-    """Additional parameters for the extraction agent."""
+    """Configuration parameters for the extraction agent."""
 
     data_schema_override: Union[
         Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str, None

@@ -35,7 +35,8 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from .extraction_agents import (
+from ...types.extraction.extract_job import ExtractJob
+from .extraction_agents.extraction_agents import (
     ExtractionAgentsResource,
     AsyncExtractionAgentsResource,
     ExtractionAgentsResourceWithRawResponse,
@@ -43,7 +44,6 @@ from .extraction_agents import (
     ExtractionAgentsResourceWithStreamingResponse,
     AsyncExtractionAgentsResourceWithStreamingResponse,
 )
-from ...types.extraction.extract_job import ExtractJob
 from ...types.extraction.extract_config_param import ExtractConfigParam
 from ...types.extraction.job_get_result_response import JobGetResultResponse
 from ...types.extraction.webhook_configuration_param import WebhookConfigurationParam

@@ -39,10 +39,7 @@ class ExtractConfigParam(TypedDict, total=False):
             "openai-gpt-4o-mini",
         ]
     ]
-    """The extract model to use for data extraction.
-
-    If not provided, uses the default for the extraction mode.
-    """
+    """Extract model options."""
 
     extraction_mode: Literal["FAST", "BALANCED", "PREMIUM", "MULTIMODAL"]
     """The extraction mode specified (FAST, BALANCED, MULTIMODAL, PREMIUM)."""
@@ -78,17 +75,18 @@ class ExtractConfigParam(TypedDict, total=False):
             "openai-gpt-5",
             "openai-gpt-5-mini",
             "openai-gpt-5-nano",
-            "openai-text-embedding-3-small",
             "openai-text-embedding-3-large",
+            "openai-text-embedding-3-small",
             "openai-whisper-1",
             "anthropic-sonnet-3.5",
             "anthropic-sonnet-3.5-v2",
             "anthropic-sonnet-3.7",
             "anthropic-sonnet-4.0",
             "anthropic-sonnet-4.5",
+            "anthropic-haiku-3.5",
             "anthropic-haiku-4.5",
-            "gemini-3.0-pro",
             "gemini-2.5-flash",
+            "gemini-3.0-pro",
             "gemini-2.5-pro",
             "gemini-2.0-flash",
             "gemini-2.0-flash-lite",
@@ -97,10 +95,7 @@ class ExtractConfigParam(TypedDict, total=False):
             "gemini-1.5-pro",
         ]
     ]
-    """The parse model to use for document parsing.
-
-    If not provided, uses the default for the extraction mode.
-    """
+    """Public model names."""
 
     priority: Optional[Literal["low", "medium", "high", "critical"]]
     """The priority for the request.
