@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.12.0 (2025-12-03)
+
+Full Changelog: [v0.11.0...v0.12.0](https://github.com/run-llama/llama-cloud-py/compare/v0.11.0...v0.12.0)
+
+### Features
+
+* **api:** add split ([2219e71](https://github.com/run-llama/llama-cloud-py/commit/2219e712b4ab3a196b04e425a73b7e2af52bed43))
+
+
+### Chores
+
+* **docs:** use environment variables for authentication in code snippets ([f054d44](https://github.com/run-llama/llama-cloud-py/commit/f054d44d903f850e2503029f2399f4cee10606ae))
+* update lockfile ([3f8db4e](https://github.com/run-llama/llama-cloud-py/commit/3f8db4ea90ea3c268c3f59dd9cb2da7166e61f50))
+
 ## 0.11.0 (2025-12-03)
 
 Full Changelog: [v0.10.0...v0.11.0](https://github.com/run-llama/llama-cloud-py/compare/v0.10.0...v0.11.0)
