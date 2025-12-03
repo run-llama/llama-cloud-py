@@ -508,3 +508,17 @@ Methods:
 
 - <code title="get /api/v1/beta/batch-processing/{job_id}/items">client.beta.batch.job_items.<a href="./src/llama_cloud/resources/beta/batch/job_items.py">list</a>(job_id, \*\*<a href="src/llama_cloud/types/beta/batch/job_item_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/batch/job_item_list_response.py">SyncPaginatedBatchItems[JobItemListResponse]</a></code>
 - <code title="get /api/v1/beta/batch-processing/items/{item_id}/processing-results">client.beta.batch.job_items.<a href="./src/llama_cloud/resources/beta/batch/job_items.py">get_processing_results</a>(item_id, \*\*<a href="src/llama_cloud/types/beta/batch/job_item_get_processing_results_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/batch/job_item_get_processing_results_response.py">JobItemGetProcessingResultsResponse</a></code>
+
+## Split
+
+Types:
+
+```python
+from llama_cloud.types.beta import SplitCreateResponse, SplitListResponse, SplitGetResponse
+```
+
+Methods:
+
+- <code title="post /api/v1/beta/split/jobs">client.beta.split.<a href="./src/llama_cloud/resources/beta/split.py">create</a>(\*\*<a href="src/llama_cloud/types/beta/split_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/split_create_response.py">SplitCreateResponse</a></code>
+- <code title="get /api/v1/beta/split/jobs">client.beta.split.<a href="./src/llama_cloud/resources/beta/split.py">list</a>(\*\*<a href="src/llama_cloud/types/beta/split_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/split_list_response.py">SyncPaginatedClassifyJobs[SplitListResponse]</a></code>
+- <code title="get /api/v1/beta/split/jobs/{split_job_id}">client.beta.split.<a href="./src/llama_cloud/resources/beta/split.py">get</a>(split_job_id, \*\*<a href="src/llama_cloud/types/beta/split_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/split_get_response.py">SplitGetResponse</a></code>
