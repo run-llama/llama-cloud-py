@@ -6,30 +6,42 @@ from typing import Dict, Union, Iterable, Optional
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
-from ..._compat import cached_property
-from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
+from .schema import (
+    SchemaResource,
+    AsyncSchemaResource,
+    SchemaResourceWithRawResponse,
+    AsyncSchemaResourceWithRawResponse,
+    SchemaResourceWithStreamingResponse,
+    AsyncSchemaResourceWithStreamingResponse,
+)
+from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ...._utils import maybe_transform, async_maybe_transform
+from ...._compat import cached_property
+from ...._resource import SyncAPIResource, AsyncAPIResource
+from ...._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
-from ...types.extraction import (
+from ...._base_client import make_request_options
+from ....types.extraction import (
     extraction_agent_list_params,
     extraction_agent_create_params,
     extraction_agent_update_params,
 )
-from ...types.extraction.extract_agent import ExtractAgent
-from ...types.extraction.extract_config_param import ExtractConfigParam
-from ...types.extraction.extraction_agent_list_response import ExtractionAgentListResponse
+from ....types.extraction.extract_agent import ExtractAgent
+from ....types.extraction.extract_config_param import ExtractConfigParam
+from ....types.extraction.extraction_agent_list_response import ExtractionAgentListResponse
 
 __all__ = ["ExtractionAgentsResource", "AsyncExtractionAgentsResource"]
 
 
 class ExtractionAgentsResource(SyncAPIResource):
+    @cached_property
+    def schema(self) -> SchemaResource:
+        return SchemaResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> ExtractionAgentsResourceWithRawResponse:
         """
@@ -274,6 +286,10 @@ class ExtractionAgentsResource(SyncAPIResource):
 
 
 class AsyncExtractionAgentsResource(AsyncAPIResource):
+    @cached_property
+    def schema(self) -> AsyncSchemaResource:
+        return AsyncSchemaResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> AsyncExtractionAgentsResourceWithRawResponse:
         """
@@ -537,6 +553,10 @@ class ExtractionAgentsResourceWithRawResponse:
             extraction_agents.get,
         )
 
+    @cached_property
+    def schema(self) -> SchemaResourceWithRawResponse:
+        return SchemaResourceWithRawResponse(self._extraction_agents.schema)
+
 
 class AsyncExtractionAgentsResourceWithRawResponse:
     def __init__(self, extraction_agents: AsyncExtractionAgentsResource) -> None:
@@ -557,6 +577,10 @@ class AsyncExtractionAgentsResourceWithRawResponse:
         self.get = async_to_raw_response_wrapper(
             extraction_agents.get,
         )
+
+    @cached_property
+    def schema(self) -> AsyncSchemaResourceWithRawResponse:
+        return AsyncSchemaResourceWithRawResponse(self._extraction_agents.schema)
 
 
 class ExtractionAgentsResourceWithStreamingResponse:
@@ -579,6 +603,10 @@ class ExtractionAgentsResourceWithStreamingResponse:
             extraction_agents.get,
         )
 
+    @cached_property
+    def schema(self) -> SchemaResourceWithStreamingResponse:
+        return SchemaResourceWithStreamingResponse(self._extraction_agents.schema)
+
 
 class AsyncExtractionAgentsResourceWithStreamingResponse:
     def __init__(self, extraction_agents: AsyncExtractionAgentsResource) -> None:
@@ -599,3 +627,7 @@ class AsyncExtractionAgentsResourceWithStreamingResponse:
         self.get = async_to_streamed_response_wrapper(
             extraction_agents.get,
         )
+
+    @cached_property
+    def schema(self) -> AsyncSchemaResourceWithStreamingResponse:
+        return AsyncSchemaResourceWithStreamingResponse(self._extraction_agents.schema)
