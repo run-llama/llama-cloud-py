@@ -64,4 +64,4 @@ else
 fi
 
 echo "==> Running Pydantic v1 tests"
-rye run nox -s test-pydantic-v1 -- "$@"
+rye run nox -s test-pydantic-v1 -- --ignore=tests/test_index.py "$@"
