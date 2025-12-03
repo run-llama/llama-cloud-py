@@ -146,6 +146,15 @@ class LlamaCloudIndex(BaseManagedIndex):
         if kwargs:
             logger.warning(f"Ignoring unrecognized kwargs: {kwargs}")
 
+    def __del__(self) -> None:
+        """Close HTTPX clients if they were created by this instance."""
+        if self._httpx_client is None:
+            self._client.close()
+
+        if self._async_httpx_client is None:
+            event_loop = asyncio.get_event_loop()
+            event_loop.create_task(self._aclient.close())
+
     @property
     def id(self) -> str:
         """Return the pipeline (aka index) ID."""
@@ -411,6 +420,8 @@ class LlamaCloudIndex(BaseManagedIndex):
         if verbose:
             print(f"Syncing pipeline {self.pipeline.id}")
 
+        await self._aclient.pipelines.sync.create(pipeline_id=self.pipeline.id)
+
         status_response: Optional[ManagedIngestionStatusResponse] = None
         while True:
             try:
@@ -445,6 +456,7 @@ class LlamaCloudIndex(BaseManagedIndex):
     def create_index(
         cls: Type["LlamaCloudIndex"],
         name: str,
+        project_name: Optional[str] = None,
         project_id: Optional[str] = None,
         api_key: Optional[str] = None,
         base_url: Optional[str] = None,
@@ -464,6 +476,13 @@ class LlamaCloudIndex(BaseManagedIndex):
             base_url=base_url,
             timeout=timeout,
         )
+
+        if project_id is None and project_name is not None:
+            projects = client.projects.list(project_name=project_name)
+            for project in projects:
+                if project.name == project_name:
+                    project_id = project.id
+                    break
 
         if project_id is None:
             # create project if it doesn't exist
@@ -497,6 +516,7 @@ class LlamaCloudIndex(BaseManagedIndex):
     async def acreate_index(
         cls: Type["LlamaCloudIndex"],
         name: str,
+        project_name: Optional[str] = None,
         project_id: Optional[str] = None,
         api_key: Optional[str] = None,
         base_url: Optional[str] = None,
@@ -516,6 +536,13 @@ class LlamaCloudIndex(BaseManagedIndex):
             base_url=base_url,
             timeout=timeout,
         )
+
+        if project_id is None and project_name is not None:
+            projects = await client.projects.list(project_name=project_name)
+            for project in projects:
+                if project.name == project_name:
+                    project_id = project.id
+                    break
 
         if project_id is None:
             # create project if it doesn't exist
@@ -600,6 +627,9 @@ class LlamaCloudIndex(BaseManagedIndex):
             ],
         )
 
+        # Trigger a sync
+        client.pipelines.sync.create(pipeline_id=index.pipeline.id)
+
         doc_ids = [doc.id for doc in upserted_documents_response]
         index.wait_for_completion(doc_ids=doc_ids, verbose=verbose, raise_on_error=raise_on_error)
 
@@ -650,16 +680,14 @@ class LlamaCloudIndex(BaseManagedIndex):
         pipeline_documents: List[CloudDocument] = []
         skip = 0
         limit = batch_size
-        while True:
-            batch_response = self._client.pipelines.documents.list(
-                pipeline_id=pipeline_id,
-                skip=skip,
-                limit=limit,
-            )
-            if not batch_response:
-                break
-            pipeline_documents.extend(batch_response)
-            skip += limit
+
+        for doc in self._client.pipelines.documents.list(
+            pipeline_id=pipeline_id,
+            skip=skip,
+            limit=limit,
+        ):
+            pipeline_documents.append(doc)
+
         return {doc.id: RefDocInfo(metadata=doc.metadata, node_ids=[]) for doc in pipeline_documents}
 
     @override
@@ -678,6 +706,10 @@ class LlamaCloudIndex(BaseManagedIndex):
                     )
                 ],
             )
+
+            # Trigger a sync
+            self._client.pipelines.sync.create(pipeline_id=self.pipeline.id)
+
             upserted_document = upserted_documents_response[0]
             self.wait_for_completion(doc_ids=[upserted_document.id], verbose=verbose, raise_on_error=True)
 
@@ -697,6 +729,10 @@ class LlamaCloudIndex(BaseManagedIndex):
                     )
                 ],
             )
+
+            # Trigger a sync
+            await self._aclient.pipelines.sync.create(pipeline_id=self.pipeline.id)
+
             upserted_document = upserted_documents_response[0]
             await self.await_for_completion(doc_ids=[upserted_document.id], verbose=verbose, raise_on_error=True)
 
@@ -705,7 +741,7 @@ class LlamaCloudIndex(BaseManagedIndex):
         """Upserts a document and its corresponding nodes."""
         with self._callback_manager.as_trace("update"):
             # Note: New API doesn't have explicit upsert - using create which may handle upsert internally
-            upserted_documents_response = self._client.pipelines.documents.create(
+            upserted_documents_response = self._client.pipelines.documents.upsert(
                 pipeline_id=self.pipeline.id,
                 body=[
                     CloudDocumentCreateParam(
@@ -717,6 +753,10 @@ class LlamaCloudIndex(BaseManagedIndex):
                     )
                 ],
             )
+
+            # Trigger a sync
+            self._client.pipelines.sync.create(pipeline_id=self.pipeline.id)
+
             upserted_document = upserted_documents_response[0]
             self.wait_for_completion(doc_ids=[upserted_document.id], verbose=verbose, raise_on_error=True)
 
@@ -725,7 +765,7 @@ class LlamaCloudIndex(BaseManagedIndex):
         """Upserts a document and its corresponding nodes."""
         with self._callback_manager.as_trace("update"):
             # Note: New API doesn't have explicit upsert - using create which may handle upsert internally
-            upserted_documents_response = await self._aclient.pipelines.documents.create(
+            upserted_documents_response = await self._aclient.pipelines.documents.upsert(
                 pipeline_id=self.pipeline.id,
                 body=[
                     CloudDocumentCreateParam(
@@ -737,6 +777,10 @@ class LlamaCloudIndex(BaseManagedIndex):
                     )
                 ],
             )
+
+            # Trigger a sync
+            await self._aclient.pipelines.sync.create(pipeline_id=self.pipeline.id)
+
             upserted_document = upserted_documents_response[0]
             await self.await_for_completion(doc_ids=[upserted_document.id], verbose=verbose, raise_on_error=True)
 
@@ -745,7 +789,7 @@ class LlamaCloudIndex(BaseManagedIndex):
         """Refresh an index with documents that have changed."""
         with self._callback_manager.as_trace("refresh"):
             # Note: New API doesn't have explicit upsert - using create which may handle upsert internally
-            upserted_documents_response = self._client.pipelines.documents.create(
+            upserted_documents_response = self._client.pipelines.documents.upsert(
                 pipeline_id=self.pipeline.id,
                 body=[
                     CloudDocumentCreateParam(
@@ -758,6 +802,10 @@ class LlamaCloudIndex(BaseManagedIndex):
                     for doc in documents
                 ],
             )
+
+            # Trigger a sync
+            self._client.pipelines.sync.create(pipeline_id=self.pipeline.id)
+
             doc_ids = [doc.id for doc in upserted_documents_response]
             self.wait_for_completion(doc_ids=doc_ids, verbose=True, raise_on_error=True)
             return [True] * len(doc_ids)
@@ -767,7 +815,7 @@ class LlamaCloudIndex(BaseManagedIndex):
         """Refresh an index with documents that have changed."""
         with self._callback_manager.as_trace("refresh"):
             # Note: New API doesn't have explicit upsert - using create which may handle upsert internally
-            upserted_documents_response = await self._aclient.pipelines.documents.create(
+            upserted_documents_response = await self._aclient.pipelines.documents.upsert(
                 pipeline_id=self.pipeline.id,
                 body=[
                     CloudDocumentCreateParam(
@@ -780,6 +828,10 @@ class LlamaCloudIndex(BaseManagedIndex):
                     for doc in documents
                 ],
             )
+
+            # Trigger a sync
+            await self._aclient.pipelines.sync.create(pipeline_id=self.pipeline.id)
+
             doc_ids = [doc.id for doc in upserted_documents_response]
             await self.await_for_completion(doc_ids=doc_ids, verbose=True, raise_on_error=True)
             return [True] * len(doc_ids)

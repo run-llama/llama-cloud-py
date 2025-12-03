@@ -55,7 +55,13 @@ fi
 export DEFER_PYDANTIC_BUILD=false
 
 echo "==> Running tests"
-rye run pytest "$@"
+if is_overriding_api_base_url ; then
+  # Running against real API - run all tests
+  rye run pytest "$@"
+else
+  # Running against mock server - skip test_index.py (requires real API)
+  rye run pytest --ignore=tests/test_index.py "$@"
+fi
 
 echo "==> Running Pydantic v1 tests"
 rye run nox -s test-pydantic-v1 -- "$@"
