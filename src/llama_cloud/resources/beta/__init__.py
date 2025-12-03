@@ -16,6 +16,14 @@ from .batch import (
     BatchResourceWithStreamingResponse,
     AsyncBatchResourceWithStreamingResponse,
 )
+from .split import (
+    SplitResource,
+    AsyncSplitResource,
+    SplitResourceWithRawResponse,
+    AsyncSplitResourceWithRawResponse,
+    SplitResourceWithStreamingResponse,
+    AsyncSplitResourceWithStreamingResponse,
+)
 from .sheets import (
     SheetsResource,
     AsyncSheetsResource,
@@ -80,6 +88,12 @@ __all__ = [
     "AsyncBatchResourceWithRawResponse",
     "BatchResourceWithStreamingResponse",
     "AsyncBatchResourceWithStreamingResponse",
+    "SplitResource",
+    "AsyncSplitResource",
+    "SplitResourceWithRawResponse",
+    "AsyncSplitResourceWithRawResponse",
+    "SplitResourceWithStreamingResponse",
+    "AsyncSplitResourceWithStreamingResponse",
     "BetaResource",
     "AsyncBetaResource",
     "BetaResourceWithRawResponse",
