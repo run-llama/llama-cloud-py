@@ -2,6 +2,14 @@
 
 from __future__ import annotations
 
+from .split import (
+    SplitResource,
+    AsyncSplitResource,
+    SplitResourceWithRawResponse,
+    AsyncSplitResourceWithRawResponse,
+    SplitResourceWithStreamingResponse,
+    AsyncSplitResourceWithStreamingResponse,
+)
 from .sheets import (
     SheetsResource,
     AsyncSheetsResource,
@@ -70,6 +78,10 @@ class BetaResource(SyncAPIResource):
         return BatchResource(self._client)
 
     @cached_property
+    def split(self) -> SplitResource:
+        return SplitResource(self._client)
+
+    @cached_property
     def with_raw_response(self) -> BetaResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
@@ -109,6 +121,10 @@ class AsyncBetaResource(AsyncAPIResource):
     @cached_property
     def batch(self) -> AsyncBatchResource:
         return AsyncBatchResource(self._client)
+
+    @cached_property
+    def split(self) -> AsyncSplitResource:
+        return AsyncSplitResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncBetaResourceWithRawResponse:
@@ -154,6 +170,10 @@ class BetaResourceWithRawResponse:
     def batch(self) -> BatchResourceWithRawResponse:
         return BatchResourceWithRawResponse(self._beta.batch)
 
+    @cached_property
+    def split(self) -> SplitResourceWithRawResponse:
+        return SplitResourceWithRawResponse(self._beta.split)
+
 
 class AsyncBetaResourceWithRawResponse:
     def __init__(self, beta: AsyncBetaResource) -> None:
@@ -178,6 +198,10 @@ class AsyncBetaResourceWithRawResponse:
     @cached_property
     def batch(self) -> AsyncBatchResourceWithRawResponse:
         return AsyncBatchResourceWithRawResponse(self._beta.batch)
+
+    @cached_property
+    def split(self) -> AsyncSplitResourceWithRawResponse:
+        return AsyncSplitResourceWithRawResponse(self._beta.split)
 
 
 class BetaResourceWithStreamingResponse:
@@ -204,6 +228,10 @@ class BetaResourceWithStreamingResponse:
     def batch(self) -> BatchResourceWithStreamingResponse:
         return BatchResourceWithStreamingResponse(self._beta.batch)
 
+    @cached_property
+    def split(self) -> SplitResourceWithStreamingResponse:
+        return SplitResourceWithStreamingResponse(self._beta.split)
+
 
 class AsyncBetaResourceWithStreamingResponse:
     def __init__(self, beta: AsyncBetaResource) -> None:
@@ -228,3 +256,7 @@ class AsyncBetaResourceWithStreamingResponse:
     @cached_property
     def batch(self) -> AsyncBatchResourceWithStreamingResponse:
         return AsyncBatchResourceWithStreamingResponse(self._beta.batch)
+
+    @cached_property
+    def split(self) -> AsyncSplitResourceWithStreamingResponse:
+        return AsyncSplitResourceWithStreamingResponse(self._beta.split)
