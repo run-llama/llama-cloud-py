@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.13.0 (2025-12-04)
+
+Full Changelog: [v0.12.0...v0.13.0](https://github.com/run-llama/llama-cloud-py/compare/v0.12.0...v0.13.0)
+
+### Features
+
+* **api:** add list page screenshots/figures ([e4c618c](https://github.com/run-llama/llama-cloud-py/commit/e4c618c4046da38d0d4234f934c6a80f782839ce))
+
 ## 0.12.0 (2025-12-03)
 
 Full Changelog: [v0.11.0...v0.12.0](https://github.com/run-llama/llama-cloud-py/compare/v0.11.0...v0.12.0)
