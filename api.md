@@ -48,7 +48,14 @@ Methods:
 Types:
 
 ```python
-from llama_cloud.types import File, FileCreate, PresignedURL, FileGeneratePresignedURLResponse
+from llama_cloud.types import (
+    File,
+    FileCreate,
+    PresignedURL,
+    FileGeneratePresignedURLResponse,
+    FileListPageFiguresResponse,
+    FileListPageScreenshotsResponse,
+)
 ```
 
 Methods:
@@ -58,6 +65,8 @@ Methods:
 - <code title="get /api/v1/files/{id}">client.files.<a href="./src/llama_cloud/resources/files.py">get</a>(id, \*\*<a href="src/llama_cloud/types/file_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
 - <code title="get /api/v1/files/{id}/page-figures/{page_index}/{figure_name}">client.files.<a href="./src/llama_cloud/resources/files.py">get_page_figure</a>(figure_name, \*, id, page_index, \*\*<a href="src/llama_cloud/types/file_get_page_figure_params.py">params</a>) -> object</code>
 - <code title="get /api/v1/files/{id}/page_screenshots/{page_index}">client.files.<a href="./src/llama_cloud/resources/files.py">get_page_screenshot</a>(page_index, \*, id, \*\*<a href="src/llama_cloud/types/file_get_page_screenshot_params.py">params</a>) -> object</code>
+- <code title="get /api/v1/files/{id}/page-figures">client.files.<a href="./src/llama_cloud/resources/files.py">list_page_figures</a>(id, \*\*<a href="src/llama_cloud/types/file_list_page_figures_params.py">params</a>) -> <a href="./src/llama_cloud/types/file_list_page_figures_response.py">FileListPageFiguresResponse</a></code>
+- <code title="get /api/v1/files/{id}/page_screenshots">client.files.<a href="./src/llama_cloud/resources/files.py">list_page_screenshots</a>(id, \*\*<a href="src/llama_cloud/types/file_list_page_screenshots_params.py">params</a>) -> <a href="./src/llama_cloud/types/file_list_page_screenshots_response.py">FileListPageScreenshotsResponse</a></code>
 - <code title="get /api/v1/files/{id}/content">client.files.<a href="./src/llama_cloud/resources/files.py">read_content</a>(id, \*\*<a href="src/llama_cloud/types/file_read_content_params.py">params</a>) -> <a href="./src/llama_cloud/types/presigned_url.py">PresignedURL</a></code>
 - <code title="post /api/v1/files">client.files.<a href="./src/llama_cloud/resources/files.py">upload</a>(\*\*<a href="src/llama_cloud/types/file_upload_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
 - <code title="put /api/v1/files/upload_from_url">client.files.<a href="./src/llama_cloud/resources/files.py">upload_from_url</a>(\*\*<a href="src/llama_cloud/types/file_upload_from_url_params.py">params</a>) -> <a href="./src/llama_cloud/types/file.py">File</a></code>
