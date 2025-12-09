@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Iterable, Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -59,6 +60,7 @@ class JobsResource(SyncAPIResource):
         rules: Iterable[ClassifierRuleParam],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
+        mode: Literal["FAST", "MULTIMODAL"] | Omit = omit,
         parsing_configuration: ClassifyParsingConfigurationParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -77,6 +79,8 @@ class JobsResource(SyncAPIResource):
 
           rules: The rules to classify the files
 
+          mode: The classification mode to use
+
           parsing_configuration: The configuration for the parsing job
 
           extra_headers: Send extra headers
@@ -93,6 +97,7 @@ class JobsResource(SyncAPIResource):
                 {
                     "file_ids": file_ids,
                     "rules": rules,
+                    "mode": mode,
                     "parsing_configuration": parsing_configuration,
                 },
                 job_create_params.JobCreateParams,
@@ -284,6 +289,7 @@ class AsyncJobsResource(AsyncAPIResource):
         rules: Iterable[ClassifierRuleParam],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
+        mode: Literal["FAST", "MULTIMODAL"] | Omit = omit,
         parsing_configuration: ClassifyParsingConfigurationParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -302,6 +308,8 @@ class AsyncJobsResource(AsyncAPIResource):
 
           rules: The rules to classify the files
 
+          mode: The classification mode to use
+
           parsing_configuration: The configuration for the parsing job
 
           extra_headers: Send extra headers
@@ -318,6 +326,7 @@ class AsyncJobsResource(AsyncAPIResource):
                 {
                     "file_ids": file_ids,
                     "rules": rules,
+                    "mode": mode,
                     "parsing_configuration": parsing_configuration,
                 },
                 job_create_params.JobCreateParams,
