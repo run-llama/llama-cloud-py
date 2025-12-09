@@ -8,6 +8,12 @@ __all__ = ["SparseModelConfigParam"]
 
 
 class SparseModelConfigParam(TypedDict, total=False):
+    """Configuration for sparse embedding models used in hybrid search.
+
+    This allows users to choose between Splade and BM25 models for
+    sparse retrieval in managed data sinks.
+    """
+
     class_name: str
 
     model_type: Literal["splade", "bm25", "auto"]

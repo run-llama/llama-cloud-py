@@ -10,6 +10,8 @@ __all__ = ["BatchGetStatusResponse", "Job"]
 
 
 class Job(BaseModel):
+    """Response schema for a batch processing job."""
+
     id: str
     """Unique identifier for the batch job"""
 
@@ -62,6 +64,8 @@ class Job(BaseModel):
 
 
 class BatchGetStatusResponse(BaseModel):
+    """Detailed status response for a batch processing job."""
+
     job: Job
     """Response schema for a batch processing job."""
 

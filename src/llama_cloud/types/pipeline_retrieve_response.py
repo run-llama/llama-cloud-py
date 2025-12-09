@@ -13,6 +13,11 @@ __all__ = ["PipelineRetrieveResponse", "RetrievalNode"]
 
 
 class RetrievalNode(BaseModel):
+    """
+    Same as NodeWithScore but type for node is a TextNode instead of BaseNode.
+    FastAPI doesn't accept abstract classes like BaseNode.
+    """
+
     node: TextNode
     """Provided for backward compatibility.
 
@@ -26,6 +31,8 @@ class RetrievalNode(BaseModel):
 
 
 class PipelineRetrieveResponse(BaseModel):
+    """Schema for the result of an retrieval execution."""
+
     pipeline_id: str
     """The ID of the pipeline that the query was retrieved against."""
 

@@ -9,6 +9,8 @@ __all__ = ["File"]
 
 
 class File(BaseModel):
+    """Schema for a file."""
+
     id: str
     """Unique identifier"""
 

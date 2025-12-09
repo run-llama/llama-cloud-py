@@ -6,6 +6,8 @@ __all__ = ["ParsingJobStructuredResult"]
 
 
 class ParsingJobStructuredResult(BaseModel):
+    """Response schema for parsing job structured result."""
+
     job_metadata: object
     """Parsing job metadata, including usage"""
 

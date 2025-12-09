@@ -8,6 +8,8 @@ __all__ = ["CloudDocument"]
 
 
 class CloudDocument(BaseModel):
+    """Cloud document stored in S3."""
+
     id: str
 
     metadata: Dict[str, object]

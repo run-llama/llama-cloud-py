@@ -38,6 +38,12 @@ Relationships: TypeAlias = Union[RelationshipsRelatedNodeInfo, List[Relationship
 
 
 class TextNode(BaseModel):
+    """Provided for backward compatibility.
+
+    Note: we keep the field with the typo "seperator" to maintain backward compatibility for
+    serialized objects.
+    """
+
     class_name: Optional[str] = None
 
     embedding: Optional[List[float]] = None

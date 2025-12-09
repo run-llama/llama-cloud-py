@@ -12,6 +12,8 @@ __all__ = ["ClassifyJob"]
 
 
 class ClassifyJob(BaseModel):
+    """A classify job."""
+
     id: str
     """Unique identifier"""
 

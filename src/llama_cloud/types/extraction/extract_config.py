@@ -9,6 +9,8 @@ __all__ = ["ExtractConfig"]
 
 
 class ExtractConfig(BaseModel):
+    """Configuration parameters for the extraction agent."""
+
     chunk_mode: Optional[Literal["PAGE", "SECTION"]] = None
     """The mode to use for chunking the document."""
 

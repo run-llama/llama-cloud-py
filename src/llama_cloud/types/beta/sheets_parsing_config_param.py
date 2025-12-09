@@ -11,6 +11,8 @@ __all__ = ["SheetsParsingConfigParam"]
 
 
 class SheetsParsingConfigParam(TypedDict, total=False):
+    """Configuration for spreadsheet parsing and region extraction"""
+
     extraction_range: Optional[str]
     """A1 notation of the range to extract a single region from.
 

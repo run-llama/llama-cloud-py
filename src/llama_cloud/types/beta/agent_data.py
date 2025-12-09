@@ -9,6 +9,8 @@ __all__ = ["AgentData"]
 
 
 class AgentData(BaseModel):
+    """API Result for a single agent data item"""
+
     data: Dict[str, object]
 
     deployment_name: str

@@ -15,6 +15,8 @@ __all__ = ["ClassifyJobParam"]
 
 
 class ClassifyJobParam(TypedDict, total=False):
+    """A classify job."""
+
     id: Required[str]
     """Unique identifier"""
 

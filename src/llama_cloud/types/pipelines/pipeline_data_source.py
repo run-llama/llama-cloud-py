@@ -180,6 +180,19 @@ class ComponentCloudNotionPageDataSource(BaseModel):
 
 
 class ComponentCloudConfluenceDataSourceFailureHandling(BaseModel):
+    """Configuration for handling failures during processing.
+
+    Key-value object controlling failure handling behaviors.
+
+    Example:
+    {
+      "skip_list_failures": true
+    }
+
+    Currently supports:
+    - skip_list_failures: Skip failed batches/lists and continue processing
+    """
+
     skip_list_failures: Optional[bool] = None
     """Whether to skip failed batches/lists and continue processing"""
 
@@ -230,6 +243,8 @@ class ComponentCloudConfluenceDataSource(BaseModel):
 
 
 class ComponentCloudJiraDataSource(BaseModel):
+    """Cloud Jira Data Source integrating JiraReader."""
+
     authentication_mechanism: str
     """Type of Authentication for connecting to Jira APIs."""
 
@@ -251,6 +266,8 @@ class ComponentCloudJiraDataSource(BaseModel):
 
 
 class ComponentCloudJiraDataSourceV2(BaseModel):
+    """Cloud Jira Data Source integrating JiraReaderV2."""
+
     authentication_mechanism: str
     """Type of Authentication for connecting to Jira APIs."""
 
@@ -328,6 +345,8 @@ Component: TypeAlias = Union[
 
 
 class PipelineDataSource(BaseModel):
+    """Schema for a data source in a pipeline."""
+
     id: str
     """Unique identifier"""
 

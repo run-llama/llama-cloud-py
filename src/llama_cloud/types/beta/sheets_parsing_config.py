@@ -9,6 +9,8 @@ __all__ = ["SheetsParsingConfig"]
 
 
 class SheetsParsingConfig(BaseModel):
+    """Configuration for spreadsheet parsing and region extraction"""
+
     extraction_range: Optional[str] = None
     """A1 notation of the range to extract a single region from.
 

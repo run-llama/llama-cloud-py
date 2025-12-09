@@ -228,6 +228,19 @@ class ComponentCloudNotionPageDataSource(TypedDict, total=False):
 
 
 class ComponentCloudConfluenceDataSourceFailureHandling(TypedDict, total=False):
+    """Configuration for handling failures during processing.
+
+    Key-value object controlling failure handling behaviors.
+
+    Example:
+    {
+      "skip_list_failures": true
+    }
+
+    Currently supports:
+    - skip_list_failures: Skip failed batches/lists and continue processing
+    """
+
     skip_list_failures: bool
     """Whether to skip failed batches/lists and continue processing"""
 
@@ -281,6 +294,8 @@ class ComponentCloudConfluenceDataSource(TypedDict, total=False):
 
 
 class ComponentCloudJiraDataSource(TypedDict, total=False):
+    """Cloud Jira Data Source integrating JiraReader."""
+
     authentication_mechanism: Required[str]
     """Type of Authentication for connecting to Jira APIs."""
 
@@ -305,6 +320,8 @@ class ComponentCloudJiraDataSource(TypedDict, total=False):
 
 
 class ComponentCloudJiraDataSourceV2(TypedDict, total=False):
+    """Cloud Jira Data Source integrating JiraReaderV2."""
+
     authentication_mechanism: Required[str]
     """Type of Authentication for connecting to Jira APIs."""
 

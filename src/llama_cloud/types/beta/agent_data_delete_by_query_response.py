@@ -6,4 +6,6 @@ __all__ = ["AgentDataDeleteByQueryResponse"]
 
 
 class AgentDataDeleteByQueryResponse(BaseModel):
+    """API response for bulk delete operation"""
+
     deleted_count: int

@@ -8,6 +8,8 @@ __all__ = ["JobGetResultResponse"]
 
 
 class JobGetResultResponse(BaseModel):
+    """Schema for an extraction resultset."""
+
     data: Union[
         Dict[str, Union[Dict[str, object], List[object], str, float, bool, None]],
         List[Dict[str, Union[Dict[str, object], List[object], str, float, bool, None]]],

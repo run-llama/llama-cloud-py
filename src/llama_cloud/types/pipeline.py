@@ -59,6 +59,8 @@ __all__ = [
 
 
 class EmbeddingConfigManagedOpenAIEmbeddingConfigComponent(BaseModel):
+    """Configuration for the Managed OpenAI embedding model."""
+
     class_name: Optional[str] = None
 
     embed_batch_size: Optional[int] = None
@@ -80,6 +82,8 @@ class EmbeddingConfigManagedOpenAIEmbeddingConfig(BaseModel):
 
 
 class EmbeddingConfigAzureOpenAIEmbeddingConfigComponent(BaseModel):
+    """Configuration for the Azure OpenAI embedding model."""
+
     additional_kwargs: Optional[Dict[str, object]] = None
     """Additional kwargs for the OpenAI API."""
 
@@ -141,6 +145,8 @@ class EmbeddingConfigAzureOpenAIEmbeddingConfig(BaseModel):
 
 
 class EmbeddingConfigCohereEmbeddingConfigComponent(BaseModel):
+    """Configuration for the Cohere embedding model."""
+
     api_key: Optional[str] = None
     """The Cohere API key."""
 
@@ -177,6 +183,8 @@ class EmbeddingConfigCohereEmbeddingConfig(BaseModel):
 
 
 class EmbeddingConfigGeminiEmbeddingConfigComponent(BaseModel):
+    """Configuration for the Gemini embedding model."""
+
     api_base: Optional[str] = None
     """API base to access the model. Defaults to None."""
 
@@ -216,6 +224,8 @@ class EmbeddingConfigGeminiEmbeddingConfig(BaseModel):
 
 
 class EmbeddingConfigHuggingFaceInferenceAPIEmbeddingConfigComponent(BaseModel):
+    """Configuration for the HuggingFace Inference API embedding model."""
+
     token: Union[str, bool, None] = None
     """Hugging Face token.
 
@@ -276,6 +286,8 @@ class EmbeddingConfigHuggingFaceInferenceAPIEmbeddingConfig(BaseModel):
 
 
 class EmbeddingConfigOpenAIEmbeddingConfigComponent(BaseModel):
+    """Configuration for the OpenAI embedding model."""
+
     additional_kwargs: Optional[Dict[str, object]] = None
     """Additional kwargs for the OpenAI API."""
 
@@ -331,6 +343,8 @@ class EmbeddingConfigOpenAIEmbeddingConfig(BaseModel):
 
 
 class EmbeddingConfigVertexAIEmbeddingConfigComponent(BaseModel):
+    """Configuration for the VertexAI embedding model."""
+
     client_email: Optional[str] = None
     """The client email for the VertexAI credentials."""
 
@@ -376,6 +390,8 @@ class EmbeddingConfigVertexAIEmbeddingConfig(BaseModel):
 
 
 class EmbeddingConfigBedrockEmbeddingConfigComponent(BaseModel):
+    """Configuration for the Bedrock embedding model."""
+
     additional_kwargs: Optional[Dict[str, object]] = None
     """Additional kwargs for the bedrock client."""
 
@@ -439,6 +455,8 @@ EmbeddingConfig: TypeAlias = Annotated[
 
 
 class ConfigHash(BaseModel):
+    """Hashes for the configuration of a pipeline."""
+
     embedding_config_hash: Optional[str] = None
     """Hash of the embedding config."""
 
@@ -450,6 +468,8 @@ class ConfigHash(BaseModel):
 
 
 class EmbeddingModelConfigEmbeddingConfigAzureOpenAIEmbeddingConfigComponent(BaseModel):
+    """Configuration for the Azure OpenAI embedding model."""
+
     additional_kwargs: Optional[Dict[str, object]] = None
     """Additional kwargs for the OpenAI API."""
 
@@ -511,6 +531,8 @@ class EmbeddingModelConfigEmbeddingConfigAzureOpenAIEmbeddingConfig(BaseModel):
 
 
 class EmbeddingModelConfigEmbeddingConfigCohereEmbeddingConfigComponent(BaseModel):
+    """Configuration for the Cohere embedding model."""
+
     api_key: Optional[str] = None
     """The Cohere API key."""
 
@@ -547,6 +569,8 @@ class EmbeddingModelConfigEmbeddingConfigCohereEmbeddingConfig(BaseModel):
 
 
 class EmbeddingModelConfigEmbeddingConfigGeminiEmbeddingConfigComponent(BaseModel):
+    """Configuration for the Gemini embedding model."""
+
     api_base: Optional[str] = None
     """API base to access the model. Defaults to None."""
 
@@ -586,6 +610,8 @@ class EmbeddingModelConfigEmbeddingConfigGeminiEmbeddingConfig(BaseModel):
 
 
 class EmbeddingModelConfigEmbeddingConfigHuggingFaceInferenceAPIEmbeddingConfigComponent(BaseModel):
+    """Configuration for the HuggingFace Inference API embedding model."""
+
     token: Union[str, bool, None] = None
     """Hugging Face token.
 
@@ -646,6 +672,8 @@ class EmbeddingModelConfigEmbeddingConfigHuggingFaceInferenceAPIEmbeddingConfig(
 
 
 class EmbeddingModelConfigEmbeddingConfigOpenAIEmbeddingConfigComponent(BaseModel):
+    """Configuration for the OpenAI embedding model."""
+
     additional_kwargs: Optional[Dict[str, object]] = None
     """Additional kwargs for the OpenAI API."""
 
@@ -701,6 +729,8 @@ class EmbeddingModelConfigEmbeddingConfigOpenAIEmbeddingConfig(BaseModel):
 
 
 class EmbeddingModelConfigEmbeddingConfigVertexAIEmbeddingConfigComponent(BaseModel):
+    """Configuration for the VertexAI embedding model."""
+
     client_email: Optional[str] = None
     """The client email for the VertexAI credentials."""
 
@@ -746,6 +776,8 @@ class EmbeddingModelConfigEmbeddingConfigVertexAIEmbeddingConfig(BaseModel):
 
 
 class EmbeddingModelConfigEmbeddingConfigBedrockEmbeddingConfigComponent(BaseModel):
+    """Configuration for the Bedrock embedding model."""
+
     additional_kwargs: Optional[Dict[str, object]] = None
     """Additional kwargs for the bedrock client."""
 
@@ -808,6 +840,8 @@ EmbeddingModelConfigEmbeddingConfig: TypeAlias = Annotated[
 
 
 class EmbeddingModelConfig(BaseModel):
+    """Schema for an embedding model config."""
+
     id: str
     """Unique identifier"""
 
@@ -830,6 +864,8 @@ TransformConfig: TypeAlias = Union[AutoTransformConfig, AdvancedModeTransformCon
 
 
 class Pipeline(BaseModel):
+    """Schema for a pipeline."""
+
     id: str
     """Unique identifier"""
 

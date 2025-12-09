@@ -9,6 +9,8 @@ __all__ = ["WebhookConfiguration"]
 
 
 class WebhookConfiguration(BaseModel):
+    """Allows the user to configure webhook options for notifications and callbacks."""
+
     webhook_events: Optional[
         List[
             Literal[

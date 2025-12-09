@@ -11,6 +11,8 @@ __all__ = ["CloudDocumentCreateParam"]
 
 
 class CloudDocumentCreateParam(TypedDict, total=False):
+    """Create a new cloud document."""
+
     metadata: Required[Dict[str, object]]
 
     text: Required[str]

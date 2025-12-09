@@ -9,6 +9,8 @@ __all__ = ["ParseConfigurationQueryResponse"]
 
 
 class ParseConfigurationQueryResponse(BaseModel):
+    """Response schema for paginated parse configuration queries."""
+
     items: List[ParseConfiguration]
     """The list of items."""
 
