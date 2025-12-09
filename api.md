@@ -255,8 +255,8 @@ Methods:
 Methods:
 
 - <code title="get /api/v1/parsing/job/{job_id}/read/{filename}">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">generate_presigned_url</a>(filename, \*, job_id) -> <a href="./src/llama_cloud/types/presigned_url.py">PresignedURL</a></code>
-- <code title="get /api/v1/parsing/job/{job_id}">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">get</a>(job_id) -> <a href="./src/llama_cloud/types/parsing_job.py">ParsingJob</a></code>
-- <code title="get /api/v1/parsing/job/{job_id}/details">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">get_details</a>(job_id) -> object</code>
+- <code title="get /api/v1/parsing/job/{job_id}">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">get</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_job.py">ParsingJob</a></code>
+- <code title="get /api/v1/parsing/job/{job_id}/details">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">get_details</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job_get_details_params.py">params</a>) -> object</code>
 
 ### Result
 
@@ -273,13 +273,13 @@ from llama_cloud.types.parsing.job import (
 
 Methods:
 
-- <code title="get /api/v1/parsing/job/{job_id}/result/image/{name}">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_image</a>(name, \*, job_id) -> BinaryAPIResponse</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/image/{name}">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_image</a>(name, \*, job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_image_params.py">params</a>) -> BinaryAPIResponse</code>
 - <code title="get /api/v1/parsing/job/{job_id}/result/json">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_json</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_json_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_json_result.py">ParsingJobJsonResult</a></code>
 - <code title="get /api/v1/parsing/job/{job_id}/result/markdown">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_markdown</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_markdown_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_markdown_result.py">ParsingJobMarkdownResult</a></code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/pdf">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_pdf</a>(job_id) -> object</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/pdf">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_pdf</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_pdf_params.py">params</a>) -> object</code>
 - <code title="get /api/v1/parsing/job/{job_id}/result/structured">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_structured</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_structured_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_structured_result.py">ParsingJobStructuredResult</a></code>
 - <code title="get /api/v1/parsing/job/{job_id}/result/text">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_text</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_text_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_text_result.py">ParsingJobTextResult</a></code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/xlsx">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_xlsx</a>(job_id) -> object</code>
+- <code title="get /api/v1/parsing/job/{job_id}/result/xlsx">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_xlsx</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_xlsx_params.py">params</a>) -> object</code>
 
 # Classifier
 

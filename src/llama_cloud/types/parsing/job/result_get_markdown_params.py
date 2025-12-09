@@ -10,3 +10,5 @@ __all__ = ["ResultGetMarkdownParams"]
 
 class ResultGetMarkdownParams(TypedDict, total=False):
     organization_id: Optional[str]
+
+    project_id: Optional[str]

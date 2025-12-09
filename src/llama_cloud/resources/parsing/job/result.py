@@ -26,8 +26,11 @@ from ...._response import (
 )
 from ...._base_client import make_request_options
 from ....types.parsing.job import (
+    result_get_pdf_params,
     result_get_json_params,
     result_get_text_params,
+    result_get_xlsx_params,
+    result_get_image_params,
     result_get_markdown_params,
     result_get_structured_params,
 )
@@ -64,6 +67,8 @@ class ResultResource(SyncAPIResource):
         name: str,
         *,
         job_id: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -91,7 +96,17 @@ class ResultResource(SyncAPIResource):
         return self._get(
             f"/api/v1/parsing/job/{job_id}/result/image/{name}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    result_get_image_params.ResultGetImageParams,
+                ),
             ),
             cast_to=BinaryAPIResponse,
         )
@@ -101,6 +116,7 @@ class ResultResource(SyncAPIResource):
         job_id: str,
         *,
         organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -132,7 +148,13 @@ class ResultResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"organization_id": organization_id}, result_get_json_params.ResultGetJsonParams),
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    result_get_json_params.ResultGetJsonParams,
+                ),
             ),
             cast_to=ParsingJobJsonResult,
         )
@@ -142,6 +164,7 @@ class ResultResource(SyncAPIResource):
         job_id: str,
         *,
         organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -174,7 +197,11 @@ class ResultResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform(
-                    {"organization_id": organization_id}, result_get_markdown_params.ResultGetMarkdownParams
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    result_get_markdown_params.ResultGetMarkdownParams,
                 ),
             ),
             cast_to=ParsingJobMarkdownResult,
@@ -184,6 +211,8 @@ class ResultResource(SyncAPIResource):
         self,
         job_id: str,
         *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -208,7 +237,17 @@ class ResultResource(SyncAPIResource):
         return self._get(
             f"/api/v1/parsing/job/{job_id}/result/pdf",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    result_get_pdf_params.ResultGetPdfParams,
+                ),
             ),
             cast_to=object,
         )
@@ -218,6 +257,7 @@ class ResultResource(SyncAPIResource):
         job_id: str,
         *,
         organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -250,7 +290,11 @@ class ResultResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform(
-                    {"organization_id": organization_id}, result_get_structured_params.ResultGetStructuredParams
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    result_get_structured_params.ResultGetStructuredParams,
                 ),
             ),
             cast_to=ParsingJobStructuredResult,
@@ -261,6 +305,7 @@ class ResultResource(SyncAPIResource):
         job_id: str,
         *,
         organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -292,7 +337,13 @@ class ResultResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"organization_id": organization_id}, result_get_text_params.ResultGetTextParams),
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    result_get_text_params.ResultGetTextParams,
+                ),
             ),
             cast_to=ParsingJobTextResult,
         )
@@ -301,6 +352,8 @@ class ResultResource(SyncAPIResource):
         self,
         job_id: str,
         *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -325,7 +378,17 @@ class ResultResource(SyncAPIResource):
         return self._get(
             f"/api/v1/parsing/job/{job_id}/result/xlsx",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    result_get_xlsx_params.ResultGetXlsxParams,
+                ),
             ),
             cast_to=object,
         )
@@ -356,6 +419,8 @@ class AsyncResultResource(AsyncAPIResource):
         name: str,
         *,
         job_id: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -383,7 +448,17 @@ class AsyncResultResource(AsyncAPIResource):
         return await self._get(
             f"/api/v1/parsing/job/{job_id}/result/image/{name}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    result_get_image_params.ResultGetImageParams,
+                ),
             ),
             cast_to=AsyncBinaryAPIResponse,
         )
@@ -393,6 +468,7 @@ class AsyncResultResource(AsyncAPIResource):
         job_id: str,
         *,
         organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -425,7 +501,11 @@ class AsyncResultResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform(
-                    {"organization_id": organization_id}, result_get_json_params.ResultGetJsonParams
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    result_get_json_params.ResultGetJsonParams,
                 ),
             ),
             cast_to=ParsingJobJsonResult,
@@ -436,6 +516,7 @@ class AsyncResultResource(AsyncAPIResource):
         job_id: str,
         *,
         organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -468,7 +549,11 @@ class AsyncResultResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform(
-                    {"organization_id": organization_id}, result_get_markdown_params.ResultGetMarkdownParams
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    result_get_markdown_params.ResultGetMarkdownParams,
                 ),
             ),
             cast_to=ParsingJobMarkdownResult,
@@ -478,6 +563,8 @@ class AsyncResultResource(AsyncAPIResource):
         self,
         job_id: str,
         *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -502,7 +589,17 @@ class AsyncResultResource(AsyncAPIResource):
         return await self._get(
             f"/api/v1/parsing/job/{job_id}/result/pdf",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    result_get_pdf_params.ResultGetPdfParams,
+                ),
             ),
             cast_to=object,
         )
@@ -512,6 +609,7 @@ class AsyncResultResource(AsyncAPIResource):
         job_id: str,
         *,
         organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -544,7 +642,11 @@ class AsyncResultResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform(
-                    {"organization_id": organization_id}, result_get_structured_params.ResultGetStructuredParams
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    result_get_structured_params.ResultGetStructuredParams,
                 ),
             ),
             cast_to=ParsingJobStructuredResult,
@@ -555,6 +657,7 @@ class AsyncResultResource(AsyncAPIResource):
         job_id: str,
         *,
         organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -587,7 +690,11 @@ class AsyncResultResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform(
-                    {"organization_id": organization_id}, result_get_text_params.ResultGetTextParams
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    result_get_text_params.ResultGetTextParams,
                 ),
             ),
             cast_to=ParsingJobTextResult,
@@ -597,6 +704,8 @@ class AsyncResultResource(AsyncAPIResource):
         self,
         job_id: str,
         *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -621,7 +730,17 @@ class AsyncResultResource(AsyncAPIResource):
         return await self._get(
             f"/api/v1/parsing/job/{job_id}/result/xlsx",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    result_get_xlsx_params.ResultGetXlsxParams,
+                ),
             ),
             cast_to=object,
         )

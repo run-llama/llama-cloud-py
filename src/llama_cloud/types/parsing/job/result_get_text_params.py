@@ -10,3 +10,5 @@ __all__ = ["ResultGetTextParams"]
 
 class ResultGetTextParams(TypedDict, total=False):
     organization_id: Optional[str]
+
+    project_id: Optional[str]

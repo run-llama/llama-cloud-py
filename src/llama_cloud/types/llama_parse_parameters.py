@@ -164,7 +164,7 @@ class LlamaParseParameters(BaseModel):
     page_suffix: Optional[str] = None
 
     parse_mode: Optional[ParsingMode] = None
-    """Enum for representing the mode of parsing to be used"""
+    """Enum for representing the mode of parsing to be used."""
 
     parsing_instruction: Optional[str] = None
 
@@ -173,6 +173,8 @@ class LlamaParseParameters(BaseModel):
     premium_mode: Optional[bool] = None
 
     presentation_out_of_bounds_content: Optional[bool] = None
+
+    presentation_skip_embedded_data: Optional[bool] = None
 
     preserve_layout_alignment_across_pages: Optional[bool] = None
 
@@ -191,7 +193,7 @@ class LlamaParseParameters(BaseModel):
     remove_hidden_text: Optional[bool] = None
 
     replace_failed_page_mode: Optional[FailPageMode] = None
-    """Enum for representing the different available page error handling modes"""
+    """Enum for representing the different available page error handling modes."""
 
     replace_failed_page_with_error_message_prefix: Optional[str] = None
 

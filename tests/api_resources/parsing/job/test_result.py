@@ -47,6 +47,23 @@ class TestResult:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
+    def test_method_get_image_with_all_params(self, client: LlamaCloud, respx_mock: MockRouter) -> None:
+        respx_mock.get("/api/v1/parsing/job/job_id/result/image/name").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
+        result = client.parsing.job.result.get_image(
+            name="name",
+            job_id="job_id",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert result.is_closed
+        assert result.json() == {"foo": "bar"}
+        assert cast(Any, result.is_closed) is True
+        assert isinstance(result, BinaryAPIResponse)
+
+    @parametrize
+    @pytest.mark.respx(base_url=base_url)
     def test_raw_response_get_image(self, client: LlamaCloud, respx_mock: MockRouter) -> None:
         respx_mock.get("/api/v1/parsing/job/job_id/result/image/name").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
@@ -110,6 +127,7 @@ class TestResult:
         result = client.parsing.job.result.get_json(
             job_id="job_id",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ParsingJobJsonResult, result, path=["response"])
 
@@ -161,6 +179,7 @@ class TestResult:
         result = client.parsing.job.result.get_markdown(
             job_id="job_id",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ParsingJobMarkdownResult, result, path=["response"])
 
@@ -202,7 +221,17 @@ class TestResult:
     @parametrize
     def test_method_get_pdf(self, client: LlamaCloud) -> None:
         result = client.parsing.job.result.get_pdf(
-            "job_id",
+            job_id="job_id",
+        )
+        assert_matches_type(object, result, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_get_pdf_with_all_params(self, client: LlamaCloud) -> None:
+        result = client.parsing.job.result.get_pdf(
+            job_id="job_id",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(object, result, path=["response"])
 
@@ -210,7 +239,7 @@ class TestResult:
     @parametrize
     def test_raw_response_get_pdf(self, client: LlamaCloud) -> None:
         response = client.parsing.job.result.with_raw_response.get_pdf(
-            "job_id",
+            job_id="job_id",
         )
 
         assert response.is_closed is True
@@ -222,7 +251,7 @@ class TestResult:
     @parametrize
     def test_streaming_response_get_pdf(self, client: LlamaCloud) -> None:
         with client.parsing.job.result.with_streaming_response.get_pdf(
-            "job_id",
+            job_id="job_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -237,7 +266,7 @@ class TestResult:
     def test_path_params_get_pdf(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `job_id` but received ''"):
             client.parsing.job.result.with_raw_response.get_pdf(
-                "",
+                job_id="",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -254,6 +283,7 @@ class TestResult:
         result = client.parsing.job.result.get_structured(
             job_id="job_id",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ParsingJobStructuredResult, result, path=["response"])
 
@@ -305,6 +335,7 @@ class TestResult:
         result = client.parsing.job.result.get_text(
             job_id="job_id",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ParsingJobTextResult, result, path=["response"])
 
@@ -346,7 +377,17 @@ class TestResult:
     @parametrize
     def test_method_get_xlsx(self, client: LlamaCloud) -> None:
         result = client.parsing.job.result.get_xlsx(
-            "job_id",
+            job_id="job_id",
+        )
+        assert_matches_type(object, result, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_get_xlsx_with_all_params(self, client: LlamaCloud) -> None:
+        result = client.parsing.job.result.get_xlsx(
+            job_id="job_id",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(object, result, path=["response"])
 
@@ -354,7 +395,7 @@ class TestResult:
     @parametrize
     def test_raw_response_get_xlsx(self, client: LlamaCloud) -> None:
         response = client.parsing.job.result.with_raw_response.get_xlsx(
-            "job_id",
+            job_id="job_id",
         )
 
         assert response.is_closed is True
@@ -366,7 +407,7 @@ class TestResult:
     @parametrize
     def test_streaming_response_get_xlsx(self, client: LlamaCloud) -> None:
         with client.parsing.job.result.with_streaming_response.get_xlsx(
-            "job_id",
+            job_id="job_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -381,7 +422,7 @@ class TestResult:
     def test_path_params_get_xlsx(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `job_id` but received ''"):
             client.parsing.job.result.with_raw_response.get_xlsx(
-                "",
+                job_id="",
             )
 
 
@@ -399,6 +440,25 @@ class TestAsyncResult:
         result = await async_client.parsing.job.result.get_image(
             name="name",
             job_id="job_id",
+        )
+        assert result.is_closed
+        assert await result.json() == {"foo": "bar"}
+        assert cast(Any, result.is_closed) is True
+        assert isinstance(result, AsyncBinaryAPIResponse)
+
+    @parametrize
+    @pytest.mark.respx(base_url=base_url)
+    async def test_method_get_image_with_all_params(
+        self, async_client: AsyncLlamaCloud, respx_mock: MockRouter
+    ) -> None:
+        respx_mock.get("/api/v1/parsing/job/job_id/result/image/name").mock(
+            return_value=httpx.Response(200, json={"foo": "bar"})
+        )
+        result = await async_client.parsing.job.result.get_image(
+            name="name",
+            job_id="job_id",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert result.is_closed
         assert await result.json() == {"foo": "bar"}
@@ -470,6 +530,7 @@ class TestAsyncResult:
         result = await async_client.parsing.job.result.get_json(
             job_id="job_id",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ParsingJobJsonResult, result, path=["response"])
 
@@ -521,6 +582,7 @@ class TestAsyncResult:
         result = await async_client.parsing.job.result.get_markdown(
             job_id="job_id",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ParsingJobMarkdownResult, result, path=["response"])
 
@@ -562,7 +624,17 @@ class TestAsyncResult:
     @parametrize
     async def test_method_get_pdf(self, async_client: AsyncLlamaCloud) -> None:
         result = await async_client.parsing.job.result.get_pdf(
-            "job_id",
+            job_id="job_id",
+        )
+        assert_matches_type(object, result, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_get_pdf_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        result = await async_client.parsing.job.result.get_pdf(
+            job_id="job_id",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(object, result, path=["response"])
 
@@ -570,7 +642,7 @@ class TestAsyncResult:
     @parametrize
     async def test_raw_response_get_pdf(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.parsing.job.result.with_raw_response.get_pdf(
-            "job_id",
+            job_id="job_id",
         )
 
         assert response.is_closed is True
@@ -582,7 +654,7 @@ class TestAsyncResult:
     @parametrize
     async def test_streaming_response_get_pdf(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.parsing.job.result.with_streaming_response.get_pdf(
-            "job_id",
+            job_id="job_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -597,7 +669,7 @@ class TestAsyncResult:
     async def test_path_params_get_pdf(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `job_id` but received ''"):
             await async_client.parsing.job.result.with_raw_response.get_pdf(
-                "",
+                job_id="",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -614,6 +686,7 @@ class TestAsyncResult:
         result = await async_client.parsing.job.result.get_structured(
             job_id="job_id",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ParsingJobStructuredResult, result, path=["response"])
 
@@ -665,6 +738,7 @@ class TestAsyncResult:
         result = await async_client.parsing.job.result.get_text(
             job_id="job_id",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ParsingJobTextResult, result, path=["response"])
 
@@ -706,7 +780,17 @@ class TestAsyncResult:
     @parametrize
     async def test_method_get_xlsx(self, async_client: AsyncLlamaCloud) -> None:
         result = await async_client.parsing.job.result.get_xlsx(
-            "job_id",
+            job_id="job_id",
+        )
+        assert_matches_type(object, result, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_get_xlsx_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        result = await async_client.parsing.job.result.get_xlsx(
+            job_id="job_id",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(object, result, path=["response"])
 
@@ -714,7 +798,7 @@ class TestAsyncResult:
     @parametrize
     async def test_raw_response_get_xlsx(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.parsing.job.result.with_raw_response.get_xlsx(
-            "job_id",
+            job_id="job_id",
         )
 
         assert response.is_closed is True
@@ -726,7 +810,7 @@ class TestAsyncResult:
     @parametrize
     async def test_streaming_response_get_xlsx(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.parsing.job.result.with_streaming_response.get_xlsx(
-            "job_id",
+            job_id="job_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -741,5 +825,5 @@ class TestAsyncResult:
     async def test_path_params_get_xlsx(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `job_id` but received ''"):
             await async_client.parsing.job.result.with_raw_response.get_xlsx(
-                "",
+                job_id="",
             )

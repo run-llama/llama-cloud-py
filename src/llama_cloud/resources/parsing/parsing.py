@@ -251,6 +251,7 @@ class ParsingResource(SyncAPIResource):
         precise_bounding_box: bool | Omit = omit,
         premium_mode: bool | Omit = omit,
         presentation_out_of_bounds_content: bool | Omit = omit,
+        presentation_skip_embedded_data: bool | Omit = omit,
         preserve_layout_alignment_across_pages: bool | Omit = omit,
         preserve_very_small_text: bool | Omit = omit,
         preset: str | Omit = omit,
@@ -296,9 +297,9 @@ class ParsingResource(SyncAPIResource):
         Upload File
 
         Args:
-          parse_mode: Enum for representing the mode of parsing to be used
+          parse_mode: Enum for representing the mode of parsing to be used.
 
-          replace_failed_page_mode: Enum for representing the different available page error handling modes
+          replace_failed_page_mode: Enum for representing the different available page error handling modes.
 
           extra_headers: Send extra headers
 
@@ -388,6 +389,7 @@ class ParsingResource(SyncAPIResource):
                 "precise_bounding_box": precise_bounding_box,
                 "premium_mode": premium_mode,
                 "presentation_out_of_bounds_content": presentation_out_of_bounds_content,
+                "presentation_skip_embedded_data": presentation_skip_embedded_data,
                 "preserve_layout_alignment_across_pages": preserve_layout_alignment_across_pages,
                 "preserve_very_small_text": preserve_very_small_text,
                 "preset": preset,
@@ -753,6 +755,7 @@ class AsyncParsingResource(AsyncAPIResource):
         precise_bounding_box: bool | Omit = omit,
         premium_mode: bool | Omit = omit,
         presentation_out_of_bounds_content: bool | Omit = omit,
+        presentation_skip_embedded_data: bool | Omit = omit,
         preserve_layout_alignment_across_pages: bool | Omit = omit,
         preserve_very_small_text: bool | Omit = omit,
         preset: str | Omit = omit,
@@ -798,9 +801,9 @@ class AsyncParsingResource(AsyncAPIResource):
         Upload File
 
         Args:
-          parse_mode: Enum for representing the mode of parsing to be used
+          parse_mode: Enum for representing the mode of parsing to be used.
 
-          replace_failed_page_mode: Enum for representing the different available page error handling modes
+          replace_failed_page_mode: Enum for representing the different available page error handling modes.
 
           extra_headers: Send extra headers
 
@@ -890,6 +893,7 @@ class AsyncParsingResource(AsyncAPIResource):
                 "precise_bounding_box": precise_bounding_box,
                 "premium_mode": premium_mode,
                 "presentation_out_of_bounds_content": presentation_out_of_bounds_content,
+                "presentation_skip_embedded_data": presentation_skip_embedded_data,
                 "preserve_layout_alignment_across_pages": preserve_layout_alignment_across_pages,
                 "preserve_very_small_text": preserve_very_small_text,
                 "preset": preset,

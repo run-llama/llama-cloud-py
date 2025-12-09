@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Optional
+
 import httpx
 
 from .result import (
@@ -12,7 +14,8 @@ from .result import (
     ResultResourceWithStreamingResponse,
     AsyncResultResourceWithStreamingResponse,
 )
-from ...._types import Body, Query, Headers, NotGiven, not_given
+from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ...._utils import maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from ...._polling import (
     BackoffStrategy,
@@ -27,6 +30,7 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ...._base_client import make_request_options
+from ....types.parsing import job_get_params, job_get_details_params
 from ....types.parsing_job import ParsingJob
 from ....types.presigned_url import PresignedURL
 
@@ -97,6 +101,8 @@ class JobResource(SyncAPIResource):
         self,
         job_id: str,
         *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -121,7 +127,17 @@ class JobResource(SyncAPIResource):
         return self._get(
             f"/api/v1/parsing/job/{job_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    job_get_params.JobGetParams,
+                ),
             ),
             cast_to=ParsingJob,
         )
@@ -130,6 +146,8 @@ class JobResource(SyncAPIResource):
         self,
         job_id: str,
         *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -138,7 +156,15 @@ class JobResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
-        Get a job by id
+        Get detailed parsing job information including status, parameters, and
+        telemetry.
+
+        Returns comprehensive job details with:
+
+        - Job status and error information
+        - Job parameters (with sensitive API keys removed)
+        - Job metadata (telemetry, performance metrics)
+        - Session logs (errors, warnings, page-level details)
 
         Args:
           extra_headers: Send extra headers
@@ -154,7 +180,17 @@ class JobResource(SyncAPIResource):
         return self._get(
             f"/api/v1/parsing/job/{job_id}/details",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    job_get_details_params.JobGetDetailsParams,
+                ),
             ),
             cast_to=object,
         )
@@ -329,6 +365,8 @@ class AsyncJobResource(AsyncAPIResource):
         self,
         job_id: str,
         *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -353,7 +391,17 @@ class AsyncJobResource(AsyncAPIResource):
         return await self._get(
             f"/api/v1/parsing/job/{job_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    job_get_params.JobGetParams,
+                ),
             ),
             cast_to=ParsingJob,
         )
@@ -362,6 +410,8 @@ class AsyncJobResource(AsyncAPIResource):
         self,
         job_id: str,
         *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -370,7 +420,15 @@ class AsyncJobResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
-        Get a job by id
+        Get detailed parsing job information including status, parameters, and
+        telemetry.
+
+        Returns comprehensive job details with:
+
+        - Job status and error information
+        - Job parameters (with sensitive API keys removed)
+        - Job metadata (telemetry, performance metrics)
+        - Session logs (errors, warnings, page-level details)
 
         Args:
           extra_headers: Send extra headers
@@ -386,7 +444,17 @@ class AsyncJobResource(AsyncAPIResource):
         return await self._get(
             f"/api/v1/parsing/job/{job_id}/details",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    job_get_details_params.JobGetDetailsParams,
+                ),
             ),
             cast_to=object,
         )

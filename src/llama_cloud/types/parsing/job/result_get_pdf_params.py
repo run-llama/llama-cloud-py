@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import TypedDict
 
-__all__ = ["ResultGetStructuredParams"]
+__all__ = ["ResultGetPdfParams"]
 
 
-class ResultGetStructuredParams(TypedDict, total=False):
+class ResultGetPdfParams(TypedDict, total=False):
     organization_id: Optional[str]
 
     project_id: Optional[str]
