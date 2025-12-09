@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import TypedDict
+from typing_extensions import Required, TypedDict
 
-__all__ = ["ResultGetStructuredParams"]
+__all__ = ["ResultGetImageParams"]
 
 
-class ResultGetStructuredParams(TypedDict, total=False):
+class ResultGetImageParams(TypedDict, total=False):
+    job_id: Required[str]
+
     organization_id: Optional[str]
 
     project_id: Optional[str]

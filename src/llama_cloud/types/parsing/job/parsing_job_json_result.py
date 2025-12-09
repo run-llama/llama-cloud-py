@@ -7,7 +7,7 @@ __all__ = ["ParsingJobJsonResult"]
 
 class ParsingJobJsonResult(BaseModel):
     job_metadata: object
-    """Parsing job metadata , including usage"""
+    """Parsing job metadata, including usage"""
 
     pages: object
     """The json result of the parsing job"""

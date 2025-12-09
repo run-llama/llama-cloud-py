@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+from .result_get_pdf_params import ResultGetPdfParams as ResultGetPdfParams
 from .result_get_json_params import ResultGetJsonParams as ResultGetJsonParams
 from .result_get_text_params import ResultGetTextParams as ResultGetTextParams
+from .result_get_xlsx_params import ResultGetXlsxParams as ResultGetXlsxParams
 from .parsing_job_json_result import ParsingJobJsonResult as ParsingJobJsonResult
 from .parsing_job_text_result import ParsingJobTextResult as ParsingJobTextResult
+from .result_get_image_params import ResultGetImageParams as ResultGetImageParams
 from .result_get_markdown_params import ResultGetMarkdownParams as ResultGetMarkdownParams
 from .parsing_job_markdown_result import ParsingJobMarkdownResult as ParsingJobMarkdownResult
 from .result_get_structured_params import ResultGetStructuredParams as ResultGetStructuredParams

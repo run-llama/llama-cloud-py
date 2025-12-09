@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Union, Optional
+from typing import Dict, List, Union, Iterable, Optional
 from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
 from ..._types import SequenceNotStr
@@ -11,6 +11,7 @@ from ..parsing_mode import ParsingMode
 from ..fail_page_mode import FailPageMode
 from ..parser_languages import ParserLanguages
 from ..classifier.classify_job_param import ClassifyJobParam
+from ..extraction.webhook_configuration_param import WebhookConfigurationParam
 
 __all__ = [
     "BatchCreateParams",
@@ -221,7 +222,7 @@ class JobConfigBatchParseJobRecordCreateParameters(TypedDict, total=False):
     page_suffix: Optional[str]
 
     parse_mode: Optional[ParsingMode]
-    """Enum for representing the mode of parsing to be used"""
+    """Enum for representing the mode of parsing to be used."""
 
     parsing_instruction: Optional[str]
 
@@ -231,6 +232,10 @@ class JobConfigBatchParseJobRecordCreateParameters(TypedDict, total=False):
     precise_bounding_box: Optional[bool]
 
     premium_mode: Optional[bool]
+
+    presentation_out_of_bounds_content: Optional[bool]
+
+    presentation_skip_embedded_data: Optional[bool]
 
     preserve_layout_alignment_across_pages: Optional[bool]
 
@@ -246,8 +251,10 @@ class JobConfigBatchParseJobRecordCreateParameters(TypedDict, total=False):
 
     project_id: Optional[str]
 
+    remove_hidden_text: Optional[bool]
+
     replace_failed_page_mode: Optional[FailPageMode]
-    """Enum for representing the different available page error handling modes"""
+    """Enum for representing the different available page error handling modes."""
 
     replace_failed_page_with_error_message_prefix: Optional[str]
 
@@ -307,6 +314,9 @@ class JobConfigBatchParseJobRecordCreateParameters(TypedDict, total=False):
     vendor_multimodal_model_name: Optional[str]
 
     version: Optional[str]
+
+    webhook_configurations: Optional[Iterable[WebhookConfigurationParam]]
+    """The outbound webhook configurations"""
 
     webhook_url: Optional[str]
 

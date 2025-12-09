@@ -38,9 +38,11 @@ class TestSheets:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             config={
                 "extraction_range": "extraction_range",
+                "flatten_hierarchical_tables": True,
                 "generate_additional_metadata": True,
                 "include_hidden_cells": True,
                 "sheet_names": ["string"],
+                "table_merge_sensitivity": "strong",
                 "use_experimental_processing": True,
             },
         )
@@ -310,9 +312,11 @@ class TestAsyncSheets:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             config={
                 "extraction_range": "extraction_range",
+                "flatten_hierarchical_tables": True,
                 "generate_additional_metadata": True,
                 "include_hidden_cells": True,
                 "sheet_names": ["string"],
+                "table_merge_sensitivity": "strong",
                 "use_experimental_processing": True,
             },
         )

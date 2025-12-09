@@ -11,6 +11,7 @@ from ...parsing_mode import ParsingMode
 from ...fail_page_mode import FailPageMode
 from ...parser_languages import ParserLanguages
 from ...classifier.classify_job import ClassifyJob
+from ...extraction.webhook_configuration import WebhookConfiguration
 
 __all__ = [
     "JobItemGetProcessingResultsResponse",
@@ -186,7 +187,7 @@ class ProcessingResultJobConfigBatchParseJobRecordCreateParameters(BaseModel):
     page_suffix: Optional[str] = None
 
     parse_mode: Optional[ParsingMode] = None
-    """Enum for representing the mode of parsing to be used"""
+    """Enum for representing the mode of parsing to be used."""
 
     parsing_instruction: Optional[str] = None
 
@@ -196,6 +197,10 @@ class ProcessingResultJobConfigBatchParseJobRecordCreateParameters(BaseModel):
     precise_bounding_box: Optional[bool] = None
 
     premium_mode: Optional[bool] = None
+
+    presentation_out_of_bounds_content: Optional[bool] = None
+
+    presentation_skip_embedded_data: Optional[bool] = None
 
     preserve_layout_alignment_across_pages: Optional[bool] = None
 
@@ -211,8 +216,10 @@ class ProcessingResultJobConfigBatchParseJobRecordCreateParameters(BaseModel):
 
     project_id: Optional[str] = None
 
+    remove_hidden_text: Optional[bool] = None
+
     replace_failed_page_mode: Optional[FailPageMode] = None
-    """Enum for representing the different available page error handling modes"""
+    """Enum for representing the different available page error handling modes."""
 
     replace_failed_page_with_error_message_prefix: Optional[str] = None
 
@@ -272,6 +279,9 @@ class ProcessingResultJobConfigBatchParseJobRecordCreateParameters(BaseModel):
     vendor_multimodal_model_name: Optional[str] = None
 
     version: Optional[str] = None
+
+    webhook_configurations: Optional[List[WebhookConfiguration]] = None
+    """The outbound webhook configurations"""
 
     webhook_url: Optional[str] = None
 
