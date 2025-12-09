@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Iterable, Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
 from ..._types import SequenceNotStr
 from .classifier_rule_param import ClassifierRuleParam
@@ -22,6 +22,9 @@ class JobCreateParams(TypedDict, total=False):
     organization_id: Optional[str]
 
     project_id: Optional[str]
+
+    mode: Literal["FAST", "MULTIMODAL"]
+    """The classification mode to use"""
 
     parsing_configuration: ClassifyParsingConfigurationParam
     """The configuration for the parsing job"""

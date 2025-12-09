@@ -2,6 +2,7 @@
 
 from typing import List, Optional
 from datetime import datetime
+from typing_extensions import Literal
 
 from ..._models import BaseModel
 from ..status_enum import StatusEnum
@@ -39,6 +40,9 @@ class ClassifyJob(BaseModel):
 
     job_record_id: Optional[str] = None
     """The job record ID associated with this status, if any."""
+
+    mode: Optional[Literal["FAST", "MULTIMODAL"]] = None
+    """The classification mode to use"""
 
     parsing_configuration: Optional[ClassifyParsingConfiguration] = None
     """The configuration for the parsing job"""

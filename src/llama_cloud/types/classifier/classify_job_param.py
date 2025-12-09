@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Union, Iterable, Optional
 from datetime import datetime
-from typing_extensions import Required, Annotated, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from ..._utils import PropertyInfo
 from ..status_enum import StatusEnum
@@ -42,6 +42,9 @@ class ClassifyJobParam(TypedDict, total=False):
 
     job_record_id: Optional[str]
     """The job record ID associated with this status, if any."""
+
+    mode: Literal["FAST", "MULTIMODAL"]
+    """The classification mode to use"""
 
     parsing_configuration: ClassifyParsingConfigurationParam
     """The configuration for the parsing job"""
