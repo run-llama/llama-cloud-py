@@ -9,6 +9,8 @@ __all__ = ["Project"]
 
 
 class Project(BaseModel):
+    """Schema for a project."""
+
     id: str
     """Unique identifier"""
 

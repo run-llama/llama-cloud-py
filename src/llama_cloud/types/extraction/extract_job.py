@@ -11,6 +11,8 @@ __all__ = ["ExtractJob"]
 
 
 class ExtractJob(BaseModel):
+    """Schema for an extraction job."""
+
     id: str
     """The id of the extraction job"""
 

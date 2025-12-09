@@ -54,6 +54,8 @@ class AgentDataSearchParams(TypedDict, total=False):
 
 
 class Filter(TypedDict, total=False):
+    """API request model for a filter comparison operation."""
+
     eq: Annotated[Union[float, str, Union[str, datetime], None], PropertyInfo(format="iso8601")]
 
     gt: Annotated[Union[float, str, Union[str, datetime], None], PropertyInfo(format="iso8601")]

@@ -58,6 +58,17 @@ class BatchCreateParams(TypedDict, total=False):
 
 
 class JobConfigBatchParseJobRecordCreateParameters(TypedDict, total=False):
+    """Generic parse job configuration for batch processing.
+
+    This model contains the parsing configuration that applies to all files
+    in a batch, but excludes file-specific fields like file_name, file_id, etc.
+    Those file-specific fields are populated from DirectoryFile data when
+    creating individual ParseJobRecordCreate instances for each file.
+
+    The fields in this model should be generic settings that apply uniformly
+    to all files being processed in the batch.
+    """
+
     adaptive_long_table: Optional[bool]
 
     aggressive_table_extraction: Optional[bool]
@@ -322,6 +333,25 @@ class JobConfigBatchParseJobRecordCreateParameters(TypedDict, total=False):
 
 
 class JobConfigBatchParseJobRecordCreate(TypedDict, total=False):
+    """Batch-specific parse job record for batch processing.
+
+    This model contains the metadata and configuration for a batch parse job,
+    but excludes file-specific information. It's used as input to the batch
+    parent workflow and combined with DirectoryFile data to create full
+    ParseJobRecordCreate instances for each file.
+
+    Attributes:
+        job_name: Must be PARSE_RAW_FILE
+        partitions: Partitions for job output location
+        parameters: Generic parse configuration (BatchParseJobConfig)
+        session_id: Upstream request ID for tracking
+        correlation_id: Correlation ID for cross-service tracking
+        parent_job_execution_id: Parent job execution ID if nested
+        user_id: User who created the job
+        project_id: Project this job belongs to
+        webhook_url: Optional webhook URL for job completion notifications
+    """
+
     correlation_id: Optional[str]
     """The correlation ID for this job. Used for tracking the job across services."""
 

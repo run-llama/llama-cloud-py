@@ -13,6 +13,8 @@ class FileCreateParams(TypedDict, total=False):
 
 
 class Body(TypedDict, total=False):
+    """Schema for creating a file that is associated with a pipeline."""
+
     file_id: Required[str]
     """The ID of the file"""
 

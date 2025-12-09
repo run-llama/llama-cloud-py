@@ -24,6 +24,8 @@ class SplitCreateParams(TypedDict, total=False):
 
 
 class Category(TypedDict, total=False):
+    """Category definition for document splitting."""
+
     name: Required[str]
     """Name of the category."""
 
@@ -32,6 +34,8 @@ class Category(TypedDict, total=False):
 
 
 class DocumentInput(TypedDict, total=False):
+    """Document to be split."""
+
     type: Required[str]
     """Type of document input. Valid values are: file_id"""
 
@@ -40,6 +44,8 @@ class DocumentInput(TypedDict, total=False):
 
 
 class SplittingStrategy(TypedDict, total=False):
+    """Strategy for splitting the document."""
+
     allow_uncategorized: bool
     """
     Whether to allow pages that don't match any category to be grouped as

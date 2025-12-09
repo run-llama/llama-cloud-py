@@ -9,6 +9,8 @@ __all__ = ["FileGetResponse"]
 
 
 class FileGetResponse(BaseModel):
+    """API response schema for a directory file."""
+
     id: str
     """Unique identifier for the directory file."""
 

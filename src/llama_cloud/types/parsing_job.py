@@ -9,6 +9,8 @@ __all__ = ["ParsingJob"]
 
 
 class ParsingJob(BaseModel):
+    """Response schema for a parsing job."""
+
     id: str
 
     status: StatusEnum

@@ -15,6 +15,10 @@ __all__ = ["LlamaParseParametersParam"]
 
 
 class LlamaParseParametersParam(TypedDict, total=False):
+    """
+    Settings that can be configured for how to use LlamaParse to parse files within a LlamaCloud pipeline.
+    """
+
     adaptive_long_table: Optional[bool]
 
     aggressive_table_extraction: Optional[bool]

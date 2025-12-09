@@ -21,6 +21,18 @@ __all__ = [
 
 
 class ComponentCloudPineconeVectorStore(BaseModel):
+    """Cloud Pinecone Vector Store.
+
+    This class is used to store the configuration for a Pinecone vector store, so that it can be
+    created and used in LlamaCloud.
+
+    Args:
+        api_key (str): API key for authenticating with Pinecone
+        index_name (str): name of the Pinecone index
+        namespace (optional[str]): namespace to use in the Pinecone index
+        insert_kwargs (optional[dict]): additional kwargs to pass during insertion
+    """
+
     index_name: str
 
     class_name: Optional[str] = None
@@ -33,6 +45,8 @@ class ComponentCloudPineconeVectorStore(BaseModel):
 
 
 class ComponentCloudPostgresVectorStoreHnswSettings(BaseModel):
+    """HNSW settings for PGVector."""
+
     distance_method: Optional[Literal["l2", "ip", "cosine", "l1", "hamming", "jaccard"]] = None
     """The distance method to use."""
 
@@ -77,6 +91,19 @@ class ComponentCloudPostgresVectorStore(BaseModel):
 
 
 class ComponentCloudQdrantVectorStore(BaseModel):
+    """Cloud Qdrant Vector Store.
+
+    This class is used to store the configuration for a Qdrant vector store, so that it can be
+    created and used in LlamaCloud.
+
+    Args:
+        collection_name (str): name of the Qdrant collection
+        url (str): url of the Qdrant instance
+        api_key (str): API key for authenticating with Qdrant
+        max_retries (int): maximum number of retries in case of a failure. Defaults to 3
+        client_kwargs (dict): additional kwargs to pass to the Qdrant client
+    """
+
     collection_name: str
 
     url: str
@@ -91,6 +118,8 @@ class ComponentCloudQdrantVectorStore(BaseModel):
 
 
 class ComponentCloudAzureAISearchVectorStore(BaseModel):
+    """Cloud Azure AI Search Vector Store."""
+
     search_service_endpoint: str
 
     class_name: Optional[str] = None
@@ -111,6 +140,19 @@ class ComponentCloudAzureAISearchVectorStore(BaseModel):
 
 
 class ComponentCloudMongoDBAtlasVectorSearch(BaseModel):
+    """Cloud MongoDB Atlas Vector Store.
+
+    This class is used to store the configuration for a MongoDB Atlas vector store,
+    so that it can be created and used in LlamaCloud.
+
+    Args:
+        mongodb_uri (str): URI for connecting to MongoDB Atlas
+        db_name (str): name of the MongoDB database
+        collection_name (str): name of the MongoDB collection
+        vector_index_name (str): name of the MongoDB Atlas vector index
+        fulltext_index_name (str): name of the MongoDB Atlas full-text index
+    """
+
     collection_name: str
 
     db_name: str
@@ -127,6 +169,8 @@ class ComponentCloudMongoDBAtlasVectorSearch(BaseModel):
 
 
 class ComponentCloudMilvusVectorStore(BaseModel):
+    """Cloud Milvus Vector Store."""
+
     uri: str
 
     class_name: Optional[str] = None
@@ -139,6 +183,19 @@ class ComponentCloudMilvusVectorStore(BaseModel):
 
 
 class ComponentCloudAstraDBVectorStore(BaseModel):
+    """Cloud AstraDB Vector Store.
+
+    This class is used to store the configuration for an AstraDB vector store, so that it can be
+    created and used in LlamaCloud.
+
+    Args:
+        token (str): The Astra DB Application Token to use.
+        api_endpoint (str): The Astra DB JSON API endpoint for your database.
+        collection_name (str): Collection name to use. If not existing, it will be created.
+        embedding_dimension (int): Length of the embedding vectors in use.
+        keyspace (optional[str]): The keyspace to use. If not provided, 'default_keyspace'
+    """
+
     api_endpoint: str
     """The Astra DB JSON API endpoint for your database"""
 
@@ -169,6 +226,8 @@ Component: TypeAlias = Union[
 
 
 class DataSink(BaseModel):
+    """Schema for a data sink."""
+
     id: str
     """Unique identifier"""
 

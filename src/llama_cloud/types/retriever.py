@@ -11,6 +11,8 @@ __all__ = ["Retriever"]
 
 
 class Retriever(BaseModel):
+    """An entity that retrieves context nodes from several sub RetrieverTools."""
+
     id: str
     """Unique identifier"""
 

@@ -9,6 +9,8 @@ __all__ = ["PresignedURL"]
 
 
 class PresignedURL(BaseModel):
+    """Schema for a presigned URL."""
+
     expires_at: datetime
     """The time at which the presigned URL expires"""
 

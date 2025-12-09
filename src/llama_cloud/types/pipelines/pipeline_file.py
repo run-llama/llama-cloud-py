@@ -10,6 +10,8 @@ __all__ = ["PipelineFile"]
 
 
 class PipelineFile(BaseModel):
+    """Schema for a file that is associated with a pipeline."""
+
     id: str
     """Unique identifier"""
 

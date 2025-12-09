@@ -9,6 +9,8 @@ __all__ = ["ClassifyParsingConfiguration"]
 
 
 class ClassifyParsingConfiguration(BaseModel):
+    """Parsing configuration for a classify job."""
+
     lang: Optional[ParserLanguages] = None
     """The language to parse the files in"""
 

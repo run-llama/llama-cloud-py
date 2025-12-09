@@ -11,6 +11,8 @@ __all__ = ["ClassifyParsingConfigurationParam"]
 
 
 class ClassifyParsingConfigurationParam(TypedDict, total=False):
+    """Parsing configuration for a classify job."""
+
     lang: ParserLanguages
     """The language to parse the files in"""
 

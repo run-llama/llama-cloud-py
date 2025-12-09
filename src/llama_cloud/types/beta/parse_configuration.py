@@ -10,6 +10,8 @@ __all__ = ["ParseConfiguration"]
 
 
 class ParseConfiguration(BaseModel):
+    """Parse configuration schema."""
+
     id: str
     """Unique identifier for the parse configuration"""
 

@@ -9,6 +9,8 @@ __all__ = ["ExtractConfigParam"]
 
 
 class ExtractConfigParam(TypedDict, total=False):
+    """Configuration parameters for the extraction agent."""
+
     chunk_mode: Literal["PAGE", "SECTION"]
     """The mode to use for chunking the document."""
 

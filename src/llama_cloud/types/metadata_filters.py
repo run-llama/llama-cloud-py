@@ -12,6 +12,14 @@ __all__ = ["MetadataFilters", "Filter", "FilterMetadataFilter"]
 
 
 class FilterMetadataFilter(BaseModel):
+    """Comprehensive metadata filter for vector stores to support more operators.
+
+    Value uses Strict types, as int, float and str are compatible types and were all
+    converted to string before.
+
+    See: https://docs.pydantic.dev/latest/usage/types/#strict-types
+    """
+
     key: str
 
     value: Union[float, str, List[str], List[float], List[int], None] = None
@@ -44,6 +52,8 @@ else:
 
 
 class MetadataFilters(BaseModel):
+    """Metadata filters for vector stores."""
+
     filters: List[Filter]
 
     condition: Optional[Literal["and", "or", "not"]] = None

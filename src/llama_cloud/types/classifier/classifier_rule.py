@@ -6,6 +6,12 @@ __all__ = ["ClassifierRule"]
 
 
 class ClassifierRule(BaseModel):
+    """A rule for classifying documents - v0 simplified version.
+
+    This represents a single classification rule that will be applied to documents.
+    All rules are content-based and use natural language descriptions.
+    """
+
     description: str
     """Natural language description of what to classify.
 

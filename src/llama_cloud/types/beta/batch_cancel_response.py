@@ -8,6 +8,8 @@ __all__ = ["BatchCancelResponse"]
 
 
 class BatchCancelResponse(BaseModel):
+    """Response after cancelling a batch job."""
+
     job_id: str
     """ID of the cancelled job"""
 

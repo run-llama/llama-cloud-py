@@ -10,6 +10,8 @@ __all__ = ["JobItemListResponse"]
 
 
 class JobItemListResponse(BaseModel):
+    """Detailed information about an item in a batch job."""
+
     item_id: str
     """ID of the item"""
 

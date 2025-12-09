@@ -9,6 +9,8 @@ __all__ = ["SplitListResponse", "Category", "DocumentInput", "Result", "ResultSe
 
 
 class Category(BaseModel):
+    """Category definition for document splitting."""
+
     name: str
     """Name of the category."""
 
@@ -17,6 +19,8 @@ class Category(BaseModel):
 
 
 class DocumentInput(BaseModel):
+    """Document that was split."""
+
     type: str
     """Type of document input. Valid values are: file_id"""
 
@@ -25,6 +29,8 @@ class DocumentInput(BaseModel):
 
 
 class ResultSegment(BaseModel):
+    """A segment of the split document."""
+
     category: str
     """Category name this split belongs to."""
 
@@ -36,11 +42,15 @@ class ResultSegment(BaseModel):
 
 
 class Result(BaseModel):
+    """Result of a completed split job."""
+
     segments: List[ResultSegment]
     """List of document segments."""
 
 
 class SplitListResponse(BaseModel):
+    """A document split job."""
+
     id: str
     """Unique identifier for the split job."""
 

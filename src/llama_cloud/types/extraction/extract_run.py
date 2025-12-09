@@ -12,6 +12,8 @@ __all__ = ["ExtractRun"]
 
 
 class ExtractRun(BaseModel):
+    """Schema for an extraction run."""
+
     id: str
     """The id of the extraction run"""
 
