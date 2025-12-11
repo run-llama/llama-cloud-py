@@ -1,7 +1,6 @@
 import asyncio
 
 from llama_cloud import AsyncLlamaCloud
-from llama_cloud.types.beta.split_create_params import Category
 
 
 async def split_document() -> None:
@@ -25,23 +24,20 @@ async def split_document() -> None:
     file_obj = await client.files.upload(upload_file="../example_files/turing+imagenet+attention.pdf")
     file_id = file_obj.id
 
-    # Define categories for splitting
+    # Split the document and wait for completion
     # Each category needs a name and a description that helps the AI
     # understand what content belongs to that category
-    categories: list[Category] = [
-        Category(
-            name="essay",
-            description="A philosophical or reflective piece of writing that presents personal viewpoints, arguments, or thoughts on a topic without strict formal structure",
-        ),
-        Category(
-            name="research_paper",
-            description="A formal academic document presenting original research, methodology, experiments, results, and conclusions with citations and references",
-        ),
-    ]
-
-    # Split the document and wait for completion
     result = await client.beta.split.split(
-        categories=categories,
+        categories=[
+            {
+                "name": "essay",
+                "description": "A philosophical or reflective piece of writing that presents personal viewpoints, arguments, or thoughts on a topic without strict formal structure",
+            },
+            {
+                "name": "research_paper",
+                "description": "A formal academic document presenting original research, methodology, experiments, results, and conclusions with citations and references",
+            },
+        ],
         document_input={"type": "file_id", "value": file_id},
         verbose=True,
     )

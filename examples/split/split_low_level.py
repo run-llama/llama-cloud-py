@@ -1,7 +1,6 @@
 import asyncio
 
 from llama_cloud import AsyncLlamaCloud
-from llama_cloud.types.beta.split_create_params import Category
 
 
 async def split_document_low_level() -> None:
@@ -24,10 +23,10 @@ async def split_document_low_level() -> None:
     # Research papers will be grouped as 'uncategorized'
     job = await client.beta.split.create(
         categories=[
-            Category(
-                name="essay",
-                description="A philosophical or reflective piece of writing that presents personal viewpoints",
-            ),
+            {
+                "name": "essay",
+                "description": "A philosophical or reflective piece of writing that presents personal viewpoints",
+            },
         ],
         document_input={"type": "file_id", "value": file_id},
         splitting_strategy={"allow_uncategorized": True},
