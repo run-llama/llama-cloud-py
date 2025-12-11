@@ -1,7 +1,6 @@
 import asyncio
 
 from llama_cloud import AsyncLlamaCloud
-from llama_cloud.types import RetrieverPipelineParam, PresetRetrievalParamsParam
 
 
 async def retrieve_from_existing_index_pipeline() -> None:
@@ -26,18 +25,18 @@ async def retrieve_from_existing_index_pipeline() -> None:
     retriver = await client.retrievers.create(
         name="my-retriever",
         pipelines=[
-            RetrieverPipelineParam(
-                name="my-pipeline-retriever",
-                description="Contains information about XYZ",
-                pipeline_id="your-existing-pipeline-id",
-                preset_retrieval_parameters=PresetRetrievalParamsParam(
-                    dense_similarity_top_k=20,
-                    sparse_similarity_top_k=20,
-                    alpha=0.5,
-                    enable_reranking=True,
-                    rerank_top_n=5,
-                ),
-            )
+            {
+                "name": "my-pipeline-retriever",
+                "description": "Contains information about XYZ",
+                "pipeline_id": "your-existing-pipeline-id",
+                "preset_retrieval_parameters": {
+                    "dense_similarity_top_k": 20,
+                    "sparse_similarity_top_k": 20,
+                    "alpha": 0.5,
+                    "enable_reranking": True,
+                    "rerank_top_n": 5,
+                },
+            }
         ],
     )
 

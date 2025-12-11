@@ -1,7 +1,6 @@
 import asyncio
 
 from llama_cloud import AsyncLlamaCloud
-from llama_cloud.types.classifier import ClassifierRuleParam
 
 
 async def classify_document() -> None:
@@ -15,15 +14,20 @@ async def classify_document() -> None:
     result = await client.classifier.classify(
         file_ids=[file_id],
         rules=[
-            ClassifierRuleParam(
-                type="ACADEMIC_PAPER",
-                description="Classify whether the document is an academic paper.",
-            ),
-            ClassifierRuleParam(
-                type="OTHER",
-                description="Classify whether the document is from any other source besides academic papers.",
-            ),
+            {
+                "type": "ACADEMIC_PAPER",
+                "description": "Classify whether the document is an academic paper.",
+            },
+            {
+                "type": "OTHER",
+                "description": "Classify whether the document is from any other source besides academic papers.",
+            },
         ],
+        parsing_configuration={
+            "lang": "en",
+            "max_pages": 5,
+            # "target_pages": [1],  # Optional: specify particular pages to parse, cannot be used with max_pages
+        }
     )
 
     # Print the classification results

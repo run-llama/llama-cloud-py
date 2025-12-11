@@ -1,16 +1,6 @@
 import asyncio
 
 from llama_cloud import AsyncLlamaCloud
-from llama_cloud.types import (
-    AutoTransformConfigParam,
-    # AdvancedModeTransformConfigParam,
-    LlamaParseParametersParam,
-)
-from llama_cloud.types.pipelines import CloudDocumentCreateParam
-from llama_cloud.types.pipeline_create_params import (
-    EmbeddingConfigOpenAIEmbeddingConfig,
-    EmbeddingConfigOpenAIEmbeddingConfigComponent,
-)
 from llama_cloud.types.data_sink_create_params import (
     ComponentCloudPineconeVectorStore,
     # ComponentCloudQdrantVectorStore,
@@ -37,19 +27,19 @@ async def create_index() -> None:
     # 3. The data source (if blank, no data will be connected by default, you can always add data later)
     # 4. The parsing parameters when ingesting data (if blank, the default parsing parameters will be used)
     # 5. The transform configuration when processing ingested data (if blank, the default transform configuration will be used)
-    pipeline = await client.pipelines.create(
+    pipeline = await client.pipelines.upsert(
         name="my-first-index",
         project_id="my-project-id",
-        data_sink_id=await create_data_sink(),
-        embedding_config=EmbeddingConfigOpenAIEmbeddingConfig(
-            component=EmbeddingConfigOpenAIEmbeddingConfigComponent(
-                api_key="sk-1234",
-                model_name="text-embedding-3-small",
-            ),
-            type="OPENAI_EMBEDDING",
-        ),
-        llama_parse_parameters=LlamaParseParametersParam(),
-        transform_config=AutoTransformConfigParam(chunk_overlap=128, chunk_size=1028),
+        data_sink_id=await create_data_sink(), # optional
+        embedding_config={
+            "component": {
+                "api_key": "sk-1234",
+                "model_name": "text-embedding-3-small",
+            },
+            "type": "OPENAI_EMBEDDING",
+        },
+        llama_parse_parameters={"parse_mode": "parse_document_with_agent", "model": "openai-gpt-4-1-mini"},
+        transform_config={"mode": "auto", "chunk_overlap": 128, "chunk_size": 1028},
     )
 
     print(pipeline.id)
@@ -58,13 +48,25 @@ async def create_index() -> None:
     documents = await client.pipelines.documents.create(
         pipeline_id=pipeline.id,
         body=[
-            CloudDocumentCreateParam(
-                text="This is my first document to be indexed.",
-                metadata={"source": "generated"},
-            )
+            {
+                "text": "This is my first document to be indexed.",
+                "metadata": {"source": "generated"},
+            }
         ],
     )
     print(f"Uploaded {len(documents)} documents to the index.")
+
+    # Optional: OR attach a data source after creating the index
+    # data_source_id = await create_data_source()
+    # await client.pipelines.data_sources.update_data_sources(
+    #     pipeline_id=pipeline.id,
+    #     body=[
+    #         {
+    #             "data_source_id": data_source_id, 
+    #             "sync_interval": 43200.0 # Optional, scheduled sync frequency in seconds. In this case, every 12 hours.
+    #         },  
+    #     ]
+    # )
 
     # Optional: Wait for indexing to complete
     status_resp = await client.pipelines.get_status(pipeline_id=pipeline.id)

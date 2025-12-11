@@ -6,7 +6,6 @@ from typing import Optional
 from pydantic import Field, BaseModel
 
 from llama_cloud import AsyncLlamaCloud
-from llama_cloud.types.extraction import ExtractConfigParam
 
 
 class Models(BaseModel):
@@ -22,12 +21,12 @@ async def extract_stateless() -> None:
     # Stateless one-shot extraction
     result = await client.extraction.extract(
         file_id=file_id,
-        config=ExtractConfigParam(
-            chunk_mode="PAGE",
-            cite_sources=True,
-            extraction_target="PER_DOC",
-            extraction_mode="BALANCED",
-        ),
+        config={
+            "chunk_mode": "PAGE",
+            "cite_sources": True,
+            "extraction_target": "PER_DOC",
+            "extraction_mode": "BALANCED",
+        },
         data_schema=Models.model_json_schema(),
     )
 
@@ -43,12 +42,12 @@ async def extract_with_agent() -> None:
 
     # Create an extraction agent
     agent = await client.extraction.extraction_agents.create(
-        config=ExtractConfigParam(
-            chunk_mode="PAGE",
-            cite_sources=True,
-            extraction_target="PER_DOC",
-            extraction_mode="BALANCED",
-        ),
+        config={
+            "chunk_mode": "PAGE",
+            "cite_sources": True,
+            "extraction_target": "PER_DOC",
+            "extraction_mode": "BALANCED",
+        },
         data_schema=Models.model_json_schema(),
         name="My Extraction Agent",
     )

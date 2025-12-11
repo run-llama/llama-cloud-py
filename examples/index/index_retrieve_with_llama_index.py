@@ -1,10 +1,5 @@
 import asyncio
 
-from llama_cloud.types import (
-    AutoTransformConfigParam,
-    # AdvancedModeTransformConfigParam,
-    LlamaParseParametersParam,
-)
 from llama_cloud.lib.index import LlamaCloudIndex
 from llama_cloud.types.pipeline_create_params import (
     EmbeddingConfigOpenAIEmbeddingConfig,
@@ -23,8 +18,8 @@ async def indexing_and_retrieval_with_llama_index_from_files() -> None:
             ),
             type="OPENAI_EMBEDDING",
         ),
-        llama_parse_parameters=LlamaParseParametersParam(),
-        transform_config=AutoTransformConfigParam(chunk_overlap=128, chunk_size=1028),
+        llama_parse_parameters={"parse_mode": "parse_document_with_agent", "model": "openai-gpt-4-1-mini"},
+        transform_config={"chunk_overlap": 128, "chunk_size": 1028},
     )
 
     # Index documents from files
