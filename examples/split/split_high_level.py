@@ -67,4 +67,3 @@ async def split_document() -> None:
 
 if __name__ == "__main__":
     asyncio.run(split_document())
-
