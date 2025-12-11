@@ -8,7 +8,7 @@ from typing_extensions import Literal, Annotated, TypedDict
 from .._utils import PropertyInfo
 from .parsing_mode import ParsingMode
 from .fail_page_mode import FailPageMode
-from .parser_languages import ParserLanguages
+from .parsing_languages import ParsingLanguages
 from .extraction.webhook_configuration_param import WebhookConfigurationParam
 
 __all__ = ["LlamaParseParametersParam"]
@@ -125,7 +125,7 @@ class LlamaParseParametersParam(TypedDict, total=False):
 
     keep_page_separator_when_merging_tables: Optional[bool]
 
-    languages: List[ParserLanguages]
+    languages: List[ParsingLanguages]
 
     layout_aware: Optional[bool]
 

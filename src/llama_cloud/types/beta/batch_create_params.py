@@ -9,7 +9,7 @@ from ..._types import SequenceNotStr
 from ..._utils import PropertyInfo
 from ..parsing_mode import ParsingMode
 from ..fail_page_mode import FailPageMode
-from ..parser_languages import ParserLanguages
+from ..parsing_languages import ParsingLanguages
 from ..classifier.classify_job_param import ClassifyJobParam
 from ..extraction.webhook_configuration_param import WebhookConfigurationParam
 
@@ -182,7 +182,7 @@ class JobConfigBatchParseJobRecordCreateParameters(TypedDict, total=False):
     lang: str
     """The language."""
 
-    languages: List[ParserLanguages]
+    languages: List[ParsingLanguages]
 
     layout_aware: Optional[bool]
 

@@ -9,7 +9,7 @@ from pydantic import Field as FieldInfo
 from ...._models import BaseModel
 from ...parsing_mode import ParsingMode
 from ...fail_page_mode import FailPageMode
-from ...parser_languages import ParserLanguages
+from ...parsing_languages import ParsingLanguages
 from ...classifier.classify_job import ClassifyJob
 from ...extraction.webhook_configuration import WebhookConfiguration
 
@@ -147,7 +147,7 @@ class ProcessingResultJobConfigBatchParseJobRecordCreateParameters(BaseModel):
     lang: Optional[str] = None
     """The language."""
 
-    languages: Optional[List[ParserLanguages]] = None
+    languages: Optional[List[ParsingLanguages]] = None
 
     layout_aware: Optional[bool] = None
 

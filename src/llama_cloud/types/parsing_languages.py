@@ -2,9 +2,9 @@
 
 from typing_extensions import Literal, TypeAlias
 
-__all__ = ["ParserLanguages"]
+__all__ = ["ParsingLanguages"]
 
-ParserLanguages: TypeAlias = Literal[
+ParsingLanguages: TypeAlias = Literal[
     "af",
     "az",
     "bs",
