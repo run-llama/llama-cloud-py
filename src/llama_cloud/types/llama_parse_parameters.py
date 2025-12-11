@@ -8,7 +8,7 @@ from pydantic import Field as FieldInfo
 from .._models import BaseModel
 from .parsing_mode import ParsingMode
 from .fail_page_mode import FailPageMode
-from .parser_languages import ParserLanguages
+from .parsing_languages import ParsingLanguages
 from .extraction.webhook_configuration import WebhookConfiguration
 
 __all__ = ["LlamaParseParameters"]
@@ -125,7 +125,7 @@ class LlamaParseParameters(BaseModel):
 
     keep_page_separator_when_merging_tables: Optional[bool] = None
 
-    languages: Optional[List[ParserLanguages]] = None
+    languages: Optional[List[ParsingLanguages]] = None
 
     layout_aware: Optional[bool] = None
 

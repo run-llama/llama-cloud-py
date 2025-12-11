@@ -3,7 +3,7 @@
 from typing import List, Optional
 
 from ..._models import BaseModel
-from ..parser_languages import ParserLanguages
+from ..parsing_languages import ParsingLanguages
 
 __all__ = ["ClassifyParsingConfiguration"]
 
@@ -11,7 +11,7 @@ __all__ = ["ClassifyParsingConfiguration"]
 class ClassifyParsingConfiguration(BaseModel):
     """Parsing configuration for a classify job."""
 
-    lang: Optional[ParserLanguages] = None
+    lang: Optional[ParsingLanguages] = None
     """The language to parse the files in"""
 
     max_pages: Optional[int] = None

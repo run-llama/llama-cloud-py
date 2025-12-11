@@ -11,7 +11,7 @@ from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
 from llama_cloud.types import (
     ParsingJob,
-    ParsingGetSupportedFileExtensionsResponse,
+    ParsingGetResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -22,38 +22,116 @@ class TestParsing:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_screenshot(self, client: LlamaCloud) -> None:
-        parsing = client.parsing.create_screenshot()
-        assert_matches_type(ParsingJob, parsing, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_create_screenshot_with_all_params(self, client: LlamaCloud) -> None:
-        parsing = client.parsing.create_screenshot(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            do_not_cache=True,
-            file=b"raw file contents",
-            http_proxy="http_proxy",
-            input_s3_path="input_s3_path",
-            input_s3_region="input_s3_region",
-            input_url="input_url",
-            invalidate_cache=True,
-            job_timeout_extra_time_per_page_in_seconds=0,
-            job_timeout_in_seconds=0,
-            max_pages=0,
-            output_s3_path_prefix="output_s3_path_prefix",
-            output_s3_region="output_s3_region",
-            target_pages="target_pages",
-            webhook_configurations="webhook_configurations",
-            webhook_url="webhook_url",
+    def test_method_create(self, client: LlamaCloud) -> None:
+        parsing = client.parsing.create(
+            tier="fast",
         )
         assert_matches_type(ParsingJob, parsing, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create_screenshot(self, client: LlamaCloud) -> None:
-        response = client.parsing.with_raw_response.create_screenshot()
+    def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
+        parsing = client.parsing.create(
+            tier="fast",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            agentic_options={"custom_prompt": "custom_prompt"},
+            client_name="client_name",
+            crop_box={
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0,
+            },
+            disable_cache=True,
+            fast_options={},
+            file_id="file_id",
+            http_proxy="https:",
+            input_options={
+                "html": {
+                    "make_all_elements_visible": True,
+                    "remove_fixed_elements": True,
+                    "remove_navigation_elements": True,
+                },
+                "pdf": {},
+                "presentation": {
+                    "out_of_bounds_content": True,
+                    "skip_embedded_data": True,
+                },
+                "spreadsheet": {
+                    "detect_sub_tables_in_sheets": True,
+                    "force_formula_computation_in_sheets": True,
+                },
+            },
+            output_options={
+                "embedded_images": {"enable": True},
+                "export_pdf": {"enable": True},
+                "extract_printed_page_number": True,
+                "markdown": {
+                    "annotate_links": True,
+                    "pages": {"merge_tables_across_pages_in_markdown": True},
+                    "tables": {
+                        "compact_markdown_tables": True,
+                        "markdown_table_multiline_separator": "markdown_table_multiline_separator",
+                        "output_tables_as_markdown": True,
+                    },
+                },
+                "screenshots": {"enable": True},
+                "spatial_text": {
+                    "do_not_unroll_columns": True,
+                    "pages": {"merge_tables_across_pages_in_markdown": True},
+                    "preserve_layout_alignment_across_pages": True,
+                    "preserve_very_small_text": True,
+                },
+                "tables_as_spreadsheet": {
+                    "enable": True,
+                    "guess_sheet_name": True,
+                },
+            },
+            page_ranges={
+                "max_pages": 1,
+                "target_pages": "target_pages",
+            },
+            processing_control={
+                "job_failure_conditions": {
+                    "allowed_page_failure_ratio": 1,
+                    "fail_on_buggy_font": True,
+                    "fail_on_image_extraction_error": True,
+                    "fail_on_image_ocr_error": True,
+                    "fail_on_markdown_reconstruction_error": True,
+                },
+                "timeouts": {
+                    "base_in_seconds": 1,
+                    "extra_time_per_page_in_seconds": 1,
+                },
+            },
+            processing_options={
+                "aggressive_table_extraction": True,
+                "ignore": {
+                    "ignore_diagonal_text": True,
+                    "ignore_hidden_text": True,
+                    "ignore_text_in_image": True,
+                },
+                "ocr_parameters": {"languages": ["af"]},
+            },
+            source_url="https:",
+            version="2025-12-11",
+            webhook_configurations=[
+                {
+                    "webhook_events": ["string"],
+                    "webhook_headers": {"foo": "bar"},
+                    "webhook_url": "https:",
+                }
+            ],
+        )
+        assert_matches_type(ParsingJob, parsing, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_create(self, client: LlamaCloud) -> None:
+        response = client.parsing.with_raw_response.create(
+            tier="fast",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -62,8 +140,10 @@ class TestParsing:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create_screenshot(self, client: LlamaCloud) -> None:
-        with client.parsing.with_streaming_response.create_screenshot() as response:
+    def test_streaming_response_create(self, client: LlamaCloud) -> None:
+        with client.parsing.with_streaming_response.create(
+            tier="fast",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -74,31 +154,59 @@ class TestParsing:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_get_supported_file_extensions(self, client: LlamaCloud) -> None:
-        parsing = client.parsing.get_supported_file_extensions()
-        assert_matches_type(ParsingGetSupportedFileExtensionsResponse, parsing, path=["response"])
+    def test_method_get(self, client: LlamaCloud) -> None:
+        parsing = client.parsing.get(
+            job_id="job_id",
+        )
+        assert_matches_type(ParsingGetResponse, parsing, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_get_supported_file_extensions(self, client: LlamaCloud) -> None:
-        response = client.parsing.with_raw_response.get_supported_file_extensions()
+    def test_method_get_with_all_params(self, client: LlamaCloud) -> None:
+        parsing = client.parsing.get(
+            job_id="job_id",
+            include_json_output=True,
+            include_markdown=True,
+            include_structured=True,
+            include_text=True,
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(ParsingGetResponse, parsing, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_get(self, client: LlamaCloud) -> None:
+        response = client.parsing.with_raw_response.get(
+            job_id="job_id",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         parsing = response.parse()
-        assert_matches_type(ParsingGetSupportedFileExtensionsResponse, parsing, path=["response"])
+        assert_matches_type(ParsingGetResponse, parsing, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_get_supported_file_extensions(self, client: LlamaCloud) -> None:
-        with client.parsing.with_streaming_response.get_supported_file_extensions() as response:
+    def test_streaming_response_get(self, client: LlamaCloud) -> None:
+        with client.parsing.with_streaming_response.get(
+            job_id="job_id",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             parsing = response.parse()
-            assert_matches_type(ParsingGetSupportedFileExtensionsResponse, parsing, path=["response"])
+            assert_matches_type(ParsingGetResponse, parsing, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_get(self, client: LlamaCloud) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `job_id` but received ''"):
+            client.parsing.with_raw_response.get(
+                job_id="",
+            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -112,119 +220,6 @@ class TestParsing:
         parsing = client.parsing.upload_file(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            adaptive_long_table=True,
-            aggressive_table_extraction=True,
-            annotate_links=True,
-            auto_mode=True,
-            auto_mode_configuration_json="auto_mode_configuration_json",
-            auto_mode_trigger_on_image_in_page=True,
-            auto_mode_trigger_on_regexp_in_page="auto_mode_trigger_on_regexp_in_page",
-            auto_mode_trigger_on_table_in_page=True,
-            auto_mode_trigger_on_text_in_page="auto_mode_trigger_on_text_in_page",
-            azure_openai_api_version="azure_openai_api_version",
-            azure_openai_deployment_name="azure_openai_deployment_name",
-            azure_openai_endpoint="azure_openai_endpoint",
-            azure_openai_key="azure_openai_key",
-            bbox_bottom=0,
-            bbox_left=0,
-            bbox_right=0,
-            bbox_top=0,
-            bounding_box="bounding_box",
-            compact_markdown_table=True,
-            complemental_formatting_instruction="complemental_formatting_instruction",
-            content_guideline_instruction="content_guideline_instruction",
-            continuous_mode=True,
-            disable_image_extraction=True,
-            disable_ocr=True,
-            disable_reconstruction=True,
-            do_not_cache=True,
-            do_not_unroll_columns=True,
-            extract_charts=True,
-            extract_layout=True,
-            extract_printed_page_number=True,
-            fast_mode=True,
-            file=b"raw file contents",
-            formatting_instruction="formatting_instruction",
-            gpt4o_api_key="gpt4o_api_key",
-            gpt4o_mode=True,
-            guess_xlsx_sheet_name=True,
-            hide_footers=True,
-            hide_headers=True,
-            high_res_ocr=True,
-            html_make_all_elements_visible=True,
-            html_remove_fixed_elements=True,
-            html_remove_navigation_elements=True,
-            http_proxy="http_proxy",
-            ignore_document_elements_for_layout_detection=True,
-            inline_images_in_markdown=True,
-            input_s3_path="input_s3_path",
-            input_s3_region="input_s3_region",
-            input_url="input_url",
-            invalidate_cache=True,
-            is_formatting_instruction=True,
-            job_timeout_extra_time_per_page_in_seconds=0,
-            job_timeout_in_seconds=0,
-            keep_page_separator_when_merging_tables=True,
-            language=["af"],
-            layout_aware=True,
-            line_level_bounding_box=True,
-            markdown_table_multiline_header_separator="markdown_table_multiline_header_separator",
-            max_pages=0,
-            merge_tables_across_pages_in_markdown=True,
-            model="model",
-            outlined_table_extraction=True,
-            output_pdf_of_document=True,
-            output_s3_path_prefix="output_s3_path_prefix",
-            output_s3_region="output_s3_region",
-            output_tables_as_html=True,
-            page_error_tolerance=0,
-            page_footer_prefix="page_footer_prefix",
-            page_footer_suffix="page_footer_suffix",
-            page_header_prefix="page_header_prefix",
-            page_header_suffix="page_header_suffix",
-            page_prefix="page_prefix",
-            page_separator="page_separator",
-            page_suffix="page_suffix",
-            parse_mode="parse_page_without_llm",
-            parsing_instruction="parsing_instruction",
-            precise_bounding_box=True,
-            premium_mode=True,
-            presentation_out_of_bounds_content=True,
-            presentation_skip_embedded_data=True,
-            preserve_layout_alignment_across_pages=True,
-            preserve_very_small_text=True,
-            preset="preset",
-            remove_hidden_text=True,
-            replace_failed_page_mode="raw_text",
-            replace_failed_page_with_error_message_prefix="replace_failed_page_with_error_message_prefix",
-            replace_failed_page_with_error_message_suffix="replace_failed_page_with_error_message_suffix",
-            save_images=True,
-            skip_diagonal_text=True,
-            specialized_chart_parsing_agentic=True,
-            specialized_chart_parsing_efficient=True,
-            specialized_chart_parsing_plus=True,
-            specialized_image_parsing=True,
-            spreadsheet_extract_sub_tables=True,
-            spreadsheet_force_formula_computation=True,
-            strict_mode_buggy_font=True,
-            strict_mode_image_extraction=True,
-            strict_mode_image_ocr=True,
-            strict_mode_reconstruction=True,
-            structured_output=True,
-            structured_output_json_schema="structured_output_json_schema",
-            structured_output_json_schema_name="structured_output_json_schema_name",
-            system_prompt="system_prompt",
-            system_prompt_append="system_prompt_append",
-            take_screenshot=True,
-            target_pages="target_pages",
-            tier="tier",
-            use_vendor_multimodal_model=True,
-            user_prompt="user_prompt",
-            vendor_multimodal_api_key="vendor_multimodal_api_key",
-            vendor_multimodal_model_name="vendor_multimodal_model_name",
-            version="version",
-            webhook_configurations="webhook_configurations",
-            webhook_url="webhook_url",
         )
         assert_matches_type(ParsingJob, parsing, path=["response"])
 
@@ -258,38 +253,116 @@ class TestAsyncParsing:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_screenshot(self, async_client: AsyncLlamaCloud) -> None:
-        parsing = await async_client.parsing.create_screenshot()
-        assert_matches_type(ParsingJob, parsing, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_create_screenshot_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        parsing = await async_client.parsing.create_screenshot(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            do_not_cache=True,
-            file=b"raw file contents",
-            http_proxy="http_proxy",
-            input_s3_path="input_s3_path",
-            input_s3_region="input_s3_region",
-            input_url="input_url",
-            invalidate_cache=True,
-            job_timeout_extra_time_per_page_in_seconds=0,
-            job_timeout_in_seconds=0,
-            max_pages=0,
-            output_s3_path_prefix="output_s3_path_prefix",
-            output_s3_region="output_s3_region",
-            target_pages="target_pages",
-            webhook_configurations="webhook_configurations",
-            webhook_url="webhook_url",
+    async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
+        parsing = await async_client.parsing.create(
+            tier="fast",
         )
         assert_matches_type(ParsingJob, parsing, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create_screenshot(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.parsing.with_raw_response.create_screenshot()
+    async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        parsing = await async_client.parsing.create(
+            tier="fast",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            agentic_options={"custom_prompt": "custom_prompt"},
+            client_name="client_name",
+            crop_box={
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0,
+            },
+            disable_cache=True,
+            fast_options={},
+            file_id="file_id",
+            http_proxy="https:",
+            input_options={
+                "html": {
+                    "make_all_elements_visible": True,
+                    "remove_fixed_elements": True,
+                    "remove_navigation_elements": True,
+                },
+                "pdf": {},
+                "presentation": {
+                    "out_of_bounds_content": True,
+                    "skip_embedded_data": True,
+                },
+                "spreadsheet": {
+                    "detect_sub_tables_in_sheets": True,
+                    "force_formula_computation_in_sheets": True,
+                },
+            },
+            output_options={
+                "embedded_images": {"enable": True},
+                "export_pdf": {"enable": True},
+                "extract_printed_page_number": True,
+                "markdown": {
+                    "annotate_links": True,
+                    "pages": {"merge_tables_across_pages_in_markdown": True},
+                    "tables": {
+                        "compact_markdown_tables": True,
+                        "markdown_table_multiline_separator": "markdown_table_multiline_separator",
+                        "output_tables_as_markdown": True,
+                    },
+                },
+                "screenshots": {"enable": True},
+                "spatial_text": {
+                    "do_not_unroll_columns": True,
+                    "pages": {"merge_tables_across_pages_in_markdown": True},
+                    "preserve_layout_alignment_across_pages": True,
+                    "preserve_very_small_text": True,
+                },
+                "tables_as_spreadsheet": {
+                    "enable": True,
+                    "guess_sheet_name": True,
+                },
+            },
+            page_ranges={
+                "max_pages": 1,
+                "target_pages": "target_pages",
+            },
+            processing_control={
+                "job_failure_conditions": {
+                    "allowed_page_failure_ratio": 1,
+                    "fail_on_buggy_font": True,
+                    "fail_on_image_extraction_error": True,
+                    "fail_on_image_ocr_error": True,
+                    "fail_on_markdown_reconstruction_error": True,
+                },
+                "timeouts": {
+                    "base_in_seconds": 1,
+                    "extra_time_per_page_in_seconds": 1,
+                },
+            },
+            processing_options={
+                "aggressive_table_extraction": True,
+                "ignore": {
+                    "ignore_diagonal_text": True,
+                    "ignore_hidden_text": True,
+                    "ignore_text_in_image": True,
+                },
+                "ocr_parameters": {"languages": ["af"]},
+            },
+            source_url="https:",
+            version="2025-12-11",
+            webhook_configurations=[
+                {
+                    "webhook_events": ["string"],
+                    "webhook_headers": {"foo": "bar"},
+                    "webhook_url": "https:",
+                }
+            ],
+        )
+        assert_matches_type(ParsingJob, parsing, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.parsing.with_raw_response.create(
+            tier="fast",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -298,8 +371,10 @@ class TestAsyncParsing:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create_screenshot(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.parsing.with_streaming_response.create_screenshot() as response:
+    async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.parsing.with_streaming_response.create(
+            tier="fast",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -310,31 +385,59 @@ class TestAsyncParsing:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_get_supported_file_extensions(self, async_client: AsyncLlamaCloud) -> None:
-        parsing = await async_client.parsing.get_supported_file_extensions()
-        assert_matches_type(ParsingGetSupportedFileExtensionsResponse, parsing, path=["response"])
+    async def test_method_get(self, async_client: AsyncLlamaCloud) -> None:
+        parsing = await async_client.parsing.get(
+            job_id="job_id",
+        )
+        assert_matches_type(ParsingGetResponse, parsing, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_get_supported_file_extensions(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.parsing.with_raw_response.get_supported_file_extensions()
+    async def test_method_get_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        parsing = await async_client.parsing.get(
+            job_id="job_id",
+            include_json_output=True,
+            include_markdown=True,
+            include_structured=True,
+            include_text=True,
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(ParsingGetResponse, parsing, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_get(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.parsing.with_raw_response.get(
+            job_id="job_id",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         parsing = await response.parse()
-        assert_matches_type(ParsingGetSupportedFileExtensionsResponse, parsing, path=["response"])
+        assert_matches_type(ParsingGetResponse, parsing, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_get_supported_file_extensions(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.parsing.with_streaming_response.get_supported_file_extensions() as response:
+    async def test_streaming_response_get(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.parsing.with_streaming_response.get(
+            job_id="job_id",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             parsing = await response.parse()
-            assert_matches_type(ParsingGetSupportedFileExtensionsResponse, parsing, path=["response"])
+            assert_matches_type(ParsingGetResponse, parsing, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_get(self, async_client: AsyncLlamaCloud) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `job_id` but received ''"):
+            await async_client.parsing.with_raw_response.get(
+                job_id="",
+            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -348,119 +451,6 @@ class TestAsyncParsing:
         parsing = await async_client.parsing.upload_file(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            adaptive_long_table=True,
-            aggressive_table_extraction=True,
-            annotate_links=True,
-            auto_mode=True,
-            auto_mode_configuration_json="auto_mode_configuration_json",
-            auto_mode_trigger_on_image_in_page=True,
-            auto_mode_trigger_on_regexp_in_page="auto_mode_trigger_on_regexp_in_page",
-            auto_mode_trigger_on_table_in_page=True,
-            auto_mode_trigger_on_text_in_page="auto_mode_trigger_on_text_in_page",
-            azure_openai_api_version="azure_openai_api_version",
-            azure_openai_deployment_name="azure_openai_deployment_name",
-            azure_openai_endpoint="azure_openai_endpoint",
-            azure_openai_key="azure_openai_key",
-            bbox_bottom=0,
-            bbox_left=0,
-            bbox_right=0,
-            bbox_top=0,
-            bounding_box="bounding_box",
-            compact_markdown_table=True,
-            complemental_formatting_instruction="complemental_formatting_instruction",
-            content_guideline_instruction="content_guideline_instruction",
-            continuous_mode=True,
-            disable_image_extraction=True,
-            disable_ocr=True,
-            disable_reconstruction=True,
-            do_not_cache=True,
-            do_not_unroll_columns=True,
-            extract_charts=True,
-            extract_layout=True,
-            extract_printed_page_number=True,
-            fast_mode=True,
-            file=b"raw file contents",
-            formatting_instruction="formatting_instruction",
-            gpt4o_api_key="gpt4o_api_key",
-            gpt4o_mode=True,
-            guess_xlsx_sheet_name=True,
-            hide_footers=True,
-            hide_headers=True,
-            high_res_ocr=True,
-            html_make_all_elements_visible=True,
-            html_remove_fixed_elements=True,
-            html_remove_navigation_elements=True,
-            http_proxy="http_proxy",
-            ignore_document_elements_for_layout_detection=True,
-            inline_images_in_markdown=True,
-            input_s3_path="input_s3_path",
-            input_s3_region="input_s3_region",
-            input_url="input_url",
-            invalidate_cache=True,
-            is_formatting_instruction=True,
-            job_timeout_extra_time_per_page_in_seconds=0,
-            job_timeout_in_seconds=0,
-            keep_page_separator_when_merging_tables=True,
-            language=["af"],
-            layout_aware=True,
-            line_level_bounding_box=True,
-            markdown_table_multiline_header_separator="markdown_table_multiline_header_separator",
-            max_pages=0,
-            merge_tables_across_pages_in_markdown=True,
-            model="model",
-            outlined_table_extraction=True,
-            output_pdf_of_document=True,
-            output_s3_path_prefix="output_s3_path_prefix",
-            output_s3_region="output_s3_region",
-            output_tables_as_html=True,
-            page_error_tolerance=0,
-            page_footer_prefix="page_footer_prefix",
-            page_footer_suffix="page_footer_suffix",
-            page_header_prefix="page_header_prefix",
-            page_header_suffix="page_header_suffix",
-            page_prefix="page_prefix",
-            page_separator="page_separator",
-            page_suffix="page_suffix",
-            parse_mode="parse_page_without_llm",
-            parsing_instruction="parsing_instruction",
-            precise_bounding_box=True,
-            premium_mode=True,
-            presentation_out_of_bounds_content=True,
-            presentation_skip_embedded_data=True,
-            preserve_layout_alignment_across_pages=True,
-            preserve_very_small_text=True,
-            preset="preset",
-            remove_hidden_text=True,
-            replace_failed_page_mode="raw_text",
-            replace_failed_page_with_error_message_prefix="replace_failed_page_with_error_message_prefix",
-            replace_failed_page_with_error_message_suffix="replace_failed_page_with_error_message_suffix",
-            save_images=True,
-            skip_diagonal_text=True,
-            specialized_chart_parsing_agentic=True,
-            specialized_chart_parsing_efficient=True,
-            specialized_chart_parsing_plus=True,
-            specialized_image_parsing=True,
-            spreadsheet_extract_sub_tables=True,
-            spreadsheet_force_formula_computation=True,
-            strict_mode_buggy_font=True,
-            strict_mode_image_extraction=True,
-            strict_mode_image_ocr=True,
-            strict_mode_reconstruction=True,
-            structured_output=True,
-            structured_output_json_schema="structured_output_json_schema",
-            structured_output_json_schema_name="structured_output_json_schema_name",
-            system_prompt="system_prompt",
-            system_prompt_append="system_prompt_append",
-            take_screenshot=True,
-            target_pages="target_pages",
-            tier="tier",
-            use_vendor_multimodal_model=True,
-            user_prompt="user_prompt",
-            vendor_multimodal_api_key="vendor_multimodal_api_key",
-            vendor_multimodal_model_name="vendor_multimodal_model_name",
-            version="version",
-            webhook_configurations="webhook_configurations",
-            webhook_url="webhook_url",
         )
         assert_matches_type(ParsingJob, parsing, path=["response"])
 

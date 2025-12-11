@@ -21,7 +21,7 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
-from .resources import files, projects, data_sinks, data_sources
+from .resources import files, parsing, projects, data_sinks, data_sources
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, LlamaCloudError
 from ._base_client import (
@@ -30,7 +30,6 @@ from ._base_client import (
     AsyncAPIClient,
 )
 from .resources.beta import beta
-from .resources.parsing import parsing
 from .resources.pipelines import pipelines
 from .resources.classifier import classifier
 from .resources.extraction import extraction
