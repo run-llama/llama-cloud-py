@@ -98,6 +98,7 @@ class TestFiles:
             last_modified_at=parse_datetime("2019-12-27T18:11:19.117Z"),
             permission_info={"foo": {"foo": "bar"}},
             resource_info={"foo": {"foo": "bar"}},
+            storage_type="ephemeral",
         )
         assert_matches_type(FileGeneratePresignedURLResponse, file, path=["response"])
 
@@ -637,6 +638,7 @@ class TestAsyncFiles:
             last_modified_at=parse_datetime("2019-12-27T18:11:19.117Z"),
             permission_info={"foo": {"foo": "bar"}},
             resource_info={"foo": {"foo": "bar"}},
+            storage_type="ephemeral",
         )
         assert_matches_type(FileGeneratePresignedURLResponse, file, path=["response"])
 
