@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Dict, Union, Iterable, Optional
 from datetime import datetime
-from typing_extensions import Required, Annotated, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
@@ -41,3 +41,10 @@ class FileGeneratePresignedURLParams(TypedDict, total=False):
 
     resource_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
     """Resource information for the file"""
+
+    storage_type: Union[Literal["ephemeral", "permanent"], str]
+    """Storage type for the file.
+
+    Valid values: 'Ephemeral', 'Permanent' (no expiration). If not specified,
+    defaults to permanent storage.
+    """

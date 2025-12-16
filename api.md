@@ -240,14 +240,11 @@ from llama_cloud.types import (
     ParsingLanguages,
     ParsingMode,
     StatusEnum,
-    ParsingGetResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /api/v2alpha1/parse/">client.parsing.<a href="./src/llama_cloud/resources/parsing.py">create</a>(\*\*<a href="src/llama_cloud/types/parsing_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_job.py">ParsingJob</a></code>
-- <code title="get /api/v2alpha1/parse/{job_id}/result">client.parsing.<a href="./src/llama_cloud/resources/parsing.py">get</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_get_response.py">ParsingGetResponse</a></code>
 - <code title="post /api/v2alpha1/parse/upload">client.parsing.<a href="./src/llama_cloud/resources/parsing.py">upload_file</a>(\*\*<a href="src/llama_cloud/types/parsing_upload_file_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_job.py">ParsingJob</a></code>
 
 # Classifier
