@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import Union, Optional
 from typing_extensions import Literal
 
 from ..._models import BaseModel
@@ -26,7 +26,7 @@ class ExtractConfig(BaseModel):
     confidence_scores: Optional[bool] = None
     """Whether to fetch confidence scores for the extraction."""
 
-    extract_model: Optional[
+    extract_model: Union[
         Literal[
             "openai-gpt-4-1",
             "openai-gpt-4-1-mini",
@@ -39,9 +39,14 @@ class ExtractConfig(BaseModel):
             "gemini-2.5-pro",
             "openai-gpt-4o",
             "openai-gpt-4o-mini",
-        ]
+        ],
+        str,
+        None,
     ] = None
-    """Extract model options."""
+    """The extract model to use for data extraction.
+
+    If not provided, uses the default for the extraction mode.
+    """
 
     extraction_mode: Optional[Literal["FAST", "BALANCED", "PREMIUM", "MULTIMODAL"]] = None
     """The extraction mode specified (FAST, BALANCED, MULTIMODAL, PREMIUM)."""

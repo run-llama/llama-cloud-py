@@ -18,7 +18,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.parsing_job import ParsingJob
+from ..types.parsing_upload_file_response import ParsingUploadFileResponse
 
 __all__ = ["ParsingResource", "AsyncParsingResource"]
 
@@ -54,7 +54,7 @@ class ParsingResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ParsingJob:
+    ) -> ParsingUploadFileResponse:
         """
         Upload and parse a file using multipart/form-data.
 
@@ -82,7 +82,7 @@ class ParsingResource(SyncAPIResource):
                     parsing_upload_file_params.ParsingUploadFileParams,
                 ),
             ),
-            cast_to=ParsingJob,
+            cast_to=ParsingUploadFileResponse,
         )
 
 
@@ -117,7 +117,7 @@ class AsyncParsingResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ParsingJob:
+    ) -> ParsingUploadFileResponse:
         """
         Upload and parse a file using multipart/form-data.
 
@@ -145,7 +145,7 @@ class AsyncParsingResource(AsyncAPIResource):
                     parsing_upload_file_params.ParsingUploadFileParams,
                 ),
             ),
-            cast_to=ParsingJob,
+            cast_to=ParsingUploadFileResponse,
         )
 
 
