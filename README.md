@@ -35,8 +35,8 @@ client = LlamaCloud(
     api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted
 )
 
-parsing_job = client.parsing.upload_file()
-print(parsing_job.id)
+response = client.parsing.upload_file()
+print(response.id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -59,8 +59,8 @@ client = AsyncLlamaCloud(
 
 
 async def main() -> None:
-    parsing_job = await client.parsing.upload_file()
-    print(parsing_job.id)
+    response = await client.parsing.upload_file()
+    print(response.id)
 
 
 asyncio.run(main())
@@ -93,8 +93,8 @@ async def main() -> None:
         api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
-        parsing_job = await client.parsing.upload_file()
-        print(parsing_job.id)
+        response = await client.parsing.upload_file()
+        print(response.id)
 
 
 asyncio.run(main())

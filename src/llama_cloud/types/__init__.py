@@ -17,7 +17,6 @@ from .pipeline import Pipeline as Pipeline
 from .data_sink import DataSink as DataSink
 from .retriever import Retriever as Retriever
 from .data_source import DataSource as DataSource
-from .parsing_job import ParsingJob as ParsingJob
 from .status_enum import StatusEnum as StatusEnum
 from .message_role import MessageRole as MessageRole
 from .parsing_mode import ParsingMode as ParsingMode
@@ -76,6 +75,7 @@ from .file_get_page_figure_params import FileGetPageFigureParams as FileGetPageF
 from .file_upload_from_url_params import FileUploadFromURLParams as FileUploadFromURLParams
 from .page_figure_node_with_score import PageFigureNodeWithScore as PageFigureNodeWithScore
 from .llama_parse_parameters_param import LlamaParseParametersParam as LlamaParseParametersParam
+from .parsing_upload_file_response import ParsingUploadFileResponse as ParsingUploadFileResponse
 from .file_list_page_figures_params import FileListPageFiguresParams as FileListPageFiguresParams
 from .preset_retrieval_params_param import PresetRetrievalParamsParam as PresetRetrievalParamsParam
 from .advanced_mode_transform_config import AdvancedModeTransformConfig as AdvancedModeTransformConfig
