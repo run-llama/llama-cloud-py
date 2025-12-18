@@ -240,12 +240,18 @@ from llama_cloud.types import (
     ParsingLanguages,
     ParsingMode,
     StatusEnum,
+    ParsingCreateResponse,
+    ParsingListResponse,
+    ParsingGetResponse,
     ParsingUploadFileResponse,
 )
 ```
 
 Methods:
 
+- <code title="post /api/v2alpha1/parse">client.parsing.<a href="./src/llama_cloud/resources/parsing.py">create</a>(\*\*<a href="src/llama_cloud/types/parsing_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_create_response.py">ParsingCreateResponse</a></code>
+- <code title="get /api/v2alpha1/parse">client.parsing.<a href="./src/llama_cloud/resources/parsing.py">list</a>(\*\*<a href="src/llama_cloud/types/parsing_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_list_response.py">SyncPaginatedClassifyJobs[ParsingListResponse]</a></code>
+- <code title="get /api/v2alpha1/parse/{job_id}">client.parsing.<a href="./src/llama_cloud/resources/parsing.py">get</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_get_response.py">ParsingGetResponse</a></code>
 - <code title="post /api/v2alpha1/parse/upload">client.parsing.<a href="./src/llama_cloud/resources/parsing.py">upload_file</a>(\*\*<a href="src/llama_cloud/types/parsing_upload_file_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_upload_file_response.py">ParsingUploadFileResponse</a></code>
 
 # Classifier
