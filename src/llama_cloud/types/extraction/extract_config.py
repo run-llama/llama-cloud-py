@@ -17,7 +17,8 @@ class ExtractConfig(BaseModel):
     citation_bbox: Optional[bool] = None
     """Whether to fetch citation bounding boxes for the extraction.
 
-    Only available in PREMIUM mode.
+    Only available in PREMIUM mode. Deprecated: this is now synonymous with
+    cite_sources.
     """
 
     cite_sources: Optional[bool] = None
