@@ -21,7 +21,7 @@ class ParsingUploadFileResponse(BaseModel):
     project_id: str
     """Project this job belongs to"""
 
-    status: Literal["pending", "running", "completed", "failed", "cancelled"]
+    status: Literal["PENDING", "RUNNING", "COMPLETED", "FAILED", "CANCELLED"]
     """
     Current status of the job (e.g., pending, running, completed, failed, cancelled)
     """

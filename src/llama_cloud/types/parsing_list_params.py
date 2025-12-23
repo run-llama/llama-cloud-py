@@ -19,5 +19,5 @@ class ParsingListParams(TypedDict, total=False):
 
     project_id: Optional[str]
 
-    status: Optional[Literal["pending", "running", "completed", "failed", "cancelled"]]
-    """Filter by job status (pending, running, completed, failed, cancelled)"""
+    status: Optional[Literal["PENDING", "RUNNING", "COMPLETED", "FAILED", "CANCELLED"]]
+    """Filter by job status (PENDING, RUNNING, COMPLETED, FAILED, CANCELLED)"""
