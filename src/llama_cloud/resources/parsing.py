@@ -166,7 +166,7 @@ class ParsingResource(SyncAPIResource):
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        status: Optional[Literal["pending", "running", "completed", "failed", "cancelled"]] | Omit = omit,
+        status: Optional[Literal["PENDING", "RUNNING", "COMPLETED", "FAILED", "CANCELLED"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -183,7 +183,7 @@ class ParsingResource(SyncAPIResource):
 
           page_token: Token for pagination
 
-          status: Filter by job status (pending, running, completed, failed, cancelled)
+          status: Filter by job status (PENDING, RUNNING, COMPLETED, FAILED, CANCELLED)
 
           extra_headers: Send extra headers
 
@@ -233,8 +233,9 @@ class ParsingResource(SyncAPIResource):
         Retrieve parse job with optional expanded result data (text, markdown, items).
 
         Args:
-          expand: List of fields to include in response. Supported values: text, markdown, items.
-              Example: ?expand=text&expand=markdown
+          expand: List of fields to include in response. Supported values: text, markdown, items,
+              text_content_metadata, markdown_content_metadata, items_content_metadata.
+              Example: ?expand=text&expand=markdown&expand=text_content_metadata
 
           extra_headers: Send extra headers
 
@@ -446,7 +447,7 @@ class AsyncParsingResource(AsyncAPIResource):
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        status: Optional[Literal["pending", "running", "completed", "failed", "cancelled"]] | Omit = omit,
+        status: Optional[Literal["PENDING", "RUNNING", "COMPLETED", "FAILED", "CANCELLED"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -463,7 +464,7 @@ class AsyncParsingResource(AsyncAPIResource):
 
           page_token: Token for pagination
 
-          status: Filter by job status (pending, running, completed, failed, cancelled)
+          status: Filter by job status (PENDING, RUNNING, COMPLETED, FAILED, CANCELLED)
 
           extra_headers: Send extra headers
 
@@ -513,8 +514,9 @@ class AsyncParsingResource(AsyncAPIResource):
         Retrieve parse job with optional expanded result data (text, markdown, items).
 
         Args:
-          expand: List of fields to include in response. Supported values: text, markdown, items.
-              Example: ?expand=text&expand=markdown
+          expand: List of fields to include in response. Supported values: text, markdown, items,
+              text_content_metadata, markdown_content_metadata, items_content_metadata.
+              Example: ?expand=text&expand=markdown&expand=text_content_metadata
 
           extra_headers: Send extra headers
 

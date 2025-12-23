@@ -29,6 +29,7 @@ __all__ = [
     "MarkdownPage",
     "MarkdownPageMarkdownResultPage",
     "MarkdownPageFailedMarkdownPage",
+    "ResultContentMetadata",
     "Text",
     "TextPage",
 ]
@@ -46,7 +47,7 @@ class Job(BaseModel):
     project_id: str
     """Project this job belongs to"""
 
-    status: Literal["pending", "running", "completed", "failed", "cancelled"]
+    status: Literal["PENDING", "RUNNING", "COMPLETED", "FAILED", "CANCELLED"]
     """
     Current status of the job (e.g., pending, running, completed, failed, cancelled)
     """
@@ -238,6 +239,16 @@ class Markdown(BaseModel):
     """List of markdown pages or failed page entries"""
 
 
+class ResultContentMetadata(BaseModel):
+    """Metadata about a specific result type stored in S3."""
+
+    size_bytes: int
+    """Size of the result file in S3 (bytes)"""
+
+    exists: Optional[bool] = None
+    """Whether the result file exists in S3"""
+
+
 class TextPage(BaseModel):
     page_number: int
     """Page number of the document"""
@@ -258,6 +269,10 @@ class ParsingGetResponse(BaseModel):
 
     The job field is always present with status information. Other fields are only included
     if requested via the corresponding flags in ParseResultRequest.
+
+    The result_content_metadata field is only included when requested via the expand parameter.
+    It provides size information for available results, allowing clients to determine result sizes
+    before fetching content.
     """
 
     job: Job
@@ -268,6 +283,13 @@ class ParsingGetResponse(BaseModel):
 
     markdown: Optional[Markdown] = None
     """Markdown result (if requested)"""
+
+    result_content_metadata: Optional[Dict[str, ResultContentMetadata]] = None
+    """
+    Metadata about available results (sizes, existence) - only included when
+    'result_content_metadata' is in the expand parameter. Maps result type names
+    (e.g., 'text', 'markdown', 'items') to their metadata.
+    """
 
     text: Optional[Text] = None
     """Plain text result (if requested)"""
