@@ -30,7 +30,7 @@ async def create_index() -> None:
     pipeline = await client.pipelines.upsert(
         name="my-first-index",
         project_id="my-project-id",
-        data_sink_id=await create_data_sink(), # optional
+        data_sink_id=await create_data_sink(),  # optional
         embedding_config={
             "component": {
                 "api_key": "sk-1234",
@@ -62,9 +62,9 @@ async def create_index() -> None:
     #     pipeline_id=pipeline.id,
     #     body=[
     #         {
-    #             "data_source_id": data_source_id, 
+    #             "data_source_id": data_source_id,
     #             "sync_interval": 43200.0 # Optional, scheduled sync frequency in seconds. In this case, every 12 hours.
-    #         },  
+    #         },
     #     ]
     # )
 

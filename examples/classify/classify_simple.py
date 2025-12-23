@@ -27,7 +27,7 @@ async def classify_document() -> None:
             "lang": "en",
             "max_pages": 5,
             # "target_pages": [1],  # Optional: specify particular pages to parse, cannot be used with max_pages
-        }
+        },
     )
 
     # Print the classification results

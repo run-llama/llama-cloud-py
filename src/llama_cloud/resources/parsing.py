@@ -9,9 +9,9 @@ from typing_extensions import Literal
 import httpx
 
 from ..types import parsing_get_params, parsing_list_params, parsing_create_params, parsing_upload_file_params
+from .._files import to_httpx_files, async_to_httpx_files
 from .._types import Body, Omit, Query, Headers, NotGiven, FileTypes, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
-from .._files import to_httpx_files, async_to_httpx_files
 from .._compat import cached_property
 from .._polling import BackoffStrategy, poll_until_complete, poll_until_complete_async
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -26,7 +26,6 @@ from .._base_client import AsyncPaginator, make_request_options
 from ..types.parsing_get_response import ParsingGetResponse
 from ..types.parsing_list_response import ParsingListResponse
 from ..types.parsing_create_response import ParsingCreateResponse
-from ..types.parsing_upload_file_response import ParsingUploadFileResponse
 
 __all__ = ["ParsingResource", "AsyncParsingResource"]
 
@@ -598,10 +597,10 @@ class ParsingResource(SyncAPIResource):
             )
 
         def is_complete(job: ParsingCreateResponse) -> bool:
-            return job.status == "completed"
+            return job.status == "COMPLETED"
 
         def is_error(job: ParsingCreateResponse) -> bool:
-            return job.status in ("failed", "cancelled")
+            return job.status in ("FAILED", "CANCELLED")
 
         def get_error_message(job: ParsingCreateResponse) -> str:
             error_parts = [f"Job {job_id} failed with status: {job.status}"]
@@ -620,7 +619,6 @@ class ParsingResource(SyncAPIResource):
             backoff=backoff,
             verbose=verbose,
         )
-
 
 
 class AsyncParsingResource(AsyncAPIResource):
@@ -1083,6 +1081,7 @@ class AsyncParsingResource(AsyncAPIResource):
 
         # Get and return the result
         import asyncio
+
         await asyncio.sleep(10)
         return await self.get(
             job.id,
@@ -1192,10 +1191,10 @@ class AsyncParsingResource(AsyncAPIResource):
             )
 
         def is_complete(job: ParsingCreateResponse) -> bool:
-            return job.status == "completed"
+            return job.status == "COMPLETED"
 
         def is_error(job: ParsingCreateResponse) -> bool:
-            return job.status in ("failed", "cancelled")
+            return job.status in ("FAILED", "CANCELLED")
 
         def get_error_message(job: ParsingCreateResponse) -> str:
             error_parts = [f"Job {job_id} failed with status: {job.status}"]
