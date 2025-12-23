@@ -9,6 +9,8 @@ __all__ = ["JobGetResultsResponse", "Item", "ItemResult"]
 
 
 class ItemResult(BaseModel):
+    """Result of classifying a single file."""
+
     confidence: float
     """Confidence score of the classification (0.0-1.0)"""
 
@@ -23,6 +25,8 @@ class ItemResult(BaseModel):
 
 
 class Item(BaseModel):
+    """A file classification."""
+
     id: str
     """Unique identifier"""
 
@@ -43,6 +47,8 @@ class Item(BaseModel):
 
 
 class JobGetResultsResponse(BaseModel):
+    """Response model for the classify endpoint following AIP-132 pagination standard."""
+
     items: List[Item]
     """The list of items."""
 

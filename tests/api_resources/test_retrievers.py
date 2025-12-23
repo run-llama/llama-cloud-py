@@ -389,7 +389,7 @@ class TestRetrievers:
                 }
             ],
             rerank_config={
-                "top_n": 0,
+                "top_n": 1,
                 "type": "system_default",
             },
             rerank_top_n=0,
@@ -872,7 +872,7 @@ class TestAsyncRetrievers:
                 }
             ],
             rerank_config={
-                "top_n": 0,
+                "top_n": 1,
                 "type": "system_default",
             },
             rerank_top_n=0,

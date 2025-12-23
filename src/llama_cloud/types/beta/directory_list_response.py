@@ -9,6 +9,8 @@ __all__ = ["DirectoryListResponse"]
 
 
 class DirectoryListResponse(BaseModel):
+    """API response schema for a directory."""
+
     id: str
     """Unique identifier for the directory."""
 

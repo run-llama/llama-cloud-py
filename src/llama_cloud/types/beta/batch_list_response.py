@@ -10,6 +10,8 @@ __all__ = ["BatchListResponse"]
 
 
 class BatchListResponse(BaseModel):
+    """Response schema for a batch processing job."""
+
     id: str
     """Unique identifier for the batch job"""
 

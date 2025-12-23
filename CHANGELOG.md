@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.14.0 (2025-12-23)
+
+Full Changelog: [v0.13.0...v0.14.0](https://github.com/run-llama/llama-cloud-py/compare/v0.13.0...v0.14.0)
+
+### Features
+
+* **api:** api update ([f51c7dc](https://github.com/run-llama/llama-cloud-py/commit/f51c7dcd316db757103b8429a372bde2d4aaa0ea))
+* **api:** api update ([ff5295d](https://github.com/run-llama/llama-cloud-py/commit/ff5295ddccab0cf23ce854c9e393ced2f114f8db))
+* **api:** api update ([5335d08](https://github.com/run-llama/llama-cloud-py/commit/5335d085a7cded66214f8d74ba1ff9f2fadc490f))
+* **api:** api update ([68dabd1](https://github.com/run-llama/llama-cloud-py/commit/68dabd199971a8cd1fa43d781725ef733be466d5))
+* **api:** api update ([20cbc0d](https://github.com/run-llama/llama-cloud-py/commit/20cbc0d9d57a06cc448e7cc6f7d9cf9e72a5ec38))
+* **api:** api update ([5be72ef](https://github.com/run-llama/llama-cloud-py/commit/5be72ef51bb7be7ad44ac1085ca24885bf7dbc81))
+* **api:** parse v2 updates ([6d8e09c](https://github.com/run-llama/llama-cloud-py/commit/6d8e09cb5e729bcf6095ba3a99f7591059fbd0e3))
+* **api:** swap in parse v2 support ([0134a13](https://github.com/run-llama/llama-cloud-py/commit/0134a13d5c013fcce6943105098587bb60828439))
+* **api:** update readme ([4d21124](https://github.com/run-llama/llama-cloud-py/commit/4d21124abf414ffbbca5ed36dc39074d4109ed8a))
+* **api:** use repeat query params with and char ([054c5ac](https://github.com/run-llama/llama-cloud-py/commit/054c5ac34d65b0aa64082ac7d3983a63ff789d65))
+
+
+### Bug Fixes
+
+* **types:** allow pyright to infer TypedDict types within SequenceNotStr ([a8a44f6](https://github.com/run-llama/llama-cloud-py/commit/a8a44f6b6a3cf622d807100517b325b94875f9ed))
+* use async_to_httpx_files in patch method ([f137ed7](https://github.com/run-llama/llama-cloud-py/commit/f137ed7ca66be65fb5917ac0739a6243b549e255))
+
+
+### Chores
+
+* add missing docstrings ([f5b5cf9](https://github.com/run-llama/llama-cloud-py/commit/f5b5cf90f95785bc59332ffec6a1d8bd4040b24d))
+* **internal:** add `--fix` argument to lint script ([4a5d9d0](https://github.com/run-llama/llama-cloud-py/commit/4a5d9d0f73c423828c3cc6a46cc0b09067776e43))
+* **internal:** add missing files argument to base client ([cfd8fc8](https://github.com/run-llama/llama-cloud-py/commit/cfd8fc8da24d63ed6669c17bda54e2e081bdfa17))
+* speedup initial import ([98e32fc](https://github.com/run-llama/llama-cloud-py/commit/98e32fcb35dbc9762ba8b57658aefb06535a2ffc))
+
 ## 0.13.0 (2025-12-04)
 
 Full Changelog: [v0.12.0...v0.13.0](https://github.com/run-llama/llama-cloud-py/compare/v0.12.0...v0.13.0)

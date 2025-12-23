@@ -36,6 +36,8 @@ class ExtractionRunParams(TypedDict, total=False):
 
 
 class File(TypedDict, total=False):
+    """Schema for file data with base64 content and MIME type."""
+
     data: Required[str]
     """The file content as base64-encoded string"""
 

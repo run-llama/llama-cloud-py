@@ -8,6 +8,8 @@ __all__ = ["AgentDataAggregateResponse", "Item"]
 
 
 class Item(BaseModel):
+    """API Result for a single group in the aggregate response"""
+
     group_key: Dict[str, object]
 
     count: Optional[int] = None

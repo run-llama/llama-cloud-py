@@ -36,7 +36,7 @@ class TestRetriever:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             mode="routing",
             rerank_config={
-                "top_n": 0,
+                "top_n": 1,
                 "type": "system_default",
             },
             rerank_top_n=0,
@@ -105,7 +105,7 @@ class TestAsyncRetriever:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             mode="routing",
             rerank_config={
-                "top_n": 0,
+                "top_n": 1,
                 "type": "system_default",
             },
             rerank_top_n=0,

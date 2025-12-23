@@ -2,20 +2,23 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Union, Optional
 from typing_extensions import Literal, TypedDict
 
 __all__ = ["ExtractConfigParam"]
 
 
 class ExtractConfigParam(TypedDict, total=False):
+    """Configuration parameters for the extraction agent."""
+
     chunk_mode: Literal["PAGE", "SECTION"]
     """The mode to use for chunking the document."""
 
     citation_bbox: bool
     """Whether to fetch citation bounding boxes for the extraction.
 
-    Only available in PREMIUM mode.
+    Only available in PREMIUM mode. Deprecated: this is now synonymous with
+    cite_sources.
     """
 
     cite_sources: bool
@@ -24,7 +27,7 @@ class ExtractConfigParam(TypedDict, total=False):
     confidence_scores: bool
     """Whether to fetch confidence scores for the extraction."""
 
-    extract_model: Optional[
+    extract_model: Union[
         Literal[
             "openai-gpt-4-1",
             "openai-gpt-4-1-mini",
@@ -37,9 +40,14 @@ class ExtractConfigParam(TypedDict, total=False):
             "gemini-2.5-pro",
             "openai-gpt-4o",
             "openai-gpt-4o-mini",
-        ]
+        ],
+        str,
+        None,
     ]
-    """Extract model options."""
+    """The extract model to use for data extraction.
+
+    If not provided, uses the default for the extraction mode.
+    """
 
     extraction_mode: Literal["FAST", "BALANCED", "PREMIUM", "MULTIMODAL"]
     """The extraction mode specified (FAST, BALANCED, MULTIMODAL, PREMIUM)."""

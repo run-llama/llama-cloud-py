@@ -5,13 +5,15 @@ from __future__ import annotations
 from typing import Iterable, Optional
 from typing_extensions import TypedDict
 
-from ..parser_languages import ParserLanguages
+from ..parsing_languages import ParsingLanguages
 
 __all__ = ["ClassifyParsingConfigurationParam"]
 
 
 class ClassifyParsingConfigurationParam(TypedDict, total=False):
-    lang: ParserLanguages
+    """Parsing configuration for a classify job."""
+
+    lang: ParsingLanguages
     """The language to parse the files in"""
 
     max_pages: Optional[int]

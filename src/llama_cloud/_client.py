@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Mapping
+from typing import TYPE_CHECKING, Any, Mapping
 from typing_extensions import Self, override
 
 import httpx
@@ -20,8 +20,8 @@ from ._types import (
     not_given,
 )
 from ._utils import is_given, get_async_library
+from ._compat import cached_property
 from ._version import __version__
-from .resources import files, projects, data_sinks, data_sources
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, LlamaCloudError
 from ._base_client import (
@@ -29,12 +29,30 @@ from ._base_client import (
     SyncAPIClient,
     AsyncAPIClient,
 )
-from .resources.beta import beta
-from .resources.parsing import parsing
-from .resources.pipelines import pipelines
-from .resources.classifier import classifier
-from .resources.extraction import extraction
-from .resources.retrievers import retrievers
+
+if TYPE_CHECKING:
+    from .resources import (
+        beta,
+        files,
+        parsing,
+        projects,
+        pipelines,
+        classifier,
+        data_sinks,
+        extraction,
+        retrievers,
+        data_sources,
+    )
+    from .resources.files import FilesResource, AsyncFilesResource
+    from .resources.parsing import ParsingResource, AsyncParsingResource
+    from .resources.projects import ProjectsResource, AsyncProjectsResource
+    from .resources.beta.beta import BetaResource, AsyncBetaResource
+    from .resources.data_sinks import DataSinksResource, AsyncDataSinksResource
+    from .resources.data_sources import DataSourcesResource, AsyncDataSourcesResource
+    from .resources.pipelines.pipelines import PipelinesResource, AsyncPipelinesResource
+    from .resources.classifier.classifier import ClassifierResource, AsyncClassifierResource
+    from .resources.extraction.extraction import ExtractionResource, AsyncExtractionResource
+    from .resources.retrievers.retrievers import RetrieversResource, AsyncRetrieversResource
 
 __all__ = [
     "Timeout",
@@ -49,19 +67,6 @@ __all__ = [
 
 
 class LlamaCloud(SyncAPIClient):
-    projects: projects.ProjectsResource
-    data_sinks: data_sinks.DataSinksResource
-    data_sources: data_sources.DataSourcesResource
-    files: files.FilesResource
-    pipelines: pipelines.PipelinesResource
-    retrievers: retrievers.RetrieversResource
-    parsing: parsing.ParsingResource
-    classifier: classifier.ClassifierResource
-    extraction: extraction.ExtractionResource
-    beta: beta.BetaResource
-    with_raw_response: LlamaCloudWithRawResponse
-    with_streaming_response: LlamaCloudWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -116,23 +121,78 @@ class LlamaCloud(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.projects = projects.ProjectsResource(self)
-        self.data_sinks = data_sinks.DataSinksResource(self)
-        self.data_sources = data_sources.DataSourcesResource(self)
-        self.files = files.FilesResource(self)
-        self.pipelines = pipelines.PipelinesResource(self)
-        self.retrievers = retrievers.RetrieversResource(self)
-        self.parsing = parsing.ParsingResource(self)
-        self.classifier = classifier.ClassifierResource(self)
-        self.extraction = extraction.ExtractionResource(self)
-        self.beta = beta.BetaResource(self)
-        self.with_raw_response = LlamaCloudWithRawResponse(self)
-        self.with_streaming_response = LlamaCloudWithStreamedResponse(self)
+    @cached_property
+    def projects(self) -> ProjectsResource:
+        from .resources.projects import ProjectsResource
+
+        return ProjectsResource(self)
+
+    @cached_property
+    def data_sinks(self) -> DataSinksResource:
+        from .resources.data_sinks import DataSinksResource
+
+        return DataSinksResource(self)
+
+    @cached_property
+    def data_sources(self) -> DataSourcesResource:
+        from .resources.data_sources import DataSourcesResource
+
+        return DataSourcesResource(self)
+
+    @cached_property
+    def files(self) -> FilesResource:
+        from .resources.files import FilesResource
+
+        return FilesResource(self)
+
+    @cached_property
+    def pipelines(self) -> PipelinesResource:
+        from .resources.pipelines import PipelinesResource
+
+        return PipelinesResource(self)
+
+    @cached_property
+    def retrievers(self) -> RetrieversResource:
+        from .resources.retrievers import RetrieversResource
+
+        return RetrieversResource(self)
+
+    @cached_property
+    def parsing(self) -> ParsingResource:
+        from .resources.parsing import ParsingResource
+
+        return ParsingResource(self)
+
+    @cached_property
+    def classifier(self) -> ClassifierResource:
+        from .resources.classifier import ClassifierResource
+
+        return ClassifierResource(self)
+
+    @cached_property
+    def extraction(self) -> ExtractionResource:
+        from .resources.extraction import ExtractionResource
+
+        return ExtractionResource(self)
+
+    @cached_property
+    def beta(self) -> BetaResource:
+        from .resources.beta import BetaResource
+
+        return BetaResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> LlamaCloudWithRawResponse:
+        return LlamaCloudWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> LlamaCloudWithStreamedResponse:
+        return LlamaCloudWithStreamedResponse(self)
 
     @property
     @override
     def qs(self) -> Querystring:
-        return Querystring(array_format="comma")
+        return Querystring(array_format="repeat")
 
     @property
     @override
@@ -235,19 +295,6 @@ class LlamaCloud(SyncAPIClient):
 
 
 class AsyncLlamaCloud(AsyncAPIClient):
-    projects: projects.AsyncProjectsResource
-    data_sinks: data_sinks.AsyncDataSinksResource
-    data_sources: data_sources.AsyncDataSourcesResource
-    files: files.AsyncFilesResource
-    pipelines: pipelines.AsyncPipelinesResource
-    retrievers: retrievers.AsyncRetrieversResource
-    parsing: parsing.AsyncParsingResource
-    classifier: classifier.AsyncClassifierResource
-    extraction: extraction.AsyncExtractionResource
-    beta: beta.AsyncBetaResource
-    with_raw_response: AsyncLlamaCloudWithRawResponse
-    with_streaming_response: AsyncLlamaCloudWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -302,23 +349,78 @@ class AsyncLlamaCloud(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.projects = projects.AsyncProjectsResource(self)
-        self.data_sinks = data_sinks.AsyncDataSinksResource(self)
-        self.data_sources = data_sources.AsyncDataSourcesResource(self)
-        self.files = files.AsyncFilesResource(self)
-        self.pipelines = pipelines.AsyncPipelinesResource(self)
-        self.retrievers = retrievers.AsyncRetrieversResource(self)
-        self.parsing = parsing.AsyncParsingResource(self)
-        self.classifier = classifier.AsyncClassifierResource(self)
-        self.extraction = extraction.AsyncExtractionResource(self)
-        self.beta = beta.AsyncBetaResource(self)
-        self.with_raw_response = AsyncLlamaCloudWithRawResponse(self)
-        self.with_streaming_response = AsyncLlamaCloudWithStreamedResponse(self)
+    @cached_property
+    def projects(self) -> AsyncProjectsResource:
+        from .resources.projects import AsyncProjectsResource
+
+        return AsyncProjectsResource(self)
+
+    @cached_property
+    def data_sinks(self) -> AsyncDataSinksResource:
+        from .resources.data_sinks import AsyncDataSinksResource
+
+        return AsyncDataSinksResource(self)
+
+    @cached_property
+    def data_sources(self) -> AsyncDataSourcesResource:
+        from .resources.data_sources import AsyncDataSourcesResource
+
+        return AsyncDataSourcesResource(self)
+
+    @cached_property
+    def files(self) -> AsyncFilesResource:
+        from .resources.files import AsyncFilesResource
+
+        return AsyncFilesResource(self)
+
+    @cached_property
+    def pipelines(self) -> AsyncPipelinesResource:
+        from .resources.pipelines import AsyncPipelinesResource
+
+        return AsyncPipelinesResource(self)
+
+    @cached_property
+    def retrievers(self) -> AsyncRetrieversResource:
+        from .resources.retrievers import AsyncRetrieversResource
+
+        return AsyncRetrieversResource(self)
+
+    @cached_property
+    def parsing(self) -> AsyncParsingResource:
+        from .resources.parsing import AsyncParsingResource
+
+        return AsyncParsingResource(self)
+
+    @cached_property
+    def classifier(self) -> AsyncClassifierResource:
+        from .resources.classifier import AsyncClassifierResource
+
+        return AsyncClassifierResource(self)
+
+    @cached_property
+    def extraction(self) -> AsyncExtractionResource:
+        from .resources.extraction import AsyncExtractionResource
+
+        return AsyncExtractionResource(self)
+
+    @cached_property
+    def beta(self) -> AsyncBetaResource:
+        from .resources.beta import AsyncBetaResource
+
+        return AsyncBetaResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncLlamaCloudWithRawResponse:
+        return AsyncLlamaCloudWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncLlamaCloudWithStreamedResponse:
+        return AsyncLlamaCloudWithStreamedResponse(self)
 
     @property
     @override
     def qs(self) -> Querystring:
-        return Querystring(array_format="comma")
+        return Querystring(array_format="repeat")
 
     @property
     @override
@@ -421,59 +523,271 @@ class AsyncLlamaCloud(AsyncAPIClient):
 
 
 class LlamaCloudWithRawResponse:
+    _client: LlamaCloud
+
     def __init__(self, client: LlamaCloud) -> None:
-        self.projects = projects.ProjectsResourceWithRawResponse(client.projects)
-        self.data_sinks = data_sinks.DataSinksResourceWithRawResponse(client.data_sinks)
-        self.data_sources = data_sources.DataSourcesResourceWithRawResponse(client.data_sources)
-        self.files = files.FilesResourceWithRawResponse(client.files)
-        self.pipelines = pipelines.PipelinesResourceWithRawResponse(client.pipelines)
-        self.retrievers = retrievers.RetrieversResourceWithRawResponse(client.retrievers)
-        self.parsing = parsing.ParsingResourceWithRawResponse(client.parsing)
-        self.classifier = classifier.ClassifierResourceWithRawResponse(client.classifier)
-        self.extraction = extraction.ExtractionResourceWithRawResponse(client.extraction)
-        self.beta = beta.BetaResourceWithRawResponse(client.beta)
+        self._client = client
+
+    @cached_property
+    def projects(self) -> projects.ProjectsResourceWithRawResponse:
+        from .resources.projects import ProjectsResourceWithRawResponse
+
+        return ProjectsResourceWithRawResponse(self._client.projects)
+
+    @cached_property
+    def data_sinks(self) -> data_sinks.DataSinksResourceWithRawResponse:
+        from .resources.data_sinks import DataSinksResourceWithRawResponse
+
+        return DataSinksResourceWithRawResponse(self._client.data_sinks)
+
+    @cached_property
+    def data_sources(self) -> data_sources.DataSourcesResourceWithRawResponse:
+        from .resources.data_sources import DataSourcesResourceWithRawResponse
+
+        return DataSourcesResourceWithRawResponse(self._client.data_sources)
+
+    @cached_property
+    def files(self) -> files.FilesResourceWithRawResponse:
+        from .resources.files import FilesResourceWithRawResponse
+
+        return FilesResourceWithRawResponse(self._client.files)
+
+    @cached_property
+    def pipelines(self) -> pipelines.PipelinesResourceWithRawResponse:
+        from .resources.pipelines import PipelinesResourceWithRawResponse
+
+        return PipelinesResourceWithRawResponse(self._client.pipelines)
+
+    @cached_property
+    def retrievers(self) -> retrievers.RetrieversResourceWithRawResponse:
+        from .resources.retrievers import RetrieversResourceWithRawResponse
+
+        return RetrieversResourceWithRawResponse(self._client.retrievers)
+
+    @cached_property
+    def parsing(self) -> parsing.ParsingResourceWithRawResponse:
+        from .resources.parsing import ParsingResourceWithRawResponse
+
+        return ParsingResourceWithRawResponse(self._client.parsing)
+
+    @cached_property
+    def classifier(self) -> classifier.ClassifierResourceWithRawResponse:
+        from .resources.classifier import ClassifierResourceWithRawResponse
+
+        return ClassifierResourceWithRawResponse(self._client.classifier)
+
+    @cached_property
+    def extraction(self) -> extraction.ExtractionResourceWithRawResponse:
+        from .resources.extraction import ExtractionResourceWithRawResponse
+
+        return ExtractionResourceWithRawResponse(self._client.extraction)
+
+    @cached_property
+    def beta(self) -> beta.BetaResourceWithRawResponse:
+        from .resources.beta import BetaResourceWithRawResponse
+
+        return BetaResourceWithRawResponse(self._client.beta)
 
 
 class AsyncLlamaCloudWithRawResponse:
+    _client: AsyncLlamaCloud
+
     def __init__(self, client: AsyncLlamaCloud) -> None:
-        self.projects = projects.AsyncProjectsResourceWithRawResponse(client.projects)
-        self.data_sinks = data_sinks.AsyncDataSinksResourceWithRawResponse(client.data_sinks)
-        self.data_sources = data_sources.AsyncDataSourcesResourceWithRawResponse(client.data_sources)
-        self.files = files.AsyncFilesResourceWithRawResponse(client.files)
-        self.pipelines = pipelines.AsyncPipelinesResourceWithRawResponse(client.pipelines)
-        self.retrievers = retrievers.AsyncRetrieversResourceWithRawResponse(client.retrievers)
-        self.parsing = parsing.AsyncParsingResourceWithRawResponse(client.parsing)
-        self.classifier = classifier.AsyncClassifierResourceWithRawResponse(client.classifier)
-        self.extraction = extraction.AsyncExtractionResourceWithRawResponse(client.extraction)
-        self.beta = beta.AsyncBetaResourceWithRawResponse(client.beta)
+        self._client = client
+
+    @cached_property
+    def projects(self) -> projects.AsyncProjectsResourceWithRawResponse:
+        from .resources.projects import AsyncProjectsResourceWithRawResponse
+
+        return AsyncProjectsResourceWithRawResponse(self._client.projects)
+
+    @cached_property
+    def data_sinks(self) -> data_sinks.AsyncDataSinksResourceWithRawResponse:
+        from .resources.data_sinks import AsyncDataSinksResourceWithRawResponse
+
+        return AsyncDataSinksResourceWithRawResponse(self._client.data_sinks)
+
+    @cached_property
+    def data_sources(self) -> data_sources.AsyncDataSourcesResourceWithRawResponse:
+        from .resources.data_sources import AsyncDataSourcesResourceWithRawResponse
+
+        return AsyncDataSourcesResourceWithRawResponse(self._client.data_sources)
+
+    @cached_property
+    def files(self) -> files.AsyncFilesResourceWithRawResponse:
+        from .resources.files import AsyncFilesResourceWithRawResponse
+
+        return AsyncFilesResourceWithRawResponse(self._client.files)
+
+    @cached_property
+    def pipelines(self) -> pipelines.AsyncPipelinesResourceWithRawResponse:
+        from .resources.pipelines import AsyncPipelinesResourceWithRawResponse
+
+        return AsyncPipelinesResourceWithRawResponse(self._client.pipelines)
+
+    @cached_property
+    def retrievers(self) -> retrievers.AsyncRetrieversResourceWithRawResponse:
+        from .resources.retrievers import AsyncRetrieversResourceWithRawResponse
+
+        return AsyncRetrieversResourceWithRawResponse(self._client.retrievers)
+
+    @cached_property
+    def parsing(self) -> parsing.AsyncParsingResourceWithRawResponse:
+        from .resources.parsing import AsyncParsingResourceWithRawResponse
+
+        return AsyncParsingResourceWithRawResponse(self._client.parsing)
+
+    @cached_property
+    def classifier(self) -> classifier.AsyncClassifierResourceWithRawResponse:
+        from .resources.classifier import AsyncClassifierResourceWithRawResponse
+
+        return AsyncClassifierResourceWithRawResponse(self._client.classifier)
+
+    @cached_property
+    def extraction(self) -> extraction.AsyncExtractionResourceWithRawResponse:
+        from .resources.extraction import AsyncExtractionResourceWithRawResponse
+
+        return AsyncExtractionResourceWithRawResponse(self._client.extraction)
+
+    @cached_property
+    def beta(self) -> beta.AsyncBetaResourceWithRawResponse:
+        from .resources.beta import AsyncBetaResourceWithRawResponse
+
+        return AsyncBetaResourceWithRawResponse(self._client.beta)
 
 
 class LlamaCloudWithStreamedResponse:
+    _client: LlamaCloud
+
     def __init__(self, client: LlamaCloud) -> None:
-        self.projects = projects.ProjectsResourceWithStreamingResponse(client.projects)
-        self.data_sinks = data_sinks.DataSinksResourceWithStreamingResponse(client.data_sinks)
-        self.data_sources = data_sources.DataSourcesResourceWithStreamingResponse(client.data_sources)
-        self.files = files.FilesResourceWithStreamingResponse(client.files)
-        self.pipelines = pipelines.PipelinesResourceWithStreamingResponse(client.pipelines)
-        self.retrievers = retrievers.RetrieversResourceWithStreamingResponse(client.retrievers)
-        self.parsing = parsing.ParsingResourceWithStreamingResponse(client.parsing)
-        self.classifier = classifier.ClassifierResourceWithStreamingResponse(client.classifier)
-        self.extraction = extraction.ExtractionResourceWithStreamingResponse(client.extraction)
-        self.beta = beta.BetaResourceWithStreamingResponse(client.beta)
+        self._client = client
+
+    @cached_property
+    def projects(self) -> projects.ProjectsResourceWithStreamingResponse:
+        from .resources.projects import ProjectsResourceWithStreamingResponse
+
+        return ProjectsResourceWithStreamingResponse(self._client.projects)
+
+    @cached_property
+    def data_sinks(self) -> data_sinks.DataSinksResourceWithStreamingResponse:
+        from .resources.data_sinks import DataSinksResourceWithStreamingResponse
+
+        return DataSinksResourceWithStreamingResponse(self._client.data_sinks)
+
+    @cached_property
+    def data_sources(self) -> data_sources.DataSourcesResourceWithStreamingResponse:
+        from .resources.data_sources import DataSourcesResourceWithStreamingResponse
+
+        return DataSourcesResourceWithStreamingResponse(self._client.data_sources)
+
+    @cached_property
+    def files(self) -> files.FilesResourceWithStreamingResponse:
+        from .resources.files import FilesResourceWithStreamingResponse
+
+        return FilesResourceWithStreamingResponse(self._client.files)
+
+    @cached_property
+    def pipelines(self) -> pipelines.PipelinesResourceWithStreamingResponse:
+        from .resources.pipelines import PipelinesResourceWithStreamingResponse
+
+        return PipelinesResourceWithStreamingResponse(self._client.pipelines)
+
+    @cached_property
+    def retrievers(self) -> retrievers.RetrieversResourceWithStreamingResponse:
+        from .resources.retrievers import RetrieversResourceWithStreamingResponse
+
+        return RetrieversResourceWithStreamingResponse(self._client.retrievers)
+
+    @cached_property
+    def parsing(self) -> parsing.ParsingResourceWithStreamingResponse:
+        from .resources.parsing import ParsingResourceWithStreamingResponse
+
+        return ParsingResourceWithStreamingResponse(self._client.parsing)
+
+    @cached_property
+    def classifier(self) -> classifier.ClassifierResourceWithStreamingResponse:
+        from .resources.classifier import ClassifierResourceWithStreamingResponse
+
+        return ClassifierResourceWithStreamingResponse(self._client.classifier)
+
+    @cached_property
+    def extraction(self) -> extraction.ExtractionResourceWithStreamingResponse:
+        from .resources.extraction import ExtractionResourceWithStreamingResponse
+
+        return ExtractionResourceWithStreamingResponse(self._client.extraction)
+
+    @cached_property
+    def beta(self) -> beta.BetaResourceWithStreamingResponse:
+        from .resources.beta import BetaResourceWithStreamingResponse
+
+        return BetaResourceWithStreamingResponse(self._client.beta)
 
 
 class AsyncLlamaCloudWithStreamedResponse:
+    _client: AsyncLlamaCloud
+
     def __init__(self, client: AsyncLlamaCloud) -> None:
-        self.projects = projects.AsyncProjectsResourceWithStreamingResponse(client.projects)
-        self.data_sinks = data_sinks.AsyncDataSinksResourceWithStreamingResponse(client.data_sinks)
-        self.data_sources = data_sources.AsyncDataSourcesResourceWithStreamingResponse(client.data_sources)
-        self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
-        self.pipelines = pipelines.AsyncPipelinesResourceWithStreamingResponse(client.pipelines)
-        self.retrievers = retrievers.AsyncRetrieversResourceWithStreamingResponse(client.retrievers)
-        self.parsing = parsing.AsyncParsingResourceWithStreamingResponse(client.parsing)
-        self.classifier = classifier.AsyncClassifierResourceWithStreamingResponse(client.classifier)
-        self.extraction = extraction.AsyncExtractionResourceWithStreamingResponse(client.extraction)
-        self.beta = beta.AsyncBetaResourceWithStreamingResponse(client.beta)
+        self._client = client
+
+    @cached_property
+    def projects(self) -> projects.AsyncProjectsResourceWithStreamingResponse:
+        from .resources.projects import AsyncProjectsResourceWithStreamingResponse
+
+        return AsyncProjectsResourceWithStreamingResponse(self._client.projects)
+
+    @cached_property
+    def data_sinks(self) -> data_sinks.AsyncDataSinksResourceWithStreamingResponse:
+        from .resources.data_sinks import AsyncDataSinksResourceWithStreamingResponse
+
+        return AsyncDataSinksResourceWithStreamingResponse(self._client.data_sinks)
+
+    @cached_property
+    def data_sources(self) -> data_sources.AsyncDataSourcesResourceWithStreamingResponse:
+        from .resources.data_sources import AsyncDataSourcesResourceWithStreamingResponse
+
+        return AsyncDataSourcesResourceWithStreamingResponse(self._client.data_sources)
+
+    @cached_property
+    def files(self) -> files.AsyncFilesResourceWithStreamingResponse:
+        from .resources.files import AsyncFilesResourceWithStreamingResponse
+
+        return AsyncFilesResourceWithStreamingResponse(self._client.files)
+
+    @cached_property
+    def pipelines(self) -> pipelines.AsyncPipelinesResourceWithStreamingResponse:
+        from .resources.pipelines import AsyncPipelinesResourceWithStreamingResponse
+
+        return AsyncPipelinesResourceWithStreamingResponse(self._client.pipelines)
+
+    @cached_property
+    def retrievers(self) -> retrievers.AsyncRetrieversResourceWithStreamingResponse:
+        from .resources.retrievers import AsyncRetrieversResourceWithStreamingResponse
+
+        return AsyncRetrieversResourceWithStreamingResponse(self._client.retrievers)
+
+    @cached_property
+    def parsing(self) -> parsing.AsyncParsingResourceWithStreamingResponse:
+        from .resources.parsing import AsyncParsingResourceWithStreamingResponse
+
+        return AsyncParsingResourceWithStreamingResponse(self._client.parsing)
+
+    @cached_property
+    def classifier(self) -> classifier.AsyncClassifierResourceWithStreamingResponse:
+        from .resources.classifier import AsyncClassifierResourceWithStreamingResponse
+
+        return AsyncClassifierResourceWithStreamingResponse(self._client.classifier)
+
+    @cached_property
+    def extraction(self) -> extraction.AsyncExtractionResourceWithStreamingResponse:
+        from .resources.extraction import AsyncExtractionResourceWithStreamingResponse
+
+        return AsyncExtractionResourceWithStreamingResponse(self._client.extraction)
+
+    @cached_property
+    def beta(self) -> beta.AsyncBetaResourceWithStreamingResponse:
+        from .resources.beta import AsyncBetaResourceWithStreamingResponse
+
+        return AsyncBetaResourceWithStreamingResponse(self._client.beta)
 
 
 Client = LlamaCloud

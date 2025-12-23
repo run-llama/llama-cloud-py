@@ -12,6 +12,14 @@ __all__ = ["MetadataFiltersParam", "Filter", "FilterMetadataFilter"]
 
 
 class FilterMetadataFilter(TypedDict, total=False):
+    """Comprehensive metadata filter for vector stores to support more operators.
+
+    Value uses Strict types, as int, float and str are compatible types and were all
+    converted to string before.
+
+    See: https://docs.pydantic.dev/latest/usage/types/#strict-types
+    """
+
     key: Required[str]
 
     value: Required[Union[float, str, SequenceNotStr[str], Iterable[float], Iterable[int], None]]
@@ -42,6 +50,8 @@ else:
 
 
 class MetadataFiltersParam(TypedDict, total=False):
+    """Metadata filters for vector stores."""
+
     filters: Required[Iterable[Filter]]
 
     condition: Optional[Literal["and", "or", "not"]]

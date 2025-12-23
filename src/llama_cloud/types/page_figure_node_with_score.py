@@ -31,6 +31,8 @@ class Node(BaseModel):
 
 
 class PageFigureNodeWithScore(BaseModel):
+    """Page figure metadata with score"""
+
     node: Node
 
     score: float

@@ -22,6 +22,8 @@ class Node(BaseModel):
 
 
 class PageScreenshotNodeWithScore(BaseModel):
+    """Page screenshot metadata with score"""
+
     node: Node
 
     score: float

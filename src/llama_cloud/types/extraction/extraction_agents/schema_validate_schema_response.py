@@ -8,4 +8,6 @@ __all__ = ["SchemaValidateSchemaResponse"]
 
 
 class SchemaValidateSchemaResponse(BaseModel):
+    """Response schema for schema validation."""
+
     data_schema: Dict[str, Union[Dict[str, object], List[object], str, float, bool, None]]

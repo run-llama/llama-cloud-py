@@ -11,6 +11,12 @@ __all__ = ["SparseModelConfig"]
 
 
 class SparseModelConfig(BaseModel):
+    """Configuration for sparse embedding models used in hybrid search.
+
+    This allows users to choose between Splade and BM25 models for
+    sparse retrieval in managed data sinks.
+    """
+
     class_name: Optional[str] = None
 
     api_model_type: Optional[Literal["splade", "bm25", "auto"]] = FieldInfo(alias="model_type", default=None)

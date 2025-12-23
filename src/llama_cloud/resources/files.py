@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Dict, Union, Mapping, Iterable, Optional, cast
 from datetime import datetime
+from typing_extensions import Literal
 
 import httpx
 
@@ -120,6 +121,7 @@ class FilesResource(SyncAPIResource):
         | Omit = omit,
         resource_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
         | Omit = omit,
+        storage_type: Union[Literal["ephemeral", "permanent"], str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -150,6 +152,9 @@ class FilesResource(SyncAPIResource):
 
           resource_info: Resource information for the file
 
+          storage_type: Storage type for the file. Valid values: 'Ephemeral', 'Permanent' (no
+              expiration). If not specified, defaults to permanent storage.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -169,6 +174,7 @@ class FilesResource(SyncAPIResource):
                     "last_modified_at": last_modified_at,
                     "permission_info": permission_info,
                     "resource_info": resource_info,
+                    "storage_type": storage_type,
                 },
                 file_generate_presigned_url_params.FileGeneratePresignedURLParams,
             ),
@@ -685,6 +691,7 @@ class AsyncFilesResource(AsyncAPIResource):
         | Omit = omit,
         resource_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
         | Omit = omit,
+        storage_type: Union[Literal["ephemeral", "permanent"], str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -715,6 +722,9 @@ class AsyncFilesResource(AsyncAPIResource):
 
           resource_info: Resource information for the file
 
+          storage_type: Storage type for the file. Valid values: 'Ephemeral', 'Permanent' (no
+              expiration). If not specified, defaults to permanent storage.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -734,6 +744,7 @@ class AsyncFilesResource(AsyncAPIResource):
                     "last_modified_at": last_modified_at,
                     "permission_info": permission_info,
                     "resource_info": resource_info,
+                    "storage_type": storage_type,
                 },
                 file_generate_presigned_url_params.FileGeneratePresignedURLParams,
             ),

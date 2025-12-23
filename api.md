@@ -236,50 +236,23 @@ Types:
 from llama_cloud.types import (
     FailPageMode,
     LlamaParseSupportedFileExtensions,
-    ParserLanguages,
     ParsingJob,
+    ParsingLanguages,
     ParsingMode,
     StatusEnum,
-    ParsingGetSupportedFileExtensionsResponse,
+    ParsingCreateResponse,
+    ParsingListResponse,
+    ParsingGetResponse,
+    ParsingUploadFileResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /api/v1/parsing/screenshot">client.parsing.<a href="./src/llama_cloud/resources/parsing/parsing.py">create_screenshot</a>(\*\*<a href="src/llama_cloud/types/parsing_create_screenshot_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_job.py">ParsingJob</a></code>
-- <code title="get /api/v1/parsing/supported_file_extensions">client.parsing.<a href="./src/llama_cloud/resources/parsing/parsing.py">get_supported_file_extensions</a>() -> <a href="./src/llama_cloud/types/parsing_get_supported_file_extensions_response.py">ParsingGetSupportedFileExtensionsResponse</a></code>
-- <code title="post /api/v1/parsing/upload">client.parsing.<a href="./src/llama_cloud/resources/parsing/parsing.py">upload_file</a>(\*\*<a href="src/llama_cloud/types/parsing_upload_file_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_job.py">ParsingJob</a></code>
-
-## Job
-
-Methods:
-
-- <code title="get /api/v1/parsing/job/{job_id}/read/{filename}">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">generate_presigned_url</a>(filename, \*, job_id) -> <a href="./src/llama_cloud/types/presigned_url.py">PresignedURL</a></code>
-- <code title="get /api/v1/parsing/job/{job_id}">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">get</a>(job_id) -> <a href="./src/llama_cloud/types/parsing_job.py">ParsingJob</a></code>
-- <code title="get /api/v1/parsing/job/{job_id}/details">client.parsing.job.<a href="./src/llama_cloud/resources/parsing/job/job.py">get_details</a>(job_id) -> object</code>
-
-### Result
-
-Types:
-
-```python
-from llama_cloud.types.parsing.job import (
-    ParsingJobJsonResult,
-    ParsingJobMarkdownResult,
-    ParsingJobStructuredResult,
-    ParsingJobTextResult,
-)
-```
-
-Methods:
-
-- <code title="get /api/v1/parsing/job/{job_id}/result/image/{name}">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_image</a>(name, \*, job_id) -> BinaryAPIResponse</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/json">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_json</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_json_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_json_result.py">ParsingJobJsonResult</a></code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/markdown">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_markdown</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_markdown_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_markdown_result.py">ParsingJobMarkdownResult</a></code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/pdf">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_pdf</a>(job_id) -> object</code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/structured">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_structured</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_structured_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_structured_result.py">ParsingJobStructuredResult</a></code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/text">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_text</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing/job/result_get_text_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing/job/parsing_job_text_result.py">ParsingJobTextResult</a></code>
-- <code title="get /api/v1/parsing/job/{job_id}/result/xlsx">client.parsing.job.result.<a href="./src/llama_cloud/resources/parsing/job/result.py">get_xlsx</a>(job_id) -> object</code>
+- <code title="post /api/v2alpha1/parse">client.parsing.<a href="./src/llama_cloud/resources/parsing.py">create</a>(\*\*<a href="src/llama_cloud/types/parsing_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_create_response.py">ParsingCreateResponse</a></code>
+- <code title="get /api/v2alpha1/parse">client.parsing.<a href="./src/llama_cloud/resources/parsing.py">list</a>(\*\*<a href="src/llama_cloud/types/parsing_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_list_response.py">SyncPaginatedClassifyJobs[ParsingListResponse]</a></code>
+- <code title="get /api/v2alpha1/parse/{job_id}">client.parsing.<a href="./src/llama_cloud/resources/parsing.py">get</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_get_response.py">ParsingGetResponse</a></code>
+- <code title="post /api/v2alpha1/parse/upload">client.parsing.<a href="./src/llama_cloud/resources/parsing.py">upload_file</a>(\*\*<a href="src/llama_cloud/types/parsing_upload_file_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_upload_file_response.py">ParsingUploadFileResponse</a></code>
 
 # Classifier
 

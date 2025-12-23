@@ -9,6 +9,8 @@ __all__ = ["FileGeneratePresignedURLResponse"]
 
 
 class FileGeneratePresignedURLResponse(BaseModel):
+    """Schema for a presigned URL with a file ID."""
+
     expires_at: datetime
     """The time at which the presigned URL expires"""
 

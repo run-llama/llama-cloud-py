@@ -11,6 +11,10 @@ __all__ = ["PresetRetrievalParams"]
 
 
 class PresetRetrievalParams(BaseModel):
+    """
+    Schema for the search params for an retrieval execution that can be preset for a pipeline.
+    """
+
     alpha: Optional[float] = None
     """
     Alpha value for hybrid retrieval to determine the weights between dense and

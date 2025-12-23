@@ -9,6 +9,8 @@ __all__ = ["WebhookConfigurationParam"]
 
 
 class WebhookConfigurationParam(TypedDict, total=False):
+    """Allows the user to configure webhook options for notifications and callbacks."""
+
     webhook_events: Optional[
         List[
             Literal[

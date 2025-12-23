@@ -8,6 +8,12 @@ __all__ = ["ClassifierRuleParam"]
 
 
 class ClassifierRuleParam(TypedDict, total=False):
+    """A rule for classifying documents - v0 simplified version.
+
+    This represents a single classification rule that will be applied to documents.
+    All rules are content-based and use natural language descriptions.
+    """
+
     description: Required[str]
     """Natural language description of what to classify.
 

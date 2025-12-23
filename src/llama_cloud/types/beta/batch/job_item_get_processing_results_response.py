@@ -9,8 +9,9 @@ from pydantic import Field as FieldInfo
 from ...._models import BaseModel
 from ...parsing_mode import ParsingMode
 from ...fail_page_mode import FailPageMode
-from ...parser_languages import ParserLanguages
+from ...parsing_languages import ParsingLanguages
 from ...classifier.classify_job import ClassifyJob
+from ...extraction.webhook_configuration import WebhookConfiguration
 
 __all__ = [
     "JobItemGetProcessingResultsResponse",
@@ -22,6 +23,17 @@ __all__ = [
 
 
 class ProcessingResultJobConfigBatchParseJobRecordCreateParameters(BaseModel):
+    """Generic parse job configuration for batch processing.
+
+    This model contains the parsing configuration that applies to all files
+    in a batch, but excludes file-specific fields like file_name, file_id, etc.
+    Those file-specific fields are populated from DirectoryFile data when
+    creating individual ParseJobRecordCreate instances for each file.
+
+    The fields in this model should be generic settings that apply uniformly
+    to all files being processed in the batch.
+    """
+
     adaptive_long_table: Optional[bool] = None
 
     aggressive_table_extraction: Optional[bool] = None
@@ -135,7 +147,7 @@ class ProcessingResultJobConfigBatchParseJobRecordCreateParameters(BaseModel):
     lang: Optional[str] = None
     """The language."""
 
-    languages: Optional[List[ParserLanguages]] = None
+    languages: Optional[List[ParsingLanguages]] = None
 
     layout_aware: Optional[bool] = None
 
@@ -186,7 +198,7 @@ class ProcessingResultJobConfigBatchParseJobRecordCreateParameters(BaseModel):
     page_suffix: Optional[str] = None
 
     parse_mode: Optional[ParsingMode] = None
-    """Enum for representing the mode of parsing to be used"""
+    """Enum for representing the mode of parsing to be used."""
 
     parsing_instruction: Optional[str] = None
 
@@ -196,6 +208,10 @@ class ProcessingResultJobConfigBatchParseJobRecordCreateParameters(BaseModel):
     precise_bounding_box: Optional[bool] = None
 
     premium_mode: Optional[bool] = None
+
+    presentation_out_of_bounds_content: Optional[bool] = None
+
+    presentation_skip_embedded_data: Optional[bool] = None
 
     preserve_layout_alignment_across_pages: Optional[bool] = None
 
@@ -211,8 +227,10 @@ class ProcessingResultJobConfigBatchParseJobRecordCreateParameters(BaseModel):
 
     project_id: Optional[str] = None
 
+    remove_hidden_text: Optional[bool] = None
+
     replace_failed_page_mode: Optional[FailPageMode] = None
-    """Enum for representing the different available page error handling modes"""
+    """Enum for representing the different available page error handling modes."""
 
     replace_failed_page_with_error_message_prefix: Optional[str] = None
 
@@ -273,10 +291,32 @@ class ProcessingResultJobConfigBatchParseJobRecordCreateParameters(BaseModel):
 
     version: Optional[str] = None
 
+    webhook_configurations: Optional[List[WebhookConfiguration]] = None
+    """The outbound webhook configurations"""
+
     webhook_url: Optional[str] = None
 
 
 class ProcessingResultJobConfigBatchParseJobRecordCreate(BaseModel):
+    """Batch-specific parse job record for batch processing.
+
+    This model contains the metadata and configuration for a batch parse job,
+    but excludes file-specific information. It's used as input to the batch
+    parent workflow and combined with DirectoryFile data to create full
+    ParseJobRecordCreate instances for each file.
+
+    Attributes:
+        job_name: Must be PARSE_RAW_FILE
+        partitions: Partitions for job output location
+        parameters: Generic parse configuration (BatchParseJobConfig)
+        session_id: Upstream request ID for tracking
+        correlation_id: Correlation ID for cross-service tracking
+        parent_job_execution_id: Parent job execution ID if nested
+        user_id: User who created the job
+        project_id: Project this job belongs to
+        webhook_url: Optional webhook URL for job completion notifications
+    """
+
     correlation_id: Optional[str] = None
     """The correlation ID for this job. Used for tracking the job across services."""
 
@@ -323,6 +363,8 @@ ProcessingResultJobConfig: TypeAlias = Union[ProcessingResultJobConfigBatchParse
 
 
 class ProcessingResult(BaseModel):
+    """A processing result with lineage information."""
+
     item_id: str
     """Source item that was processed"""
 
@@ -353,6 +395,8 @@ class ProcessingResult(BaseModel):
 
 
 class JobItemGetProcessingResultsResponse(BaseModel):
+    """Response containing all processing results for an item."""
+
     item_id: str
     """ID of the source item"""
 

@@ -8,13 +8,17 @@ from pydantic import Field as FieldInfo
 from .._models import BaseModel
 from .parsing_mode import ParsingMode
 from .fail_page_mode import FailPageMode
-from .parser_languages import ParserLanguages
+from .parsing_languages import ParsingLanguages
 from .extraction.webhook_configuration import WebhookConfiguration
 
 __all__ = ["LlamaParseParameters"]
 
 
 class LlamaParseParameters(BaseModel):
+    """
+    Settings that can be configured for how to use LlamaParse to parse files within a LlamaCloud pipeline.
+    """
+
     adaptive_long_table: Optional[bool] = None
 
     aggressive_table_extraction: Optional[bool] = None
@@ -121,7 +125,7 @@ class LlamaParseParameters(BaseModel):
 
     keep_page_separator_when_merging_tables: Optional[bool] = None
 
-    languages: Optional[List[ParserLanguages]] = None
+    languages: Optional[List[ParsingLanguages]] = None
 
     layout_aware: Optional[bool] = None
 
@@ -164,7 +168,7 @@ class LlamaParseParameters(BaseModel):
     page_suffix: Optional[str] = None
 
     parse_mode: Optional[ParsingMode] = None
-    """Enum for representing the mode of parsing to be used"""
+    """Enum for representing the mode of parsing to be used."""
 
     parsing_instruction: Optional[str] = None
 
@@ -173,6 +177,8 @@ class LlamaParseParameters(BaseModel):
     premium_mode: Optional[bool] = None
 
     presentation_out_of_bounds_content: Optional[bool] = None
+
+    presentation_skip_embedded_data: Optional[bool] = None
 
     preserve_layout_alignment_across_pages: Optional[bool] = None
 
@@ -191,7 +197,7 @@ class LlamaParseParameters(BaseModel):
     remove_hidden_text: Optional[bool] = None
 
     replace_failed_page_mode: Optional[FailPageMode] = None
-    """Enum for representing the different available page error handling modes"""
+    """Enum for representing the different available page error handling modes."""
 
     replace_failed_page_with_error_message_prefix: Optional[str] = None
 

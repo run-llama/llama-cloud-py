@@ -11,6 +11,8 @@ __all__ = ["SheetsJob", "Region", "WorksheetMetadata"]
 
 
 class Region(BaseModel):
+    """A summary of a single extracted region from a spreadsheet"""
+
     location: str
     """Location of the region in the spreadsheet"""
 
@@ -31,6 +33,8 @@ class Region(BaseModel):
 
 
 class WorksheetMetadata(BaseModel):
+    """Metadata about a worksheet in a spreadsheet"""
+
     sheet_name: str
     """Name of the worksheet"""
 
@@ -42,6 +46,8 @@ class WorksheetMetadata(BaseModel):
 
 
 class SheetsJob(BaseModel):
+    """A spreadsheet parsing job"""
+
     id: str
     """The ID of the job"""
 

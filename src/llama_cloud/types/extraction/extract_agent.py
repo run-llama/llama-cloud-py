@@ -11,6 +11,8 @@ __all__ = ["ExtractAgent"]
 
 
 class ExtractAgent(BaseModel):
+    """Schema and configuration for an extraction agent."""
+
     id: str
     """The id of the extraction agent."""
 

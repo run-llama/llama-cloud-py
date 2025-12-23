@@ -1,23 +1,25 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Optional
+from typing_extensions import Literal
 
 from ..file import File
 from ..._models import BaseModel
-from ..status_enum import StatusEnum
 from .extract_agent import ExtractAgent
 
 __all__ = ["ExtractJob"]
 
 
 class ExtractJob(BaseModel):
+    """Schema for an extraction job."""
+
     id: str
     """The id of the extraction job"""
 
     extraction_agent: ExtractAgent
     """The agent that the job was run on."""
 
-    status: StatusEnum
+    status: Literal["PENDING", "SUCCESS", "ERROR", "PARTIAL_SUCCESS", "CANCELLED"]
     """The status of the extraction job"""
 
     error: Optional[str] = None

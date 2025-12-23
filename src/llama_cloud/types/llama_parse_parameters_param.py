@@ -8,13 +8,17 @@ from typing_extensions import Literal, Annotated, TypedDict
 from .._utils import PropertyInfo
 from .parsing_mode import ParsingMode
 from .fail_page_mode import FailPageMode
-from .parser_languages import ParserLanguages
+from .parsing_languages import ParsingLanguages
 from .extraction.webhook_configuration_param import WebhookConfigurationParam
 
 __all__ = ["LlamaParseParametersParam"]
 
 
 class LlamaParseParametersParam(TypedDict, total=False):
+    """
+    Settings that can be configured for how to use LlamaParse to parse files within a LlamaCloud pipeline.
+    """
+
     adaptive_long_table: Optional[bool]
 
     aggressive_table_extraction: Optional[bool]
@@ -121,7 +125,7 @@ class LlamaParseParametersParam(TypedDict, total=False):
 
     keep_page_separator_when_merging_tables: Optional[bool]
 
-    languages: List[ParserLanguages]
+    languages: List[ParsingLanguages]
 
     layout_aware: Optional[bool]
 
@@ -164,7 +168,7 @@ class LlamaParseParametersParam(TypedDict, total=False):
     page_suffix: Optional[str]
 
     parse_mode: Optional[ParsingMode]
-    """Enum for representing the mode of parsing to be used"""
+    """Enum for representing the mode of parsing to be used."""
 
     parsing_instruction: Optional[str]
 
@@ -173,6 +177,8 @@ class LlamaParseParametersParam(TypedDict, total=False):
     premium_mode: Optional[bool]
 
     presentation_out_of_bounds_content: Optional[bool]
+
+    presentation_skip_embedded_data: Optional[bool]
 
     preserve_layout_alignment_across_pages: Optional[bool]
 
@@ -191,7 +197,7 @@ class LlamaParseParametersParam(TypedDict, total=False):
     remove_hidden_text: Optional[bool]
 
     replace_failed_page_mode: Optional[FailPageMode]
-    """Enum for representing the different available page error handling modes"""
+    """Enum for representing the different available page error handling modes."""
 
     replace_failed_page_with_error_message_prefix: Optional[str]
 

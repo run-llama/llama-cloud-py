@@ -9,6 +9,8 @@ __all__ = ["File"]
 
 
 class File(BaseModel):
+    """Schema for a file."""
+
     id: str
     """Unique identifier"""
 
@@ -22,6 +24,9 @@ class File(BaseModel):
 
     data_source_id: Optional[str] = None
     """The ID of the data source that the file belongs to"""
+
+    expires_at: Optional[datetime] = None
+    """The expiration date for the file. Files past this date can be deleted."""
 
     external_file_id: Optional[str] = None
     """The ID of the file in the external system"""

@@ -9,6 +9,8 @@ __all__ = ["FileAddResponse"]
 
 
 class FileAddResponse(BaseModel):
+    """API response schema for a directory file."""
+
     id: str
     """Unique identifier for the directory file."""
 

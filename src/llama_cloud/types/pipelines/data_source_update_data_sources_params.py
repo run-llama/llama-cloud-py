@@ -13,6 +13,8 @@ class DataSourceUpdateDataSourcesParams(TypedDict, total=False):
 
 
 class Body(TypedDict, total=False):
+    """Schema for creating an association between a data source and a pipeline."""
+
     data_source_id: Required[str]
     """The ID of the data source."""
 
