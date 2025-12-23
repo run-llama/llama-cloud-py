@@ -17,8 +17,7 @@ class ExtractConfigParam(TypedDict, total=False):
     citation_bbox: bool
     """Whether to fetch citation bounding boxes for the extraction.
 
-    Only available in PREMIUM mode. Deprecated: this is now synonymous with
-    cite_sources.
+    Only available in PREMIUM mode.
     """
 
     cite_sources: bool
