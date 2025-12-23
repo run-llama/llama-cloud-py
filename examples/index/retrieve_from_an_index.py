@@ -1,7 +1,6 @@
 import asyncio
 
 from llama_cloud import AsyncLlamaCloud
-from llama_cloud.types import RetrieverPipelineParam
 
 
 async def retrieve_from_existing_index_pipeline() -> None:
@@ -23,23 +22,22 @@ async def retrieve_from_existing_index_pipeline() -> None:
 
     # Create a named retrieval configuration for reuse
     # Can combine one or more pipelines in a single retriever
-    pipeline_configs: list[RetrieverPipelineParam] = [
-        {
-            "name": "my-pipeline-retriever",
-            "description": "Contains information about XYZ",
-            "pipeline_id": "your-existing-pipeline-id",
-            "preset_retrieval_parameters": {
-                "dense_similarity_top_k": 20,
-                "sparse_similarity_top_k": 20,
-                "alpha": 0.5,
-                "enable_reranking": True,
-                "rerank_top_n": 5,
-            },
-        }
-    ]
     retriver = await client.retrievers.create(
         name="my-retriever",
-        pipelines=pipeline_configs,
+        pipelines=[
+            {
+                "name": "my-pipeline-retriever",
+                "description": "Contains information about XYZ",
+                "pipeline_id": "your-existing-pipeline-id",
+                "preset_retrieval_parameters": {
+                    "dense_similarity_top_k": 20,
+                    "sparse_similarity_top_k": 20,
+                    "alpha": 0.5,
+                    "enable_reranking": True,
+                    "rerank_top_n": 5,
+                },
+            }
+        ],
     )
 
     # Use the retriever to search across its pipelines
