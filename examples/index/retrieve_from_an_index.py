@@ -24,7 +24,7 @@ async def retrieve_from_existing_index_pipeline() -> None:
     # Can combine one or more pipelines in a single retriever
     retriver = await client.retrievers.create(
         name="my-retriever",
-        pipelines=[
+        pipelines=[  # type: ignore[arg-type]
             {
                 "name": "my-pipeline-retriever",
                 "description": "Contains information about XYZ",
