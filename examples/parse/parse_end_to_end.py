@@ -1,4 +1,5 @@
 import asyncio
+
 from llama_cloud import AsyncLlamaCloud
 
 
@@ -10,7 +11,7 @@ async def parse_document() -> None:
         upload_file="../example_files/attention_is_all_you_need.pdf",
         tier="agentic",
         version="latest",
-        expand=["text", "markdown", "items"]
+        expand=["text", "markdown", "items"],
     )
 
     print(result.text)
@@ -18,6 +19,7 @@ async def parse_document() -> None:
 
     if result.items:
         print(result.items.pages[0])
+
 
 if __name__ == "__main__":
     asyncio.run(parse_document())
