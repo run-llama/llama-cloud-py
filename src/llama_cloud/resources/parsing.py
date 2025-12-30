@@ -283,12 +283,12 @@ class ParsingResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParsingGetResponse:
         """
-        Retrieve parse job with optional expanded result data (text, markdown, items).
+        Retrieve parse job with optional content or metadata.
 
         Args:
-          expand: List of fields to include in response. Supported values: text, markdown, items,
-              text_content_metadata, markdown_content_metadata, items_content_metadata.
-              Example: ?expand=text&expand=markdown&expand=text_content_metadata
+          expand: Fields to include: text, markdown, items, text_content_metadata,
+              markdown_content_metadata, items_content_metadata. Metadata fields include
+              presigned URLs.
 
           extra_headers: Send extra headers
 
@@ -874,12 +874,12 @@ class AsyncParsingResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParsingGetResponse:
         """
-        Retrieve parse job with optional expanded result data (text, markdown, items).
+        Retrieve parse job with optional content or metadata.
 
         Args:
-          expand: List of fields to include in response. Supported values: text, markdown, items,
-              text_content_metadata, markdown_content_metadata, items_content_metadata.
-              Example: ?expand=text&expand=markdown&expand=text_content_metadata
+          expand: Fields to include: text, markdown, items, text_content_metadata,
+              markdown_content_metadata, items_content_metadata. Metadata fields include
+              presigned URLs.
 
           extra_headers: Send extra headers
 

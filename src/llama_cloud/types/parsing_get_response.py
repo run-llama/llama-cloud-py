@@ -36,7 +36,7 @@ __all__ = [
 
 
 class Job(BaseModel):
-    """Parse job status and metadata (always included)"""
+    """Parse job status and metadata"""
 
     id: str
     """Unique identifier for the parse job"""
@@ -248,6 +248,9 @@ class ResultContentMetadata(BaseModel):
     exists: Optional[bool] = None
     """Whether the result file exists in S3"""
 
+    presigned_url: Optional[str] = None
+    """Presigned URL to download the result file"""
+
 
 class TextPage(BaseModel):
     page_number: int
@@ -265,18 +268,13 @@ class Text(BaseModel):
 
 
 class ParsingGetResponse(BaseModel):
-    """Combined parse result response with job status and optional result data.
+    """Parse result response with job status and optional content or metadata.
 
-    The job field is always present with status information. Other fields are only included
-    if requested via the corresponding flags in ParseResultRequest.
-
-    The result_content_metadata field is only included when requested via the expand parameter.
-    It provides size information for available results, allowing clients to determine result sizes
-    before fetching content.
+    The job field is always included. Other fields are included based on expand parameters.
     """
 
     job: Job
-    """Parse job status and metadata (always included)"""
+    """Parse job status and metadata"""
 
     items: Optional[Items] = None
     """Structured JSON result (if requested)"""
@@ -285,11 +283,7 @@ class ParsingGetResponse(BaseModel):
     """Markdown result (if requested)"""
 
     result_content_metadata: Optional[Dict[str, ResultContentMetadata]] = None
-    """
-    Metadata about available results (sizes, existence) - only included when
-    'result_content_metadata' is in the expand parameter. Maps result type names
-    (e.g., 'text', 'markdown', 'items') to their metadata.
-    """
+    """Metadata including size, existence, and presigned URLs for result files"""
 
     text: Optional[Text] = None
     """Plain text result (if requested)"""

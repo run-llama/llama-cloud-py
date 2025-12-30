@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, Union, Iterable, Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
 __all__ = ["FileUploadFromURLParams"]
 
@@ -33,6 +33,13 @@ class FileUploadFromURLParams(TypedDict, total=False):
 
     resource_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
     """Resource information for the file"""
+
+    storage_type: Union[Literal["ephemeral", "permanent"], str]
+    """Storage type for the file.
+
+    Valid values: 'Ephemeral', 'Permanent' (no expiration). If not specified,
+    defaults to permanent storage.
+    """
 
     verify_ssl: bool
     """Whether to verify the SSL certificate when downloading the file"""

@@ -43,6 +43,12 @@ class File(BaseModel):
     permission_info: Optional[Dict[str, Union[Dict[str, object], List[object], str, float, bool, None]]] = None
     """Permission information for the file"""
 
+    purpose: Optional[str] = None
+    """
+    The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
+    'split', 'classify')
+    """
+
     resource_info: Optional[Dict[str, Union[Dict[str, object], List[object], str, float, bool, None]]] = None
     """Resource information for the file"""
 

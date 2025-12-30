@@ -12,11 +12,10 @@ __all__ = ["ParsingGetParams"]
 
 class ParsingGetParams(TypedDict, total=False):
     expand: SequenceNotStr[str]
-    """List of fields to include in response.
-
-    Supported values: text, markdown, items, text_content_metadata,
-    markdown_content_metadata, items_content_metadata. Example:
-    ?expand=text&expand=markdown&expand=text_content_metadata
+    """
+    Fields to include: text, markdown, items, text_content_metadata,
+    markdown_content_metadata, items_content_metadata. Metadata fields include
+    presigned URLs.
     """
 
     organization_id: Optional[str]
