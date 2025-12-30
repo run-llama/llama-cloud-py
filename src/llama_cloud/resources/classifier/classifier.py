@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Iterable, Optional
+from typing import Iterable, Literal, Optional
 
 from .jobs import (
     JobsResource,
@@ -34,6 +34,7 @@ class ClassifierResource(SyncAPIResource):
         *,
         file_ids: SequenceNotStr[str],
         rules: Iterable[ClassifierRuleParam],
+        mode: Literal["FAST", "MULTIMODAL"] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         parsing_configuration: ClassifyParsingConfigurationParam | Omit = omit,
@@ -59,6 +60,8 @@ class ClassifierResource(SyncAPIResource):
             file_ids: The IDs of the files to classify
 
             rules: The rules to classify the files
+
+            mode: The classification mode to use ("FAST" or "MULTIMODAL")
 
             organization_id: Optional organization ID
 
@@ -118,6 +121,7 @@ class ClassifierResource(SyncAPIResource):
         job = self.jobs.create(
             file_ids=file_ids,
             rules=rules,
+            mode=mode,
             organization_id=organization_id,
             project_id=project_id,
             parsing_configuration=parsing_configuration,
@@ -315,6 +319,7 @@ class AsyncClassifierResource(AsyncAPIResource):
         *,
         file_ids: SequenceNotStr[str],
         rules: Iterable[ClassifierRuleParam],
+        mode: Literal["FAST", "MULTIMODAL"] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         parsing_configuration: ClassifyParsingConfigurationParam | Omit = omit,
@@ -340,6 +345,8 @@ class AsyncClassifierResource(AsyncAPIResource):
             file_ids: The IDs of the files to classify
 
             rules: The rules to classify the files
+
+            mode: The classification mode to use ("FAST" or "MULTIMODAL")
 
             organization_id: Optional organization ID
 
@@ -399,6 +406,7 @@ class AsyncClassifierResource(AsyncAPIResource):
         job = await self.jobs.create(
             file_ids=file_ids,
             rules=rules,
+            mode=mode,
             organization_id=organization_id,
             project_id=project_id,
             parsing_configuration=parsing_configuration,

@@ -28,6 +28,7 @@ async def classify_document() -> None:
             "max_pages": 5,
             # "target_pages": [1],  # Optional: specify particular pages to parse, cannot be used with max_pages
         },
+        mode="FAST",  # Specify classification mode: "FAST" or "MULTIMODAL"
     )
 
     # Print the classification results
