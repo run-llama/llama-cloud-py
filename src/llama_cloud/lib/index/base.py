@@ -8,6 +8,7 @@ interfaces a managed service.
 
 from __future__ import annotations
 
+import io
 import os
 import time
 import asyncio
@@ -896,7 +897,7 @@ class LlamaCloudIndex(BaseManagedIndex):
     ) -> str:
         """Upload a file to the index."""
         with open(file_path, "rb") as f:
-            file = self._client.files.upload(project_id=self.project.id, upload_file=f)
+            file = self._client.files.create(project_id=self.project.id, file=f, purpose="user_data")
             if verbose:
                 print(f"Uploaded file {file.id} with name {file.name}")
 
@@ -919,7 +920,7 @@ class LlamaCloudIndex(BaseManagedIndex):
     ) -> str:
         """Upload a file to the index."""
         with open(file_path, "rb") as f:
-            file = await self._aclient.files.upload(project_id=self.project.id, upload_file=f)
+            file = await self._aclient.files.create(project_id=self.project.id, file=f, purpose="user_data")
             if verbose:
                 print(f"Uploaded file {file.id} with name {file.name}")
 
@@ -947,14 +948,18 @@ class LlamaCloudIndex(BaseManagedIndex):
         raise_on_error: bool = False,
     ) -> str:
         """Upload a file from a URL to the index."""
-        file = self._client.files.upload_from_url(
+        with httpx.Client(verify=verify_ssl, proxy=proxy_url, headers=request_headers) as client:
+            response = client.get(
+                url, headers=request_headers, timeout=self._timeout, follow_redirects=follow_redirects
+            )
+            response.raise_for_status()
+            file_content = response.content
+
+        file = self._client.files.create(
+            file=io.BytesIO(file_content),
             project_id=self.project.id,
-            name=file_name,
-            url=url,
-            proxy_url=proxy_url,
-            request_headers=request_headers,
-            verify_ssl=verify_ssl,
-            follow_redirects=follow_redirects,
+            external_file_id=file_name,
+            purpose="user_data",
         )
         if verbose:
             print(f"Uploaded file {file.id} with ID {file.id}")
@@ -982,14 +987,18 @@ class LlamaCloudIndex(BaseManagedIndex):
         raise_on_error: bool = False,
     ) -> str:
         """Upload a file from a URL to the index."""
-        file = await self._aclient.files.upload_from_url(
+        async with httpx.AsyncClient(verify=verify_ssl, proxy=proxy_url, headers=request_headers) as client:
+            response = await client.get(
+                url, headers=request_headers, timeout=self._timeout, follow_redirects=follow_redirects
+            )
+            response.raise_for_status()
+            file_content = response.content
+
+        file = await self._aclient.files.create(
+            file=io.BytesIO(file_content),
             project_id=self.project.id,
-            name=file_name,
-            url=url,
-            proxy_url=proxy_url,
-            request_headers=request_headers,
-            verify_ssl=verify_ssl,
-            follow_redirects=follow_redirects,
+            external_file_id=file_name,
+            purpose="user_data",
         )
         if verbose:
             print(f"Uploaded file {file.id} with ID {file.id}")

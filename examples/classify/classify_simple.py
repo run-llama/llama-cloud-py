@@ -7,7 +7,10 @@ async def classify_document() -> None:
     client = AsyncLlamaCloud()
 
     # Upload a file
-    file_obj = await client.files.upload(upload_file="../example_files/attention_is_all_you_need.pdf")
+    file_obj = await client.files.create(
+        file="../example_files/attention_is_all_you_need.pdf",
+        purpose="classify",
+    )
     file_id = file_obj.id
 
     # Upload and wait for completion

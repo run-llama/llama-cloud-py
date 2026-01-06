@@ -15,7 +15,7 @@ class Models(BaseModel):
 async def extract_stateless() -> None:
     client = AsyncLlamaCloud()
 
-    file_obj = await client.files.upload(upload_file="../example_files/attention_is_all_you_need.pdf")
+    file_obj = await client.files.create(file="../example_files/attention_is_all_you_need.pdf", purpose="extract")
     file_id = file_obj.id
 
     # Stateless one-shot extraction
@@ -46,7 +46,7 @@ async def extract_stateless() -> None:
 async def extract_with_agent() -> None:
     client = AsyncLlamaCloud()
 
-    file_obj = await client.files.upload(upload_file="../example_files/attention_is_all_you_need.pdf")
+    file_obj = await client.files.create(file="../example_files/attention_is_all_you_need.pdf", purpose="extract")
     file_id = file_obj.id
 
     # Create an extraction agent

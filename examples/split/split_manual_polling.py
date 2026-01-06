@@ -16,7 +16,7 @@ async def split_document() -> None:
     client = AsyncLlamaCloud()
 
     # Upload a file to split
-    file_obj = await client.files.upload(upload_file="../example_files/turing+imagenet+attention.pdf")
+    file_obj = await client.files.create(file="../example_files/turing+imagenet+attention.pdf", purpose="split")
     file_id = file_obj.id
 
     # Create the split job with only 'essay' category defined

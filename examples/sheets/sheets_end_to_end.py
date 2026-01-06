@@ -10,7 +10,7 @@ async def extract_tables() -> None:
     client = AsyncLlamaCloud()
 
     # Upload a spreadsheet
-    file_obj = await client.files.upload(upload_file="../example_files/sample_spreadsheet.xlsx")
+    file_obj = await client.files.create(file="../example_files/sample_spreadsheet.xlsx", purpose="parse")
     file_id = file_obj.id
 
     # Extract tables from the spreadsheet
