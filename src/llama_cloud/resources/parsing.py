@@ -70,7 +70,7 @@ class ParsingResource(SyncAPIResource):
         processing_control: parsing_create_params.ProcessingControl | Omit = omit,
         processing_options: parsing_create_params.ProcessingOptions | Omit = omit,
         source_url: Optional[str] | Omit = omit,
-        version: Union[Literal["2025-12-31", "2025-12-18", "2025-12-11", "latest"], str] | Omit = omit,
+        version: Union[Literal["2025-12-18", "2025-12-11", "latest"], str] | Omit = omit,
         webhook_configurations: Iterable[parsing_create_params.WebhookConfiguration] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -273,10 +273,8 @@ class ParsingResource(SyncAPIResource):
         job_id: str,
         *,
         expand: SequenceNotStr[str] | Omit = omit,
-        image_filenames: Optional[str] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        return_all_images: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -289,14 +287,8 @@ class ParsingResource(SyncAPIResource):
 
         Args:
           expand: Fields to include: text, markdown, items, text_content_metadata,
-              markdown_content_metadata, items_content_metadata, xlsx_content_metadata,
-              output_pdf_content_metadata, images_content_metadata. Metadata fields include
+              markdown_content_metadata, items_content_metadata. Metadata fields include
               presigned URLs.
-
-          image_filenames: Comma-delimited list of image filenames to fetch. Supersedes return_all_images.
-              Example: image_0.png,image_1.jpg
-
-          return_all_images: Return all available images when true. Ignored if image_filenames is provided.
 
           extra_headers: Send extra headers
 
@@ -318,10 +310,8 @@ class ParsingResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "expand": expand,
-                        "image_filenames": image_filenames,
                         "organization_id": organization_id,
                         "project_id": project_id,
-                        "return_all_images": return_all_images,
                     },
                     parsing_get_params.ParsingGetParams,
                 ),
@@ -670,7 +660,7 @@ class AsyncParsingResource(AsyncAPIResource):
         processing_control: parsing_create_params.ProcessingControl | Omit = omit,
         processing_options: parsing_create_params.ProcessingOptions | Omit = omit,
         source_url: Optional[str] | Omit = omit,
-        version: Union[Literal["2025-12-31", "2025-12-18", "2025-12-11", "latest"], str] | Omit = omit,
+        version: Union[Literal["2025-12-18", "2025-12-11", "latest"], str] | Omit = omit,
         webhook_configurations: Iterable[parsing_create_params.WebhookConfiguration] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -873,10 +863,8 @@ class AsyncParsingResource(AsyncAPIResource):
         job_id: str,
         *,
         expand: SequenceNotStr[str] | Omit = omit,
-        image_filenames: Optional[str] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        return_all_images: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -889,14 +877,8 @@ class AsyncParsingResource(AsyncAPIResource):
 
         Args:
           expand: Fields to include: text, markdown, items, text_content_metadata,
-              markdown_content_metadata, items_content_metadata, xlsx_content_metadata,
-              output_pdf_content_metadata, images_content_metadata. Metadata fields include
+              markdown_content_metadata, items_content_metadata. Metadata fields include
               presigned URLs.
-
-          image_filenames: Comma-delimited list of image filenames to fetch. Supersedes return_all_images.
-              Example: image_0.png,image_1.jpg
-
-          return_all_images: Return all available images when true. Ignored if image_filenames is provided.
 
           extra_headers: Send extra headers
 
@@ -918,10 +900,8 @@ class AsyncParsingResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "expand": expand,
-                        "image_filenames": image_filenames,
                         "organization_id": organization_id,
                         "project_id": project_id,
-                        "return_all_images": return_all_images,
                     },
                     parsing_get_params.ParsingGetParams,
                 ),
