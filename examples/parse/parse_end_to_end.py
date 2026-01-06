@@ -6,9 +6,12 @@ from llama_cloud import AsyncLlamaCloud
 async def parse_document() -> None:
     client = AsyncLlamaCloud()
 
+    # Upload a file and parse
+    file_obj = await client.files.create(file="../example_files/attention_is_all_you_need.pdf", purpose="parse")
+
     # Upload and parse a document
     result = await client.parsing.parse(
-        upload_file="../example_files/attention_is_all_you_need.pdf",
+        file_id=file_obj.id,
         tier="agentic",
         version="latest",
         expand=["text", "markdown", "items"],

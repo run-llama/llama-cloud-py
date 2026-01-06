@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.16.0 (2026-01-06)
+
+Full Changelog: [v0.15.0...v0.16.0](https://github.com/run-llama/llama-cloud-py/compare/v0.15.0...v0.16.0)
+
+### Features
+
+* **api:** add back pipeline files ([ca81b27](https://github.com/run-llama/llama-cloud-py/commit/ca81b27d04ee0bdeb0484d6638509197a6f9cb1b))
+* **api:** add pipelines image utils ([dd26528](https://github.com/run-llama/llama-cloud-py/commit/dd26528422b7053e132470f4498fac26d4f6e168))
+* **api:** api update ([31d2071](https://github.com/run-llama/llama-cloud-py/commit/31d2071597fe67d2b397bc441e354451de60bc95))
+* **api:** api update ([064c1ad](https://github.com/run-llama/llama-cloud-py/commit/064c1adeb43804de1e1acdc00b4fcd187f7ee2ce))
+* **api:** Fix readme ([54cb781](https://github.com/run-llama/llama-cloud-py/commit/54cb7817269c3751562f05e550b5691eb8a74276))
+* **api:** swap in files v2 support ([fbd41a4](https://github.com/run-llama/llama-cloud-py/commit/fbd41a4abae1f02b39f61d576befcad9c903b2b6))
+* **api:** typo ([3e8bce8](https://github.com/run-llama/llama-cloud-py/commit/3e8bce86f76f09bd708cc246247ad60b1976fb56))
+
 ## 0.15.0 (2026-01-06)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/run-llama/llama-cloud-py/compare/v0.14.0...v0.15.0)

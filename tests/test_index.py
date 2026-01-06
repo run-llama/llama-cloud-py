@@ -1,7 +1,7 @@
 import os
 import tempfile
 from uuid import uuid4
-from typing import Tuple, Generator
+from typing import Generator
 
 import pytest
 from llama_index.core.schema import Document, ImageNode
@@ -17,13 +17,6 @@ api_key = os.environ.get("LLAMA_CLOUD_API_KEY", None)
 organization_id = os.environ.get("LLAMA_CLOUD_ORGANIZATION_ID", None)
 project_name = os.environ.get("LLAMA_CLOUD_PROJECT_NAME", "framework_integration_test")
 project_id = os.environ.get("LLAMA_CLOUD_PROJECT_ID", None)
-
-
-@pytest.fixture()
-def remote_file() -> Tuple[str, str]:
-    test_file_url = "https://www.google.com/robots.txt"
-    test_file_name = "google_robots.txt"
-    return test_file_url, test_file_name
 
 
 @pytest.fixture()
@@ -48,7 +41,7 @@ def local_figures_file() -> str:
     return "tests/test_files/index/image_figure_slides.pdf"
 
 
-def _setup_index_with_file(client: LlamaCloud, index_name: str, remote_file: Tuple[str, str]) -> Pipeline:
+def _setup_index_with_file(client: LlamaCloud, index_name: str) -> Pipeline:
     # create project if it doesn't exist
     if project_id is None:
         raise ValueError("project_id must be set for this test.")
@@ -60,13 +53,15 @@ def _setup_index_with_file(client: LlamaCloud, index_name: str, remote_file: Tup
         name=index_name, project_id=project.id, transform_config=AutoTransformConfigParam()
     )
 
-    # upload file to pipeline
-    test_file_url, test_file_name = remote_file
-    file_obj = client.files.upload_from_url(
-        url=test_file_url,
-        project_id=project.id,
-        name=test_file_name,
-    )
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+        temp_file.write(b"Sample content for testing upload.")
+        temp_file_path = temp_file.name
+
+        file_obj = client.files.create(
+            file=temp_file_path,
+            project_id=project.id,
+            purpose="user_data",
+        )
 
     # add file to pipeline
     client.pipelines.files.create(pipeline_id=pipeline.id, body=[{"file_id": file_obj.id}])
@@ -75,10 +70,10 @@ def _setup_index_with_file(client: LlamaCloud, index_name: str, remote_file: Tup
 
 
 @pytest.mark.skipif(not base_url or not api_key, reason="No platform base url or api key set")
-def test_resolve_index_with_id(remote_file: Tuple[str, str], index_name: str):
+def test_resolve_index_with_id(index_name: str):
     """Test that we can instantiate an index with a given id."""
     client = LlamaCloud(api_key=api_key, base_url=base_url)
-    pipeline = _setup_index_with_file(client, index_name, remote_file)
+    pipeline = _setup_index_with_file(client, index_name)
 
     index = LlamaCloudIndex(
         pipeline_id=pipeline.id,
@@ -96,10 +91,10 @@ def test_resolve_index_with_id(remote_file: Tuple[str, str], index_name: str):
 
 
 @pytest.mark.skipif(not base_url or not api_key, reason="No platform base url or api key set")
-def test_resolve_index_with_name(remote_file: Tuple[str, str], index_name: str):
+def test_resolve_index_with_name(index_name: str):
     """Test that we can instantiate an index with a given name."""
     client = LlamaCloud(api_key=api_key, base_url=base_url)
-    pipeline = _setup_index_with_file(client, index_name, remote_file)
+    pipeline = _setup_index_with_file(client, index_name)
 
     index = LlamaCloudIndex(
         name=pipeline.name,
@@ -179,7 +174,7 @@ def test_upload_file_with_custom_metadata(index_name: str):
 
 
 @pytest.mark.skipif(not base_url or not api_key, reason="No platform base url or api key set")
-def test_upload_file_from_url(remote_file: Tuple[str, str], index_name: str):
+def test_upload_file_from_url(index_name: str):
     index = LlamaCloudIndex.create_index(
         name=index_name,
         project_name=project_name,
@@ -189,7 +184,7 @@ def test_upload_file_from_url(remote_file: Tuple[str, str], index_name: str):
     )
 
     # Define a URL to a file for testing
-    test_file_url, test_file_name = remote_file
+    test_file_url, test_file_name = "https://www.google.com/robots.txt", "google_robots.txt"
 
     # Upload the file from the URL
     file_id = index.upload_file_from_url(file_name=test_file_name, url=test_file_url, verbose=True)
@@ -201,7 +196,7 @@ def test_upload_file_from_url(remote_file: Tuple[str, str], index_name: str):
 
 
 @pytest.mark.skipif(not base_url or not api_key, reason="No platform base url or api key set")
-def test_upload_file_from_url_with_custom_metadata(remote_file: Tuple[str, str], index_name: str):
+def test_upload_file_from_url_with_custom_metadata(index_name: str):
     index = LlamaCloudIndex.create_index(
         name=index_name,
         project_name=project_name,
@@ -212,7 +207,7 @@ def test_upload_file_from_url_with_custom_metadata(remote_file: Tuple[str, str],
 
     # Define a URL to a file for testing
     custom_metadata = {"foo": "bar"}
-    test_file_url, test_file_name = remote_file
+    test_file_url, test_file_name = "https://www.google.com/robots.txt", "google_robots.txt"
 
     # Upload the file from the URL
     file_id = index.upload_file_from_url(
@@ -497,7 +492,7 @@ async def test_async_index_from_documents(index_name: str):
 
 @pytest.mark.skipif(not base_url or not api_key, reason="No platform base url or api key set")
 @pytest.mark.asyncio
-async def test_async_upload_file_from_url(remote_file: Tuple[str, str], index_name: str):
+async def test_async_upload_file_from_url(index_name: str):
     index = await LlamaCloudIndex.acreate_index(
         name=index_name,
         project_name=project_name,
@@ -505,7 +500,7 @@ async def test_async_upload_file_from_url(remote_file: Tuple[str, str], index_na
         base_url=base_url,
     )
 
-    test_file_url, test_file_name = remote_file
+    test_file_url, test_file_name = "https://www.google.com/robots.txt", "google_robots.txt"
     file_id = await index.aupload_file_from_url(file_name=test_file_name, url=test_file_url, verbose=True)
     assert file_id is not None
 
@@ -514,7 +509,7 @@ async def test_async_upload_file_from_url(remote_file: Tuple[str, str], index_na
 
 @pytest.mark.skipif(not base_url or not api_key, reason="No platform base url or api key set")
 @pytest.mark.asyncio
-async def test_async_upload_file_from_url_with_custom_metadata(remote_file: Tuple[str, str], index_name: str):
+async def test_async_upload_file_from_url_with_custom_metadata(index_name: str):
     index = await LlamaCloudIndex.acreate_index(
         name=index_name,
         project_name=project_name,
@@ -523,7 +518,7 @@ async def test_async_upload_file_from_url_with_custom_metadata(remote_file: Tupl
     )
 
     custom_metadata = {"foo": "bar"}
-    test_file_url, test_file_name = remote_file
+    test_file_url, test_file_name = "https://www.google.com/robots.txt", "google_robots.txt"
     file_id = await index.aupload_file_from_url(
         file_name=test_file_name,
         url=test_file_url,

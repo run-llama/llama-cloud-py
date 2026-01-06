@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import Required, TypedDict
 
-__all__ = ["FileGetPageScreenshotParams"]
+__all__ = ["ImageGetPageScreenshotParams"]
 
 
-class FileGetPageScreenshotParams(TypedDict, total=False):
+class ImageGetPageScreenshotParams(TypedDict, total=False):
     id: Required[str]
 
     organization_id: Optional[str]

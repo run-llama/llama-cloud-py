@@ -35,8 +35,12 @@ client = LlamaCloud(
     api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted
 )
 
-response = client.parsing.upload_file()
-print(response.id)
+parsing = client.parsing.create(
+    tier="agentic",
+    file_id="abc1234",
+    version="latest",
+)
+print(parsing.id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -59,8 +63,12 @@ client = AsyncLlamaCloud(
 
 
 async def main() -> None:
-    response = await client.parsing.upload_file()
-    print(response.id)
+    parsing = await client.parsing.create(
+        tier="agentic",
+        file_id="abc1234",
+        version="latest",
+    )
+    print(parsing.id)
 
 
 asyncio.run(main())
@@ -93,8 +101,12 @@ async def main() -> None:
         api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
-        response = await client.parsing.upload_file()
-        print(response.id)
+        parsing = await client.parsing.create(
+            tier="agentic",
+            file_id="abc1234",
+            version="latest",
+        )
+        print(parsing.id)
 
 
 asyncio.run(main())
@@ -199,15 +211,11 @@ from llama_cloud import LlamaCloud
 
 client = LlamaCloud()
 
-pipeline = client.pipelines.create(
-    name="x",
-    data_sink={
-        "component": {"foo": "bar"},
-        "name": "name",
-        "sink_type": "PINECONE",
-    },
+parsing = client.parsing.create(
+    tier="fast",
+    agentic_options={},
 )
-print(pipeline.data_sink)
+print(parsing.agentic_options)
 ```
 
 ## File uploads
@@ -220,8 +228,9 @@ from llama_cloud import LlamaCloud
 
 client = LlamaCloud()
 
-client.files.upload(
-    upload_file=Path("/path/to/file"),
+client.files.create(
+    file=Path("/path/to/file"),
+    purpose="purpose",
 )
 ```
 

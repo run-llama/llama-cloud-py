@@ -9,6 +9,8 @@ __all__ = ["FileGetParams"]
 
 
 class FileGetParams(TypedDict, total=False):
+    expires_at_seconds: Optional[int]
+
     organization_id: Optional[str]
 
     project_id: Optional[str]

@@ -103,7 +103,7 @@ def page_screenshot_nodes_to_node_with_score(
 
     image_nodes: List[NodeWithScore] = []
     for raw_image_node in raw_image_nodes:
-        image_bytes_str = client.files.get_page_screenshot(
+        image_bytes_str = client.pipelines.images.get_page_screenshot(
             page_index=raw_image_node.node.page_index,
             id=raw_image_node.node.file_id,
             project_id=project_id,
@@ -155,7 +155,7 @@ def page_figure_nodes_to_node_with_score(
 
     figure_nodes: List[NodeWithScore] = []
     for raw_figure_node in raw_figure_nodes:
-        figure_bytes_str = client.files.get_page_figure(
+        figure_bytes_str = client.pipelines.images.get_page_figure(
             page_index=raw_figure_node.node.page_index,
             id=raw_figure_node.node.file_id,
             figure_name=raw_figure_node.node.figure_name,
@@ -192,7 +192,7 @@ async def apage_screenshot_nodes_to_node_with_score(
         page_index: int,
         project_id: str,
     ) -> str:
-        figure_bytes_str = await client.files.get_page_screenshot(
+        figure_bytes_str = await client.pipelines.images.get_page_screenshot(
             page_index=page_index,
             id=file_id,
             project_id=project_id,
@@ -262,7 +262,7 @@ async def apage_figure_nodes_to_node_with_score(
         page_index: int,
         project_id: str,
     ) -> str:
-        figure_bytes_str = await client.files.get_page_figure(
+        figure_bytes_str = await client.pipelines.images.get_page_figure(
             page_index=page_index,
             figure_name=figure_name,
             id=file_id,

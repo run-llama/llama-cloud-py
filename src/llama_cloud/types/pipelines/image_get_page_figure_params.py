@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import TypedDict
+from typing_extensions import Required, TypedDict
 
-__all__ = ["FileReadContentParams"]
+__all__ = ["ImageGetPageFigureParams"]
 
 
-class FileReadContentParams(TypedDict, total=False):
-    expires_at_seconds: Optional[int]
+class ImageGetPageFigureParams(TypedDict, total=False):
+    id: Required[str]
+
+    page_index: Required[int]
 
     organization_id: Optional[str]
 
