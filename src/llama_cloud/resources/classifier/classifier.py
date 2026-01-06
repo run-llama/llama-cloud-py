@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Iterable, Literal, Optional
+from typing import Literal, Iterable, Optional
 
 from .jobs import (
     JobsResource,

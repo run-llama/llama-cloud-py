@@ -479,6 +479,7 @@ class FilesResource(SyncAPIResource):
         external_file_id: Optional[str] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
+        storage_type: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -518,6 +519,7 @@ class FilesResource(SyncAPIResource):
                         "external_file_id": external_file_id,
                         "organization_id": organization_id,
                         "project_id": project_id,
+                        "storage_type": storage_type,
                     },
                     file_upload_params.FileUploadParams,
                 ),
@@ -537,6 +539,7 @@ class FilesResource(SyncAPIResource):
         request_headers: Optional[Dict[str, str]] | Omit = omit,
         resource_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
         | Omit = omit,
+        storage_type: Union[Literal["ephemeral", "permanent"], str] | Omit = omit,
         verify_ssl: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -569,6 +572,9 @@ class FilesResource(SyncAPIResource):
 
           resource_info: Resource information for the file
 
+          storage_type: Storage type for the file. Valid values: 'Ephemeral', 'Permanent' (no
+              expiration). If not specified, defaults to permanent storage.
+
           verify_ssl: Whether to verify the SSL certificate when downloading the file
 
           extra_headers: Send extra headers
@@ -589,6 +595,7 @@ class FilesResource(SyncAPIResource):
                     "proxy_url": proxy_url,
                     "request_headers": request_headers,
                     "resource_info": resource_info,
+                    "storage_type": storage_type,
                     "verify_ssl": verify_ssl,
                 },
                 file_upload_from_url_params.FileUploadFromURLParams,
@@ -1049,6 +1056,7 @@ class AsyncFilesResource(AsyncAPIResource):
         external_file_id: Optional[str] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
+        storage_type: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1088,6 +1096,7 @@ class AsyncFilesResource(AsyncAPIResource):
                         "external_file_id": external_file_id,
                         "organization_id": organization_id,
                         "project_id": project_id,
+                        "storage_type": storage_type,
                     },
                     file_upload_params.FileUploadParams,
                 ),
@@ -1107,6 +1116,7 @@ class AsyncFilesResource(AsyncAPIResource):
         request_headers: Optional[Dict[str, str]] | Omit = omit,
         resource_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
         | Omit = omit,
+        storage_type: Union[Literal["ephemeral", "permanent"], str] | Omit = omit,
         verify_ssl: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1139,6 +1149,9 @@ class AsyncFilesResource(AsyncAPIResource):
 
           resource_info: Resource information for the file
 
+          storage_type: Storage type for the file. Valid values: 'Ephemeral', 'Permanent' (no
+              expiration). If not specified, defaults to permanent storage.
+
           verify_ssl: Whether to verify the SSL certificate when downloading the file
 
           extra_headers: Send extra headers
@@ -1159,6 +1172,7 @@ class AsyncFilesResource(AsyncAPIResource):
                     "proxy_url": proxy_url,
                     "request_headers": request_headers,
                     "resource_info": resource_info,
+                    "storage_type": storage_type,
                     "verify_ssl": verify_ssl,
                 },
                 file_upload_from_url_params.FileUploadFromURLParams,
