@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import typing_extensions
-from typing import Dict, Union, Iterable, Optional
+from typing import Mapping, Optional, cast
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, FileTypes, omit, not_given
+from ..._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -17,13 +16,11 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncPaginatedPipelineFiles, AsyncPaginatedPipelineFiles
-from ..._base_client import AsyncPaginator, make_request_options
-from ...types.pipelines import file_list_params, file_create_params, file_update_params, file_get_status_counts_params
-from ...types.pipelines.pipeline_file import PipelineFile
+from ..._base_client import make_request_options
+from ...types.pipelines import file_get_params, file_query_params, file_create_params, file_delete_params
+from ...types.presigned_url import PresignedURL
+from ...types.pipelines.file_query_response import FileQueryResponse
 from ...types.pipelines.file_create_response import FileCreateResponse
-from ...types.managed_ingestion_status_response import ManagedIngestionStatusResponse
-from ...types.pipelines.file_get_status_counts_response import FileGetStatusCountsResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -50,9 +47,12 @@ class FilesResource(SyncAPIResource):
 
     def create(
         self,
-        pipeline_id: str,
         *,
-        body: Iterable[file_create_params.Body],
+        file: FileTypes,
+        purpose: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        external_file_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -61,9 +61,16 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileCreateResponse:
         """
-        Add files to a pipeline.
+        Upload a file using multipart/form-data.
 
         Args:
+          file: The file to upload
+
+          purpose: The intended purpose of the file. Valid values: 'user_data', 'parse', 'extract',
+              'split', 'classify'
+
+          external_file_id: The ID of the file in the external system
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -72,98 +79,22 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._put(
-            f"/api/v1/pipelines/{pipeline_id}/files",
-            body=maybe_transform(body, Iterable[file_create_params.Body]),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=FileCreateResponse,
+        body = deepcopy_minimal(
+            {
+                "file": file,
+                "purpose": purpose,
+                "external_file_id": external_file_id,
+            }
         )
-
-    def update(
-        self,
-        file_id: str,
-        *,
-        pipeline_id: str,
-        custom_metadata: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
-        | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PipelineFile:
-        """
-        Update a file for a pipeline.
-
-        Args:
-          custom_metadata: Custom metadata for the file
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        return self._put(
-            f"/api/v1/pipelines/{pipeline_id}/files/{file_id}",
-            body=maybe_transform({"custom_metadata": custom_metadata}, file_update_params.FileUpdateParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=PipelineFile,
-        )
-
-    @typing_extensions.deprecated("deprecated")
-    def list(
-        self,
-        pipeline_id: str,
-        *,
-        data_source_id: Optional[str] | Omit = omit,
-        file_name_contains: Optional[str] | Omit = omit,
-        limit: Optional[int] | Omit = omit,
-        offset: Optional[int] | Omit = omit,
-        only_manually_uploaded: bool | Omit = omit,
-        order_by: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncPaginatedPipelineFiles[PipelineFile]:
-        """
-        Get files for a pipeline.
-
-        Args: pipeline_id: ID of the pipeline data_source_id: Optional filter by data
-        source ID only_manually_uploaded: Filter for only manually uploaded files
-        file_name_contains: Optional filter by file name (substring match) limit: Limit
-        number of results offset: Offset for pagination order_by: Field to order by
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._get_api_list(
-            f"/api/v1/pipelines/{pipeline_id}/files2",
-            page=SyncPaginatedPipelineFiles[PipelineFile],
+        files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
+        return self._post(
+            "/api/v1/beta/files",
+            body=maybe_transform(body, file_create_params.FileCreateParams),
+            files=files,
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -171,24 +102,21 @@ class FilesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "data_source_id": data_source_id,
-                        "file_name_contains": file_name_contains,
-                        "limit": limit,
-                        "offset": offset,
-                        "only_manually_uploaded": only_manually_uploaded,
-                        "order_by": order_by,
+                        "organization_id": organization_id,
+                        "project_id": project_id,
                     },
-                    file_list_params.FileListParams,
+                    file_create_params.FileCreateParams,
                 ),
             ),
-            model=PipelineFile,
+            cast_to=FileCreateResponse,
         )
 
     def delete(
         self,
         file_id: str,
         *,
-        pipeline_id: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -197,7 +125,12 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Delete a file from a pipeline.
+        Delete a single file from the project.
+
+        Args: file_id: The ID of the file to delete project: Validated project from
+        dependency db: Database session
+
+        Returns: None (204 No Content on success)
 
         Args:
           extra_headers: Send extra headers
@@ -208,84 +141,11 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/api/v1/pipelines/{pipeline_id}/files/{file_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
-    def get_status(
-        self,
-        file_id: str,
-        *,
-        pipeline_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ManagedIngestionStatusResponse:
-        """
-        Get status of a file for a pipeline.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/files/{file_id}/status",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ManagedIngestionStatusResponse,
-        )
-
-    def get_status_counts(
-        self,
-        pipeline_id: str,
-        *,
-        data_source_id: Optional[str] | Omit = omit,
-        only_manually_uploaded: bool | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileGetStatusCountsResponse:
-        """
-        Get files for a pipeline.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/files/status-counts",
+            f"/api/v1/beta/files/{file_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -293,13 +153,132 @@ class FilesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "data_source_id": data_source_id,
-                        "only_manually_uploaded": only_manually_uploaded,
+                        "organization_id": organization_id,
+                        "project_id": project_id,
                     },
-                    file_get_status_counts_params.FileGetStatusCountsParams,
+                    file_delete_params.FileDeleteParams,
                 ),
             ),
-            cast_to=FileGetStatusCountsResponse,
+            cast_to=NoneType,
+        )
+
+    def get(
+        self,
+        file_id: str,
+        *,
+        expires_at_seconds: Optional[int] | Omit = omit,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PresignedURL:
+        """
+        Returns a presigned url to read the file content.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not file_id:
+            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
+        return self._get(
+            f"/api/v1/beta/files/{file_id}/content",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "expires_at_seconds": expires_at_seconds,
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    file_get_params.FileGetParams,
+                ),
+            ),
+            cast_to=PresignedURL,
+        )
+
+    def query(
+        self,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        filter: Optional[file_query_params.Filter] | Omit = omit,
+        order_by: Optional[str] | Omit = omit,
+        page_size: Optional[int] | Omit = omit,
+        page_token: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> FileQueryResponse:
+        """
+        Query files with flexible filtering and pagination.
+
+        Args: request: The query request with filters and pagination project: Validated
+        project from dependency db: Database session
+
+        Returns: Paginated response with files
+
+        Args:
+          filter: Filter parameters for file queries.
+
+          order_by: A comma-separated list of fields to order by, sorted in ascending order. Use
+              'field_name desc' to specify descending order.
+
+          page_size: The maximum number of items to return. The service may return fewer than this
+              value. If unspecified, a default page size will be used. The maximum value is
+              typically 1000; values above this will be coerced to the maximum.
+
+          page_token: A page token, received from a previous list call. Provide this to retrieve the
+              subsequent page.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/api/v1/beta/files/query",
+            body=maybe_transform(
+                {
+                    "filter": filter,
+                    "order_by": order_by,
+                    "page_size": page_size,
+                    "page_token": page_token,
+                },
+                file_query_params.FileQueryParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    file_query_params.FileQueryParams,
+                ),
+            ),
+            cast_to=FileQueryResponse,
         )
 
 
@@ -325,9 +304,12 @@ class AsyncFilesResource(AsyncAPIResource):
 
     async def create(
         self,
-        pipeline_id: str,
         *,
-        body: Iterable[file_create_params.Body],
+        file: FileTypes,
+        purpose: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        external_file_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -336,9 +318,16 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileCreateResponse:
         """
-        Add files to a pipeline.
+        Upload a file using multipart/form-data.
 
         Args:
+          file: The file to upload
+
+          purpose: The intended purpose of the file. Valid values: 'user_data', 'parse', 'extract',
+              'split', 'classify'
+
+          external_file_id: The ID of the file in the external system
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -347,123 +336,44 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return await self._put(
-            f"/api/v1/pipelines/{pipeline_id}/files",
-            body=await async_maybe_transform(body, Iterable[file_create_params.Body]),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=FileCreateResponse,
+        body = deepcopy_minimal(
+            {
+                "file": file,
+                "purpose": purpose,
+                "external_file_id": external_file_id,
+            }
         )
-
-    async def update(
-        self,
-        file_id: str,
-        *,
-        pipeline_id: str,
-        custom_metadata: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
-        | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PipelineFile:
-        """
-        Update a file for a pipeline.
-
-        Args:
-          custom_metadata: Custom metadata for the file
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        return await self._put(
-            f"/api/v1/pipelines/{pipeline_id}/files/{file_id}",
-            body=await async_maybe_transform({"custom_metadata": custom_metadata}, file_update_params.FileUpdateParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=PipelineFile,
-        )
-
-    @typing_extensions.deprecated("deprecated")
-    def list(
-        self,
-        pipeline_id: str,
-        *,
-        data_source_id: Optional[str] | Omit = omit,
-        file_name_contains: Optional[str] | Omit = omit,
-        limit: Optional[int] | Omit = omit,
-        offset: Optional[int] | Omit = omit,
-        only_manually_uploaded: bool | Omit = omit,
-        order_by: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[PipelineFile, AsyncPaginatedPipelineFiles[PipelineFile]]:
-        """
-        Get files for a pipeline.
-
-        Args: pipeline_id: ID of the pipeline data_source_id: Optional filter by data
-        source ID only_manually_uploaded: Filter for only manually uploaded files
-        file_name_contains: Optional filter by file name (substring match) limit: Limit
-        number of results offset: Offset for pagination order_by: Field to order by
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return self._get_api_list(
-            f"/api/v1/pipelines/{pipeline_id}/files2",
-            page=AsyncPaginatedPipelineFiles[PipelineFile],
+        files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
+        return await self._post(
+            "/api/v1/beta/files",
+            body=await async_maybe_transform(body, file_create_params.FileCreateParams),
+            files=files,
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform(
+                query=await async_maybe_transform(
                     {
-                        "data_source_id": data_source_id,
-                        "file_name_contains": file_name_contains,
-                        "limit": limit,
-                        "offset": offset,
-                        "only_manually_uploaded": only_manually_uploaded,
-                        "order_by": order_by,
+                        "organization_id": organization_id,
+                        "project_id": project_id,
                     },
-                    file_list_params.FileListParams,
+                    file_create_params.FileCreateParams,
                 ),
             ),
-            model=PipelineFile,
+            cast_to=FileCreateResponse,
         )
 
     async def delete(
         self,
         file_id: str,
         *,
-        pipeline_id: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -472,7 +382,12 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Delete a file from a pipeline.
+        Delete a single file from the project.
+
+        Args: file_id: The ID of the file to delete project: Validated project from
+        dependency db: Database session
+
+        Returns: None (204 No Content on success)
 
         Args:
           extra_headers: Send extra headers
@@ -483,84 +398,11 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/api/v1/pipelines/{pipeline_id}/files/{file_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
-    async def get_status(
-        self,
-        file_id: str,
-        *,
-        pipeline_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ManagedIngestionStatusResponse:
-        """
-        Get status of a file for a pipeline.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        if not file_id:
-            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
-        return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/files/{file_id}/status",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ManagedIngestionStatusResponse,
-        )
-
-    async def get_status_counts(
-        self,
-        pipeline_id: str,
-        *,
-        data_source_id: Optional[str] | Omit = omit,
-        only_manually_uploaded: bool | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileGetStatusCountsResponse:
-        """
-        Get files for a pipeline.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not pipeline_id:
-            raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
-        return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/files/status-counts",
+            f"/api/v1/beta/files/{file_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -568,13 +410,132 @@ class AsyncFilesResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
-                        "data_source_id": data_source_id,
-                        "only_manually_uploaded": only_manually_uploaded,
+                        "organization_id": organization_id,
+                        "project_id": project_id,
                     },
-                    file_get_status_counts_params.FileGetStatusCountsParams,
+                    file_delete_params.FileDeleteParams,
                 ),
             ),
-            cast_to=FileGetStatusCountsResponse,
+            cast_to=NoneType,
+        )
+
+    async def get(
+        self,
+        file_id: str,
+        *,
+        expires_at_seconds: Optional[int] | Omit = omit,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PresignedURL:
+        """
+        Returns a presigned url to read the file content.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not file_id:
+            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
+        return await self._get(
+            f"/api/v1/beta/files/{file_id}/content",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "expires_at_seconds": expires_at_seconds,
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    file_get_params.FileGetParams,
+                ),
+            ),
+            cast_to=PresignedURL,
+        )
+
+    async def query(
+        self,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        filter: Optional[file_query_params.Filter] | Omit = omit,
+        order_by: Optional[str] | Omit = omit,
+        page_size: Optional[int] | Omit = omit,
+        page_token: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> FileQueryResponse:
+        """
+        Query files with flexible filtering and pagination.
+
+        Args: request: The query request with filters and pagination project: Validated
+        project from dependency db: Database session
+
+        Returns: Paginated response with files
+
+        Args:
+          filter: Filter parameters for file queries.
+
+          order_by: A comma-separated list of fields to order by, sorted in ascending order. Use
+              'field_name desc' to specify descending order.
+
+          page_size: The maximum number of items to return. The service may return fewer than this
+              value. If unspecified, a default page size will be used. The maximum value is
+              typically 1000; values above this will be coerced to the maximum.
+
+          page_token: A page token, received from a previous list call. Provide this to retrieve the
+              subsequent page.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/api/v1/beta/files/query",
+            body=await async_maybe_transform(
+                {
+                    "filter": filter,
+                    "order_by": order_by,
+                    "page_size": page_size,
+                    "page_token": page_token,
+                },
+                file_query_params.FileQueryParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    file_query_params.FileQueryParams,
+                ),
+            ),
+            cast_to=FileQueryResponse,
         )
 
 
@@ -585,22 +546,14 @@ class FilesResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             files.create,
         )
-        self.update = to_raw_response_wrapper(
-            files.update,
-        )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                files.list,  # pyright: ignore[reportDeprecated],
-            )
-        )
         self.delete = to_raw_response_wrapper(
             files.delete,
         )
-        self.get_status = to_raw_response_wrapper(
-            files.get_status,
+        self.get = to_raw_response_wrapper(
+            files.get,
         )
-        self.get_status_counts = to_raw_response_wrapper(
-            files.get_status_counts,
+        self.query = to_raw_response_wrapper(
+            files.query,
         )
 
 
@@ -611,22 +564,14 @@ class AsyncFilesResourceWithRawResponse:
         self.create = async_to_raw_response_wrapper(
             files.create,
         )
-        self.update = async_to_raw_response_wrapper(
-            files.update,
-        )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                files.list,  # pyright: ignore[reportDeprecated],
-            )
-        )
         self.delete = async_to_raw_response_wrapper(
             files.delete,
         )
-        self.get_status = async_to_raw_response_wrapper(
-            files.get_status,
+        self.get = async_to_raw_response_wrapper(
+            files.get,
         )
-        self.get_status_counts = async_to_raw_response_wrapper(
-            files.get_status_counts,
+        self.query = async_to_raw_response_wrapper(
+            files.query,
         )
 
 
@@ -637,22 +582,14 @@ class FilesResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             files.create,
         )
-        self.update = to_streamed_response_wrapper(
-            files.update,
-        )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                files.list,  # pyright: ignore[reportDeprecated],
-            )
-        )
         self.delete = to_streamed_response_wrapper(
             files.delete,
         )
-        self.get_status = to_streamed_response_wrapper(
-            files.get_status,
+        self.get = to_streamed_response_wrapper(
+            files.get,
         )
-        self.get_status_counts = to_streamed_response_wrapper(
-            files.get_status_counts,
+        self.query = to_streamed_response_wrapper(
+            files.query,
         )
 
 
@@ -663,20 +600,12 @@ class AsyncFilesResourceWithStreamingResponse:
         self.create = async_to_streamed_response_wrapper(
             files.create,
         )
-        self.update = async_to_streamed_response_wrapper(
-            files.update,
-        )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                files.list,  # pyright: ignore[reportDeprecated],
-            )
-        )
         self.delete = async_to_streamed_response_wrapper(
             files.delete,
         )
-        self.get_status = async_to_streamed_response_wrapper(
-            files.get_status,
+        self.get = async_to_streamed_response_wrapper(
+            files.get,
         )
-        self.get_status_counts = async_to_streamed_response_wrapper(
-            files.get_status_counts,
+        self.query = async_to_streamed_response_wrapper(
+            files.query,
         )

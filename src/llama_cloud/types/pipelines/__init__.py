@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 from .text_node import TextNode as TextNode
-from .pipeline_file import PipelineFile as PipelineFile
 from .cloud_document import CloudDocument as CloudDocument
-from .file_list_params import FileListParams as FileListParams
+from .file_get_params import FileGetParams as FileGetParams
+from .file_query_params import FileQueryParams as FileQueryParams
 from .file_create_params import FileCreateParams as FileCreateParams
-from .file_update_params import FileUpdateParams as FileUpdateParams
+from .file_delete_params import FileDeleteParams as FileDeleteParams
+from .file_query_response import FileQueryResponse as FileQueryResponse
 from .document_list_params import DocumentListParams as DocumentListParams
 from .file_create_response import FileCreateResponse as FileCreateResponse
 from .pipeline_data_source import PipelineDataSource as PipelineDataSource
@@ -21,8 +22,6 @@ from .metadata_create_response import MetadataCreateResponse as MetadataCreateRe
 from .data_source_update_params import DataSourceUpdateParams as DataSourceUpdateParams
 from .cloud_document_create_param import CloudDocumentCreateParam as CloudDocumentCreateParam
 from .document_get_chunks_response import DocumentGetChunksResponse as DocumentGetChunksResponse
-from .file_get_status_counts_params import FileGetStatusCountsParams as FileGetStatusCountsParams
-from .file_get_status_counts_response import FileGetStatusCountsResponse as FileGetStatusCountsResponse
 from .data_source_get_data_sources_response import DataSourceGetDataSourcesResponse as DataSourceGetDataSourcesResponse
 from .data_source_update_data_sources_params import (
     DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams,

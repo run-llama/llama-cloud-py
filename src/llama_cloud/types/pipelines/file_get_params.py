@@ -5,10 +5,12 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import TypedDict
 
-__all__ = ["FileGetStatusCountsParams"]
+__all__ = ["FileGetParams"]
 
 
-class FileGetStatusCountsParams(TypedDict, total=False):
-    data_source_id: Optional[str]
+class FileGetParams(TypedDict, total=False):
+    expires_at_seconds: Optional[int]
 
-    only_manually_uploaded: bool
+    organization_id: Optional[str]
+
+    project_id: Optional[str]

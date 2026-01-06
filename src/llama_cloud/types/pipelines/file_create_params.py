@@ -2,21 +2,27 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Iterable, Optional
+from typing import Optional
 from typing_extensions import Required, TypedDict
 
-__all__ = ["FileCreateParams", "Body"]
+from ..._types import FileTypes
+
+__all__ = ["FileCreateParams"]
 
 
 class FileCreateParams(TypedDict, total=False):
-    body: Required[Iterable[Body]]
+    file: Required[FileTypes]
+    """The file to upload"""
 
+    purpose: Required[str]
+    """The intended purpose of the file.
 
-class Body(TypedDict, total=False):
-    """Schema for creating a file that is associated with a pipeline."""
+    Valid values: 'user_data', 'parse', 'extract', 'split', 'classify'
+    """
 
-    file_id: Required[str]
-    """The ID of the file"""
+    organization_id: Optional[str]
 
-    custom_metadata: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
-    """Custom metadata for the file"""
+    project_id: Optional[str]
+
+    external_file_id: Optional[str]
+    """The ID of the file in the external system"""

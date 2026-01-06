@@ -3,22 +3,17 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import Required, Annotated, TypedDict
-
-from ...._utils import PropertyInfo
+from typing_extensions import Required, TypedDict
 
 __all__ = ["FileUpdateParams"]
 
 
 class FileUpdateParams(TypedDict, total=False):
-    path_directory_id: Required[Annotated[str, PropertyInfo(alias="directory_id")]]
+    directory_id: Required[str]
 
     organization_id: Optional[str]
 
     project_id: Optional[str]
-
-    body_directory_id: Annotated[Optional[str], PropertyInfo(alias="directory_id")]
-    """Move file to a different directory."""
 
     display_name: Optional[str]
     """Updated display name."""
