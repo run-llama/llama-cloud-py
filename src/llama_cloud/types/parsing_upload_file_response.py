@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, Optional
+from typing import Optional
 from datetime import datetime
 from typing_extensions import Literal
 
@@ -14,9 +14,6 @@ class ParsingUploadFileResponse(BaseModel):
 
     id: str
     """Unique identifier for the parse job"""
-
-    parameters: Dict[str, object]
-    """Job-specific parameters as JSON"""
 
     project_id: str
     """Project this job belongs to"""
