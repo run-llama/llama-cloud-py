@@ -141,7 +141,7 @@ class TestParsing:
                                 "preserve_very_small_text": True,
                             },
                             "tier": "fast",
-                            "version": "2025-12-18",
+                            "version": "2025-12-31",
                         },
                         "filename_match_glob": "filename_match_glob",
                         "filename_match_glob_list": ["string"],
@@ -188,7 +188,7 @@ class TestParsing:
                 "ocr_parameters": {"languages": ["af"]},
             },
             source_url="https:",
-            version="2025-12-18",
+            version="2025-12-31",
             webhook_configurations=[
                 {
                     "webhook_events": ["string"],
@@ -279,8 +279,10 @@ class TestParsing:
         parsing = client.parsing.get(
             job_id="job_id",
             expand=["string"],
+            image_filenames="image_filenames",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            return_all_images=True,
         )
         assert_matches_type(ParsingGetResponse, parsing, path=["response"])
 
@@ -479,7 +481,7 @@ class TestAsyncParsing:
                                 "preserve_very_small_text": True,
                             },
                             "tier": "fast",
-                            "version": "2025-12-18",
+                            "version": "2025-12-31",
                         },
                         "filename_match_glob": "filename_match_glob",
                         "filename_match_glob_list": ["string"],
@@ -526,7 +528,7 @@ class TestAsyncParsing:
                 "ocr_parameters": {"languages": ["af"]},
             },
             source_url="https:",
-            version="2025-12-18",
+            version="2025-12-31",
             webhook_configurations=[
                 {
                     "webhook_events": ["string"],
@@ -617,8 +619,10 @@ class TestAsyncParsing:
         parsing = await async_client.parsing.get(
             job_id="job_id",
             expand=["string"],
+            image_filenames="image_filenames",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            return_all_images=True,
         )
         assert_matches_type(ParsingGetResponse, parsing, path=["response"])
 
