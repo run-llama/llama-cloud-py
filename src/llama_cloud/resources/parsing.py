@@ -598,7 +598,6 @@ class ParsingResource(SyncAPIResource):
             # Convert ParsingGetResponse to ParsingCreateResponse (just the job part)
             return ParsingCreateResponse(
                 id=response.job.id,
-                parameters=response.job.parameters,
                 project_id=response.job.project_id,
                 status=response.job.status,
                 created_at=response.job.created_at,
@@ -1202,7 +1201,6 @@ class AsyncParsingResource(AsyncAPIResource):
             # Convert ParsingGetResponse to ParsingCreateResponse (just the job part)
             return ParsingCreateResponse(
                 id=response.job.id,
-                parameters=response.job.parameters,
                 project_id=response.job.project_id,
                 status=response.job.status,
                 created_at=response.job.created_at,
