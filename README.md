@@ -228,8 +228,9 @@ from llama_cloud import LlamaCloud
 
 client = LlamaCloud()
 
-client.files.upload(
-    upload_file=Path("/path/to/file"),
+client.files.create(
+    file=Path("/path/to/file"),
+    purpose="purpose",
 )
 ```
 

@@ -2,24 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Mapping, Iterable, Optional, cast
-from datetime import datetime
-from typing_extensions import Literal
+from typing import Mapping, Optional, cast
 
 import httpx
 
-from ..types import (
-    file_get_params,
-    file_delete_params,
-    file_upload_params,
-    file_read_content_params,
-    file_get_page_figure_params,
-    file_upload_from_url_params,
-    file_list_page_figures_params,
-    file_get_page_screenshot_params,
-    file_list_page_screenshots_params,
-    file_generate_presigned_url_params,
-)
+from ..types import file_get_params, file_query_params, file_create_params, file_delete_params
 from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, FileTypes, omit, not_given
 from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from .._compat import cached_property
@@ -30,12 +17,10 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..types.file import File
 from .._base_client import make_request_options
 from ..types.presigned_url import PresignedURL
-from ..types.file_list_page_figures_response import FileListPageFiguresResponse
-from ..types.file_list_page_screenshots_response import FileListPageScreenshotsResponse
-from ..types.file_generate_presigned_url_response import FileGeneratePresignedURLResponse
+from ..types.file_query_response import FileQueryResponse
+from ..types.file_create_response import FileCreateResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -60,9 +45,75 @@ class FilesResource(SyncAPIResource):
         """
         return FilesResourceWithStreamingResponse(self)
 
+    def create(
+        self,
+        *,
+        file: FileTypes,
+        purpose: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        external_file_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> FileCreateResponse:
+        """
+        Upload a file using multipart/form-data.
+
+        Args:
+          file: The file to upload
+
+          purpose: The intended purpose of the file. Valid values: 'user_data', 'parse', 'extract',
+              'split', 'classify'
+
+          external_file_id: The ID of the file in the external system
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        body = deepcopy_minimal(
+            {
+                "file": file,
+                "purpose": purpose,
+                "external_file_id": external_file_id,
+            }
+        )
+        files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
+        return self._post(
+            "/api/v1/beta/files",
+            body=maybe_transform(body, file_create_params.FileCreateParams),
+            files=files,
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    file_create_params.FileCreateParams,
+                ),
+            ),
+            cast_to=FileCreateResponse,
+        )
+
     def delete(
         self,
-        id: str,
+        file_id: str,
         *,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
@@ -74,7 +125,12 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Delete the file from S3.
+        Delete a single file from the project.
+
+        Args: file_id: The ID of the file to delete project: Validated project from
+        dependency db: Database session
+
+        Returns: None (204 No Content on success)
 
         Args:
           extra_headers: Send extra headers
@@ -85,11 +141,11 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        if not file_id:
+            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/api/v1/files/{id}",
+            f"/api/v1/beta/files/{file_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -106,328 +162,9 @@ class FilesResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
-    def generate_presigned_url(
-        self,
-        *,
-        name: str,
-        expires_at_seconds: Optional[int] | Omit = omit,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        data_source_id: Optional[str] | Omit = omit,
-        external_file_id: Optional[str] | Omit = omit,
-        file_size: Optional[int] | Omit = omit,
-        last_modified_at: Union[str, datetime, None] | Omit = omit,
-        permission_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
-        | Omit = omit,
-        resource_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
-        | Omit = omit,
-        storage_type: Union[Literal["ephemeral", "permanent"], str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileGeneratePresignedURLResponse:
-        """
-        Create a presigned url for uploading a file.
-
-        The presigned url is valid for a limited time period, after which it will
-        expire. Be careful on accidental exposure of the presigned url, as it may allow
-        unauthorized access to the file before the expiration.
-
-        Args:
-          name: Name that will be used for created file. If possible, always include the file
-              extension in the name.
-
-          data_source_id: The ID of the data source that the file belongs to
-
-          external_file_id: The ID of the file in the external system
-
-          file_size: Size of the file in bytes
-
-          last_modified_at: The last modified time of the file
-
-          permission_info: Permission information for the file
-
-          resource_info: Resource information for the file
-
-          storage_type: Storage type for the file. Valid values: 'Ephemeral', 'Permanent' (no
-              expiration). If not specified, defaults to permanent storage.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._put(
-            "/api/v1/files",
-            body=maybe_transform(
-                {
-                    "name": name,
-                    "data_source_id": data_source_id,
-                    "external_file_id": external_file_id,
-                    "file_size": file_size,
-                    "last_modified_at": last_modified_at,
-                    "permission_info": permission_info,
-                    "resource_info": resource_info,
-                    "storage_type": storage_type,
-                },
-                file_generate_presigned_url_params.FileGeneratePresignedURLParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "expires_at_seconds": expires_at_seconds,
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_generate_presigned_url_params.FileGeneratePresignedURLParams,
-                ),
-            ),
-            cast_to=FileGeneratePresignedURLResponse,
-        )
-
     def get(
         self,
-        id: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> File:
-        """
-        Read File metadata objects.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return self._get(
-            f"/api/v1/files/{id}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_get_params.FileGetParams,
-                ),
-            ),
-            cast_to=File,
-        )
-
-    def get_page_figure(
-        self,
-        figure_name: str,
-        *,
-        id: str,
-        page_index: int,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """
-        Get a specific figure from a page of a file.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        if not figure_name:
-            raise ValueError(f"Expected a non-empty value for `figure_name` but received {figure_name!r}")
-        return self._get(
-            f"/api/v1/files/{id}/page-figures/{page_index}/{figure_name}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_get_page_figure_params.FileGetPageFigureParams,
-                ),
-            ),
-            cast_to=object,
-        )
-
-    def get_page_screenshot(
-        self,
-        page_index: int,
-        *,
-        id: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """
-        Get screenshot of a page from a file.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return self._get(
-            f"/api/v1/files/{id}/page_screenshots/{page_index}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_get_page_screenshot_params.FileGetPageScreenshotParams,
-                ),
-            ),
-            cast_to=object,
-        )
-
-    def list_page_figures(
-        self,
-        id: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListPageFiguresResponse:
-        """
-        List metadata for all figures from all pages of a file.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return self._get(
-            f"/api/v1/files/{id}/page-figures",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_list_page_figures_params.FileListPageFiguresParams,
-                ),
-            ),
-            cast_to=FileListPageFiguresResponse,
-        )
-
-    def list_page_screenshots(
-        self,
-        id: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListPageScreenshotsResponse:
-        """
-        List metadata for all screenshots of pages from a file.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return self._get(
-            f"/api/v1/files/{id}/page_screenshots",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_list_page_screenshots_params.FileListPageScreenshotsParams,
-                ),
-            ),
-            cast_to=FileListPageScreenshotsResponse,
-        )
-
-    def read_content(
-        self,
-        id: str,
+        file_id: str,
         *,
         expires_at_seconds: Optional[int] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
@@ -451,10 +188,10 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        if not file_id:
+            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return self._get(
-            f"/api/v1/files/{id}/content",
+            f"/api/v1/beta/files/{file_id}/content",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -466,31 +203,49 @@ class FilesResource(SyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    file_read_content_params.FileReadContentParams,
+                    file_get_params.FileGetParams,
                 ),
             ),
             cast_to=PresignedURL,
         )
 
-    def upload(
+    def query(
         self,
         *,
-        upload_file: FileTypes,
-        external_file_id: Optional[str] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        storage_type: Optional[str] | Omit = omit,
+        filter: Optional[file_query_params.Filter] | Omit = omit,
+        order_by: Optional[str] | Omit = omit,
+        page_size: Optional[int] | Omit = omit,
+        page_token: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> File:
+    ) -> FileQueryResponse:
         """
-        Upload a file to S3.
+        Query files with flexible filtering and pagination.
+
+        Args: request: The query request with filters and pagination project: Validated
+        project from dependency db: Database session
+
+        Returns: Paginated response with files
 
         Args:
+          filter: Filter parameters for file queries.
+
+          order_by: A comma-separated list of fields to order by, sorted in ascending order. Use
+              'field_name desc' to specify descending order.
+
+          page_size: The maximum number of items to return. The service may return fewer than this
+              value. If unspecified, a default page size will be used. The maximum value is
+              typically 1000; values above this will be coerced to the maximum.
+
+          page_token: A page token, received from a previous list call. Provide this to retrieve the
+              subsequent page.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -499,106 +254,16 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal({"upload_file": upload_file})
-        files = extract_files(cast(Mapping[str, object], body), paths=[["upload_file"]])
-        # It should be noted that the actual Content-Type header that will be
-        # sent to the server will contain a `boundary` parameter, e.g.
-        # multipart/form-data; boundary=---abc--
-        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._post(
-            "/api/v1/files",
-            body=maybe_transform(body, file_upload_params.FileUploadParams),
-            files=files,
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "external_file_id": external_file_id,
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                        "storage_type": storage_type,
-                    },
-                    file_upload_params.FileUploadParams,
-                ),
-            ),
-            cast_to=File,
-        )
-
-    def upload_from_url(
-        self,
-        *,
-        url: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        follow_redirects: bool | Omit = omit,
-        name: Optional[str] | Omit = omit,
-        proxy_url: Optional[str] | Omit = omit,
-        request_headers: Optional[Dict[str, str]] | Omit = omit,
-        resource_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
-        | Omit = omit,
-        storage_type: Union[Literal["ephemeral", "permanent"], str] | Omit = omit,
-        verify_ssl: bool | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> File:
-        """
-        Upload a file to the project from a URL.
-
-        If name is ommitted in the request payload, the file name will be extracted from
-        the response Content-Disposition header if available or otherwise it will be
-        derived from the URL path.
-
-        If providing the name in the request payload, always suffix the file extension
-        in the name if available.
-
-        Args:
-          url: URL of the file to download
-
-          follow_redirects: Whether to follow redirects when downloading the file
-
-          name: Name that will be used for created file. If possible, always include the file
-              extension in the name.
-
-          proxy_url: URL of the proxy server to use for downloading the file
-
-          request_headers: Headers to include in the request when downloading the file
-
-          resource_info: Resource information for the file
-
-          storage_type: Storage type for the file. Valid values: 'Ephemeral', 'Permanent' (no
-              expiration). If not specified, defaults to permanent storage.
-
-          verify_ssl: Whether to verify the SSL certificate when downloading the file
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._put(
-            "/api/v1/files/upload_from_url",
+            "/api/v1/beta/files/query",
             body=maybe_transform(
                 {
-                    "url": url,
-                    "follow_redirects": follow_redirects,
-                    "name": name,
-                    "proxy_url": proxy_url,
-                    "request_headers": request_headers,
-                    "resource_info": resource_info,
-                    "storage_type": storage_type,
-                    "verify_ssl": verify_ssl,
+                    "filter": filter,
+                    "order_by": order_by,
+                    "page_size": page_size,
+                    "page_token": page_token,
                 },
-                file_upload_from_url_params.FileUploadFromURLParams,
+                file_query_params.FileQueryParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -610,10 +275,10 @@ class FilesResource(SyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    file_upload_from_url_params.FileUploadFromURLParams,
+                    file_query_params.FileQueryParams,
                 ),
             ),
-            cast_to=File,
+            cast_to=FileQueryResponse,
         )
 
 
@@ -637,9 +302,75 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         return AsyncFilesResourceWithStreamingResponse(self)
 
+    async def create(
+        self,
+        *,
+        file: FileTypes,
+        purpose: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        external_file_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> FileCreateResponse:
+        """
+        Upload a file using multipart/form-data.
+
+        Args:
+          file: The file to upload
+
+          purpose: The intended purpose of the file. Valid values: 'user_data', 'parse', 'extract',
+              'split', 'classify'
+
+          external_file_id: The ID of the file in the external system
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        body = deepcopy_minimal(
+            {
+                "file": file,
+                "purpose": purpose,
+                "external_file_id": external_file_id,
+            }
+        )
+        files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
+        return await self._post(
+            "/api/v1/beta/files",
+            body=await async_maybe_transform(body, file_create_params.FileCreateParams),
+            files=files,
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    file_create_params.FileCreateParams,
+                ),
+            ),
+            cast_to=FileCreateResponse,
+        )
+
     async def delete(
         self,
-        id: str,
+        file_id: str,
         *,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
@@ -651,7 +382,12 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Delete the file from S3.
+        Delete a single file from the project.
+
+        Args: file_id: The ID of the file to delete project: Validated project from
+        dependency db: Database session
+
+        Returns: None (204 No Content on success)
 
         Args:
           extra_headers: Send extra headers
@@ -662,11 +398,11 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        if not file_id:
+            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/api/v1/files/{id}",
+            f"/api/v1/beta/files/{file_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -683,328 +419,9 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
-    async def generate_presigned_url(
-        self,
-        *,
-        name: str,
-        expires_at_seconds: Optional[int] | Omit = omit,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        data_source_id: Optional[str] | Omit = omit,
-        external_file_id: Optional[str] | Omit = omit,
-        file_size: Optional[int] | Omit = omit,
-        last_modified_at: Union[str, datetime, None] | Omit = omit,
-        permission_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
-        | Omit = omit,
-        resource_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
-        | Omit = omit,
-        storage_type: Union[Literal["ephemeral", "permanent"], str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileGeneratePresignedURLResponse:
-        """
-        Create a presigned url for uploading a file.
-
-        The presigned url is valid for a limited time period, after which it will
-        expire. Be careful on accidental exposure of the presigned url, as it may allow
-        unauthorized access to the file before the expiration.
-
-        Args:
-          name: Name that will be used for created file. If possible, always include the file
-              extension in the name.
-
-          data_source_id: The ID of the data source that the file belongs to
-
-          external_file_id: The ID of the file in the external system
-
-          file_size: Size of the file in bytes
-
-          last_modified_at: The last modified time of the file
-
-          permission_info: Permission information for the file
-
-          resource_info: Resource information for the file
-
-          storage_type: Storage type for the file. Valid values: 'Ephemeral', 'Permanent' (no
-              expiration). If not specified, defaults to permanent storage.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._put(
-            "/api/v1/files",
-            body=await async_maybe_transform(
-                {
-                    "name": name,
-                    "data_source_id": data_source_id,
-                    "external_file_id": external_file_id,
-                    "file_size": file_size,
-                    "last_modified_at": last_modified_at,
-                    "permission_info": permission_info,
-                    "resource_info": resource_info,
-                    "storage_type": storage_type,
-                },
-                file_generate_presigned_url_params.FileGeneratePresignedURLParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "expires_at_seconds": expires_at_seconds,
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_generate_presigned_url_params.FileGeneratePresignedURLParams,
-                ),
-            ),
-            cast_to=FileGeneratePresignedURLResponse,
-        )
-
     async def get(
         self,
-        id: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> File:
-        """
-        Read File metadata objects.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return await self._get(
-            f"/api/v1/files/{id}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_get_params.FileGetParams,
-                ),
-            ),
-            cast_to=File,
-        )
-
-    async def get_page_figure(
-        self,
-        figure_name: str,
-        *,
-        id: str,
-        page_index: int,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """
-        Get a specific figure from a page of a file.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        if not figure_name:
-            raise ValueError(f"Expected a non-empty value for `figure_name` but received {figure_name!r}")
-        return await self._get(
-            f"/api/v1/files/{id}/page-figures/{page_index}/{figure_name}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_get_page_figure_params.FileGetPageFigureParams,
-                ),
-            ),
-            cast_to=object,
-        )
-
-    async def get_page_screenshot(
-        self,
-        page_index: int,
-        *,
-        id: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """
-        Get screenshot of a page from a file.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return await self._get(
-            f"/api/v1/files/{id}/page_screenshots/{page_index}",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_get_page_screenshot_params.FileGetPageScreenshotParams,
-                ),
-            ),
-            cast_to=object,
-        )
-
-    async def list_page_figures(
-        self,
-        id: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListPageFiguresResponse:
-        """
-        List metadata for all figures from all pages of a file.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return await self._get(
-            f"/api/v1/files/{id}/page-figures",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_list_page_figures_params.FileListPageFiguresParams,
-                ),
-            ),
-            cast_to=FileListPageFiguresResponse,
-        )
-
-    async def list_page_screenshots(
-        self,
-        id: str,
-        *,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListPageScreenshotsResponse:
-        """
-        List metadata for all screenshots of pages from a file.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return await self._get(
-            f"/api/v1/files/{id}/page_screenshots",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    file_list_page_screenshots_params.FileListPageScreenshotsParams,
-                ),
-            ),
-            cast_to=FileListPageScreenshotsResponse,
-        )
-
-    async def read_content(
-        self,
-        id: str,
+        file_id: str,
         *,
         expires_at_seconds: Optional[int] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
@@ -1028,10 +445,10 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        if not file_id:
+            raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return await self._get(
-            f"/api/v1/files/{id}/content",
+            f"/api/v1/beta/files/{file_id}/content",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -1043,31 +460,49 @@ class AsyncFilesResource(AsyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    file_read_content_params.FileReadContentParams,
+                    file_get_params.FileGetParams,
                 ),
             ),
             cast_to=PresignedURL,
         )
 
-    async def upload(
+    async def query(
         self,
         *,
-        upload_file: FileTypes,
-        external_file_id: Optional[str] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        storage_type: Optional[str] | Omit = omit,
+        filter: Optional[file_query_params.Filter] | Omit = omit,
+        order_by: Optional[str] | Omit = omit,
+        page_size: Optional[int] | Omit = omit,
+        page_token: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> File:
+    ) -> FileQueryResponse:
         """
-        Upload a file to S3.
+        Query files with flexible filtering and pagination.
+
+        Args: request: The query request with filters and pagination project: Validated
+        project from dependency db: Database session
+
+        Returns: Paginated response with files
 
         Args:
+          filter: Filter parameters for file queries.
+
+          order_by: A comma-separated list of fields to order by, sorted in ascending order. Use
+              'field_name desc' to specify descending order.
+
+          page_size: The maximum number of items to return. The service may return fewer than this
+              value. If unspecified, a default page size will be used. The maximum value is
+              typically 1000; values above this will be coerced to the maximum.
+
+          page_token: A page token, received from a previous list call. Provide this to retrieve the
+              subsequent page.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1076,106 +511,16 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal({"upload_file": upload_file})
-        files = extract_files(cast(Mapping[str, object], body), paths=[["upload_file"]])
-        # It should be noted that the actual Content-Type header that will be
-        # sent to the server will contain a `boundary` parameter, e.g.
-        # multipart/form-data; boundary=---abc--
-        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._post(
-            "/api/v1/files",
-            body=await async_maybe_transform(body, file_upload_params.FileUploadParams),
-            files=files,
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "external_file_id": external_file_id,
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                        "storage_type": storage_type,
-                    },
-                    file_upload_params.FileUploadParams,
-                ),
-            ),
-            cast_to=File,
-        )
-
-    async def upload_from_url(
-        self,
-        *,
-        url: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        follow_redirects: bool | Omit = omit,
-        name: Optional[str] | Omit = omit,
-        proxy_url: Optional[str] | Omit = omit,
-        request_headers: Optional[Dict[str, str]] | Omit = omit,
-        resource_info: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
-        | Omit = omit,
-        storage_type: Union[Literal["ephemeral", "permanent"], str] | Omit = omit,
-        verify_ssl: bool | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> File:
-        """
-        Upload a file to the project from a URL.
-
-        If name is ommitted in the request payload, the file name will be extracted from
-        the response Content-Disposition header if available or otherwise it will be
-        derived from the URL path.
-
-        If providing the name in the request payload, always suffix the file extension
-        in the name if available.
-
-        Args:
-          url: URL of the file to download
-
-          follow_redirects: Whether to follow redirects when downloading the file
-
-          name: Name that will be used for created file. If possible, always include the file
-              extension in the name.
-
-          proxy_url: URL of the proxy server to use for downloading the file
-
-          request_headers: Headers to include in the request when downloading the file
-
-          resource_info: Resource information for the file
-
-          storage_type: Storage type for the file. Valid values: 'Ephemeral', 'Permanent' (no
-              expiration). If not specified, defaults to permanent storage.
-
-          verify_ssl: Whether to verify the SSL certificate when downloading the file
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._put(
-            "/api/v1/files/upload_from_url",
+            "/api/v1/beta/files/query",
             body=await async_maybe_transform(
                 {
-                    "url": url,
-                    "follow_redirects": follow_redirects,
-                    "name": name,
-                    "proxy_url": proxy_url,
-                    "request_headers": request_headers,
-                    "resource_info": resource_info,
-                    "storage_type": storage_type,
-                    "verify_ssl": verify_ssl,
+                    "filter": filter,
+                    "order_by": order_by,
+                    "page_size": page_size,
+                    "page_token": page_token,
                 },
-                file_upload_from_url_params.FileUploadFromURLParams,
+                file_query_params.FileQueryParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -1187,10 +532,10 @@ class AsyncFilesResource(AsyncAPIResource):
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    file_upload_from_url_params.FileUploadFromURLParams,
+                    file_query_params.FileQueryParams,
                 ),
             ),
-            cast_to=File,
+            cast_to=FileQueryResponse,
         )
 
 
@@ -1198,35 +543,17 @@ class FilesResourceWithRawResponse:
     def __init__(self, files: FilesResource) -> None:
         self._files = files
 
+        self.create = to_raw_response_wrapper(
+            files.create,
+        )
         self.delete = to_raw_response_wrapper(
             files.delete,
-        )
-        self.generate_presigned_url = to_raw_response_wrapper(
-            files.generate_presigned_url,
         )
         self.get = to_raw_response_wrapper(
             files.get,
         )
-        self.get_page_figure = to_raw_response_wrapper(
-            files.get_page_figure,
-        )
-        self.get_page_screenshot = to_raw_response_wrapper(
-            files.get_page_screenshot,
-        )
-        self.list_page_figures = to_raw_response_wrapper(
-            files.list_page_figures,
-        )
-        self.list_page_screenshots = to_raw_response_wrapper(
-            files.list_page_screenshots,
-        )
-        self.read_content = to_raw_response_wrapper(
-            files.read_content,
-        )
-        self.upload = to_raw_response_wrapper(
-            files.upload,
-        )
-        self.upload_from_url = to_raw_response_wrapper(
-            files.upload_from_url,
+        self.query = to_raw_response_wrapper(
+            files.query,
         )
 
 
@@ -1234,35 +561,17 @@ class AsyncFilesResourceWithRawResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
         self._files = files
 
+        self.create = async_to_raw_response_wrapper(
+            files.create,
+        )
         self.delete = async_to_raw_response_wrapper(
             files.delete,
-        )
-        self.generate_presigned_url = async_to_raw_response_wrapper(
-            files.generate_presigned_url,
         )
         self.get = async_to_raw_response_wrapper(
             files.get,
         )
-        self.get_page_figure = async_to_raw_response_wrapper(
-            files.get_page_figure,
-        )
-        self.get_page_screenshot = async_to_raw_response_wrapper(
-            files.get_page_screenshot,
-        )
-        self.list_page_figures = async_to_raw_response_wrapper(
-            files.list_page_figures,
-        )
-        self.list_page_screenshots = async_to_raw_response_wrapper(
-            files.list_page_screenshots,
-        )
-        self.read_content = async_to_raw_response_wrapper(
-            files.read_content,
-        )
-        self.upload = async_to_raw_response_wrapper(
-            files.upload,
-        )
-        self.upload_from_url = async_to_raw_response_wrapper(
-            files.upload_from_url,
+        self.query = async_to_raw_response_wrapper(
+            files.query,
         )
 
 
@@ -1270,35 +579,17 @@ class FilesResourceWithStreamingResponse:
     def __init__(self, files: FilesResource) -> None:
         self._files = files
 
+        self.create = to_streamed_response_wrapper(
+            files.create,
+        )
         self.delete = to_streamed_response_wrapper(
             files.delete,
-        )
-        self.generate_presigned_url = to_streamed_response_wrapper(
-            files.generate_presigned_url,
         )
         self.get = to_streamed_response_wrapper(
             files.get,
         )
-        self.get_page_figure = to_streamed_response_wrapper(
-            files.get_page_figure,
-        )
-        self.get_page_screenshot = to_streamed_response_wrapper(
-            files.get_page_screenshot,
-        )
-        self.list_page_figures = to_streamed_response_wrapper(
-            files.list_page_figures,
-        )
-        self.list_page_screenshots = to_streamed_response_wrapper(
-            files.list_page_screenshots,
-        )
-        self.read_content = to_streamed_response_wrapper(
-            files.read_content,
-        )
-        self.upload = to_streamed_response_wrapper(
-            files.upload,
-        )
-        self.upload_from_url = to_streamed_response_wrapper(
-            files.upload_from_url,
+        self.query = to_streamed_response_wrapper(
+            files.query,
         )
 
 
@@ -1306,33 +597,15 @@ class AsyncFilesResourceWithStreamingResponse:
     def __init__(self, files: AsyncFilesResource) -> None:
         self._files = files
 
+        self.create = async_to_streamed_response_wrapper(
+            files.create,
+        )
         self.delete = async_to_streamed_response_wrapper(
             files.delete,
-        )
-        self.generate_presigned_url = async_to_streamed_response_wrapper(
-            files.generate_presigned_url,
         )
         self.get = async_to_streamed_response_wrapper(
             files.get,
         )
-        self.get_page_figure = async_to_streamed_response_wrapper(
-            files.get_page_figure,
-        )
-        self.get_page_screenshot = async_to_streamed_response_wrapper(
-            files.get_page_screenshot,
-        )
-        self.list_page_figures = async_to_streamed_response_wrapper(
-            files.list_page_figures,
-        )
-        self.list_page_screenshots = async_to_streamed_response_wrapper(
-            files.list_page_screenshots,
-        )
-        self.read_content = async_to_streamed_response_wrapper(
-            files.read_content,
-        )
-        self.upload = async_to_streamed_response_wrapper(
-            files.upload,
-        )
-        self.upload_from_url = async_to_streamed_response_wrapper(
-            files.upload_from_url,
+        self.query = async_to_streamed_response_wrapper(
+            files.query,
         )

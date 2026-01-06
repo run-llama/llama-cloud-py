@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import TypedDict
 
-from ..._types import SequenceNotStr
+from .._types import SequenceNotStr
 
 __all__ = ["FileQueryParams", "Filter"]
 
