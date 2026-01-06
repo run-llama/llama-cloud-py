@@ -14,10 +14,20 @@ class ParsingGetParams(TypedDict, total=False):
     expand: SequenceNotStr[str]
     """
     Fields to include: text, markdown, items, text_content_metadata,
-    markdown_content_metadata, items_content_metadata. Metadata fields include
+    markdown_content_metadata, items_content_metadata, xlsx_content_metadata,
+    output_pdf_content_metadata, images_content_metadata. Metadata fields include
     presigned URLs.
+    """
+
+    image_filenames: Optional[str]
+    """Comma-delimited list of image filenames to fetch.
+
+    Supersedes return_all_images. Example: image_0.png,image_1.jpg
     """
 
     organization_id: Optional[str]
 
     project_id: Optional[str]
+
+    return_all_images: bool
+    """Return all available images when true. Ignored if image_filenames is provided."""
