@@ -59,10 +59,9 @@ class FilesResource(SyncAPIResource):
         self,
         directory_file_id: str,
         *,
-        path_directory_id: str,
+        directory_id: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        body_directory_id: Optional[str] | Omit = omit,
         display_name: Optional[str] | Omit = omit,
         unique_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -75,15 +74,11 @@ class FilesResource(SyncAPIResource):
         """
         Update file metadata within the specified directory.
 
-        Supports moving files to a different directory by setting directory_id.
-
         Note: This endpoint uses directory_file_id (the internal ID). If you're trying
         to update a file by its unique_id, use the list endpoint with a filter to find
         the directory_file_id first.
 
         Args:
-          body_directory_id: Move file to a different directory.
-
           display_name: Updated display name.
 
           unique_id: Updated unique identifier.
@@ -96,15 +91,14 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not path_directory_id:
-            raise ValueError(f"Expected a non-empty value for `path_directory_id` but received {path_directory_id!r}")
+        if not directory_id:
+            raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
         if not directory_file_id:
             raise ValueError(f"Expected a non-empty value for `directory_file_id` but received {directory_file_id!r}")
         return self._patch(
-            f"/api/v1/beta/directories/{path_directory_id}/files/{directory_file_id}",
+            f"/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
             body=maybe_transform(
                 {
-                    "body_directory_id": body_directory_id,
                     "display_name": display_name,
                     "unique_id": unique_id,
                 },
@@ -450,10 +444,9 @@ class AsyncFilesResource(AsyncAPIResource):
         self,
         directory_file_id: str,
         *,
-        path_directory_id: str,
+        directory_id: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        body_directory_id: Optional[str] | Omit = omit,
         display_name: Optional[str] | Omit = omit,
         unique_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -466,15 +459,11 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         Update file metadata within the specified directory.
 
-        Supports moving files to a different directory by setting directory_id.
-
         Note: This endpoint uses directory_file_id (the internal ID). If you're trying
         to update a file by its unique_id, use the list endpoint with a filter to find
         the directory_file_id first.
 
         Args:
-          body_directory_id: Move file to a different directory.
-
           display_name: Updated display name.
 
           unique_id: Updated unique identifier.
@@ -487,15 +476,14 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not path_directory_id:
-            raise ValueError(f"Expected a non-empty value for `path_directory_id` but received {path_directory_id!r}")
+        if not directory_id:
+            raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
         if not directory_file_id:
             raise ValueError(f"Expected a non-empty value for `directory_file_id` but received {directory_file_id!r}")
         return await self._patch(
-            f"/api/v1/beta/directories/{path_directory_id}/files/{directory_file_id}",
+            f"/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
             body=await async_maybe_transform(
                 {
-                    "body_directory_id": body_directory_id,
                     "display_name": display_name,
                     "unique_id": unique_id,
                 },
