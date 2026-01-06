@@ -22,6 +22,14 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
+from .images import (
+    ImagesResource,
+    AsyncImagesResource,
+    ImagesResourceWithRawResponse,
+    AsyncImagesResourceWithRawResponse,
+    ImagesResourceWithStreamingResponse,
+    AsyncImagesResourceWithStreamingResponse,
+)
 from ...types import (
     PipelineType,
     RetrievalMode,
@@ -90,6 +98,10 @@ class PipelinesResource(SyncAPIResource):
     @cached_property
     def data_sources(self) -> DataSourcesResource:
         return DataSourcesResource(self._client)
+
+    @cached_property
+    def images(self) -> ImagesResource:
+        return ImagesResource(self._client)
 
     @cached_property
     def files(self) -> FilesResource:
@@ -695,6 +707,10 @@ class AsyncPipelinesResource(AsyncAPIResource):
     @cached_property
     def data_sources(self) -> AsyncDataSourcesResource:
         return AsyncDataSourcesResource(self._client)
+
+    @cached_property
+    def images(self) -> AsyncImagesResource:
+        return AsyncImagesResource(self._client)
 
     @cached_property
     def files(self) -> AsyncFilesResource:
@@ -1330,6 +1346,10 @@ class PipelinesResourceWithRawResponse:
         return DataSourcesResourceWithRawResponse(self._pipelines.data_sources)
 
     @cached_property
+    def images(self) -> ImagesResourceWithRawResponse:
+        return ImagesResourceWithRawResponse(self._pipelines.images)
+
+    @cached_property
     def files(self) -> FilesResourceWithRawResponse:
         return FilesResourceWithRawResponse(self._pipelines.files)
 
@@ -1378,6 +1398,10 @@ class AsyncPipelinesResourceWithRawResponse:
     @cached_property
     def data_sources(self) -> AsyncDataSourcesResourceWithRawResponse:
         return AsyncDataSourcesResourceWithRawResponse(self._pipelines.data_sources)
+
+    @cached_property
+    def images(self) -> AsyncImagesResourceWithRawResponse:
+        return AsyncImagesResourceWithRawResponse(self._pipelines.images)
 
     @cached_property
     def files(self) -> AsyncFilesResourceWithRawResponse:
@@ -1430,6 +1454,10 @@ class PipelinesResourceWithStreamingResponse:
         return DataSourcesResourceWithStreamingResponse(self._pipelines.data_sources)
 
     @cached_property
+    def images(self) -> ImagesResourceWithStreamingResponse:
+        return ImagesResourceWithStreamingResponse(self._pipelines.images)
+
+    @cached_property
     def files(self) -> FilesResourceWithStreamingResponse:
         return FilesResourceWithStreamingResponse(self._pipelines.files)
 
@@ -1478,6 +1506,10 @@ class AsyncPipelinesResourceWithStreamingResponse:
     @cached_property
     def data_sources(self) -> AsyncDataSourcesResourceWithStreamingResponse:
         return AsyncDataSourcesResourceWithStreamingResponse(self._pipelines.data_sources)
+
+    @cached_property
+    def images(self) -> AsyncImagesResourceWithStreamingResponse:
+        return AsyncImagesResourceWithStreamingResponse(self._pipelines.images)
 
     @cached_property
     def files(self) -> AsyncFilesResourceWithStreamingResponse:

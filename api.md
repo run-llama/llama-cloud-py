@@ -123,6 +123,13 @@ Methods:
 - <code title="post /api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/sync">client.pipelines.data_sources.<a href="./src/llama_cloud/resources/pipelines/data_sources.py">sync</a>(data_source_id, \*, pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/data_source_sync_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipeline.py">Pipeline</a></code>
 - <code title="put /api/v1/pipelines/{pipeline_id}/data-sources">client.pipelines.data_sources.<a href="./src/llama_cloud/resources/pipelines/data_sources.py">update_data_sources</a>(pipeline_id, \*\*<a href="src/llama_cloud/types/pipelines/data_source_update_data_sources_params.py">params</a>) -> <a href="./src/llama_cloud/types/pipelines/data_source_update_data_sources_response.py">DataSourceUpdateDataSourcesResponse</a></code>
 
+## Images
+
+Methods:
+
+- <code title="get /api/v1/files/{id}/page-figures/{page_index}/{figure_name}">client.pipelines.images.<a href="./src/llama_cloud/resources/pipelines/images.py">get_page_figure</a>(figure_name, \*, id, page_index, \*\*<a href="src/llama_cloud/types/pipelines/image_get_page_figure_params.py">params</a>) -> object</code>
+- <code title="get /api/v1/files/{id}/page_screenshots/{page_index}">client.pipelines.images.<a href="./src/llama_cloud/resources/pipelines/images.py">get_page_screenshot</a>(page_index, \*, id, \*\*<a href="src/llama_cloud/types/pipelines/image_get_page_screenshot_params.py">params</a>) -> object</code>
+
 ## Files
 
 Types:

@@ -16,6 +16,14 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
+from .images import (
+    ImagesResource,
+    AsyncImagesResource,
+    ImagesResourceWithRawResponse,
+    AsyncImagesResourceWithRawResponse,
+    ImagesResourceWithStreamingResponse,
+    AsyncImagesResourceWithStreamingResponse,
+)
 from .metadata import (
     MetadataResource,
     AsyncMetadataResource,
@@ -62,6 +70,12 @@ __all__ = [
     "AsyncDataSourcesResourceWithRawResponse",
     "DataSourcesResourceWithStreamingResponse",
     "AsyncDataSourcesResourceWithStreamingResponse",
+    "ImagesResource",
+    "AsyncImagesResource",
+    "ImagesResourceWithRawResponse",
+    "AsyncImagesResourceWithRawResponse",
+    "ImagesResourceWithStreamingResponse",
+    "AsyncImagesResourceWithStreamingResponse",
     "FilesResource",
     "AsyncFilesResource",
     "FilesResourceWithRawResponse",
