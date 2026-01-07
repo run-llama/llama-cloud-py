@@ -385,7 +385,10 @@ class ParsingResource(SyncAPIResource):
 
             disable_cache: Whether to disable caching for this parsing job
 
-            expand: List of fields to include in response. Supported values: text, markdown, items.
+            expand: Fields to include: text, markdown, items, text_content_metadata,
+              markdown_content_metadata, items_content_metadata, xlsx_content_metadata,
+              output_pdf_content_metadata, images_content_metadata. Metadata fields include
+              presigned URLs.
 
             fast_options: Options for fast tier parsing (without AI).
 
@@ -985,7 +988,10 @@ class AsyncParsingResource(AsyncAPIResource):
 
             disable_cache: Whether to disable caching for this parsing job
 
-            expand: List of fields to include in response. Supported values: text, markdown, items.
+            expand: Fields to include: text, markdown, items, text_content_metadata,
+              markdown_content_metadata, items_content_metadata, xlsx_content_metadata,
+              output_pdf_content_metadata, images_content_metadata. Metadata fields include
+              presigned URLs.
 
             fast_options: Options for fast tier parsing (without AI).
 
