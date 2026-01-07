@@ -352,6 +352,8 @@ class ParsingResource(SyncAPIResource):
         source_url: Optional[str] | Omit = omit,
         version: Union[Literal["2025-12-18", "2025-12-11", "latest"], str] | Omit = omit,
         webhook_configurations: Iterable[parsing_create_params.WebhookConfiguration] | Omit = omit,
+        image_filenames: Optional[str] | Omit = omit,
+        return_all_images: bool | Omit = omit,
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
@@ -413,6 +415,10 @@ class ParsingResource(SyncAPIResource):
             version: Version of the tier configuration
 
             webhook_configurations: List of webhook configurations for notifications
+
+            image_filenames: Comma-delimited list of image filenames to fetch. Supersedes return_all_images.
+
+            return_all_images: Return all available images when true. Ignored if image_filenames is provided.
 
             polling_interval: Initial polling interval in seconds (default: 1.0)
 
@@ -504,6 +510,8 @@ class ParsingResource(SyncAPIResource):
         # Get and return the result
         return self.get(
             job.id,
+            image_filenames=image_filenames,
+            return_all_images=return_all_images,
             expand=expand,
             organization_id=organization_id,
             project_id=project_id,
@@ -955,6 +963,8 @@ class AsyncParsingResource(AsyncAPIResource):
         source_url: Optional[str] | Omit = omit,
         version: Union[Literal["2025-12-18", "2025-12-11", "latest"], str] | Omit = omit,
         webhook_configurations: Iterable[parsing_create_params.WebhookConfiguration] | Omit = omit,
+        image_filenames: Optional[str] | Omit = omit,
+        return_all_images: bool | Omit = omit,
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
@@ -1016,6 +1026,10 @@ class AsyncParsingResource(AsyncAPIResource):
             version: Version of the tier configuration
 
             webhook_configurations: List of webhook configurations for notifications
+
+            image_filenames: Comma-delimited list of image filenames to fetch. Supersedes return_all_images.
+
+            return_all_images: Return all available images when true. Ignored if image_filenames is provided.
 
             polling_interval: Initial polling interval in seconds (default: 1.0)
 
@@ -1105,11 +1119,10 @@ class AsyncParsingResource(AsyncAPIResource):
         )
 
         # Get and return the result
-        import asyncio
-
-        await asyncio.sleep(10)
         return await self.get(
             job.id,
+            image_filenames=image_filenames,
+            return_all_images=return_all_images,
             expand=expand,
             organization_id=organization_id,
             project_id=project_id,
