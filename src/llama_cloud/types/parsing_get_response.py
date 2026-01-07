@@ -12,6 +12,8 @@ from .._models import BaseModel
 __all__ = [
     "ParsingGetResponse",
     "Job",
+    "ImagesContentMetadata",
+    "ImagesContentMetadataImage",
     "Items",
     "ItemsPage",
     "ItemsPageStructuredResultPage",
@@ -24,6 +26,7 @@ __all__ = [
     "ItemsPageStructuredResultPageItemCodeItem",
     "ItemsPageStructuredResultPageItemTableItem",
     "ItemsPageStructuredResultPageItemImageItem",
+    "ItemsPageStructuredResultPageItemLinkItem",
     "ItemsPageFailedStructuredPage",
     "Markdown",
     "MarkdownPage",
@@ -40,9 +43,6 @@ class Job(BaseModel):
 
     id: str
     """Unique identifier for the parse job"""
-
-    parameters: Dict[str, object]
-    """Job-specific parameters as JSON"""
 
     project_id: str
     """Project this job belongs to"""
@@ -62,7 +62,39 @@ class Job(BaseModel):
     """Update datetime"""
 
 
+class ImagesContentMetadataImage(BaseModel):
+    """Metadata for a single extracted image."""
+
+    filename: str
+    """Image filename (e.g., 'image_0.png')"""
+
+    index: int
+    """Index of the image in the extraction order"""
+
+    content_type: Optional[str] = None
+    """MIME type of the image"""
+
+    presigned_url: Optional[str] = None
+    """Presigned URL to download the image"""
+
+    size_bytes: Optional[int] = None
+    """Size of the image file in bytes"""
+
+
+class ImagesContentMetadata(BaseModel):
+    """Metadata for all extracted images."""
+
+    images: List[ImagesContentMetadataImage]
+    """List of image metadata with presigned URLs"""
+
+    total_count: int
+    """Total number of extracted images"""
+
+
 class ItemsPageStructuredResultPageItemTextItem(BaseModel):
+    md: str
+    """Markdown representation preserving formatting"""
+
     value: str
     """Text content"""
 
@@ -77,6 +109,9 @@ class ItemsPageStructuredResultPageItemHeadingItem(BaseModel):
     level: int
     """Heading level (1-6)"""
 
+    md: str
+    """Markdown representation preserving formatting"""
+
     value: str
     """Heading text content"""
 
@@ -88,6 +123,9 @@ class ItemsPageStructuredResultPageItemHeadingItem(BaseModel):
 
 
 class ItemsPageStructuredResultPageItemListItemItemTextItem(BaseModel):
+    md: str
+    """Markdown representation preserving formatting"""
+
     value: str
     """Text content"""
 
@@ -118,6 +156,9 @@ class ItemsPageStructuredResultPageItemListItem(BaseModel):
 
 
 class ItemsPageStructuredResultPageItemCodeItem(BaseModel):
+    md: str
+    """Markdown representation with code fences"""
+
     value: str
     """Code content"""
 
@@ -162,6 +203,20 @@ class ItemsPageStructuredResultPageItemImageItem(BaseModel):
     """Image item type"""
 
 
+class ItemsPageStructuredResultPageItemLinkItem(BaseModel):
+    text: str
+    """Display text of the link"""
+
+    url: str
+    """URL of the link"""
+
+    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
+    """Bounding box coordinates [x1, y1, x2, y2]"""
+
+    type: Optional[Literal["link"]] = None
+    """Link item type"""
+
+
 ItemsPageStructuredResultPageItem: TypeAlias = Annotated[
     Union[
         ItemsPageStructuredResultPageItemTextItem,
@@ -170,6 +225,7 @@ ItemsPageStructuredResultPageItem: TypeAlias = Annotated[
         ItemsPageStructuredResultPageItemCodeItem,
         ItemsPageStructuredResultPageItemTableItem,
         ItemsPageStructuredResultPageItemImageItem,
+        ItemsPageStructuredResultPageItemLinkItem,
     ],
     PropertyInfo(discriminator="type"),
 ]
@@ -275,6 +331,9 @@ class ParsingGetResponse(BaseModel):
 
     job: Job
     """Parse job status and metadata"""
+
+    images_content_metadata: Optional[ImagesContentMetadata] = None
+    """Metadata for all extracted images."""
 
     items: Optional[Items] = None
     """Structured JSON result (if requested)"""
