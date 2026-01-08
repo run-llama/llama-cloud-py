@@ -17,7 +17,14 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.pipelines import image_get_page_figure_params, image_get_page_screenshot_params
+from ...types.pipelines import (
+    image_get_page_figure_params,
+    image_list_page_figures_params,
+    image_get_page_screenshot_params,
+    image_list_page_screenshots_params,
+)
+from ...types.pipelines.image_list_page_figures_response import ImageListPageFiguresResponse
+from ...types.pipelines.image_list_page_screenshots_response import ImageListPageScreenshotsResponse
 
 __all__ = ["ImagesResource", "AsyncImagesResource"]
 
@@ -137,6 +144,96 @@ class ImagesResource(SyncAPIResource):
             cast_to=object,
         )
 
+    def list_page_figures(
+        self,
+        id: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ImageListPageFiguresResponse:
+        """
+        List metadata for all figures from all pages of a file.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return self._get(
+            f"/api/v1/files/{id}/page-figures",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    image_list_page_figures_params.ImageListPageFiguresParams,
+                ),
+            ),
+            cast_to=ImageListPageFiguresResponse,
+        )
+
+    def list_page_screenshots(
+        self,
+        id: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ImageListPageScreenshotsResponse:
+        """
+        List metadata for all screenshots of pages from a file.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return self._get(
+            f"/api/v1/files/{id}/page_screenshots",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    image_list_page_screenshots_params.ImageListPageScreenshotsParams,
+                ),
+            ),
+            cast_to=ImageListPageScreenshotsResponse,
+        )
+
 
 class AsyncImagesResource(AsyncAPIResource):
     @cached_property
@@ -253,6 +350,96 @@ class AsyncImagesResource(AsyncAPIResource):
             cast_to=object,
         )
 
+    async def list_page_figures(
+        self,
+        id: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ImageListPageFiguresResponse:
+        """
+        List metadata for all figures from all pages of a file.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._get(
+            f"/api/v1/files/{id}/page-figures",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    image_list_page_figures_params.ImageListPageFiguresParams,
+                ),
+            ),
+            cast_to=ImageListPageFiguresResponse,
+        )
+
+    async def list_page_screenshots(
+        self,
+        id: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ImageListPageScreenshotsResponse:
+        """
+        List metadata for all screenshots of pages from a file.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._get(
+            f"/api/v1/files/{id}/page_screenshots",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    image_list_page_screenshots_params.ImageListPageScreenshotsParams,
+                ),
+            ),
+            cast_to=ImageListPageScreenshotsResponse,
+        )
+
 
 class ImagesResourceWithRawResponse:
     def __init__(self, images: ImagesResource) -> None:
@@ -263,6 +450,12 @@ class ImagesResourceWithRawResponse:
         )
         self.get_page_screenshot = to_raw_response_wrapper(
             images.get_page_screenshot,
+        )
+        self.list_page_figures = to_raw_response_wrapper(
+            images.list_page_figures,
+        )
+        self.list_page_screenshots = to_raw_response_wrapper(
+            images.list_page_screenshots,
         )
 
 
@@ -276,6 +469,12 @@ class AsyncImagesResourceWithRawResponse:
         self.get_page_screenshot = async_to_raw_response_wrapper(
             images.get_page_screenshot,
         )
+        self.list_page_figures = async_to_raw_response_wrapper(
+            images.list_page_figures,
+        )
+        self.list_page_screenshots = async_to_raw_response_wrapper(
+            images.list_page_screenshots,
+        )
 
 
 class ImagesResourceWithStreamingResponse:
@@ -288,6 +487,12 @@ class ImagesResourceWithStreamingResponse:
         self.get_page_screenshot = to_streamed_response_wrapper(
             images.get_page_screenshot,
         )
+        self.list_page_figures = to_streamed_response_wrapper(
+            images.list_page_figures,
+        )
+        self.list_page_screenshots = to_streamed_response_wrapper(
+            images.list_page_screenshots,
+        )
 
 
 class AsyncImagesResourceWithStreamingResponse:
@@ -299,4 +504,10 @@ class AsyncImagesResourceWithStreamingResponse:
         )
         self.get_page_screenshot = async_to_streamed_response_wrapper(
             images.get_page_screenshot,
+        )
+        self.list_page_figures = async_to_streamed_response_wrapper(
+            images.list_page_figures,
+        )
+        self.list_page_screenshots = async_to_streamed_response_wrapper(
+            images.list_page_screenshots,
         )
