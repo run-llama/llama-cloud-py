@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.0 (2026-01-08)
+
+Full Changelog: [v0.17.0...v0.18.0](https://github.com/run-llama/llama-cloud-py/compare/v0.17.0...v0.18.0)
+
+### Features
+
+* **api:** add list commands to pipeline file images ([e9ac62e](https://github.com/run-llama/llama-cloud-py/commit/e9ac62ecfee8b9020e169010cc910989dc491c78))
+
 ## 0.17.0 (2026-01-06)
 
 Full Changelog: [v0.16.0...v0.17.0](https://github.com/run-llama/llama-cloud-py/compare/v0.16.0...v0.17.0)
