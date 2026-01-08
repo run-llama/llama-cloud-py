@@ -25,7 +25,7 @@ async def extract_stateless() -> None:
             "chunk_mode": "PAGE",
             "cite_sources": True,
             "extraction_target": "PER_DOC",
-            "extraction_mode": "BALANCED",
+            "extraction_mode": "PREMIUM",
         },
         data_schema=Models.model_json_schema(),
     )
