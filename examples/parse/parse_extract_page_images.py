@@ -1,11 +1,14 @@
-import asyncio
-import httpx
 import re
+import asyncio
+
+import httpx
 
 from llama_cloud import AsyncLlamaCloud
 
+
 def is_page_screenshot(image_name: str) -> bool:
     return re.match(r"^page_(\d+)\.jpg$", image_name) is not None
+
 
 async def parse_document() -> None:
     client = AsyncLlamaCloud()
@@ -29,7 +32,7 @@ async def parse_document() -> None:
         expand=["images_content_metadata"],
         return_all_images=True,
     )
-    
+
     if result.images_content_metadata:
         for image in result.images_content_metadata.images:
             if image.presigned_url is None or not is_page_screenshot(image.filename):
