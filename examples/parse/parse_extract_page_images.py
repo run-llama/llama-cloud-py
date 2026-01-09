@@ -13,6 +13,8 @@ def is_page_screenshot(image_name: str) -> bool:
 async def parse_document() -> None:
     client = AsyncLlamaCloud()
 
+    client.pipelines.images.list_page_figures
+
     file_obj = await client.files.create(
         file="../example_files/attention_is_all_you_need.pdf",
         purpose="parse",
@@ -30,7 +32,6 @@ async def parse_document() -> None:
             "embedded_images": {"enable": False},
         },
         expand=["images_content_metadata"],
-        return_all_images=True,
     )
 
     if result.images_content_metadata:
