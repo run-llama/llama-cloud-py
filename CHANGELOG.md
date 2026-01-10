@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.19.0 (2026-01-10)
+
+Full Changelog: [v0.18.0...v0.19.0](https://github.com/run-llama/llama-cloud-py/compare/v0.18.0...v0.19.0)
+
+### Features
+
+* **api:** api update ([028190e](https://github.com/run-llama/llama-cloud-py/commit/028190ed0b7c0f5e4eee8f913cb13f3745ad3ecc))
+* **api:** manual updates ([3616730](https://github.com/run-llama/llama-cloud-py/commit/36167303b3980a45b56039d959435a35c6d866c8))
+
 ## 0.18.0 (2026-01-08)
 
 Full Changelog: [v0.17.0...v0.18.0](https://github.com/run-llama/llama-cloud-py/compare/v0.17.0...v0.18.0)
