@@ -1,20 +1,18 @@
 import asyncio
 
 from llama_cloud import AsyncLlamaCloud
-from llama_cloud.types.data_sink_create_params import (
-    ComponentCloudPineconeVectorStore,
-    # ComponentCloudQdrantVectorStore,
-    # ComponentCloudPostgresVectorStore,
-    # ComponentCloudAzureAISearchVectorStore,
-    # ComponentCloudAstraDBVectorStore,
-    # ComponentCloudMilvusVectorStore,
-    # ComponentCloudMongoDBAtlasVectorSearch,
-)
-from llama_cloud.types.data_source_create_params import (
-    ComponentCloudS3DataSource,
-    # ComponentCloudAzStorageBlobDataSource,
-    # ComponentCloudSharepointDataSource,
-    # ComponentCloudOneDriveDataSource,
+from llama_cloud.types import (
+    CloudPineconeVectorStore,
+    CloudS3DataSource,
+    # CloudQdrantVectorStore,
+    # CloudPostgresVectorStore,
+    # CloudAzureAISearchVectorStore,
+    # CloudAstraDBVectorStore,
+    # CloudMilvusVectorStore,
+    # CloudMongoDBAtlasVectorSearch,
+    # CloudAzStorageBlobDataSource,
+    # CloudSharepointDataSource,
+    # CloudOneDriveDataSource,
 )
 
 
@@ -83,7 +81,7 @@ async def create_data_sink() -> str:
     # create a data source
     data_sink = await client.data_sinks.create(
         name="my-pinecone-data-sink",
-        component=ComponentCloudPineconeVectorStore(
+        component=CloudPineconeVectorStore(
             api_key="my-pinecone-api-key",
             index_name="my-pinecone-index",
         ),
@@ -99,7 +97,7 @@ async def create_data_source() -> str:
     # create a data source
     data_source = await client.data_sources.create(
         name="my-s3-data-source",
-        component=ComponentCloudS3DataSource(
+        component=CloudS3DataSource(
             bucket="my-bucket",
             aws_access_id="my-access-id",
             prefix="documents/",

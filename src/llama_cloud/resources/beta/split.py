@@ -214,8 +214,8 @@ class SplitResource(SyncAPIResource):
     def split(
         self,
         *,
-        categories: Iterable[split_create_params.Category],
-        document_input: split_create_params.DocumentInput,
+        categories: Iterable[SplitCategoryParam],
+        document_input: SplitDocumentInputParam,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         splitting_strategy: split_create_params.SplittingStrategy | Omit = omit,
@@ -626,8 +626,8 @@ class AsyncSplitResource(AsyncAPIResource):
     async def split(
         self,
         *,
-        categories: Iterable[split_create_params.Category],
-        document_input: split_create_params.DocumentInput,
+        categories: Iterable[SplitCategoryParam],
+        document_input: SplitDocumentInputParam,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         splitting_strategy: split_create_params.SplittingStrategy | Omit = omit,

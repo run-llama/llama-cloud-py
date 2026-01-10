@@ -506,7 +506,6 @@ class ParsingResource(SyncAPIResource):
         return self.get(
             job.id,
             image_filenames=image_filenames,
-            return_all_images=return_all_images,
             expand=expand,
             organization_id=organization_id,
             project_id=project_id,
@@ -1112,7 +1111,6 @@ class AsyncParsingResource(AsyncAPIResource):
         return await self.get(
             job.id,
             image_filenames=image_filenames,
-            return_all_images=return_all_images,
             expand=expand,
             organization_id=organization_id,
             project_id=project_id,
