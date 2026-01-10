@@ -1,8 +1,8 @@
 import asyncio
 
 from llama_cloud.lib.index import LlamaCloudIndex
-from llama_cloud.types.openai_embedding_config_param import OpenAIEmbeddingConfigParam
 from llama_cloud.types.openai_embedding_param import OpenAIEmbeddingParam
+from llama_cloud.types.openai_embedding_config_param import OpenAIEmbeddingConfigParam
 
 
 async def indexing_and_retrieval_with_llama_index_from_files() -> None:
