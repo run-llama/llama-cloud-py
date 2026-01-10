@@ -5,14 +5,17 @@ from __future__ import annotations
 from typing import Iterable, Optional
 from typing_extensions import Required, TypedDict
 
-__all__ = ["SplitCreateParams", "Category", "DocumentInput", "SplittingStrategy"]
+from .split_category_param import SplitCategoryParam
+from .split_document_input_param import SplitDocumentInputParam
+
+__all__ = ["SplitCreateParams", "SplittingStrategy"]
 
 
 class SplitCreateParams(TypedDict, total=False):
-    categories: Required[Iterable[Category]]
+    categories: Required[Iterable[SplitCategoryParam]]
     """Categories to split the document into."""
 
-    document_input: Required[DocumentInput]
+    document_input: Required[SplitDocumentInputParam]
     """Document to be split."""
 
     organization_id: Optional[str]
@@ -21,26 +24,6 @@ class SplitCreateParams(TypedDict, total=False):
 
     splitting_strategy: SplittingStrategy
     """Strategy for splitting the document."""
-
-
-class Category(TypedDict, total=False):
-    """Category definition for document splitting."""
-
-    name: Required[str]
-    """Name of the category."""
-
-    description: Optional[str]
-    """Optional description of what content belongs in this category."""
-
-
-class DocumentInput(TypedDict, total=False):
-    """Document to be split."""
-
-    type: Required[str]
-    """Type of document input. Valid values are: file_id"""
-
-    value: Required[str]
-    """Document identifier."""
 
 
 class SplittingStrategy(TypedDict, total=False):

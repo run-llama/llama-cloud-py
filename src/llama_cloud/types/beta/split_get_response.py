@@ -4,48 +4,11 @@ from typing import List, Optional
 from datetime import datetime
 
 from ..._models import BaseModel
+from .split_category import SplitCategory
+from .split_document_input import SplitDocumentInput
+from .split_result_response import SplitResultResponse
 
-__all__ = ["SplitGetResponse", "Category", "DocumentInput", "Result", "ResultSegment"]
-
-
-class Category(BaseModel):
-    """Category definition for document splitting."""
-
-    name: str
-    """Name of the category."""
-
-    description: Optional[str] = None
-    """Optional description of what content belongs in this category."""
-
-
-class DocumentInput(BaseModel):
-    """Document that was split."""
-
-    type: str
-    """Type of document input. Valid values are: file_id"""
-
-    value: str
-    """Document identifier."""
-
-
-class ResultSegment(BaseModel):
-    """A segment of the split document."""
-
-    category: str
-    """Category name this split belongs to."""
-
-    confidence_category: str
-    """Categorical confidence level. Valid values are: high, medium, low."""
-
-    pages: List[int]
-    """1-indexed page numbers in this split."""
-
-
-class Result(BaseModel):
-    """Result of a completed split job."""
-
-    segments: List[ResultSegment]
-    """List of document segments."""
+__all__ = ["SplitGetResponse"]
 
 
 class SplitGetResponse(BaseModel):
@@ -54,10 +17,10 @@ class SplitGetResponse(BaseModel):
     id: str
     """Unique identifier for the split job."""
 
-    categories: List[Category]
+    categories: List[SplitCategory]
     """Categories used for splitting."""
 
-    document_input: DocumentInput
+    document_input: SplitDocumentInput
     """Document that was split."""
 
     project_id: str
@@ -78,7 +41,7 @@ class SplitGetResponse(BaseModel):
     error_message: Optional[str] = None
     """Error message if the job failed."""
 
-    result: Optional[Result] = None
+    result: Optional[SplitResultResponse] = None
     """Result of a completed split job."""
 
     updated_at: Optional[datetime] = None
