@@ -6,6 +6,7 @@ from typing_extensions import Literal, Annotated, TypeAlias
 
 from pydantic import Field as FieldInfo
 
+from .b_box import BBox
 from .._utils import PropertyInfo
 from .._models import BaseModel
 
@@ -32,6 +33,8 @@ __all__ = [
     "MarkdownPage",
     "MarkdownPageMarkdownResultPage",
     "MarkdownPageFailedMarkdownPage",
+    "Metadata",
+    "MetadataPage",
     "ResultContentMetadata",
     "Text",
     "TextPage",
@@ -98,8 +101,8 @@ class ItemsPageStructuredResultPageItemTextItem(BaseModel):
     value: str
     """Text content"""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    """List of bounding boxes"""
 
     type: Optional[Literal["text"]] = None
     """Text item type"""
@@ -115,8 +118,8 @@ class ItemsPageStructuredResultPageItemHeadingItem(BaseModel):
     value: str
     """Heading text content"""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    """List of bounding boxes"""
 
     type: Optional[Literal["heading"]] = None
     """Heading item type"""
@@ -129,8 +132,8 @@ class ItemsPageStructuredResultPageItemListItemItemTextItem(BaseModel):
     value: str
     """Text content"""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    """List of bounding boxes"""
 
     type: Optional[Literal["text"]] = None
     """Text item type"""
@@ -148,8 +151,8 @@ class ItemsPageStructuredResultPageItemListItem(BaseModel):
     ordered: bool
     """Whether the list is ordered or unordered"""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    """List of bounding boxes"""
 
     type: Optional[Literal["list"]] = None
     """List item type"""
@@ -162,8 +165,8 @@ class ItemsPageStructuredResultPageItemCodeItem(BaseModel):
     value: str
     """Code content"""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    """List of bounding boxes"""
 
     language: Optional[str] = None
     """Programming language identifier"""
@@ -182,22 +185,28 @@ class ItemsPageStructuredResultPageItemTableItem(BaseModel):
     md: str
     """Markdown representation of the table"""
 
-    rows: List[List[str]]
-    """Table data as array of string arrays"""
+    rows: List[List[Union[str, float, None]]]
+    """Table data as array of arrays (string, number, or null)"""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    """List of bounding boxes"""
 
     type: Optional[Literal["table"]] = None
     """Table item type"""
 
 
 class ItemsPageStructuredResultPageItemImageItem(BaseModel):
-    name: str
-    """Image filename or identifier"""
+    caption: str
+    """Image caption"""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    md: str
+    """Markdown representation of the image"""
+
+    url: str
+    """URL to the image"""
+
+    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    """List of bounding boxes"""
 
     type: Optional[Literal["image"]] = None
     """Image item type"""
@@ -210,8 +219,8 @@ class ItemsPageStructuredResultPageItemLinkItem(BaseModel):
     url: str
     """URL of the link"""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    """List of bounding boxes"""
 
     type: Optional[Literal["link"]] = None
     """Link item type"""
@@ -295,6 +304,35 @@ class Markdown(BaseModel):
     """List of markdown pages or failed page entries"""
 
 
+class MetadataPage(BaseModel):
+    """Page-level metadata including confidence scores and presentation-specific data."""
+
+    page_number: int
+    """Page number of the document"""
+
+    confidence: Optional[float] = None
+    """Confidence score for the page parsing (0-1)"""
+
+    original_orientation_angle: Optional[int] = None
+    """Original orientation angle of the page in degrees"""
+
+    printed_page_number: Optional[str] = None
+    """Printed page number as it appears in the document"""
+
+    slide_section_name: Optional[str] = None
+    """Section name from presentation slides"""
+
+    speaker_notes: Optional[str] = None
+    """Speaker notes from presentation slides"""
+
+
+class Metadata(BaseModel):
+    """Result containing page-level metadata for the parsed document."""
+
+    pages: List[MetadataPage]
+    """List of page metadata entries"""
+
+
 class ResultContentMetadata(BaseModel):
     """Metadata about a specific result type stored in S3."""
 
@@ -340,6 +378,9 @@ class ParsingGetResponse(BaseModel):
 
     markdown: Optional[Markdown] = None
     """Markdown result (if requested)"""
+
+    metadata: Optional[Metadata] = None
+    """Result containing page-level metadata for the parsed document."""
 
     result_content_metadata: Optional[Dict[str, ResultContentMetadata]] = None
     """Metadata including size, existence, and presigned URLs for result files"""

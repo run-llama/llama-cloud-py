@@ -67,7 +67,7 @@ class FilesResource(SyncAPIResource):
           file: The file to upload
 
           purpose: The intended purpose of the file. Valid values: 'user_data', 'parse', 'extract',
-              'split', 'classify'
+              'split', 'classify', 'sheet'
 
           external_file_id: The ID of the file in the external system
 
@@ -324,7 +324,7 @@ class AsyncFilesResource(AsyncAPIResource):
           file: The file to upload
 
           purpose: The intended purpose of the file. Valid values: 'user_data', 'parse', 'extract',
-              'split', 'classify'
+              'split', 'classify', 'sheet'
 
           external_file_id: The ID of the file in the external system
 
