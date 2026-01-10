@@ -21,7 +21,9 @@ from ...types.beta import split_get_params, split_list_params, split_create_para
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.beta.split_get_response import SplitGetResponse
 from ...types.beta.split_list_response import SplitListResponse
+from ...types.beta.split_category_param import SplitCategoryParam
 from ...types.beta.split_create_response import SplitCreateResponse
+from ...types.beta.split_document_input_param import SplitDocumentInputParam
 
 __all__ = ["SplitResource", "AsyncSplitResource"]
 
@@ -49,8 +51,8 @@ class SplitResource(SyncAPIResource):
     def create(
         self,
         *,
-        categories: Iterable[split_create_params.Category],
-        document_input: split_create_params.DocumentInput,
+        categories: Iterable[SplitCategoryParam],
+        document_input: SplitDocumentInputParam,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         splitting_strategy: split_create_params.SplittingStrategy | Omit = omit,
@@ -228,8 +230,8 @@ class AsyncSplitResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        categories: Iterable[split_create_params.Category],
-        document_input: split_create_params.DocumentInput,
+        categories: Iterable[SplitCategoryParam],
+        document_input: SplitDocumentInputParam,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         splitting_strategy: split_create_params.SplittingStrategy | Omit = omit,

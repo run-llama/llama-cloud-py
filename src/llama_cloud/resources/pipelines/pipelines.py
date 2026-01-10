@@ -78,6 +78,7 @@ from ..._base_client import make_request_options
 from ...types.pipeline import Pipeline
 from ...types.pipeline_type import PipelineType
 from ...types.retrieval_mode import RetrievalMode
+from ...types.data_sink_create_param import DataSinkCreateParam
 from ...types.metadata_filters_param import MetadataFiltersParam
 from ...types.pipeline_list_response import PipelineListResponse
 from ...types.sparse_model_config_param import SparseModelConfigParam
@@ -140,7 +141,7 @@ class PipelinesResource(SyncAPIResource):
         name: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        data_sink: Optional[pipeline_create_params.DataSink] | Omit = omit,
+        data_sink: Optional[DataSinkCreateParam] | Omit = omit,
         data_sink_id: Optional[str] | Omit = omit,
         embedding_config: Optional[pipeline_create_params.EmbeddingConfig] | Omit = omit,
         embedding_model_config_id: Optional[str] | Omit = omit,
@@ -353,7 +354,7 @@ class PipelinesResource(SyncAPIResource):
         self,
         pipeline_id: str,
         *,
-        data_sink: Optional[pipeline_update_params.DataSink] | Omit = omit,
+        data_sink: Optional[DataSinkCreateParam] | Omit = omit,
         data_sink_id: Optional[str] | Omit = omit,
         embedding_config: Optional[pipeline_update_params.EmbeddingConfig] | Omit = omit,
         embedding_model_config_id: Optional[str] | Omit = omit,
@@ -601,7 +602,7 @@ class PipelinesResource(SyncAPIResource):
         name: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        data_sink: Optional[pipeline_upsert_params.DataSink] | Omit = omit,
+        data_sink: Optional[DataSinkCreateParam] | Omit = omit,
         data_sink_id: Optional[str] | Omit = omit,
         embedding_config: Optional[pipeline_upsert_params.EmbeddingConfig] | Omit = omit,
         embedding_model_config_id: Optional[str] | Omit = omit,
@@ -749,7 +750,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         name: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        data_sink: Optional[pipeline_create_params.DataSink] | Omit = omit,
+        data_sink: Optional[DataSinkCreateParam] | Omit = omit,
         data_sink_id: Optional[str] | Omit = omit,
         embedding_config: Optional[pipeline_create_params.EmbeddingConfig] | Omit = omit,
         embedding_model_config_id: Optional[str] | Omit = omit,
@@ -962,7 +963,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         self,
         pipeline_id: str,
         *,
-        data_sink: Optional[pipeline_update_params.DataSink] | Omit = omit,
+        data_sink: Optional[DataSinkCreateParam] | Omit = omit,
         data_sink_id: Optional[str] | Omit = omit,
         embedding_config: Optional[pipeline_update_params.EmbeddingConfig] | Omit = omit,
         embedding_model_config_id: Optional[str] | Omit = omit,
@@ -1210,7 +1211,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         name: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        data_sink: Optional[pipeline_upsert_params.DataSink] | Omit = omit,
+        data_sink: Optional[DataSinkCreateParam] | Omit = omit,
         data_sink_id: Optional[str] | Omit = omit,
         embedding_config: Optional[pipeline_upsert_params.EmbeddingConfig] | Omit = omit,
         embedding_model_config_id: Optional[str] | Omit = omit,

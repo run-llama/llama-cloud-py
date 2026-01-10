@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from .agent_data import AgentData as AgentData
 from .sheets_job import SheetsJob as SheetsJob
+from .split_category import SplitCategory as SplitCategory
 from .sheet_get_params import SheetGetParams as SheetGetParams
 from .split_get_params import SplitGetParams as SplitGetParams
 from .batch_list_params import BatchListParams as BatchListParams
@@ -18,13 +19,17 @@ from .sheet_create_params import SheetCreateParams as SheetCreateParams
 from .split_create_params import SplitCreateParams as SplitCreateParams
 from .split_list_response import SplitListResponse as SplitListResponse
 from .directory_get_params import DirectoryGetParams as DirectoryGetParams
+from .split_category_param import SplitCategoryParam as SplitCategoryParam
+from .split_document_input import SplitDocumentInput as SplitDocumentInput
 from .agent_data_get_params import AgentDataGetParams as AgentDataGetParams
 from .batch_cancel_response import BatchCancelResponse as BatchCancelResponse
 from .batch_create_response import BatchCreateResponse as BatchCreateResponse
 from .directory_list_params import DirectoryListParams as DirectoryListParams
 from .sheets_parsing_config import SheetsParsingConfig as SheetsParsingConfig
 from .split_create_response import SplitCreateResponse as SplitCreateResponse
+from .split_result_response import SplitResultResponse as SplitResultResponse
 from .directory_get_response import DirectoryGetResponse as DirectoryGetResponse
+from .split_segment_response import SplitSegmentResponse as SplitSegmentResponse
 from .batch_get_status_params import BatchGetStatusParams as BatchGetStatusParams
 from .directory_create_params import DirectoryCreateParams as DirectoryCreateParams
 from .directory_delete_params import DirectoryDeleteParams as DirectoryDeleteParams
@@ -39,6 +44,7 @@ from .directory_create_response import DirectoryCreateResponse as DirectoryCreat
 from .directory_update_response import DirectoryUpdateResponse as DirectoryUpdateResponse
 from .agent_data_delete_response import AgentDataDeleteResponse as AgentDataDeleteResponse
 from .agent_data_search_response import AgentDataSearchResponse as AgentDataSearchResponse
+from .split_document_input_param import SplitDocumentInputParam as SplitDocumentInputParam
 from .agent_data_aggregate_params import AgentDataAggregateParams as AgentDataAggregateParams
 from .sheets_parsing_config_param import SheetsParsingConfigParam as SheetsParsingConfigParam
 from .agent_data_agent_data_params import AgentDataAgentDataParams as AgentDataAgentDataParams

@@ -12,6 +12,28 @@ from . import (
 )
 from .. import _compat
 from .file import File as File
+from .b_box import BBox as BBox
+from .shared import (
+    CloudS3DataSource as CloudS3DataSource,
+    CloudBoxDataSource as CloudBoxDataSource,
+    CloudJiraDataSource as CloudJiraDataSource,
+    CloudSlackDataSource as CloudSlackDataSource,
+    PgVectorHnswSettings as PgVectorHnswSettings,
+    CloudJiraDataSourceV2 as CloudJiraDataSourceV2,
+    FailureHandlingConfig as FailureHandlingConfig,
+    CloudMilvusVectorStore as CloudMilvusVectorStore,
+    CloudQdrantVectorStore as CloudQdrantVectorStore,
+    CloudAstraDBVectorStore as CloudAstraDBVectorStore,
+    CloudOneDriveDataSource as CloudOneDriveDataSource,
+    CloudPineconeVectorStore as CloudPineconeVectorStore,
+    CloudPostgresVectorStore as CloudPostgresVectorStore,
+    CloudConfluenceDataSource as CloudConfluenceDataSource,
+    CloudNotionPageDataSource as CloudNotionPageDataSource,
+    CloudSharepointDataSource as CloudSharepointDataSource,
+    CloudAzStorageBlobDataSource as CloudAzStorageBlobDataSource,
+    CloudAzureAISearchVectorStore as CloudAzureAISearchVectorStore,
+    CloudMongoDBAtlasVectorSearch as CloudMongoDBAtlasVectorSearch,
+)
 from .project import Project as Project
 from .pipeline import Pipeline as Pipeline
 from .data_sink import DataSink as DataSink
@@ -25,7 +47,11 @@ from .presigned_url import PresignedURL as PresignedURL
 from .fail_page_mode import FailPageMode as FailPageMode
 from .retrieval_mode import RetrievalMode as RetrievalMode
 from .file_get_params import FileGetParams as FileGetParams
+from .cohere_embedding import CohereEmbedding as CohereEmbedding
+from .gemini_embedding import GeminiEmbedding as GeminiEmbedding
 from .metadata_filters import MetadataFilters as MetadataFilters
+from .openai_embedding import OpenAIEmbedding as OpenAIEmbedding
+from .bedrock_embedding import BedrockEmbedding as BedrockEmbedding
 from .file_query_params import FileQueryParams as FileQueryParams
 from .parsing_languages import ParsingLanguages as ParsingLanguages
 from .file_create_params import FileCreateParams as FileCreateParams
@@ -49,16 +75,26 @@ from .parsing_create_params import ParsingCreateParams as ParsingCreateParams
 from .parsing_list_response import ParsingListResponse as ParsingListResponse
 from .project_list_response import ProjectListResponse as ProjectListResponse
 from .retriever_list_params import RetrieverListParams as RetrieverListParams
+from .vertex_text_embedding import VertexTextEmbedding as VertexTextEmbedding
+from .azure_openai_embedding import AzureOpenAIEmbedding as AzureOpenAIEmbedding
+from .cohere_embedding_param import CohereEmbeddingParam as CohereEmbeddingParam
+from .data_sink_create_param import DataSinkCreateParam as DataSinkCreateParam
+from .gemini_embedding_param import GeminiEmbeddingParam as GeminiEmbeddingParam
 from .llama_parse_parameters import LlamaParseParameters as LlamaParseParameters
 from .metadata_filters_param import MetadataFiltersParam as MetadataFiltersParam
+from .openai_embedding_param import OpenAIEmbeddingParam as OpenAIEmbeddingParam
 from .pipeline_create_params import PipelineCreateParams as PipelineCreateParams
 from .pipeline_list_response import PipelineListResponse as PipelineListResponse
 from .pipeline_update_params import PipelineUpdateParams as PipelineUpdateParams
 from .pipeline_upsert_params import PipelineUpsertParams as PipelineUpsertParams
+from .bedrock_embedding_param import BedrockEmbeddingParam as BedrockEmbeddingParam
+from .cohere_embedding_config import CohereEmbeddingConfig as CohereEmbeddingConfig
 from .data_sink_create_params import DataSinkCreateParams as DataSinkCreateParams
 from .data_sink_list_response import DataSinkListResponse as DataSinkListResponse
 from .data_sink_update_params import DataSinkUpdateParams as DataSinkUpdateParams
 from .data_source_list_params import DataSourceListParams as DataSourceListParams
+from .gemini_embedding_config import GeminiEmbeddingConfig as GeminiEmbeddingConfig
+from .openai_embedding_config import OpenAIEmbeddingConfig as OpenAIEmbeddingConfig
 from .parsing_create_response import ParsingCreateResponse as ParsingCreateResponse
 from .preset_retrieval_params import PresetRetrievalParams as PresetRetrievalParams
 from .retriever_create_params import RetrieverCreateParams as RetrieverCreateParams
@@ -66,6 +102,7 @@ from .retriever_list_response import RetrieverListResponse as RetrieverListRespo
 from .retriever_search_params import RetrieverSearchParams as RetrieverSearchParams
 from .retriever_update_params import RetrieverUpdateParams as RetrieverUpdateParams
 from .retriever_upsert_params import RetrieverUpsertParams as RetrieverUpsertParams
+from .bedrock_embedding_config import BedrockEmbeddingConfig as BedrockEmbeddingConfig
 from .composite_retrieval_mode import CompositeRetrievalMode as CompositeRetrievalMode
 from .pipeline_metadata_config import PipelineMetadataConfig as PipelineMetadataConfig
 from .pipeline_retrieve_params import PipelineRetrieveParams as PipelineRetrieveParams
@@ -78,19 +115,39 @@ from .composite_retrieval_result import CompositeRetrievalResult as CompositeRet
 from .parsing_upload_file_params import ParsingUploadFileParams as ParsingUploadFileParams
 from .pipeline_get_status_params import PipelineGetStatusParams as PipelineGetStatusParams
 from .pipeline_retrieve_response import PipelineRetrieveResponse as PipelineRetrieveResponse
+from .vertex_ai_embedding_config import VertexAIEmbeddingConfig as VertexAIEmbeddingConfig
 from .auto_transform_config_param import AutoTransformConfigParam as AutoTransformConfigParam
 from .page_figure_node_with_score import PageFigureNodeWithScore as PageFigureNodeWithScore
+from .vertex_text_embedding_param import VertexTextEmbeddingParam as VertexTextEmbeddingParam
+from .azure_openai_embedding_param import AzureOpenAIEmbeddingParam as AzureOpenAIEmbeddingParam
 from .llama_parse_parameters_param import LlamaParseParametersParam as LlamaParseParametersParam
 from .parsing_upload_file_response import ParsingUploadFileResponse as ParsingUploadFileResponse
+from .azure_openai_embedding_config import AzureOpenAIEmbeddingConfig as AzureOpenAIEmbeddingConfig
+from .cohere_embedding_config_param import CohereEmbeddingConfigParam as CohereEmbeddingConfigParam
+from .gemini_embedding_config_param import GeminiEmbeddingConfigParam as GeminiEmbeddingConfigParam
+from .openai_embedding_config_param import OpenAIEmbeddingConfigParam as OpenAIEmbeddingConfigParam
 from .preset_retrieval_params_param import PresetRetrievalParamsParam as PresetRetrievalParamsParam
 from .advanced_mode_transform_config import AdvancedModeTransformConfig as AdvancedModeTransformConfig
+from .bedrock_embedding_config_param import BedrockEmbeddingConfigParam as BedrockEmbeddingConfigParam
 from .pipeline_metadata_config_param import PipelineMetadataConfigParam as PipelineMetadataConfigParam
 from .page_screenshot_node_with_score import PageScreenshotNodeWithScore as PageScreenshotNodeWithScore
+from .vertex_ai_embedding_config_param import VertexAIEmbeddingConfigParam as VertexAIEmbeddingConfigParam
 from .managed_ingestion_status_response import ManagedIngestionStatusResponse as ManagedIngestionStatusResponse
+from .azure_openai_embedding_config_param import AzureOpenAIEmbeddingConfigParam as AzureOpenAIEmbeddingConfigParam
 from .data_source_reader_version_metadata import DataSourceReaderVersionMetadata as DataSourceReaderVersionMetadata
 from .advanced_mode_transform_config_param import AdvancedModeTransformConfigParam as AdvancedModeTransformConfigParam
+from .hugging_face_inference_api_embedding import HuggingFaceInferenceAPIEmbedding as HuggingFaceInferenceAPIEmbedding
 from .llama_parse_supported_file_extensions import (
     LlamaParseSupportedFileExtensions as LlamaParseSupportedFileExtensions,
+)
+from .hugging_face_inference_api_embedding_param import (
+    HuggingFaceInferenceAPIEmbeddingParam as HuggingFaceInferenceAPIEmbeddingParam,
+)
+from .hugging_face_inference_api_embedding_config import (
+    HuggingFaceInferenceAPIEmbeddingConfig as HuggingFaceInferenceAPIEmbeddingConfig,
+)
+from .hugging_face_inference_api_embedding_config_param import (
+    HuggingFaceInferenceAPIEmbeddingConfigParam as HuggingFaceInferenceAPIEmbeddingConfigParam,
 )
 
 # Rebuild cyclical models only after all modules are imported.

@@ -1,3 +1,29 @@
+# Shared Types
+
+```python
+from llama_cloud.types import (
+    CloudAstraDBVectorStore,
+    CloudAzStorageBlobDataSource,
+    CloudAzureAISearchVectorStore,
+    CloudBoxDataSource,
+    CloudConfluenceDataSource,
+    CloudJiraDataSource,
+    CloudJiraDataSourceV2,
+    CloudMilvusVectorStore,
+    CloudMongoDBAtlasVectorSearch,
+    CloudNotionPageDataSource,
+    CloudOneDriveDataSource,
+    CloudPineconeVectorStore,
+    CloudPostgresVectorStore,
+    CloudQdrantVectorStore,
+    CloudS3DataSource,
+    CloudSharepointDataSource,
+    CloudSlackDataSource,
+    FailureHandlingConfig,
+    PgVectorHnswSettings,
+)
+```
+
 # Projects
 
 Types:
@@ -66,11 +92,24 @@ Types:
 from llama_cloud.types import (
     AdvancedModeTransformConfig,
     AutoTransformConfig,
+    AzureOpenAIEmbedding,
+    AzureOpenAIEmbeddingConfig,
+    BedrockEmbedding,
+    BedrockEmbeddingConfig,
+    CohereEmbedding,
+    CohereEmbeddingConfig,
+    DataSinkCreate,
+    GeminiEmbedding,
+    GeminiEmbeddingConfig,
+    HuggingFaceInferenceAPIEmbedding,
+    HuggingFaceInferenceAPIEmbeddingConfig,
     LlamaParseParameters,
     LlmParameters,
     ManagedIngestionStatusResponse,
     MessageRole,
     MetadataFilters,
+    OpenAIEmbedding,
+    OpenAIEmbeddingConfig,
     PageFigureNodeWithScore,
     PageScreenshotNodeWithScore,
     Pipeline,
@@ -80,6 +119,8 @@ from llama_cloud.types import (
     PresetRetrievalParams,
     RetrievalMode,
     SparseModelConfig,
+    VertexAIEmbeddingConfig,
+    VertexTextEmbedding,
     PipelineRetrieveResponse,
     PipelineListResponse,
 )
@@ -239,6 +280,7 @@ Types:
 
 ```python
 from llama_cloud.types import (
+    BBox,
     FailPageMode,
     LlamaParseSupportedFileExtensions,
     ParsingJob,
@@ -501,7 +543,15 @@ Methods:
 Types:
 
 ```python
-from llama_cloud.types.beta import SplitCreateResponse, SplitListResponse, SplitGetResponse
+from llama_cloud.types.beta import (
+    SplitCategory,
+    SplitDocumentInput,
+    SplitResultResponse,
+    SplitSegmentResponse,
+    SplitCreateResponse,
+    SplitListResponse,
+    SplitGetResponse,
+)
 ```
 
 Methods:
