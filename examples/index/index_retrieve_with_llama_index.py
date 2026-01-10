@@ -1,18 +1,16 @@
 import asyncio
 
 from llama_cloud.lib.index import LlamaCloudIndex
-from llama_cloud.types.pipeline_create_params import (
-    EmbeddingConfigOpenAIEmbeddingConfig,
-    EmbeddingConfigOpenAIEmbeddingConfigComponent,
-)
+from llama_cloud.types.openai_embedding_param import OpenAIEmbeddingParam
+from llama_cloud.types.openai_embedding_config_param import OpenAIEmbeddingConfigParam
 
 
 async def indexing_and_retrieval_with_llama_index_from_files() -> None:
     index = await LlamaCloudIndex.acreate_index(
         name="my-llama-index",
         project_id="my-project-id",
-        embedding_config=EmbeddingConfigOpenAIEmbeddingConfig(
-            component=EmbeddingConfigOpenAIEmbeddingConfigComponent(
+        embedding_config=OpenAIEmbeddingConfigParam(
+            component=OpenAIEmbeddingParam(
                 api_key="sk-1234",
                 model_name="text-embedding-3-small",
             ),
