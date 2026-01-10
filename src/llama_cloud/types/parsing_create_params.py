@@ -90,7 +90,7 @@ class ParsingCreateParams(TypedDict, total=False):
     source_url: Optional[str]
     """Source URL to fetch document from"""
 
-    version: Union[Literal["2025-12-31", "2025-12-18", "2025-12-11", "latest"], str]
+    version: Union[Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "latest"], str]
     """Version of the tier configuration"""
 
     webhook_configurations: Iterable[WebhookConfiguration]
@@ -425,7 +425,7 @@ class ProcessingOptionsAutoModeConfigurationParsingConf(TypedDict, total=False):
     tier: Optional[Literal["fast", "cost_effective", "agentic", "agentic_plus"]]
     """The parsing tier to use"""
 
-    version: Union[Literal["2025-12-31", "2025-12-18", "2025-12-11", "latest"], str, None]
+    version: Union[Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "latest"], str, None]
     """Version of the tier configuration"""
 
 

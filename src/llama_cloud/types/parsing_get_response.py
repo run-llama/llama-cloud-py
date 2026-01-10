@@ -19,19 +19,29 @@ __all__ = [
     "ItemsPageStructuredResultPage",
     "ItemsPageStructuredResultPageItem",
     "ItemsPageStructuredResultPageItemTextItem",
+    "ItemsPageStructuredResultPageItemTextItemBBox",
     "ItemsPageStructuredResultPageItemHeadingItem",
+    "ItemsPageStructuredResultPageItemHeadingItemBBox",
     "ItemsPageStructuredResultPageItemListItem",
     "ItemsPageStructuredResultPageItemListItemItem",
     "ItemsPageStructuredResultPageItemListItemItemTextItem",
+    "ItemsPageStructuredResultPageItemListItemItemTextItemBBox",
+    "ItemsPageStructuredResultPageItemListItemBBox",
     "ItemsPageStructuredResultPageItemCodeItem",
+    "ItemsPageStructuredResultPageItemCodeItemBBox",
     "ItemsPageStructuredResultPageItemTableItem",
+    "ItemsPageStructuredResultPageItemTableItemBBox",
     "ItemsPageStructuredResultPageItemImageItem",
+    "ItemsPageStructuredResultPageItemImageItemBBox",
     "ItemsPageStructuredResultPageItemLinkItem",
+    "ItemsPageStructuredResultPageItemLinkItemBBox",
     "ItemsPageFailedStructuredPage",
     "Markdown",
     "MarkdownPage",
     "MarkdownPageMarkdownResultPage",
     "MarkdownPageFailedMarkdownPage",
+    "Metadata",
+    "MetadataPage",
     "ResultContentMetadata",
     "Text",
     "TextPage",
@@ -91,6 +101,34 @@ class ImagesContentMetadata(BaseModel):
     """Total number of extracted images"""
 
 
+class ItemsPageStructuredResultPageItemTextItemBBox(BaseModel):
+    """Bounding box with coordinates and optional metadata."""
+
+    h: float
+    """Height of the bounding box"""
+
+    w: float
+    """Width of the bounding box"""
+
+    x: float
+    """X coordinate of the bounding box"""
+
+    y: float
+    """Y coordinate of the bounding box"""
+
+    confidence: Optional[float] = None
+    """Confidence score"""
+
+    end_index: Optional[int] = FieldInfo(alias="endIndex", default=None)
+    """End index in the text"""
+
+    label: Optional[str] = None
+    """Label for the bounding box"""
+
+    start_index: Optional[int] = FieldInfo(alias="startIndex", default=None)
+    """Start index in the text"""
+
+
 class ItemsPageStructuredResultPageItemTextItem(BaseModel):
     md: str
     """Markdown representation preserving formatting"""
@@ -98,11 +136,39 @@ class ItemsPageStructuredResultPageItemTextItem(BaseModel):
     value: str
     """Text content"""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    b_box: Optional[List[ItemsPageStructuredResultPageItemTextItemBBox]] = FieldInfo(alias="bBox", default=None)
+    """List of bounding boxes"""
 
     type: Optional[Literal["text"]] = None
     """Text item type"""
+
+
+class ItemsPageStructuredResultPageItemHeadingItemBBox(BaseModel):
+    """Bounding box with coordinates and optional metadata."""
+
+    h: float
+    """Height of the bounding box"""
+
+    w: float
+    """Width of the bounding box"""
+
+    x: float
+    """X coordinate of the bounding box"""
+
+    y: float
+    """Y coordinate of the bounding box"""
+
+    confidence: Optional[float] = None
+    """Confidence score"""
+
+    end_index: Optional[int] = FieldInfo(alias="endIndex", default=None)
+    """End index in the text"""
+
+    label: Optional[str] = None
+    """Label for the bounding box"""
+
+    start_index: Optional[int] = FieldInfo(alias="startIndex", default=None)
+    """Start index in the text"""
 
 
 class ItemsPageStructuredResultPageItemHeadingItem(BaseModel):
@@ -115,11 +181,39 @@ class ItemsPageStructuredResultPageItemHeadingItem(BaseModel):
     value: str
     """Heading text content"""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    b_box: Optional[List[ItemsPageStructuredResultPageItemHeadingItemBBox]] = FieldInfo(alias="bBox", default=None)
+    """List of bounding boxes"""
 
     type: Optional[Literal["heading"]] = None
     """Heading item type"""
+
+
+class ItemsPageStructuredResultPageItemListItemItemTextItemBBox(BaseModel):
+    """Bounding box with coordinates and optional metadata."""
+
+    h: float
+    """Height of the bounding box"""
+
+    w: float
+    """Width of the bounding box"""
+
+    x: float
+    """X coordinate of the bounding box"""
+
+    y: float
+    """Y coordinate of the bounding box"""
+
+    confidence: Optional[float] = None
+    """Confidence score"""
+
+    end_index: Optional[int] = FieldInfo(alias="endIndex", default=None)
+    """End index in the text"""
+
+    label: Optional[str] = None
+    """Label for the bounding box"""
+
+    start_index: Optional[int] = FieldInfo(alias="startIndex", default=None)
+    """Start index in the text"""
 
 
 class ItemsPageStructuredResultPageItemListItemItemTextItem(BaseModel):
@@ -129,8 +223,10 @@ class ItemsPageStructuredResultPageItemListItemItemTextItem(BaseModel):
     value: str
     """Text content"""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    b_box: Optional[List[ItemsPageStructuredResultPageItemListItemItemTextItemBBox]] = FieldInfo(
+        alias="bBox", default=None
+    )
+    """List of bounding boxes"""
 
     type: Optional[Literal["text"]] = None
     """Text item type"""
@@ -141,6 +237,34 @@ ItemsPageStructuredResultPageItemListItemItem: TypeAlias = Union[
 ]
 
 
+class ItemsPageStructuredResultPageItemListItemBBox(BaseModel):
+    """Bounding box with coordinates and optional metadata."""
+
+    h: float
+    """Height of the bounding box"""
+
+    w: float
+    """Width of the bounding box"""
+
+    x: float
+    """X coordinate of the bounding box"""
+
+    y: float
+    """Y coordinate of the bounding box"""
+
+    confidence: Optional[float] = None
+    """Confidence score"""
+
+    end_index: Optional[int] = FieldInfo(alias="endIndex", default=None)
+    """End index in the text"""
+
+    label: Optional[str] = None
+    """Label for the bounding box"""
+
+    start_index: Optional[int] = FieldInfo(alias="startIndex", default=None)
+    """Start index in the text"""
+
+
 class ItemsPageStructuredResultPageItemListItem(BaseModel):
     items: List[ItemsPageStructuredResultPageItemListItemItem]
     """List of nested text or list items"""
@@ -148,11 +272,39 @@ class ItemsPageStructuredResultPageItemListItem(BaseModel):
     ordered: bool
     """Whether the list is ordered or unordered"""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    b_box: Optional[List[ItemsPageStructuredResultPageItemListItemBBox]] = FieldInfo(alias="bBox", default=None)
+    """List of bounding boxes"""
 
     type: Optional[Literal["list"]] = None
     """List item type"""
+
+
+class ItemsPageStructuredResultPageItemCodeItemBBox(BaseModel):
+    """Bounding box with coordinates and optional metadata."""
+
+    h: float
+    """Height of the bounding box"""
+
+    w: float
+    """Width of the bounding box"""
+
+    x: float
+    """X coordinate of the bounding box"""
+
+    y: float
+    """Y coordinate of the bounding box"""
+
+    confidence: Optional[float] = None
+    """Confidence score"""
+
+    end_index: Optional[int] = FieldInfo(alias="endIndex", default=None)
+    """End index in the text"""
+
+    label: Optional[str] = None
+    """Label for the bounding box"""
+
+    start_index: Optional[int] = FieldInfo(alias="startIndex", default=None)
+    """Start index in the text"""
 
 
 class ItemsPageStructuredResultPageItemCodeItem(BaseModel):
@@ -162,14 +314,42 @@ class ItemsPageStructuredResultPageItemCodeItem(BaseModel):
     value: str
     """Code content"""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    b_box: Optional[List[ItemsPageStructuredResultPageItemCodeItemBBox]] = FieldInfo(alias="bBox", default=None)
+    """List of bounding boxes"""
 
     language: Optional[str] = None
     """Programming language identifier"""
 
     type: Optional[Literal["code"]] = None
     """Code block item type"""
+
+
+class ItemsPageStructuredResultPageItemTableItemBBox(BaseModel):
+    """Bounding box with coordinates and optional metadata."""
+
+    h: float
+    """Height of the bounding box"""
+
+    w: float
+    """Width of the bounding box"""
+
+    x: float
+    """X coordinate of the bounding box"""
+
+    y: float
+    """Y coordinate of the bounding box"""
+
+    confidence: Optional[float] = None
+    """Confidence score"""
+
+    end_index: Optional[int] = FieldInfo(alias="endIndex", default=None)
+    """End index in the text"""
+
+    label: Optional[str] = None
+    """Label for the bounding box"""
+
+    start_index: Optional[int] = FieldInfo(alias="startIndex", default=None)
+    """Start index in the text"""
 
 
 class ItemsPageStructuredResultPageItemTableItem(BaseModel):
@@ -182,25 +362,87 @@ class ItemsPageStructuredResultPageItemTableItem(BaseModel):
     md: str
     """Markdown representation of the table"""
 
-    rows: List[List[str]]
-    """Table data as array of string arrays"""
+    rows: List[List[Union[str, float, None]]]
+    """Table data as array of arrays (string, number, or null)"""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    b_box: Optional[List[ItemsPageStructuredResultPageItemTableItemBBox]] = FieldInfo(alias="bBox", default=None)
+    """List of bounding boxes"""
 
     type: Optional[Literal["table"]] = None
     """Table item type"""
 
 
-class ItemsPageStructuredResultPageItemImageItem(BaseModel):
-    name: str
-    """Image filename or identifier"""
+class ItemsPageStructuredResultPageItemImageItemBBox(BaseModel):
+    """Bounding box with coordinates and optional metadata."""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    h: float
+    """Height of the bounding box"""
+
+    w: float
+    """Width of the bounding box"""
+
+    x: float
+    """X coordinate of the bounding box"""
+
+    y: float
+    """Y coordinate of the bounding box"""
+
+    confidence: Optional[float] = None
+    """Confidence score"""
+
+    end_index: Optional[int] = FieldInfo(alias="endIndex", default=None)
+    """End index in the text"""
+
+    label: Optional[str] = None
+    """Label for the bounding box"""
+
+    start_index: Optional[int] = FieldInfo(alias="startIndex", default=None)
+    """Start index in the text"""
+
+
+class ItemsPageStructuredResultPageItemImageItem(BaseModel):
+    caption: str
+    """Image caption"""
+
+    md: str
+    """Markdown representation of the image"""
+
+    url: str
+    """URL to the image"""
+
+    b_box: Optional[List[ItemsPageStructuredResultPageItemImageItemBBox]] = FieldInfo(alias="bBox", default=None)
+    """List of bounding boxes"""
 
     type: Optional[Literal["image"]] = None
     """Image item type"""
+
+
+class ItemsPageStructuredResultPageItemLinkItemBBox(BaseModel):
+    """Bounding box with coordinates and optional metadata."""
+
+    h: float
+    """Height of the bounding box"""
+
+    w: float
+    """Width of the bounding box"""
+
+    x: float
+    """X coordinate of the bounding box"""
+
+    y: float
+    """Y coordinate of the bounding box"""
+
+    confidence: Optional[float] = None
+    """Confidence score"""
+
+    end_index: Optional[int] = FieldInfo(alias="endIndex", default=None)
+    """End index in the text"""
+
+    label: Optional[str] = None
+    """Label for the bounding box"""
+
+    start_index: Optional[int] = FieldInfo(alias="startIndex", default=None)
+    """Start index in the text"""
 
 
 class ItemsPageStructuredResultPageItemLinkItem(BaseModel):
@@ -210,8 +452,8 @@ class ItemsPageStructuredResultPageItemLinkItem(BaseModel):
     url: str
     """URL of the link"""
 
-    b_box: Optional[List[object]] = FieldInfo(alias="bBox", default=None)
-    """Bounding box coordinates [x1, y1, x2, y2]"""
+    b_box: Optional[List[ItemsPageStructuredResultPageItemLinkItemBBox]] = FieldInfo(alias="bBox", default=None)
+    """List of bounding boxes"""
 
     type: Optional[Literal["link"]] = None
     """Link item type"""
@@ -295,6 +537,35 @@ class Markdown(BaseModel):
     """List of markdown pages or failed page entries"""
 
 
+class MetadataPage(BaseModel):
+    """Page-level metadata including confidence scores and presentation-specific data."""
+
+    page_number: int
+    """Page number of the document"""
+
+    confidence: Optional[float] = None
+    """Confidence score for the page parsing (0-1)"""
+
+    original_orientation_angle: Optional[int] = None
+    """Original orientation angle of the page in degrees"""
+
+    printed_page_number: Optional[str] = None
+    """Printed page number as it appears in the document"""
+
+    slide_section_name: Optional[str] = None
+    """Section name from presentation slides"""
+
+    speaker_notes: Optional[str] = None
+    """Speaker notes from presentation slides"""
+
+
+class Metadata(BaseModel):
+    """Result containing page-level metadata for the parsed document."""
+
+    pages: List[MetadataPage]
+    """List of page metadata entries"""
+
+
 class ResultContentMetadata(BaseModel):
     """Metadata about a specific result type stored in S3."""
 
@@ -340,6 +611,9 @@ class ParsingGetResponse(BaseModel):
 
     markdown: Optional[Markdown] = None
     """Markdown result (if requested)"""
+
+    metadata: Optional[Metadata] = None
+    """Result containing page-level metadata for the parsed document."""
 
     result_content_metadata: Optional[Dict[str, ResultContentMetadata]] = None
     """Metadata including size, existence, and presigned URLs for result files"""

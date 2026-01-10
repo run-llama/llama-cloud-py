@@ -17,7 +17,7 @@ class FileCreateParams(TypedDict, total=False):
     purpose: Required[str]
     """The intended purpose of the file.
 
-    Valid values: 'user_data', 'parse', 'extract', 'split', 'classify'
+    Valid values: 'user_data', 'parse', 'extract', 'split', 'classify', 'sheet'
     """
 
     organization_id: Optional[str]
