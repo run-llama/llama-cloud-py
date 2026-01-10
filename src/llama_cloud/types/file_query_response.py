@@ -34,7 +34,7 @@ class Item(BaseModel):
     purpose: Optional[str] = None
     """
     The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
-    'split', 'classify')
+    'split', 'classify', 'sheet')
     """
 
 
