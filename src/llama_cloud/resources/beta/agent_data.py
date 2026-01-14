@@ -16,6 +16,7 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from ...pagination import SyncPaginatedCursorPost, AsyncPaginatedCursorPost
 from ...types.beta import (
     agent_data_get_params,
     agent_data_delete_params,
@@ -25,10 +26,9 @@ from ...types.beta import (
     agent_data_agent_data_params,
     agent_data_delete_by_query_params,
 )
-from ..._base_client import make_request_options
+from ..._base_client import AsyncPaginator, make_request_options
 from ...types.beta.agent_data import AgentData
 from ...types.beta.agent_data_delete_response import AgentDataDeleteResponse
-from ...types.beta.agent_data_search_response import AgentDataSearchResponse
 from ...types.beta.agent_data_aggregate_response import AgentDataAggregateResponse
 from ...types.beta.agent_data_delete_by_query_response import AgentDataDeleteByQueryResponse
 
@@ -221,7 +221,7 @@ class AgentDataResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentDataAggregateResponse:
+    ) -> SyncPaginatedCursorPost[AgentDataAggregateResponse]:
         """
         Aggregate agent data with grouping and optional counting/first item retrieval.
 
@@ -259,8 +259,9 @@ class AgentDataResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._post(
+        return self._get_api_list(
             "/api/v1/beta/agent-data/:aggregate",
+            page=SyncPaginatedCursorPost[AgentDataAggregateResponse],
             body=maybe_transform(
                 {
                     "deployment_name": deployment_name,
@@ -289,7 +290,8 @@ class AgentDataResource(SyncAPIResource):
                     agent_data_aggregate_params.AgentDataAggregateParams,
                 ),
             ),
-            cast_to=AgentDataAggregateResponse,
+            model=AgentDataAggregateResponse,
+            method="post",
         )
 
     def delete_by_query(
@@ -415,7 +417,7 @@ class AgentDataResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentDataSearchResponse:
+    ) -> SyncPaginatedCursorPost[AgentData]:
         """
         Search agent data with filtering, sorting, and pagination.
 
@@ -448,8 +450,9 @@ class AgentDataResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._post(
+        return self._get_api_list(
             "/api/v1/beta/agent-data/:search",
+            page=SyncPaginatedCursorPost[AgentData],
             body=maybe_transform(
                 {
                     "deployment_name": deployment_name,
@@ -476,7 +479,8 @@ class AgentDataResource(SyncAPIResource):
                     agent_data_search_params.AgentDataSearchParams,
                 ),
             ),
-            cast_to=AgentDataSearchResponse,
+            model=AgentData,
+            method="post",
         )
 
 
@@ -645,7 +649,7 @@ class AsyncAgentDataResource(AsyncAPIResource):
             cast_to=AgentData,
         )
 
-    async def aggregate(
+    def aggregate(
         self,
         *,
         deployment_name: str,
@@ -666,7 +670,7 @@ class AsyncAgentDataResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentDataAggregateResponse:
+    ) -> AsyncPaginator[AgentDataAggregateResponse, AsyncPaginatedCursorPost[AgentDataAggregateResponse]]:
         """
         Aggregate agent data with grouping and optional counting/first item retrieval.
 
@@ -704,9 +708,10 @@ class AsyncAgentDataResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._post(
+        return self._get_api_list(
             "/api/v1/beta/agent-data/:aggregate",
-            body=await async_maybe_transform(
+            page=AsyncPaginatedCursorPost[AgentDataAggregateResponse],
+            body=maybe_transform(
                 {
                     "deployment_name": deployment_name,
                     "collection": collection,
@@ -726,7 +731,7 @@ class AsyncAgentDataResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "organization_id": organization_id,
                         "project_id": project_id,
@@ -734,7 +739,8 @@ class AsyncAgentDataResource(AsyncAPIResource):
                     agent_data_aggregate_params.AgentDataAggregateParams,
                 ),
             ),
-            cast_to=AgentDataAggregateResponse,
+            model=AgentDataAggregateResponse,
+            method="post",
         )
 
     async def delete_by_query(
@@ -841,7 +847,7 @@ class AsyncAgentDataResource(AsyncAPIResource):
             cast_to=AgentData,
         )
 
-    async def search(
+    def search(
         self,
         *,
         deployment_name: str,
@@ -860,7 +866,7 @@ class AsyncAgentDataResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentDataSearchResponse:
+    ) -> AsyncPaginator[AgentData, AsyncPaginatedCursorPost[AgentData]]:
         """
         Search agent data with filtering, sorting, and pagination.
 
@@ -893,9 +899,10 @@ class AsyncAgentDataResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._post(
+        return self._get_api_list(
             "/api/v1/beta/agent-data/:search",
-            body=await async_maybe_transform(
+            page=AsyncPaginatedCursorPost[AgentData],
+            body=maybe_transform(
                 {
                     "deployment_name": deployment_name,
                     "collection": collection,
@@ -913,7 +920,7 @@ class AsyncAgentDataResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "organization_id": organization_id,
                         "project_id": project_id,
@@ -921,7 +928,8 @@ class AsyncAgentDataResource(AsyncAPIResource):
                     agent_data_search_params.AgentDataSearchParams,
                 ),
             ),
-            cast_to=AgentDataSearchResponse,
+            model=AgentData,
+            method="post",
         )
 
 
