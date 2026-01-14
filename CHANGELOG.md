@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.20.0 (2026-01-14)
+
+Full Changelog: [v0.19.1...v0.20.0](https://github.com/run-llama/llama-cloud-py/compare/v0.19.1...v0.20.0)
+
+### Features
+
+* **api:** api update ([725a04e](https://github.com/run-llama/llama-cloud-py/commit/725a04ec0adc9360b572027a8eaf95e9246e9639))
+* **api:** parse v2alpha1 -&gt; v2 ([83fa7c4](https://github.com/run-llama/llama-cloud-py/commit/83fa7c47a1681a4284ca06d8e61a67540c15d4c6))
+* **api:** Removing false upload_file endpoint ([d05898c](https://github.com/run-llama/llama-cloud-py/commit/d05898c21995f17a5bebffa9d53e3140b6bb0d2b))
+* **api:** Removing false upload_file endpoint ([ff905f1](https://github.com/run-llama/llama-cloud-py/commit/ff905f17f3d7bf0f3db2639db54652f3598a10f8))
+
+
+### Chores
+
+* configure new SDK language ([5249848](https://github.com/run-llama/llama-cloud-py/commit/5249848c58c9420bfebc9157969627d368e77bb7))
+
 ## 0.19.1 (2026-01-10)
 
 Full Changelog: [v0.19.0...v0.19.1](https://github.com/run-llama/llama-cloud-py/compare/v0.19.0...v0.19.1)
