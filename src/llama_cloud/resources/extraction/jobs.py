@@ -7,17 +7,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..._types import (
-    Body,
-    Omit,
-    Query,
-    Headers,
-    NotGiven,
-    FileTypes,
-    SequenceNotStr,
-    omit,
-    not_given,
-)
+from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
 from ..._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -31,13 +21,11 @@ from ..._base_client import make_request_options
 from ...types.extraction import (
     job_file_params,
     job_list_params,
-    job_batch_params,
     job_create_params,
     job_get_result_params,
 )
 from ...types.extraction.extract_job import ExtractJob
 from ...types.extraction.job_list_response import JobListResponse
-from ...types.extraction.job_batch_response import JobBatchResponse
 from ...types.extraction.extract_config_param import ExtractConfigParam
 from ...types.extraction.job_get_result_response import JobGetResultResponse
 from ...types.extraction.webhook_configuration_param import WebhookConfigurationParam
@@ -166,69 +154,6 @@ class JobsResource(SyncAPIResource):
                 query=maybe_transform({"extraction_agent_id": extraction_agent_id}, job_list_params.JobListParams),
             ),
             cast_to=JobListResponse,
-        )
-
-    def batch(
-        self,
-        *,
-        extraction_agent_id: str,
-        file_ids: SequenceNotStr[str],
-        from_ui: bool | Omit = omit,
-        config_override: Optional[ExtractConfigParam] | Omit = omit,
-        data_schema_override: Union[
-            Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str, None
-        ]
-        | Omit = omit,
-        webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> JobBatchResponse:
-        """
-        Run Batch Jobs
-
-        Args:
-          extraction_agent_id: The id of the extraction agent
-
-          file_ids: The ids of the files
-
-          config_override: Configuration parameters for the extraction agent.
-
-          data_schema_override: The data schema to override the extraction agent's data schema with
-
-          webhook_configurations: The outbound webhook configurations
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/api/v1/extraction/jobs/batch",
-            body=maybe_transform(
-                {
-                    "extraction_agent_id": extraction_agent_id,
-                    "file_ids": file_ids,
-                    "config_override": config_override,
-                    "data_schema_override": data_schema_override,
-                    "webhook_configurations": webhook_configurations,
-                },
-                job_batch_params.JobBatchParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform({"from_ui": from_ui}, job_batch_params.JobBatchParams),
-            ),
-            cast_to=JobBatchResponse,
         )
 
     def file(
@@ -498,69 +423,6 @@ class AsyncJobsResource(AsyncAPIResource):
             cast_to=JobListResponse,
         )
 
-    async def batch(
-        self,
-        *,
-        extraction_agent_id: str,
-        file_ids: SequenceNotStr[str],
-        from_ui: bool | Omit = omit,
-        config_override: Optional[ExtractConfigParam] | Omit = omit,
-        data_schema_override: Union[
-            Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str, None
-        ]
-        | Omit = omit,
-        webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> JobBatchResponse:
-        """
-        Run Batch Jobs
-
-        Args:
-          extraction_agent_id: The id of the extraction agent
-
-          file_ids: The ids of the files
-
-          config_override: Configuration parameters for the extraction agent.
-
-          data_schema_override: The data schema to override the extraction agent's data schema with
-
-          webhook_configurations: The outbound webhook configurations
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/api/v1/extraction/jobs/batch",
-            body=await async_maybe_transform(
-                {
-                    "extraction_agent_id": extraction_agent_id,
-                    "file_ids": file_ids,
-                    "config_override": config_override,
-                    "data_schema_override": data_schema_override,
-                    "webhook_configurations": webhook_configurations,
-                },
-                job_batch_params.JobBatchParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform({"from_ui": from_ui}, job_batch_params.JobBatchParams),
-            ),
-            cast_to=JobBatchResponse,
-        )
-
     async def file(
         self,
         *,
@@ -713,9 +575,6 @@ class JobsResourceWithRawResponse:
         self.list = to_raw_response_wrapper(
             jobs.list,
         )
-        self.batch = to_raw_response_wrapper(
-            jobs.batch,
-        )
         self.file = to_raw_response_wrapper(
             jobs.file,
         )
@@ -736,9 +595,6 @@ class AsyncJobsResourceWithRawResponse:
         )
         self.list = async_to_raw_response_wrapper(
             jobs.list,
-        )
-        self.batch = async_to_raw_response_wrapper(
-            jobs.batch,
         )
         self.file = async_to_raw_response_wrapper(
             jobs.file,
@@ -761,9 +617,6 @@ class JobsResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             jobs.list,
         )
-        self.batch = to_streamed_response_wrapper(
-            jobs.batch,
-        )
         self.file = to_streamed_response_wrapper(
             jobs.file,
         )
@@ -784,9 +637,6 @@ class AsyncJobsResourceWithStreamingResponse:
         )
         self.list = async_to_streamed_response_wrapper(
             jobs.list,
-        )
-        self.batch = async_to_streamed_response_wrapper(
-            jobs.batch,
         )
         self.file = async_to_streamed_response_wrapper(
             jobs.file,

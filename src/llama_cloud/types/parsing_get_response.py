@@ -1,5 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from __future__ import annotations
+
 from typing import Dict, List, Union, Optional
 from datetime import datetime
 from typing_extensions import Literal, Annotated, TypeAlias
@@ -21,9 +23,6 @@ __all__ = [
     "ItemsPageStructuredResultPageItem",
     "ItemsPageStructuredResultPageItemTextItem",
     "ItemsPageStructuredResultPageItemHeadingItem",
-    "ItemsPageStructuredResultPageItemListItem",
-    "ItemsPageStructuredResultPageItemListItemItem",
-    "ItemsPageStructuredResultPageItemListItemItemTextItem",
     "ItemsPageStructuredResultPageItemCodeItem",
     "ItemsPageStructuredResultPageItemTableItem",
     "ItemsPageStructuredResultPageItemImageItem",
@@ -125,39 +124,6 @@ class ItemsPageStructuredResultPageItemHeadingItem(BaseModel):
     """Heading item type"""
 
 
-class ItemsPageStructuredResultPageItemListItemItemTextItem(BaseModel):
-    md: str
-    """Markdown representation preserving formatting"""
-
-    value: str
-    """Text content"""
-
-    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
-    """List of bounding boxes"""
-
-    type: Optional[Literal["text"]] = None
-    """Text item type"""
-
-
-ItemsPageStructuredResultPageItemListItemItem: TypeAlias = Union[
-    ItemsPageStructuredResultPageItemListItemItemTextItem, object
-]
-
-
-class ItemsPageStructuredResultPageItemListItem(BaseModel):
-    items: List[ItemsPageStructuredResultPageItemListItemItem]
-    """List of nested text or list items"""
-
-    ordered: bool
-    """Whether the list is ordered or unordered"""
-
-    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
-    """List of bounding boxes"""
-
-    type: Optional[Literal["list"]] = None
-    """List item type"""
-
-
 class ItemsPageStructuredResultPageItemCodeItem(BaseModel):
     md: str
     """Markdown representation with code fences"""
@@ -230,7 +196,7 @@ ItemsPageStructuredResultPageItem: TypeAlias = Annotated[
     Union[
         ItemsPageStructuredResultPageItemTextItem,
         ItemsPageStructuredResultPageItemHeadingItem,
-        ItemsPageStructuredResultPageItemListItem,
+        "ListItem",
         ItemsPageStructuredResultPageItemCodeItem,
         ItemsPageStructuredResultPageItemTableItem,
         ItemsPageStructuredResultPageItemImageItem,
@@ -393,3 +359,6 @@ class ParsingGetResponse(BaseModel):
 
     text: Optional[Text] = None
     """Plain text result (if requested)"""
+
+
+from .list_item import ListItem

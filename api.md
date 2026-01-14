@@ -282,6 +282,7 @@ Types:
 from llama_cloud.types import (
     BBox,
     FailPageMode,
+    ListItem,
     LlamaParseSupportedFileExtensions,
     ParsingJob,
     ParsingLanguages,
@@ -336,7 +337,6 @@ from llama_cloud.types.extraction import (
     ExtractJob,
     WebhookConfiguration,
     JobListResponse,
-    JobBatchResponse,
     JobGetResultResponse,
 )
 ```
@@ -345,7 +345,6 @@ Methods:
 
 - <code title="post /api/v1/extraction/jobs">client.extraction.jobs.<a href="./src/llama_cloud/resources/extraction/jobs.py">create</a>(\*\*<a href="src/llama_cloud/types/extraction/job_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_job.py">ExtractJob</a></code>
 - <code title="get /api/v1/extraction/jobs">client.extraction.jobs.<a href="./src/llama_cloud/resources/extraction/jobs.py">list</a>(\*\*<a href="src/llama_cloud/types/extraction/job_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/job_list_response.py">JobListResponse</a></code>
-- <code title="post /api/v1/extraction/jobs/batch">client.extraction.jobs.<a href="./src/llama_cloud/resources/extraction/jobs.py">batch</a>(\*\*<a href="src/llama_cloud/types/extraction/job_batch_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/job_batch_response.py">JobBatchResponse</a></code>
 - <code title="post /api/v1/extraction/jobs/file">client.extraction.jobs.<a href="./src/llama_cloud/resources/extraction/jobs.py">file</a>(\*\*<a href="src/llama_cloud/types/extraction/job_file_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_job.py">ExtractJob</a></code>
 - <code title="get /api/v1/extraction/jobs/{job_id}">client.extraction.jobs.<a href="./src/llama_cloud/resources/extraction/jobs.py">get</a>(job_id) -> <a href="./src/llama_cloud/types/extraction/extract_job.py">ExtractJob</a></code>
 - <code title="get /api/v1/extraction/jobs/{job_id}/result">client.extraction.jobs.<a href="./src/llama_cloud/resources/extraction/jobs.py">get_result</a>(job_id, \*\*<a href="src/llama_cloud/types/extraction/job_get_result_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/job_get_result_response.py">JobGetResultResponse</a></code>

@@ -12,7 +12,6 @@ from tests.utils import assert_matches_type
 from llama_cloud.types.extraction import (
     ExtractJob,
     JobListResponse,
-    JobBatchResponse,
     JobGetResultResponse,
 )
 
@@ -128,80 +127,6 @@ class TestJobs:
 
             job = response.parse()
             assert_matches_type(JobListResponse, job, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_batch(self, client: LlamaCloud) -> None:
-        job = client.extraction.jobs.batch(
-            extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-        )
-        assert_matches_type(JobBatchResponse, job, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_batch_with_all_params(self, client: LlamaCloud) -> None:
-        job = client.extraction.jobs.batch(
-            extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-            from_ui=True,
-            config_override={
-                "chunk_mode": "PAGE",
-                "citation_bbox": True,
-                "cite_sources": True,
-                "confidence_scores": True,
-                "extract_model": "openai-gpt-4-1",
-                "extraction_mode": "FAST",
-                "extraction_target": "PER_DOC",
-                "high_resolution_mode": True,
-                "invalidate_cache": True,
-                "multimodal_fast_mode": True,
-                "num_pages_context": 1,
-                "page_range": "page_range",
-                "parse_model": "openai-gpt-4o",
-                "priority": "low",
-                "system_prompt": "system_prompt",
-                "use_reasoning": True,
-            },
-            data_schema_override={"foo": {"foo": "bar"}},
-            webhook_configurations=[
-                {
-                    "webhook_events": ["extract.pending"],
-                    "webhook_headers": {"foo": "string"},
-                    "webhook_output_format": "webhook_output_format",
-                    "webhook_url": "webhook_url",
-                }
-            ],
-        )
-        assert_matches_type(JobBatchResponse, job, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_batch(self, client: LlamaCloud) -> None:
-        response = client.extraction.jobs.with_raw_response.batch(
-            extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        job = response.parse()
-        assert_matches_type(JobBatchResponse, job, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_batch(self, client: LlamaCloud) -> None:
-        with client.extraction.jobs.with_streaming_response.batch(
-            extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            job = response.parse()
-            assert_matches_type(JobBatchResponse, job, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -460,80 +385,6 @@ class TestAsyncJobs:
 
             job = await response.parse()
             assert_matches_type(JobListResponse, job, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_batch(self, async_client: AsyncLlamaCloud) -> None:
-        job = await async_client.extraction.jobs.batch(
-            extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-        )
-        assert_matches_type(JobBatchResponse, job, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_batch_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        job = await async_client.extraction.jobs.batch(
-            extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-            from_ui=True,
-            config_override={
-                "chunk_mode": "PAGE",
-                "citation_bbox": True,
-                "cite_sources": True,
-                "confidence_scores": True,
-                "extract_model": "openai-gpt-4-1",
-                "extraction_mode": "FAST",
-                "extraction_target": "PER_DOC",
-                "high_resolution_mode": True,
-                "invalidate_cache": True,
-                "multimodal_fast_mode": True,
-                "num_pages_context": 1,
-                "page_range": "page_range",
-                "parse_model": "openai-gpt-4o",
-                "priority": "low",
-                "system_prompt": "system_prompt",
-                "use_reasoning": True,
-            },
-            data_schema_override={"foo": {"foo": "bar"}},
-            webhook_configurations=[
-                {
-                    "webhook_events": ["extract.pending"],
-                    "webhook_headers": {"foo": "string"},
-                    "webhook_output_format": "webhook_output_format",
-                    "webhook_url": "webhook_url",
-                }
-            ],
-        )
-        assert_matches_type(JobBatchResponse, job, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_batch(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.extraction.jobs.with_raw_response.batch(
-            extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        job = await response.parse()
-        assert_matches_type(JobBatchResponse, job, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_batch(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.extraction.jobs.with_streaming_response.batch(
-            extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            job = await response.parse()
-            assert_matches_type(JobBatchResponse, job, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
