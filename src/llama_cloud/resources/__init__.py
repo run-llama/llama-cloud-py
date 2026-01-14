@@ -16,6 +16,14 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
+from .parsing import (
+    ParsingResource,
+    AsyncParsingResource,
+    ParsingResourceWithRawResponse,
+    AsyncParsingResourceWithRawResponse,
+    ParsingResourceWithStreamingResponse,
+    AsyncParsingResourceWithStreamingResponse,
+)
 from .projects import (
     ProjectsResource,
     AsyncProjectsResource,
@@ -110,6 +118,12 @@ __all__ = [
     "AsyncRetrieversResourceWithRawResponse",
     "RetrieversResourceWithStreamingResponse",
     "AsyncRetrieversResourceWithStreamingResponse",
+    "ParsingResource",
+    "AsyncParsingResource",
+    "ParsingResourceWithRawResponse",
+    "AsyncParsingResourceWithRawResponse",
+    "ParsingResourceWithStreamingResponse",
+    "AsyncParsingResourceWithStreamingResponse",
     "ClassifierResource",
     "AsyncClassifierResource",
     "ClassifierResourceWithRawResponse",

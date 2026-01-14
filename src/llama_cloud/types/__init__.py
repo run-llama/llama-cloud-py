@@ -12,6 +12,7 @@ from . import (
 )
 from .. import _compat
 from .file import File as File
+from .b_box import BBox as BBox
 from .shared import (
     CloudS3DataSource as CloudS3DataSource,
     CloudBoxDataSource as CloudBoxDataSource,
@@ -55,18 +56,23 @@ from .file_query_params import FileQueryParams as FileQueryParams
 from .parsing_languages import ParsingLanguages as ParsingLanguages
 from .file_create_params import FileCreateParams as FileCreateParams
 from .file_delete_params import FileDeleteParams as FileDeleteParams
+from .parsing_get_params import ParsingGetParams as ParsingGetParams
 from .project_get_params import ProjectGetParams as ProjectGetParams
 from .retriever_pipeline import RetrieverPipeline as RetrieverPipeline
 from .file_query_response import FileQueryResponse as FileQueryResponse
+from .parsing_list_params import ParsingListParams as ParsingListParams
 from .project_list_params import ProjectListParams as ProjectListParams
 from .sparse_model_config import SparseModelConfig as SparseModelConfig
 from .file_create_response import FileCreateResponse as FileCreateResponse
+from .parsing_get_response import ParsingGetResponse as ParsingGetResponse
 from .pipeline_list_params import PipelineListParams as PipelineListParams
 from .re_rank_config_param import ReRankConfigParam as ReRankConfigParam
 from .retriever_get_params import RetrieverGetParams as RetrieverGetParams
 from .auto_transform_config import AutoTransformConfig as AutoTransformConfig
 from .data_sink_list_params import DataSinkListParams as DataSinkListParams
 from .extraction_run_params import ExtractionRunParams as ExtractionRunParams
+from .parsing_create_params import ParsingCreateParams as ParsingCreateParams
+from .parsing_list_response import ParsingListResponse as ParsingListResponse
 from .project_list_response import ProjectListResponse as ProjectListResponse
 from .retriever_list_params import RetrieverListParams as RetrieverListParams
 from .vertex_text_embedding import VertexTextEmbedding as VertexTextEmbedding
@@ -89,6 +95,7 @@ from .data_sink_update_params import DataSinkUpdateParams as DataSinkUpdateParam
 from .data_source_list_params import DataSourceListParams as DataSourceListParams
 from .gemini_embedding_config import GeminiEmbeddingConfig as GeminiEmbeddingConfig
 from .openai_embedding_config import OpenAIEmbeddingConfig as OpenAIEmbeddingConfig
+from .parsing_create_response import ParsingCreateResponse as ParsingCreateResponse
 from .preset_retrieval_params import PresetRetrievalParams as PresetRetrievalParams
 from .retriever_create_params import RetrieverCreateParams as RetrieverCreateParams
 from .retriever_list_response import RetrieverListResponse as RetrieverListResponse
