@@ -27,6 +27,7 @@ class TestParsing:
     def test_method_create(self, client: LlamaCloud) -> None:
         parsing = client.parsing.create(
             tier="fast",
+            version="latest",
         )
         assert_matches_type(ParsingCreateResponse, parsing, path=["response"])
 
@@ -35,6 +36,7 @@ class TestParsing:
     def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
         parsing = client.parsing.create(
             tier="fast",
+            version="latest",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             agentic_options={"custom_prompt": "custom_prompt"},
@@ -66,9 +68,9 @@ class TestParsing:
                 },
             },
             output_options={
-                "embedded_images": {"enable": True},
                 "export_pdf": {"enable": True},
                 "extract_printed_page_number": True,
+                "images_to_save": ["screenshot"],
                 "markdown": {
                     "annotate_links": True,
                     "pages": {"merge_tables_across_pages_in_markdown": True},
@@ -78,7 +80,6 @@ class TestParsing:
                         "output_tables_as_markdown": True,
                     },
                 },
-                "screenshots": {"enable": True},
                 "spatial_text": {
                     "do_not_unroll_columns": True,
                     "pages": {"merge_tables_across_pages_in_markdown": True},
@@ -179,6 +180,7 @@ class TestParsing:
                         "trigger_mode": "trigger_mode",
                     }
                 ],
+                "disable_heuristics": True,
                 "ignore": {
                     "ignore_diagonal_text": True,
                     "ignore_hidden_text": True,
@@ -187,7 +189,6 @@ class TestParsing:
                 "ocr_parameters": {"languages": ["af"]},
             },
             source_url="https:",
-            version="2026-01-08",
             webhook_configurations=[
                 {
                     "webhook_events": ["string"],
@@ -203,6 +204,7 @@ class TestParsing:
     def test_raw_response_create(self, client: LlamaCloud) -> None:
         response = client.parsing.with_raw_response.create(
             tier="fast",
+            version="latest",
         )
 
         assert response.is_closed is True
@@ -215,6 +217,7 @@ class TestParsing:
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
         with client.parsing.with_streaming_response.create(
             tier="fast",
+            version="latest",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -329,6 +332,7 @@ class TestAsyncParsing:
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
         parsing = await async_client.parsing.create(
             tier="fast",
+            version="latest",
         )
         assert_matches_type(ParsingCreateResponse, parsing, path=["response"])
 
@@ -337,6 +341,7 @@ class TestAsyncParsing:
     async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         parsing = await async_client.parsing.create(
             tier="fast",
+            version="latest",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             agentic_options={"custom_prompt": "custom_prompt"},
@@ -368,9 +373,9 @@ class TestAsyncParsing:
                 },
             },
             output_options={
-                "embedded_images": {"enable": True},
                 "export_pdf": {"enable": True},
                 "extract_printed_page_number": True,
+                "images_to_save": ["screenshot"],
                 "markdown": {
                     "annotate_links": True,
                     "pages": {"merge_tables_across_pages_in_markdown": True},
@@ -380,7 +385,6 @@ class TestAsyncParsing:
                         "output_tables_as_markdown": True,
                     },
                 },
-                "screenshots": {"enable": True},
                 "spatial_text": {
                     "do_not_unroll_columns": True,
                     "pages": {"merge_tables_across_pages_in_markdown": True},
@@ -481,6 +485,7 @@ class TestAsyncParsing:
                         "trigger_mode": "trigger_mode",
                     }
                 ],
+                "disable_heuristics": True,
                 "ignore": {
                     "ignore_diagonal_text": True,
                     "ignore_hidden_text": True,
@@ -489,7 +494,7 @@ class TestAsyncParsing:
                 "ocr_parameters": {"languages": ["af"]},
             },
             source_url="https:",
-            version="2026-01-08",
+
             webhook_configurations=[
                 {
                     "webhook_events": ["string"],
@@ -505,6 +510,7 @@ class TestAsyncParsing:
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.parsing.with_raw_response.create(
             tier="fast",
+            version="latest",
         )
 
         assert response.is_closed is True
@@ -517,6 +523,7 @@ class TestAsyncParsing:
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.parsing.with_streaming_response.create(
             tier="fast",
+            version="latest",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
