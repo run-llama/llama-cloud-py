@@ -26,7 +26,7 @@ The REST API documentation can be found on [developers.llamaindex.ai](https://de
 
 ```sh
 # install from PyPI
-pip install llama_cloud
+pip install --pre llama_cloud
 ```
 
 ## Usage
@@ -90,7 +90,7 @@ You can enable this by installing `aiohttp`:
 
 ```sh
 # install from PyPI
-pip install llama_cloud[aiohttp]
+pip install --pre llama_cloud[aiohttp]
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
