@@ -14,7 +14,7 @@ from llama_cloud.types import (
     ParsingListResponse,
     ParsingCreateResponse,
 )
-from llama_cloud.pagination import SyncPaginatedDefaultCursor, AsyncPaginatedDefaultCursor
+from llama_cloud.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -231,7 +231,7 @@ class TestParsing:
     @parametrize
     def test_method_list(self, client: LlamaCloud) -> None:
         parsing = client.parsing.list()
-        assert_matches_type(SyncPaginatedDefaultCursor[ParsingListResponse], parsing, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[ParsingListResponse], parsing, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -243,7 +243,7 @@ class TestParsing:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             status="PENDING",
         )
-        assert_matches_type(SyncPaginatedDefaultCursor[ParsingListResponse], parsing, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[ParsingListResponse], parsing, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -253,7 +253,7 @@ class TestParsing:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         parsing = response.parse()
-        assert_matches_type(SyncPaginatedDefaultCursor[ParsingListResponse], parsing, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[ParsingListResponse], parsing, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -263,7 +263,7 @@ class TestParsing:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             parsing = response.parse()
-            assert_matches_type(SyncPaginatedDefaultCursor[ParsingListResponse], parsing, path=["response"])
+            assert_matches_type(SyncPaginatedCursor[ParsingListResponse], parsing, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -537,7 +537,7 @@ class TestAsyncParsing:
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloud) -> None:
         parsing = await async_client.parsing.list()
-        assert_matches_type(AsyncPaginatedDefaultCursor[ParsingListResponse], parsing, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[ParsingListResponse], parsing, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -549,7 +549,7 @@ class TestAsyncParsing:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             status="PENDING",
         )
-        assert_matches_type(AsyncPaginatedDefaultCursor[ParsingListResponse], parsing, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[ParsingListResponse], parsing, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -559,7 +559,7 @@ class TestAsyncParsing:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         parsing = await response.parse()
-        assert_matches_type(AsyncPaginatedDefaultCursor[ParsingListResponse], parsing, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[ParsingListResponse], parsing, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -569,7 +569,7 @@ class TestAsyncParsing:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             parsing = await response.parse()
-            assert_matches_type(AsyncPaginatedDefaultCursor[ParsingListResponse], parsing, path=["response"])
+            assert_matches_type(AsyncPaginatedCursor[ParsingListResponse], parsing, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

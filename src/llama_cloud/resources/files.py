@@ -18,7 +18,7 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..pagination import SyncPaginatedDefaultCursor, AsyncPaginatedDefaultCursor
+from ..pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.presigned_url import PresignedURL
 from ..types.file_list_response import FileListResponse
@@ -131,7 +131,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncPaginatedDefaultCursor[FileListResponse]:
+    ) -> SyncPaginatedCursor[FileListResponse]:
         """
         List files with optional filtering and pagination.
 
@@ -163,7 +163,7 @@ class FilesResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/api/v1/beta/files",
-            page=SyncPaginatedDefaultCursor[FileListResponse],
+            page=SyncPaginatedCursor[FileListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -463,7 +463,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[FileListResponse, AsyncPaginatedDefaultCursor[FileListResponse]]:
+    ) -> AsyncPaginator[FileListResponse, AsyncPaginatedCursor[FileListResponse]]:
         """
         List files with optional filtering and pagination.
 
@@ -495,7 +495,7 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/api/v1/beta/files",
-            page=AsyncPaginatedDefaultCursor[FileListResponse],
+            page=AsyncPaginatedCursor[FileListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

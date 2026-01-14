@@ -15,7 +15,7 @@ from llama_cloud.types import (
     FileQueryResponse,
     FileCreateResponse,
 )
-from llama_cloud.pagination import SyncPaginatedDefaultCursor, AsyncPaginatedDefaultCursor
+from llama_cloud.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 
 # pyright: reportDeprecated=false
 
@@ -78,7 +78,7 @@ class TestFiles:
     @parametrize
     def test_method_list(self, client: LlamaCloud) -> None:
         file = client.files.list()
-        assert_matches_type(SyncPaginatedDefaultCursor[FileListResponse], file, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[FileListResponse], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -93,7 +93,7 @@ class TestFiles:
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SyncPaginatedDefaultCursor[FileListResponse], file, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[FileListResponse], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -103,7 +103,7 @@ class TestFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = response.parse()
-        assert_matches_type(SyncPaginatedDefaultCursor[FileListResponse], file, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[FileListResponse], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -113,7 +113,7 @@ class TestFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = response.parse()
-            assert_matches_type(SyncPaginatedDefaultCursor[FileListResponse], file, path=["response"])
+            assert_matches_type(SyncPaginatedCursor[FileListResponse], file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -335,7 +335,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloud) -> None:
         file = await async_client.files.list()
-        assert_matches_type(AsyncPaginatedDefaultCursor[FileListResponse], file, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[FileListResponse], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -350,7 +350,7 @@ class TestAsyncFiles:
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(AsyncPaginatedDefaultCursor[FileListResponse], file, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[FileListResponse], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -360,7 +360,7 @@ class TestAsyncFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = await response.parse()
-        assert_matches_type(AsyncPaginatedDefaultCursor[FileListResponse], file, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[FileListResponse], file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -370,7 +370,7 @@ class TestAsyncFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = await response.parse()
-            assert_matches_type(AsyncPaginatedDefaultCursor[FileListResponse], file, path=["response"])
+            assert_matches_type(AsyncPaginatedCursor[FileListResponse], file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
