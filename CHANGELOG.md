@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.0-beta.3 (2026-01-14)
+
+Full Changelog: [v0.20.0...v1.0.0-beta.3](https://github.com/run-llama/llama-cloud-py/compare/v0.20.0...v1.0.0-beta.3)
+
+### Features
+
+* **api:** manual updates ([c23da58](https://github.com/run-llama/llama-cloud-py/commit/c23da58fc7096b490c1083d98654cd9bc3db36c1))
+* **client:** add support for binary request streaming ([d6cbf95](https://github.com/run-llama/llama-cloud-py/commit/d6cbf954f2c8b7a29a44b8929acc7c76501720fe))
+
+
+### Chores
+
+* **internal:** codegen related update ([95d0c9a](https://github.com/run-llama/llama-cloud-py/commit/95d0c9abbc779d791fa72acc6ecc53808cacbec3))
+* update SDK settings ([0a091c1](https://github.com/run-llama/llama-cloud-py/commit/0a091c12d0b88332786a1e2ba538b027ba41e6aa))
+
 ## 0.20.0 (2026-01-14)
 
 Full Changelog: [v0.19.1...v0.20.0](https://github.com/run-llama/llama-cloud-py/compare/v0.19.1...v0.20.0)

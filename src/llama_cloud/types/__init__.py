@@ -4,9 +4,11 @@ from __future__ import annotations
 
 from . import (
     pipeline,
+    list_item,
     retriever,
     metadata_filters,
     retriever_pipeline,
+    parsing_get_response,
     preset_retrieval_params,
     pipeline_retrieve_response,
 )
@@ -37,6 +39,7 @@ from .shared import (
 from .project import Project as Project
 from .pipeline import Pipeline as Pipeline
 from .data_sink import DataSink as DataSink
+from .list_item import ListItem as ListItem
 from .retriever import Retriever as Retriever
 from .data_source import DataSource as DataSource
 from .status_enum import StatusEnum as StatusEnum
@@ -161,6 +164,8 @@ if _compat.PYDANTIC_V1:
     pipeline_retrieve_response.PipelineRetrieveResponse.update_forward_refs()  # type: ignore
     retriever.Retriever.update_forward_refs()  # type: ignore
     retriever_pipeline.RetrieverPipeline.update_forward_refs()  # type: ignore
+    list_item.ListItem.update_forward_refs()  # type: ignore
+    parsing_get_response.ParsingGetResponse.update_forward_refs()  # type: ignore
 else:
     metadata_filters.MetadataFilters.model_rebuild(_parent_namespace_depth=0)
     pipeline.Pipeline.model_rebuild(_parent_namespace_depth=0)
@@ -168,3 +173,5 @@ else:
     pipeline_retrieve_response.PipelineRetrieveResponse.model_rebuild(_parent_namespace_depth=0)
     retriever.Retriever.model_rebuild(_parent_namespace_depth=0)
     retriever_pipeline.RetrieverPipeline.model_rebuild(_parent_namespace_depth=0)
+    list_item.ListItem.model_rebuild(_parent_namespace_depth=0)
+    parsing_get_response.ParsingGetResponse.model_rebuild(_parent_namespace_depth=0)
