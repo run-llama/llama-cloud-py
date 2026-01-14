@@ -123,6 +123,8 @@ class ProcessingResultJobConfigBatchParseJobRecordCreateParameters(BaseModel):
 
     ignore_document_elements_for_layout_detection: Optional[bool] = None
 
+    images_to_save: Optional[List[Literal["screenshot", "embedded", "layout"]]] = None
+
     inline_images_in_markdown: Optional[bool] = None
 
     input_s3_path: Optional[str] = None

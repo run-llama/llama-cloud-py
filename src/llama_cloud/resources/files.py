@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import typing_extensions
 from typing import Mapping, Optional, cast
 
 import httpx
@@ -209,6 +210,7 @@ class FilesResource(SyncAPIResource):
             cast_to=PresignedURL,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def query(
         self,
         *,
@@ -227,6 +229,8 @@ class FilesResource(SyncAPIResource):
     ) -> FileQueryResponse:
         """
         Query files with flexible filtering and pagination.
+
+        **Deprecated**: Use GET /files instead for listing files with query parameters.
 
         Args: request: The query request with filters and pagination project: Validated
         project from dependency db: Database session
@@ -466,6 +470,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=PresignedURL,
         )
 
+    @typing_extensions.deprecated("deprecated")
     async def query(
         self,
         *,
@@ -484,6 +489,8 @@ class AsyncFilesResource(AsyncAPIResource):
     ) -> FileQueryResponse:
         """
         Query files with flexible filtering and pagination.
+
+        **Deprecated**: Use GET /files instead for listing files with query parameters.
 
         Args: request: The query request with filters and pagination project: Validated
         project from dependency db: Database session
@@ -552,8 +559,10 @@ class FilesResourceWithRawResponse:
         self.get = to_raw_response_wrapper(
             files.get,
         )
-        self.query = to_raw_response_wrapper(
-            files.query,
+        self.query = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                files.query,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -570,8 +579,10 @@ class AsyncFilesResourceWithRawResponse:
         self.get = async_to_raw_response_wrapper(
             files.get,
         )
-        self.query = async_to_raw_response_wrapper(
-            files.query,
+        self.query = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                files.query,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -588,8 +599,10 @@ class FilesResourceWithStreamingResponse:
         self.get = to_streamed_response_wrapper(
             files.get,
         )
-        self.query = to_streamed_response_wrapper(
-            files.query,
+        self.query = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                files.query,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -606,6 +619,8 @@ class AsyncFilesResourceWithStreamingResponse:
         self.get = async_to_streamed_response_wrapper(
             files.get,
         )
-        self.query = async_to_streamed_response_wrapper(
-            files.query,
+        self.query = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                files.query,  # pyright: ignore[reportDeprecated],
+            )
         )
