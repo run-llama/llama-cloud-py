@@ -17,7 +17,7 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncPaginatedDefault, AsyncPaginatedDefault
+from ...pagination import SyncPaginatedDefaultCursor, AsyncPaginatedDefaultCursor
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.classifier import (
     job_get_params,
@@ -131,7 +131,7 @@ class JobsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncPaginatedDefault[ClassifyJob]:
+    ) -> SyncPaginatedDefaultCursor[ClassifyJob]:
         """List classify jobs.
 
         Experimental: This endpoint is not yet ready for production
@@ -148,7 +148,7 @@ class JobsResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/api/v1/classifier/jobs",
-            page=SyncPaginatedDefault[ClassifyJob],
+            page=SyncPaginatedDefaultCursor[ClassifyJob],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -360,7 +360,7 @@ class AsyncJobsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[ClassifyJob, AsyncPaginatedDefault[ClassifyJob]]:
+    ) -> AsyncPaginator[ClassifyJob, AsyncPaginatedDefaultCursor[ClassifyJob]]:
         """List classify jobs.
 
         Experimental: This endpoint is not yet ready for production
@@ -377,7 +377,7 @@ class AsyncJobsResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/api/v1/classifier/jobs",
-            page=AsyncPaginatedDefault[ClassifyJob],
+            page=AsyncPaginatedDefaultCursor[ClassifyJob],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

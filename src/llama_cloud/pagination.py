@@ -18,8 +18,8 @@ __all__ = [
     "AsyncPaginatedCloudDocuments",
     "SyncPaginatedQuotaConfigurations",
     "AsyncPaginatedQuotaConfigurations",
-    "SyncPaginatedDefault",
-    "AsyncPaginatedDefault",
+    "SyncPaginatedDefaultCursor",
+    "AsyncPaginatedDefaultCursor",
     "SyncPaginatedAgentDataSearch",
     "AsyncPaginatedAgentDataSearch",
     "SyncPaginatedAgentDataAggregate",
@@ -387,7 +387,7 @@ class AsyncPaginatedQuotaConfigurations(BaseAsyncPage[_T], BasePage[_T], Generic
         return PageInfo(params={"page": current_page + 1})
 
 
-class SyncPaginatedDefault(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
+class SyncPaginatedDefaultCursor(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
     items: List[_T]
     next_page_token: Optional[str] = None
 
@@ -407,7 +407,7 @@ class SyncPaginatedDefault(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
         return PageInfo(params={"page_token": next_page_token})
 
 
-class AsyncPaginatedDefault(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
+class AsyncPaginatedDefaultCursor(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
     items: List[_T]
     next_page_token: Optional[str] = None
 
