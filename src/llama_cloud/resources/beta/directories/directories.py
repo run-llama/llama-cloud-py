@@ -24,7 +24,7 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ....pagination import SyncPaginatedClassifyJobs, AsyncPaginatedClassifyJobs
+from ....pagination import SyncPaginatedDefault, AsyncPaginatedDefault
 from ....types.beta import (
     directory_get_params,
     directory_list_params,
@@ -201,7 +201,7 @@ class DirectoriesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncPaginatedClassifyJobs[DirectoryListResponse]:
+    ) -> SyncPaginatedDefault[DirectoryListResponse]:
         """
         List Directories
 
@@ -216,7 +216,7 @@ class DirectoriesResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/api/v1/beta/directories",
-            page=SyncPaginatedClassifyJobs[DirectoryListResponse],
+            page=SyncPaginatedDefault[DirectoryListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -490,7 +490,7 @@ class AsyncDirectoriesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[DirectoryListResponse, AsyncPaginatedClassifyJobs[DirectoryListResponse]]:
+    ) -> AsyncPaginator[DirectoryListResponse, AsyncPaginatedDefault[DirectoryListResponse]]:
         """
         List Directories
 
@@ -505,7 +505,7 @@ class AsyncDirectoriesResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/api/v1/beta/directories",
-            page=AsyncPaginatedClassifyJobs[DirectoryListResponse],
+            page=AsyncPaginatedDefault[DirectoryListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

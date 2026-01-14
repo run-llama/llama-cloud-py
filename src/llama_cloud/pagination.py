@@ -18,10 +18,6 @@ __all__ = [
     "AsyncPaginatedCloudDocuments",
     "SyncPaginatedQuotaConfigurations",
     "AsyncPaginatedQuotaConfigurations",
-    "SyncPaginatedClassifyJobs",
-    "AsyncPaginatedClassifyJobs",
-    "SyncPaginatedSpreadsheetJobs",
-    "AsyncPaginatedSpreadsheetJobs",
     "SyncPaginatedDefault",
     "AsyncPaginatedDefault",
     "SyncPaginatedAgentDataSearch",
@@ -389,86 +385,6 @@ class AsyncPaginatedQuotaConfigurations(BaseAsyncPage[_T], BasePage[_T], Generic
             return None
 
         return PageInfo(params={"page": current_page + 1})
-
-
-class SyncPaginatedClassifyJobs(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
-    items: List[_T]
-    next_page_token: Optional[str] = None
-
-    @override
-    def _get_page_items(self) -> List[_T]:
-        items = self.items
-        if not items:
-            return []
-        return items
-
-    @override
-    def next_page_info(self) -> Optional[PageInfo]:
-        next_page_token = self.next_page_token
-        if not next_page_token:
-            return None
-
-        return PageInfo(params={"page_token": next_page_token})
-
-
-class AsyncPaginatedClassifyJobs(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
-    items: List[_T]
-    next_page_token: Optional[str] = None
-
-    @override
-    def _get_page_items(self) -> List[_T]:
-        items = self.items
-        if not items:
-            return []
-        return items
-
-    @override
-    def next_page_info(self) -> Optional[PageInfo]:
-        next_page_token = self.next_page_token
-        if not next_page_token:
-            return None
-
-        return PageInfo(params={"page_token": next_page_token})
-
-
-class SyncPaginatedSpreadsheetJobs(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
-    items: List[_T]
-    next_page_token: Optional[str] = None
-
-    @override
-    def _get_page_items(self) -> List[_T]:
-        items = self.items
-        if not items:
-            return []
-        return items
-
-    @override
-    def next_page_info(self) -> Optional[PageInfo]:
-        next_page_token = self.next_page_token
-        if not next_page_token:
-            return None
-
-        return PageInfo(params={"page_token": next_page_token})
-
-
-class AsyncPaginatedSpreadsheetJobs(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
-    items: List[_T]
-    next_page_token: Optional[str] = None
-
-    @override
-    def _get_page_items(self) -> List[_T]:
-        items = self.items
-        if not items:
-            return []
-        return items
-
-    @override
-    def next_page_info(self) -> Optional[PageInfo]:
-        next_page_token = self.next_page_token
-        if not next_page_token:
-            return None
-
-        return PageInfo(params={"page_token": next_page_token})
 
 
 class SyncPaginatedDefault(BaseSyncPage[_T], BasePage[_T], Generic[_T]):

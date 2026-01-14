@@ -22,7 +22,7 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncPaginatedClassifyJobs, AsyncPaginatedClassifyJobs
+from ...pagination import SyncPaginatedDefault, AsyncPaginatedDefault
 from ...types.beta import (
     sheet_get_params,
     sheet_list_params,
@@ -346,7 +346,7 @@ class SheetsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncPaginatedClassifyJobs[SheetsJob]:
+    ) -> SyncPaginatedDefault[SheetsJob]:
         """List spreadsheet parsing jobs.
 
         Experimental: This endpoint is not yet ready for
@@ -363,7 +363,7 @@ class SheetsResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/api/v1/beta/sheets/jobs",
-            page=SyncPaginatedClassifyJobs[SheetsJob],
+            page=SyncPaginatedDefault[SheetsJob],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -850,7 +850,7 @@ class AsyncSheetsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[SheetsJob, AsyncPaginatedClassifyJobs[SheetsJob]]:
+    ) -> AsyncPaginator[SheetsJob, AsyncPaginatedDefault[SheetsJob]]:
         """List spreadsheet parsing jobs.
 
         Experimental: This endpoint is not yet ready for
@@ -867,7 +867,7 @@ class AsyncSheetsResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/api/v1/beta/sheets/jobs",
-            page=AsyncPaginatedClassifyJobs[SheetsJob],
+            page=AsyncPaginatedDefault[SheetsJob],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
