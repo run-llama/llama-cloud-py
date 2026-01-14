@@ -54,6 +54,7 @@ class ParsingResource(SyncAPIResource):
         self,
         *,
         tier: Literal["fast", "cost_effective", "agentic", "agentic_plus"],
+        version: Union[Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "latest"], str],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         agentic_options: Optional[parsing_create_params.AgenticOptions] | Omit = omit,
@@ -70,7 +71,6 @@ class ParsingResource(SyncAPIResource):
         processing_control: parsing_create_params.ProcessingControl | Omit = omit,
         processing_options: parsing_create_params.ProcessingOptions | Omit = omit,
         source_url: Optional[str] | Omit = omit,
-        version: Union[Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "latest"], str] | Omit = omit,
         webhook_configurations: Iterable[parsing_create_params.WebhookConfiguration] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -84,6 +84,8 @@ class ParsingResource(SyncAPIResource):
 
         Args:
           tier: The parsing tier to use
+
+          version: Version of the tier configuration
 
           agentic_options: Options for agentic tier parsing (with AI agents).
 
@@ -113,8 +115,6 @@ class ParsingResource(SyncAPIResource):
 
           source_url: Source URL to fetch document from
 
-          version: Version of the tier configuration
-
           webhook_configurations: List of webhook configurations for notifications
 
           extra_headers: Send extra headers
@@ -130,6 +130,7 @@ class ParsingResource(SyncAPIResource):
             # Prepare configuration as JSON string
             configuration = {
                 "tier": tier,
+                "version": version,
                 "agentic_options": agentic_options if agentic_options is not omit else None,
                 "client_name": client_name if client_name is not omit else None,
                 "crop_box": crop_box if crop_box is not omit else None,
@@ -142,7 +143,6 @@ class ParsingResource(SyncAPIResource):
                 "processing_control": processing_control if processing_control is not omit else None,
                 "processing_options": processing_options if processing_options is not omit else None,
                 "source_url": source_url if source_url is not omit else None,
-                "version": version if version is not omit else None,
                 "webhook_configurations": webhook_configurations if webhook_configurations is not omit else None,
             }
             # Remove None values
@@ -153,7 +153,7 @@ class ParsingResource(SyncAPIResource):
 
             extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
             return self._post(
-                "/api/v2alpha1/parse/upload",
+                "/api/v2/parse/upload",
                 body={"configuration": json.dumps(configuration)},
                 files=httpx_files,
                 options=make_request_options(
@@ -174,10 +174,11 @@ class ParsingResource(SyncAPIResource):
 
         # Otherwise use regular JSON endpoint
         return self._post(
-            "/api/v2alpha1/parse",
+            "/api/v2/parse",
             body=maybe_transform(
                 {
                     "tier": tier,
+                    "version": version,
                     "agentic_options": agentic_options,
                     "client_name": client_name,
                     "crop_box": crop_box,
@@ -191,7 +192,6 @@ class ParsingResource(SyncAPIResource):
                     "processing_control": processing_control,
                     "processing_options": processing_options,
                     "source_url": source_url,
-                    "version": version,
                     "webhook_configurations": webhook_configurations,
                 },
                 parsing_create_params.ParsingCreateParams,
@@ -247,7 +247,7 @@ class ParsingResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._get_api_list(
-            "/api/v2alpha1/parse",
+            "/api/v2/parse",
             page=SyncPaginatedClassifyJobs[ParsingListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -305,7 +305,7 @@ class ParsingResource(SyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return self._get(
-            f"/api/v2alpha1/parse/{job_id}",
+            f"/api/v2/parse/{job_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -328,6 +328,7 @@ class ParsingResource(SyncAPIResource):
         self,
         *,
         tier: Literal["fast", "cost_effective", "agentic", "agentic_plus"],
+        version: Union[Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "latest"], str],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         agentic_options: Optional[parsing_create_params.AgenticOptions] | Omit = omit,
@@ -345,7 +346,6 @@ class ParsingResource(SyncAPIResource):
         processing_control: parsing_create_params.ProcessingControl | Omit = omit,
         processing_options: parsing_create_params.ProcessingOptions | Omit = omit,
         source_url: Optional[str] | Omit = omit,
-        version: Union[Literal["2025-12-18", "2025-12-11", "latest"], str] | Omit = omit,
         webhook_configurations: Iterable[parsing_create_params.WebhookConfiguration] | Omit = omit,
         image_filenames: Optional[str] | Omit = omit,
         # Polling parameters
@@ -368,6 +368,8 @@ class ParsingResource(SyncAPIResource):
 
         Args:
             tier: The parsing tier to use
+
+            version: Version of the tier configuration
 
             organization_id: Optional organization ID
 
@@ -405,8 +407,6 @@ class ParsingResource(SyncAPIResource):
             processing_options: Processing options shared across all tiers
 
             source_url: Source URL to fetch document from
-
-            version: Version of the tier configuration
 
             webhook_configurations: List of webhook configurations for notifications
 
@@ -448,6 +448,7 @@ class ParsingResource(SyncAPIResource):
             # One-shot: parse, wait for completion, and get result
             result = client.parsing.parse(
                 tier="fast",
+                version="latest",
                 source_url="https://example.com/document.pdf",
                 expand=["text", "markdown"],
                 verbose=True,
@@ -461,6 +462,7 @@ class ParsingResource(SyncAPIResource):
         # Create the parsing job
         job = self.create(
             tier=tier,
+            version=version,
             organization_id=organization_id,
             project_id=project_id,
             agentic_options=agentic_options,
@@ -477,7 +479,6 @@ class ParsingResource(SyncAPIResource):
             processing_control=processing_control,
             processing_options=processing_options,
             source_url=source_url,
-            version=version,
             webhook_configurations=webhook_configurations,
             extra_headers=extra_headers,
             extra_query=extra_query,
@@ -576,7 +577,7 @@ class ParsingResource(SyncAPIResource):
             client = LlamaCloud(api_key="...")
 
             # Create a parse job
-            job = client.parsing.create(tier="fast", source_url="https://example.com/doc.pdf")
+            job = client.parsing.create(tier="fast", version="latest", source_url="https://example.com/doc.pdf")
 
             # Wait for it to complete
             completed_job = client.parsing.wait_for_completion(job.id, verbose=True)
@@ -656,6 +657,7 @@ class AsyncParsingResource(AsyncAPIResource):
         self,
         *,
         tier: Literal["fast", "cost_effective", "agentic", "agentic_plus"],
+        version: Union[Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "latest"], str],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         agentic_options: Optional[parsing_create_params.AgenticOptions] | Omit = omit,
@@ -672,7 +674,6 @@ class AsyncParsingResource(AsyncAPIResource):
         processing_control: parsing_create_params.ProcessingControl | Omit = omit,
         processing_options: parsing_create_params.ProcessingOptions | Omit = omit,
         source_url: Optional[str] | Omit = omit,
-        version: Union[Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "latest"], str] | Omit = omit,
         webhook_configurations: Iterable[parsing_create_params.WebhookConfiguration] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -686,6 +687,8 @@ class AsyncParsingResource(AsyncAPIResource):
 
         Args:
           tier: The parsing tier to use
+
+          version: Version of the tier configuration
 
           agentic_options: Options for agentic tier parsing (with AI agents).
 
@@ -715,8 +718,6 @@ class AsyncParsingResource(AsyncAPIResource):
 
           source_url: Source URL to fetch document from
 
-          version: Version of the tier configuration
-
           webhook_configurations: List of webhook configurations for notifications
 
           extra_headers: Send extra headers
@@ -732,6 +733,7 @@ class AsyncParsingResource(AsyncAPIResource):
             # Prepare configuration as JSON string
             configuration = {
                 "tier": tier,
+                "version": version,
                 "agentic_options": agentic_options if agentic_options is not omit else None,
                 "client_name": client_name if client_name is not omit else None,
                 "crop_box": crop_box if crop_box is not omit else None,
@@ -744,7 +746,6 @@ class AsyncParsingResource(AsyncAPIResource):
                 "processing_control": processing_control if processing_control is not omit else None,
                 "processing_options": processing_options if processing_options is not omit else None,
                 "source_url": source_url if source_url is not omit else None,
-                "version": version if version is not omit else None,
                 "webhook_configurations": webhook_configurations if webhook_configurations is not omit else None,
             }
             # Remove None values
@@ -755,7 +756,7 @@ class AsyncParsingResource(AsyncAPIResource):
 
             extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
             return await self._post(
-                "/api/v2alpha1/parse/upload",
+                "/api/v2/parse/upload",
                 body={"configuration": json.dumps(configuration)},
                 files=httpx_files,
                 options=make_request_options(
@@ -776,10 +777,11 @@ class AsyncParsingResource(AsyncAPIResource):
 
         # Otherwise use regular JSON endpoint
         return await self._post(
-            "/api/v2alpha1/parse",
+            "/api/v2/parse",
             body=await async_maybe_transform(
                 {
                     "tier": tier,
+                    "version": version,
                     "agentic_options": agentic_options,
                     "client_name": client_name,
                     "crop_box": crop_box,
@@ -793,7 +795,6 @@ class AsyncParsingResource(AsyncAPIResource):
                     "processing_control": processing_control,
                     "processing_options": processing_options,
                     "source_url": source_url,
-                    "version": version,
                     "webhook_configurations": webhook_configurations,
                 },
                 parsing_create_params.ParsingCreateParams,
@@ -849,7 +850,7 @@ class AsyncParsingResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._get_api_list(
-            "/api/v2alpha1/parse",
+            "/api/v2/parse",
             page=AsyncPaginatedClassifyJobs[ParsingListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -907,7 +908,7 @@ class AsyncParsingResource(AsyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return await self._get(
-            f"/api/v2alpha1/parse/{job_id}",
+            f"/api/v2/parse/{job_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -930,6 +931,7 @@ class AsyncParsingResource(AsyncAPIResource):
         self,
         *,
         tier: Literal["fast", "cost_effective", "agentic", "agentic_plus"],
+        version: Union[Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "latest"], str],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         agentic_options: Optional[parsing_create_params.AgenticOptions] | Omit = omit,
@@ -947,7 +949,6 @@ class AsyncParsingResource(AsyncAPIResource):
         processing_control: parsing_create_params.ProcessingControl | Omit = omit,
         processing_options: parsing_create_params.ProcessingOptions | Omit = omit,
         source_url: Optional[str] | Omit = omit,
-        version: Union[Literal["2025-12-18", "2025-12-11", "latest"], str] | Omit = omit,
         webhook_configurations: Iterable[parsing_create_params.WebhookConfiguration] | Omit = omit,
         image_filenames: Optional[str] | Omit = omit,
         # Polling parameters
@@ -970,6 +971,8 @@ class AsyncParsingResource(AsyncAPIResource):
 
         Args:
             tier: The parsing tier to use
+
+            version: Version of the tier configuration
 
             organization_id: Optional organization ID
 
@@ -1007,8 +1010,6 @@ class AsyncParsingResource(AsyncAPIResource):
             processing_options: Processing options shared across all tiers
 
             source_url: Source URL to fetch document from
-
-            version: Version of the tier configuration
 
             webhook_configurations: List of webhook configurations for notifications
 
@@ -1050,6 +1051,7 @@ class AsyncParsingResource(AsyncAPIResource):
             # One-shot: parse, wait for completion, and get result
             result = await client.parsing.parse(
                 tier="fast",
+                version="latest",
                 source_url="https://example.com/document.pdf",
                 expand=["text", "markdown"],
                 verbose=True,
@@ -1178,7 +1180,7 @@ class AsyncParsingResource(AsyncAPIResource):
             client = AsyncLlamaCloud(api_key="...")
 
             # Create a parse job
-            job = await client.parsing.create(tier="fast", source_url="https://example.com/doc.pdf")
+            job = await client.parsing.create(tier="fast", version="latest", source_url="https://example.com/doc.pdf")
 
             # Wait for it to complete
             completed_job = await client.parsing.wait_for_completion(job.id, verbose=True)

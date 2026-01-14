@@ -15,6 +15,8 @@ from llama_cloud.types import (
     FileCreateResponse,
 )
 
+# pyright: reportDeprecated=false
+
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
@@ -178,33 +180,38 @@ class TestFiles:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_query(self, client: LlamaCloud) -> None:
-        file = client.files.query()
+        with pytest.warns(DeprecationWarning):
+            file = client.files.query()
+
         assert_matches_type(FileQueryResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_query_with_all_params(self, client: LlamaCloud) -> None:
-        file = client.files.query(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            filter={
-                "data_source_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-                "external_file_id": "external_file_id",
-                "file_ids": ["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-                "file_name": "file_name",
-                "only_manually_uploaded": True,
-                "project_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            },
-            order_by="order_by",
-            page_size=0,
-            page_token="page_token",
-        )
+        with pytest.warns(DeprecationWarning):
+            file = client.files.query(
+                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                filter={
+                    "data_source_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "external_file_id": "external_file_id",
+                    "file_ids": ["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+                    "file_name": "file_name",
+                    "only_manually_uploaded": True,
+                    "project_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                },
+                order_by="order_by",
+                page_size=0,
+                page_token="page_token",
+            )
+
         assert_matches_type(FileQueryResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_query(self, client: LlamaCloud) -> None:
-        response = client.files.with_raw_response.query()
+        with pytest.warns(DeprecationWarning):
+            response = client.files.with_raw_response.query()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -214,12 +221,13 @@ class TestFiles:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_query(self, client: LlamaCloud) -> None:
-        with client.files.with_streaming_response.query() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        with pytest.warns(DeprecationWarning):
+            with client.files.with_streaming_response.query() as response:
+                assert not response.is_closed
+                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            file = response.parse()
-            assert_matches_type(FileQueryResponse, file, path=["response"])
+                file = response.parse()
+                assert_matches_type(FileQueryResponse, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -386,33 +394,38 @@ class TestAsyncFiles:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_query(self, async_client: AsyncLlamaCloud) -> None:
-        file = await async_client.files.query()
+        with pytest.warns(DeprecationWarning):
+            file = await async_client.files.query()
+
         assert_matches_type(FileQueryResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_query_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        file = await async_client.files.query(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            filter={
-                "data_source_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-                "external_file_id": "external_file_id",
-                "file_ids": ["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
-                "file_name": "file_name",
-                "only_manually_uploaded": True,
-                "project_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            },
-            order_by="order_by",
-            page_size=0,
-            page_token="page_token",
-        )
+        with pytest.warns(DeprecationWarning):
+            file = await async_client.files.query(
+                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                filter={
+                    "data_source_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "external_file_id": "external_file_id",
+                    "file_ids": ["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+                    "file_name": "file_name",
+                    "only_manually_uploaded": True,
+                    "project_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                },
+                order_by="order_by",
+                page_size=0,
+                page_token="page_token",
+            )
+
         assert_matches_type(FileQueryResponse, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_query(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.files.with_raw_response.query()
+        with pytest.warns(DeprecationWarning):
+            response = await async_client.files.with_raw_response.query()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -422,11 +435,12 @@ class TestAsyncFiles:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_query(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.files.with_streaming_response.query() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        with pytest.warns(DeprecationWarning):
+            async with async_client.files.with_streaming_response.query() as response:
+                assert not response.is_closed
+                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            file = await response.parse()
-            assert_matches_type(FileQueryResponse, file, path=["response"])
+                file = await response.parse()
+                assert_matches_type(FileQueryResponse, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True

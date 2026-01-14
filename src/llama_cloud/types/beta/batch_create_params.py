@@ -158,6 +158,8 @@ class JobConfigBatchParseJobRecordCreateParameters(TypedDict, total=False):
 
     ignore_document_elements_for_layout_detection: Optional[bool]
 
+    images_to_save: Optional[List[Literal["screenshot", "embedded", "layout"]]]
+
     inline_images_in_markdown: Optional[bool]
 
     input_s3_path: Optional[str]

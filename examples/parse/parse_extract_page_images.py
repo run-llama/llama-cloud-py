@@ -24,10 +24,7 @@ async def parse_document() -> None:
         tier="agentic",
         version="latest",
         output_options={
-            # Enable extraction of page screenshots
-            "screenshots": {"enable": True},
-            # Skip extraction of embedded images
-            "embedded_images": {"enable": False},
+            "images_to_save": ["screenshot"],
         },
         expand=["images_content_metadata"],
     )

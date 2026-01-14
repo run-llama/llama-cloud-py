@@ -17,12 +17,10 @@ __all__ = [
     "InputOptionsPresentation",
     "InputOptionsSpreadsheet",
     "OutputOptions",
-    "OutputOptionsEmbeddedImages",
     "OutputOptionsExportPdf",
     "OutputOptionsMarkdown",
     "OutputOptionsMarkdownPages",
     "OutputOptionsMarkdownTables",
-    "OutputOptionsScreenshots",
     "OutputOptionsSpatialText",
     "OutputOptionsSpatialTextPages",
     "OutputOptionsTablesAsSpreadsheet",
@@ -46,6 +44,9 @@ __all__ = [
 class ParsingCreateParams(TypedDict, total=False):
     tier: Required[Literal["fast", "cost_effective", "agentic", "agentic_plus"]]
     """The parsing tier to use"""
+
+    version: Required[Union[Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "latest"], str]]
+    """Version of the tier configuration"""
 
     organization_id: Optional[str]
 
@@ -89,9 +90,6 @@ class ParsingCreateParams(TypedDict, total=False):
 
     source_url: Optional[str]
     """Source URL to fetch document from"""
-
-    version: Union[Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "latest"], str]
-    """Version of the tier configuration"""
 
     webhook_configurations: Iterable[WebhookConfiguration]
     """List of webhook configurations for notifications"""
@@ -169,13 +167,6 @@ class InputOptions(TypedDict, total=False):
     """Spreadsheet-specific parsing options"""
 
 
-class OutputOptionsEmbeddedImages(TypedDict, total=False):
-    """Embedded image extraction options"""
-
-    enable: Optional[bool]
-    """Whether this option is enabled"""
-
-
 class OutputOptionsExportPdf(TypedDict, total=False):
     """PDF export options"""
 
@@ -216,13 +207,6 @@ class OutputOptionsMarkdown(TypedDict, total=False):
     """Table formatting options for markdown"""
 
 
-class OutputOptionsScreenshots(TypedDict, total=False):
-    """Screenshot generation options"""
-
-    enable: Optional[bool]
-    """Whether this option is enabled"""
-
-
 class OutputOptionsSpatialTextPages(TypedDict, total=False):
     """Page formatting options for spatial text"""
 
@@ -259,20 +243,21 @@ class OutputOptionsTablesAsSpreadsheet(TypedDict, total=False):
 class OutputOptions(TypedDict, total=False):
     """Output format and styling options"""
 
-    embedded_images: OutputOptionsEmbeddedImages
-    """Embedded image extraction options"""
-
     export_pdf: OutputOptionsExportPdf
     """PDF export options"""
 
     extract_printed_page_number: Optional[bool]
     """Extract printed page numbers from the document"""
 
+    images_to_save: Optional[List[Literal["screenshot", "embedded", "layout"]]]
+    """
+    Image categories to save: 'screenshot' (full page), 'embedded' (images in
+    document), 'layout' (cropped images from layout detection). If not set or empty,
+    no images are saved.
+    """
+
     markdown: OutputOptionsMarkdown
     """Markdown output formatting options"""
-
-    screenshots: OutputOptionsScreenshots
-    """Screenshot generation options"""
 
     spatial_text: OutputOptionsSpatialText
     """Spatial text output options"""
@@ -576,6 +561,12 @@ class ProcessingOptions(TypedDict, total=False):
 
     auto_mode_configuration: Optional[Iterable[ProcessingOptionsAutoModeConfiguration]]
     """Configuration for auto mode parsing with triggers and parsing options"""
+
+    disable_heuristics: Optional[bool]
+    """
+    Whether to disable heuristics like outlined table extraction and adaptive long
+    table handling
+    """
 
     ignore: ProcessingOptionsIgnore
     """Options for ignoring specific text types"""

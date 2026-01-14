@@ -244,8 +244,14 @@ class ItemsPageStructuredResultPage(BaseModel):
     items: List[ItemsPageStructuredResultPageItem]
     """List of structured items on the page"""
 
+    page_height: float
+    """Height of the page in points"""
+
     page_number: int
     """Page number of the document"""
+
+    page_width: float
+    """Width of the page in points"""
 
     success: Optional[Literal[True]] = None
     """Success indicator"""
