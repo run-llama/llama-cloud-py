@@ -284,7 +284,7 @@ class FilesResource(SyncAPIResource):
             cast_to=PresignedURL,
         )
 
-    @typing_extensions.deprecated("deprecated")
+    @typing_extensions.deprecated("Use the GET /files endpoint instead")
     def query(
         self,
         *,
@@ -616,7 +616,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=PresignedURL,
         )
 
-    @typing_extensions.deprecated("deprecated")
+    @typing_extensions.deprecated("Use the GET /files endpoint instead")
     async def query(
         self,
         *,
