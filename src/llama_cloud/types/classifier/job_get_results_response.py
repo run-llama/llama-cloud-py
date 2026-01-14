@@ -33,11 +33,11 @@ class Item(BaseModel):
     classify_job_id: str
     """The ID of the classify job"""
 
-    file_id: str
-    """The ID of the classified file"""
-
     created_at: Optional[datetime] = None
     """Creation datetime"""
+
+    file_id: Optional[str] = None
+    """The ID of the classified file"""
 
     result: Optional[ItemResult] = None
     """Result of classifying a single file."""
