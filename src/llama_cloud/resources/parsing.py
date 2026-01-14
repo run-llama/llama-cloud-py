@@ -18,7 +18,7 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..pagination import SyncPaginatedClassifyJobs, AsyncPaginatedClassifyJobs
+from ..pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.parsing_get_response import ParsingGetResponse
 from ..types.parsing_list_response import ParsingListResponse
@@ -172,7 +172,7 @@ class ParsingResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncPaginatedClassifyJobs[ParsingListResponse]:
+    ) -> SyncPaginatedCursor[ParsingListResponse]:
         """
         List parse jobs for the current project with optional status filtering and
         pagination.
@@ -194,7 +194,7 @@ class ParsingResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/api/v2/parse",
-            page=SyncPaginatedClassifyJobs[ParsingListResponse],
+            page=SyncPaginatedCursor[ParsingListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -416,7 +416,7 @@ class AsyncParsingResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[ParsingListResponse, AsyncPaginatedClassifyJobs[ParsingListResponse]]:
+    ) -> AsyncPaginator[ParsingListResponse, AsyncPaginatedCursor[ParsingListResponse]]:
         """
         List parse jobs for the current project with optional status filtering and
         pagination.
@@ -438,7 +438,7 @@ class AsyncParsingResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/api/v2/parse",
-            page=AsyncPaginatedClassifyJobs[ParsingListResponse],
+            page=AsyncPaginatedCursor[ParsingListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

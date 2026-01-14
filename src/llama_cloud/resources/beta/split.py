@@ -16,7 +16,7 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncPaginatedClassifyJobs, AsyncPaginatedClassifyJobs
+from ...pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 from ...types.beta import split_get_params, split_list_params, split_create_params
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.beta.split_get_response import SplitGetResponse
@@ -122,7 +122,7 @@ class SplitResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncPaginatedClassifyJobs[SplitListResponse]:
+    ) -> SyncPaginatedCursor[SplitListResponse]:
         """List document split jobs.
 
         Experimental: This endpoint is not yet ready for
@@ -139,7 +139,7 @@ class SplitResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/api/v1/beta/split/jobs",
-            page=SyncPaginatedClassifyJobs[SplitListResponse],
+            page=SyncPaginatedCursor[SplitListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -301,7 +301,7 @@ class AsyncSplitResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[SplitListResponse, AsyncPaginatedClassifyJobs[SplitListResponse]]:
+    ) -> AsyncPaginator[SplitListResponse, AsyncPaginatedCursor[SplitListResponse]]:
         """List document split jobs.
 
         Experimental: This endpoint is not yet ready for
@@ -318,7 +318,7 @@ class AsyncSplitResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/api/v1/beta/split/jobs",
-            page=AsyncPaginatedClassifyJobs[SplitListResponse],
+            page=AsyncPaginatedCursor[SplitListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
