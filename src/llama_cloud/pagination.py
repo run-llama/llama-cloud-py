@@ -20,10 +20,8 @@ __all__ = [
     "AsyncPaginatedQuotaConfigurations",
     "SyncPaginatedCursor",
     "AsyncPaginatedCursor",
-    "SyncPaginatedAgentDataSearch",
-    "AsyncPaginatedAgentDataSearch",
-    "SyncPaginatedAgentDataAggregate",
-    "AsyncPaginatedAgentDataAggregate",
+    "SyncPaginatedCursorPost",
+    "AsyncPaginatedCursorPost",
 ]
 
 _T = TypeVar("_T")
@@ -427,7 +425,7 @@ class AsyncPaginatedCursor(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
         return PageInfo(params={"page_token": next_page_token})
 
 
-class SyncPaginatedAgentDataSearch(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
+class SyncPaginatedCursorPost(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
     items: List[_T]
     next_page_token: Optional[str] = None
 
@@ -447,47 +445,7 @@ class SyncPaginatedAgentDataSearch(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
         return PageInfo(json={"page_token": next_page_token})
 
 
-class AsyncPaginatedAgentDataSearch(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
-    items: List[_T]
-    next_page_token: Optional[str] = None
-
-    @override
-    def _get_page_items(self) -> List[_T]:
-        items = self.items
-        if not items:
-            return []
-        return items
-
-    @override
-    def next_page_info(self) -> Optional[PageInfo]:
-        next_page_token = self.next_page_token
-        if not next_page_token:
-            return None
-
-        return PageInfo(json={"page_token": next_page_token})
-
-
-class SyncPaginatedAgentDataAggregate(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
-    items: List[_T]
-    next_page_token: Optional[str] = None
-
-    @override
-    def _get_page_items(self) -> List[_T]:
-        items = self.items
-        if not items:
-            return []
-        return items
-
-    @override
-    def next_page_info(self) -> Optional[PageInfo]:
-        next_page_token = self.next_page_token
-        if not next_page_token:
-            return None
-
-        return PageInfo(json={"page_token": next_page_token})
-
-
-class AsyncPaginatedAgentDataAggregate(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
+class AsyncPaginatedCursorPost(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
     items: List[_T]
     next_page_token: Optional[str] = None
 

@@ -16,17 +16,17 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from ...pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 from ...types.beta import (
     parse_configuration_get_params,
+    parse_configuration_list_params,
+    parse_configuration_create_params,
     parse_configuration_delete_params,
     parse_configuration_update_params,
-    parse_configuration_parse_configurations_params,
-    parse_configuration_get_parse_configurations_params,
 )
-from ..._base_client import make_request_options
+from ..._base_client import AsyncPaginator, make_request_options
 from ...types.beta.parse_configuration import ParseConfiguration
 from ...types.llama_parse_parameters_param import LlamaParseParametersParam
-from ...types.beta.parse_configuration_query_response import ParseConfigurationQueryResponse
 
 __all__ = ["ParseConfigurationsResource", "AsyncParseConfigurationsResource"]
 
@@ -50,6 +50,82 @@ class ParseConfigurationsResource(SyncAPIResource):
         For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
         """
         return ParseConfigurationsResourceWithStreamingResponse(self)
+
+    def create(
+        self,
+        *,
+        name: str,
+        parameters: LlamaParseParametersParam,
+        version: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        creator: Optional[str] | Omit = omit,
+        source_id: Optional[str] | Omit = omit,
+        source_type: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ParseConfiguration:
+        """
+        Create a new parse configuration.
+
+        Args: config_create: Parse configuration creation data project: Validated
+        project from dependency user: Current user db: Database session
+
+        Returns: The created parse configuration
+
+        Args:
+          name: Name of the parse configuration
+
+          parameters: LlamaParseParameters configuration
+
+          version: Version of the configuration
+
+          creator: Creator of the configuration
+
+          source_id: ID of the source
+
+          source_type: Type of the source (e.g., 'project')
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/api/v1/beta/parse-configurations",
+            body=maybe_transform(
+                {
+                    "name": name,
+                    "parameters": parameters,
+                    "version": version,
+                    "creator": creator,
+                    "source_id": source_id,
+                    "source_type": source_type,
+                },
+                parse_configuration_create_params.ParseConfigurationCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    parse_configuration_create_params.ParseConfigurationCreateParams,
+                ),
+            ),
+            cast_to=ParseConfiguration,
+        )
 
     def update(
         self,
@@ -107,6 +183,66 @@ class ParseConfigurationsResource(SyncAPIResource):
                 ),
             ),
             cast_to=ParseConfiguration,
+        )
+
+    def list(
+        self,
+        *,
+        creator: Optional[str] | Omit = omit,
+        name: Optional[str] | Omit = omit,
+        organization_id: Optional[str] | Omit = omit,
+        page_size: Optional[int] | Omit = omit,
+        page_token: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        version: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SyncPaginatedCursor[ParseConfiguration]:
+        """
+        List parse configurations for the current project.
+
+        Args: project: Validated project from dependency user: Current user db: Database
+        session page_size: Number of items per page page_token: Token for pagination
+        name: Filter by configuration name creator: Filter by creator version: Filter by
+        version
+
+        Returns: Paginated response with parse configurations
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get_api_list(
+            "/api/v1/beta/parse-configurations",
+            page=SyncPaginatedCursor[ParseConfiguration],
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "creator": creator,
+                        "name": name,
+                        "organization_id": organization_id,
+                        "page_size": page_size,
+                        "page_token": page_token,
+                        "project_id": project_id,
+                        "version": version,
+                    },
+                    parse_configuration_list_params.ParseConfigurationListParams,
+                ),
+            ),
+            model=ParseConfiguration,
         )
 
     def delete(
@@ -208,66 +344,28 @@ class ParseConfigurationsResource(SyncAPIResource):
             cast_to=ParseConfiguration,
         )
 
-    def get_parse_configurations(
-        self,
-        *,
-        creator: Optional[str] | Omit = omit,
-        name: Optional[str] | Omit = omit,
-        organization_id: Optional[str] | Omit = omit,
-        page_size: Optional[int] | Omit = omit,
-        page_token: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        version: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ParseConfigurationQueryResponse:
+
+class AsyncParseConfigurationsResource(AsyncAPIResource):
+    @cached_property
+    def with_raw_response(self) -> AsyncParseConfigurationsResourceWithRawResponse:
         """
-        List parse configurations for the current project.
+        This property can be used as a prefix for any HTTP method call to return
+        the raw response object instead of the parsed content.
 
-        Args: project: Validated project from dependency user: Current user db: Database
-        session page_size: Number of items per page page_token: Token for pagination
-        name: Filter by configuration name creator: Filter by creator version: Filter by
-        version
-
-        Returns: Paginated response with parse configurations
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
+        For more information, see https://www.github.com/run-llama/llama-cloud-py#accessing-raw-response-data-eg-headers
         """
-        return self._get(
-            "/api/v1/beta/parse-configurations",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "creator": creator,
-                        "name": name,
-                        "organization_id": organization_id,
-                        "page_size": page_size,
-                        "page_token": page_token,
-                        "project_id": project_id,
-                        "version": version,
-                    },
-                    parse_configuration_get_parse_configurations_params.ParseConfigurationGetParseConfigurationsParams,
-                ),
-            ),
-            cast_to=ParseConfigurationQueryResponse,
-        )
+        return AsyncParseConfigurationsResourceWithRawResponse(self)
 
-    def parse_configurations(
+    @cached_property
+    def with_streaming_response(self) -> AsyncParseConfigurationsResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
+        """
+        return AsyncParseConfigurationsResourceWithStreamingResponse(self)
+
+    async def create(
         self,
         *,
         name: str,
@@ -314,9 +412,9 @@ class ParseConfigurationsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._post(
+        return await self._post(
             "/api/v1/beta/parse-configurations",
-            body=maybe_transform(
+            body=await async_maybe_transform(
                 {
                     "name": name,
                     "parameters": parameters,
@@ -325,44 +423,23 @@ class ParseConfigurationsResource(SyncAPIResource):
                     "source_id": source_id,
                     "source_type": source_type,
                 },
-                parse_configuration_parse_configurations_params.ParseConfigurationParseConfigurationsParams,
+                parse_configuration_create_params.ParseConfigurationCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform(
+                query=await async_maybe_transform(
                     {
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
-                    parse_configuration_parse_configurations_params.ParseConfigurationParseConfigurationsParams,
+                    parse_configuration_create_params.ParseConfigurationCreateParams,
                 ),
             ),
             cast_to=ParseConfiguration,
         )
-
-
-class AsyncParseConfigurationsResource(AsyncAPIResource):
-    @cached_property
-    def with_raw_response(self) -> AsyncParseConfigurationsResourceWithRawResponse:
-        """
-        This property can be used as a prefix for any HTTP method call to return
-        the raw response object instead of the parsed content.
-
-        For more information, see https://www.github.com/run-llama/llama-cloud-py#accessing-raw-response-data-eg-headers
-        """
-        return AsyncParseConfigurationsResourceWithRawResponse(self)
-
-    @cached_property
-    def with_streaming_response(self) -> AsyncParseConfigurationsResourceWithStreamingResponse:
-        """
-        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
-
-        For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
-        """
-        return AsyncParseConfigurationsResourceWithStreamingResponse(self)
 
     async def update(
         self,
@@ -420,6 +497,66 @@ class AsyncParseConfigurationsResource(AsyncAPIResource):
                 ),
             ),
             cast_to=ParseConfiguration,
+        )
+
+    def list(
+        self,
+        *,
+        creator: Optional[str] | Omit = omit,
+        name: Optional[str] | Omit = omit,
+        organization_id: Optional[str] | Omit = omit,
+        page_size: Optional[int] | Omit = omit,
+        page_token: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        version: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AsyncPaginator[ParseConfiguration, AsyncPaginatedCursor[ParseConfiguration]]:
+        """
+        List parse configurations for the current project.
+
+        Args: project: Validated project from dependency user: Current user db: Database
+        session page_size: Number of items per page page_token: Token for pagination
+        name: Filter by configuration name creator: Filter by creator version: Filter by
+        version
+
+        Returns: Paginated response with parse configurations
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get_api_list(
+            "/api/v1/beta/parse-configurations",
+            page=AsyncPaginatedCursor[ParseConfiguration],
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "creator": creator,
+                        "name": name,
+                        "organization_id": organization_id,
+                        "page_size": page_size,
+                        "page_token": page_token,
+                        "project_id": project_id,
+                        "version": version,
+                    },
+                    parse_configuration_list_params.ParseConfigurationListParams,
+                ),
+            ),
+            model=ParseConfiguration,
         )
 
     async def delete(
@@ -521,148 +658,19 @@ class AsyncParseConfigurationsResource(AsyncAPIResource):
             cast_to=ParseConfiguration,
         )
 
-    async def get_parse_configurations(
-        self,
-        *,
-        creator: Optional[str] | Omit = omit,
-        name: Optional[str] | Omit = omit,
-        organization_id: Optional[str] | Omit = omit,
-        page_size: Optional[int] | Omit = omit,
-        page_token: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        version: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ParseConfigurationQueryResponse:
-        """
-        List parse configurations for the current project.
-
-        Args: project: Validated project from dependency user: Current user db: Database
-        session page_size: Number of items per page page_token: Token for pagination
-        name: Filter by configuration name creator: Filter by creator version: Filter by
-        version
-
-        Returns: Paginated response with parse configurations
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._get(
-            "/api/v1/beta/parse-configurations",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "creator": creator,
-                        "name": name,
-                        "organization_id": organization_id,
-                        "page_size": page_size,
-                        "page_token": page_token,
-                        "project_id": project_id,
-                        "version": version,
-                    },
-                    parse_configuration_get_parse_configurations_params.ParseConfigurationGetParseConfigurationsParams,
-                ),
-            ),
-            cast_to=ParseConfigurationQueryResponse,
-        )
-
-    async def parse_configurations(
-        self,
-        *,
-        name: str,
-        parameters: LlamaParseParametersParam,
-        version: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        creator: Optional[str] | Omit = omit,
-        source_id: Optional[str] | Omit = omit,
-        source_type: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ParseConfiguration:
-        """
-        Create a new parse configuration.
-
-        Args: config_create: Parse configuration creation data project: Validated
-        project from dependency user: Current user db: Database session
-
-        Returns: The created parse configuration
-
-        Args:
-          name: Name of the parse configuration
-
-          parameters: LlamaParseParameters configuration
-
-          version: Version of the configuration
-
-          creator: Creator of the configuration
-
-          source_id: ID of the source
-
-          source_type: Type of the source (e.g., 'project')
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/api/v1/beta/parse-configurations",
-            body=await async_maybe_transform(
-                {
-                    "name": name,
-                    "parameters": parameters,
-                    "version": version,
-                    "creator": creator,
-                    "source_id": source_id,
-                    "source_type": source_type,
-                },
-                parse_configuration_parse_configurations_params.ParseConfigurationParseConfigurationsParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    parse_configuration_parse_configurations_params.ParseConfigurationParseConfigurationsParams,
-                ),
-            ),
-            cast_to=ParseConfiguration,
-        )
-
 
 class ParseConfigurationsResourceWithRawResponse:
     def __init__(self, parse_configurations: ParseConfigurationsResource) -> None:
         self._parse_configurations = parse_configurations
 
+        self.create = to_raw_response_wrapper(
+            parse_configurations.create,
+        )
         self.update = to_raw_response_wrapper(
             parse_configurations.update,
+        )
+        self.list = to_raw_response_wrapper(
+            parse_configurations.list,
         )
         self.delete = to_raw_response_wrapper(
             parse_configurations.delete,
@@ -670,20 +678,20 @@ class ParseConfigurationsResourceWithRawResponse:
         self.get = to_raw_response_wrapper(
             parse_configurations.get,
         )
-        self.get_parse_configurations = to_raw_response_wrapper(
-            parse_configurations.get_parse_configurations,
-        )
-        self.parse_configurations = to_raw_response_wrapper(
-            parse_configurations.parse_configurations,
-        )
 
 
 class AsyncParseConfigurationsResourceWithRawResponse:
     def __init__(self, parse_configurations: AsyncParseConfigurationsResource) -> None:
         self._parse_configurations = parse_configurations
 
+        self.create = async_to_raw_response_wrapper(
+            parse_configurations.create,
+        )
         self.update = async_to_raw_response_wrapper(
             parse_configurations.update,
+        )
+        self.list = async_to_raw_response_wrapper(
+            parse_configurations.list,
         )
         self.delete = async_to_raw_response_wrapper(
             parse_configurations.delete,
@@ -691,20 +699,20 @@ class AsyncParseConfigurationsResourceWithRawResponse:
         self.get = async_to_raw_response_wrapper(
             parse_configurations.get,
         )
-        self.get_parse_configurations = async_to_raw_response_wrapper(
-            parse_configurations.get_parse_configurations,
-        )
-        self.parse_configurations = async_to_raw_response_wrapper(
-            parse_configurations.parse_configurations,
-        )
 
 
 class ParseConfigurationsResourceWithStreamingResponse:
     def __init__(self, parse_configurations: ParseConfigurationsResource) -> None:
         self._parse_configurations = parse_configurations
 
+        self.create = to_streamed_response_wrapper(
+            parse_configurations.create,
+        )
         self.update = to_streamed_response_wrapper(
             parse_configurations.update,
+        )
+        self.list = to_streamed_response_wrapper(
+            parse_configurations.list,
         )
         self.delete = to_streamed_response_wrapper(
             parse_configurations.delete,
@@ -712,30 +720,24 @@ class ParseConfigurationsResourceWithStreamingResponse:
         self.get = to_streamed_response_wrapper(
             parse_configurations.get,
         )
-        self.get_parse_configurations = to_streamed_response_wrapper(
-            parse_configurations.get_parse_configurations,
-        )
-        self.parse_configurations = to_streamed_response_wrapper(
-            parse_configurations.parse_configurations,
-        )
 
 
 class AsyncParseConfigurationsResourceWithStreamingResponse:
     def __init__(self, parse_configurations: AsyncParseConfigurationsResource) -> None:
         self._parse_configurations = parse_configurations
 
+        self.create = async_to_streamed_response_wrapper(
+            parse_configurations.create,
+        )
         self.update = async_to_streamed_response_wrapper(
             parse_configurations.update,
+        )
+        self.list = async_to_streamed_response_wrapper(
+            parse_configurations.list,
         )
         self.delete = async_to_streamed_response_wrapper(
             parse_configurations.delete,
         )
         self.get = async_to_streamed_response_wrapper(
             parse_configurations.get,
-        )
-        self.get_parse_configurations = async_to_streamed_response_wrapper(
-            parse_configurations.get_parse_configurations,
-        )
-        self.parse_configurations = async_to_streamed_response_wrapper(
-            parse_configurations.parse_configurations,
         )

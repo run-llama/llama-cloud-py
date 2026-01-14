@@ -7,10 +7,10 @@ from typing_extensions import Required, TypedDict
 
 from ..llama_parse_parameters_param import LlamaParseParametersParam
 
-__all__ = ["ParseConfigurationParseConfigurationsParams"]
+__all__ = ["ParseConfigurationCreateParams"]
 
 
-class ParseConfigurationParseConfigurationsParams(TypedDict, total=False):
+class ParseConfigurationCreateParams(TypedDict, total=False):
     name: Required[str]
     """Name of the parse configuration"""
 

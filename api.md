@@ -416,7 +416,6 @@ from llama_cloud.types.beta import (
     AgentDataDeleteResponse,
     AgentDataAggregateResponse,
     AgentDataDeleteByQueryResponse,
-    AgentDataSearchResponse,
 )
 ```
 
@@ -425,10 +424,10 @@ Methods:
 - <code title="put /api/v1/beta/agent-data/{item_id}">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">update</a>(item_id, \*\*<a href="src/llama_cloud/types/beta/agent_data_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data.py">AgentData</a></code>
 - <code title="delete /api/v1/beta/agent-data/{item_id}">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">delete</a>(item_id, \*\*<a href="src/llama_cloud/types/beta/agent_data_delete_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data_delete_response.py">AgentDataDeleteResponse</a></code>
 - <code title="post /api/v1/beta/agent-data">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">agent_data</a>(\*\*<a href="src/llama_cloud/types/beta/agent_data_agent_data_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data.py">AgentData</a></code>
-- <code title="post /api/v1/beta/agent-data/:aggregate">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">aggregate</a>(\*\*<a href="src/llama_cloud/types/beta/agent_data_aggregate_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data_aggregate_response.py">AgentDataAggregateResponse</a></code>
+- <code title="post /api/v1/beta/agent-data/:aggregate">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">aggregate</a>(\*\*<a href="src/llama_cloud/types/beta/agent_data_aggregate_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data_aggregate_response.py">SyncPaginatedCursorPost[AgentDataAggregateResponse]</a></code>
 - <code title="post /api/v1/beta/agent-data/:delete">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">delete_by_query</a>(\*\*<a href="src/llama_cloud/types/beta/agent_data_delete_by_query_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data_delete_by_query_response.py">AgentDataDeleteByQueryResponse</a></code>
 - <code title="get /api/v1/beta/agent-data/{item_id}">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">get</a>(item_id, \*\*<a href="src/llama_cloud/types/beta/agent_data_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data.py">AgentData</a></code>
-- <code title="post /api/v1/beta/agent-data/:search">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">search</a>(\*\*<a href="src/llama_cloud/types/beta/agent_data_search_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data_search_response.py">AgentDataSearchResponse</a></code>
+- <code title="post /api/v1/beta/agent-data/:search">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">search</a>(\*\*<a href="src/llama_cloud/types/beta/agent_data_search_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data.py">SyncPaginatedCursorPost[AgentData]</a></code>
 
 ## ParseConfigurations
 
@@ -444,11 +443,11 @@ from llama_cloud.types.beta import (
 
 Methods:
 
+- <code title="post /api/v1/beta/parse-configurations">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">create</a>(\*\*<a href="src/llama_cloud/types/beta/parse_configuration_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration.py">ParseConfiguration</a></code>
 - <code title="put /api/v1/beta/parse-configurations/{config_id}">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">update</a>(config_id, \*\*<a href="src/llama_cloud/types/beta/parse_configuration_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration.py">ParseConfiguration</a></code>
+- <code title="get /api/v1/beta/parse-configurations">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">list</a>(\*\*<a href="src/llama_cloud/types/beta/parse_configuration_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration.py">SyncPaginatedCursor[ParseConfiguration]</a></code>
 - <code title="delete /api/v1/beta/parse-configurations/{config_id}">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">delete</a>(config_id, \*\*<a href="src/llama_cloud/types/beta/parse_configuration_delete_params.py">params</a>) -> None</code>
 - <code title="get /api/v1/beta/parse-configurations/{config_id}">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">get</a>(config_id, \*\*<a href="src/llama_cloud/types/beta/parse_configuration_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration.py">ParseConfiguration</a></code>
-- <code title="get /api/v1/beta/parse-configurations">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">get_parse_configurations</a>(\*\*<a href="src/llama_cloud/types/beta/parse_configuration_get_parse_configurations_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration_query_response.py">ParseConfigurationQueryResponse</a></code>
-- <code title="post /api/v1/beta/parse-configurations">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">parse_configurations</a>(\*\*<a href="src/llama_cloud/types/beta/parse_configuration_parse_configurations_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration.py">ParseConfiguration</a></code>
 
 ## Sheets
 
