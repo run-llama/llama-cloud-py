@@ -9,7 +9,7 @@ import pytest
 
 from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
-from llama_cloud.pagination import SyncPaginatedClassifyJobs, AsyncPaginatedClassifyJobs
+from llama_cloud.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 from llama_cloud.types.beta import (
     SplitGetResponse,
     SplitListResponse,
@@ -92,7 +92,7 @@ class TestSplit:
     @parametrize
     def test_method_list(self, client: LlamaCloud) -> None:
         split = client.beta.split.list()
-        assert_matches_type(SyncPaginatedClassifyJobs[SplitListResponse], split, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -103,7 +103,7 @@ class TestSplit:
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SyncPaginatedClassifyJobs[SplitListResponse], split, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -113,7 +113,7 @@ class TestSplit:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         split = response.parse()
-        assert_matches_type(SyncPaginatedClassifyJobs[SplitListResponse], split, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -123,7 +123,7 @@ class TestSplit:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             split = response.parse()
-            assert_matches_type(SyncPaginatedClassifyJobs[SplitListResponse], split, path=["response"])
+            assert_matches_type(SyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -255,7 +255,7 @@ class TestAsyncSplit:
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloud) -> None:
         split = await async_client.beta.split.list()
-        assert_matches_type(AsyncPaginatedClassifyJobs[SplitListResponse], split, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -266,7 +266,7 @@ class TestAsyncSplit:
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(AsyncPaginatedClassifyJobs[SplitListResponse], split, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -276,7 +276,7 @@ class TestAsyncSplit:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         split = await response.parse()
-        assert_matches_type(AsyncPaginatedClassifyJobs[SplitListResponse], split, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -286,7 +286,7 @@ class TestAsyncSplit:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             split = await response.parse()
-            assert_matches_type(AsyncPaginatedClassifyJobs[SplitListResponse], split, path=["response"])
+            assert_matches_type(AsyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
