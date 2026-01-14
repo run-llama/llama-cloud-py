@@ -22,6 +22,8 @@ __all__ = [
     "AsyncPaginatedClassifyJobs",
     "SyncPaginatedSpreadsheetJobs",
     "AsyncPaginatedSpreadsheetJobs",
+    "SyncPaginatedDefault",
+    "AsyncPaginatedDefault",
     "SyncPaginatedAgentDataSearch",
     "AsyncPaginatedAgentDataSearch",
     "SyncPaginatedAgentDataAggregate",
@@ -450,6 +452,46 @@ class SyncPaginatedSpreadsheetJobs(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
 
 
 class AsyncPaginatedSpreadsheetJobs(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
+    items: List[_T]
+    next_page_token: Optional[str] = None
+
+    @override
+    def _get_page_items(self) -> List[_T]:
+        items = self.items
+        if not items:
+            return []
+        return items
+
+    @override
+    def next_page_info(self) -> Optional[PageInfo]:
+        next_page_token = self.next_page_token
+        if not next_page_token:
+            return None
+
+        return PageInfo(params={"page_token": next_page_token})
+
+
+class SyncPaginatedDefault(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
+    items: List[_T]
+    next_page_token: Optional[str] = None
+
+    @override
+    def _get_page_items(self) -> List[_T]:
+        items = self.items
+        if not items:
+            return []
+        return items
+
+    @override
+    def next_page_info(self) -> Optional[PageInfo]:
+        next_page_token = self.next_page_token
+        if not next_page_token:
+            return None
+
+        return PageInfo(params={"page_token": next_page_token})
+
+
+class AsyncPaginatedDefault(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
     items: List[_T]
     next_page_token: Optional[str] = None
 

@@ -7,8 +7,8 @@ from typing import Mapping, Optional, cast
 
 import httpx
 
-from ..types import file_get_params, file_query_params, file_create_params, file_delete_params
-from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, FileTypes, omit, not_given
+from ..types import file_get_params, file_list_params, file_query_params, file_create_params, file_delete_params
+from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, FileTypes, SequenceNotStr, omit, not_given
 from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -18,8 +18,10 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .._base_client import make_request_options
+from ..pagination import SyncPaginatedDefault, AsyncPaginatedDefault
+from .._base_client import AsyncPaginator, make_request_options
 from ..types.presigned_url import PresignedURL
+from ..types.file_list_response import FileListResponse
 from ..types.file_query_response import FileQueryResponse
 from ..types.file_create_response import FileCreateResponse
 
@@ -110,6 +112,78 @@ class FilesResource(SyncAPIResource):
                 ),
             ),
             cast_to=FileCreateResponse,
+        )
+
+    def list(
+        self,
+        *,
+        external_file_id: Optional[str] | Omit = omit,
+        file_ids: Optional[SequenceNotStr[str]] | Omit = omit,
+        file_name: Optional[str] | Omit = omit,
+        order_by: Optional[str] | Omit = omit,
+        organization_id: Optional[str] | Omit = omit,
+        page_size: Optional[int] | Omit = omit,
+        page_token: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SyncPaginatedDefault[FileListResponse]:
+        """
+        List files with optional filtering and pagination.
+
+        This endpoint retrieves files for the specified project with support for
+        filtering by various criteria and cursor-based pagination.
+
+        Args:
+          external_file_id: Filter by external file ID.
+
+          file_ids: Filter by specific file IDs.
+
+          file_name: Filter by file name (exact match).
+
+          order_by: A comma-separated list of fields to order by, sorted in ascending order. Use
+              'field_name desc' to specify descending order.
+
+          page_size: The maximum number of items to return. Defaults to 50, maximum is 1000.
+
+          page_token: A page token received from a previous list call. Provide this to retrieve the
+              subsequent page.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get_api_list(
+            "/api/v1/beta/files",
+            page=SyncPaginatedDefault[FileListResponse],
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "external_file_id": external_file_id,
+                        "file_ids": file_ids,
+                        "file_name": file_name,
+                        "order_by": order_by,
+                        "organization_id": organization_id,
+                        "page_size": page_size,
+                        "page_token": page_token,
+                        "project_id": project_id,
+                    },
+                    file_list_params.FileListParams,
+                ),
+            ),
+            model=FileListResponse,
         )
 
     def delete(
@@ -372,6 +446,78 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=FileCreateResponse,
         )
 
+    def list(
+        self,
+        *,
+        external_file_id: Optional[str] | Omit = omit,
+        file_ids: Optional[SequenceNotStr[str]] | Omit = omit,
+        file_name: Optional[str] | Omit = omit,
+        order_by: Optional[str] | Omit = omit,
+        organization_id: Optional[str] | Omit = omit,
+        page_size: Optional[int] | Omit = omit,
+        page_token: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AsyncPaginator[FileListResponse, AsyncPaginatedDefault[FileListResponse]]:
+        """
+        List files with optional filtering and pagination.
+
+        This endpoint retrieves files for the specified project with support for
+        filtering by various criteria and cursor-based pagination.
+
+        Args:
+          external_file_id: Filter by external file ID.
+
+          file_ids: Filter by specific file IDs.
+
+          file_name: Filter by file name (exact match).
+
+          order_by: A comma-separated list of fields to order by, sorted in ascending order. Use
+              'field_name desc' to specify descending order.
+
+          page_size: The maximum number of items to return. Defaults to 50, maximum is 1000.
+
+          page_token: A page token received from a previous list call. Provide this to retrieve the
+              subsequent page.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get_api_list(
+            "/api/v1/beta/files",
+            page=AsyncPaginatedDefault[FileListResponse],
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "external_file_id": external_file_id,
+                        "file_ids": file_ids,
+                        "file_name": file_name,
+                        "order_by": order_by,
+                        "organization_id": organization_id,
+                        "page_size": page_size,
+                        "page_token": page_token,
+                        "project_id": project_id,
+                    },
+                    file_list_params.FileListParams,
+                ),
+            ),
+            model=FileListResponse,
+        )
+
     async def delete(
         self,
         file_id: str,
@@ -553,6 +699,9 @@ class FilesResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             files.create,
         )
+        self.list = to_raw_response_wrapper(
+            files.list,
+        )
         self.delete = to_raw_response_wrapper(
             files.delete,
         )
@@ -572,6 +721,9 @@ class AsyncFilesResourceWithRawResponse:
 
         self.create = async_to_raw_response_wrapper(
             files.create,
+        )
+        self.list = async_to_raw_response_wrapper(
+            files.list,
         )
         self.delete = async_to_raw_response_wrapper(
             files.delete,
@@ -593,6 +745,9 @@ class FilesResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             files.create,
         )
+        self.list = to_streamed_response_wrapper(
+            files.list,
+        )
         self.delete = to_streamed_response_wrapper(
             files.delete,
         )
@@ -612,6 +767,9 @@ class AsyncFilesResourceWithStreamingResponse:
 
         self.create = async_to_streamed_response_wrapper(
             files.create,
+        )
+        self.list = async_to_streamed_response_wrapper(
+            files.list,
         )
         self.delete = async_to_streamed_response_wrapper(
             files.delete,
