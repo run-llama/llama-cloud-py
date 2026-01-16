@@ -1050,7 +1050,7 @@ class AsyncParsingResource(AsyncAPIResource):
 
             # One-shot: parse, wait for completion, and get result
             result = await client.parsing.parse(
-                tier="fast",
+                tier="cost_effective",
                 version="latest",
                 source_url="https://example.com/document.pdf",
                 expand=["text", "markdown"],
