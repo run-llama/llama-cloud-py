@@ -9,10 +9,10 @@ import pytest
 
 from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
+from llama_cloud.pagination import SyncPaginatedCursorPost, AsyncPaginatedCursorPost
 from llama_cloud.types.beta import (
     AgentData,
     AgentDataDeleteResponse,
-    AgentDataSearchResponse,
     AgentDataAggregateResponse,
     AgentDataDeleteByQueryResponse,
 )
@@ -187,7 +187,7 @@ class TestAgentData:
         agent_data = client.beta.agent_data.aggregate(
             deployment_name="deployment_name",
         )
-        assert_matches_type(AgentDataAggregateResponse, agent_data, path=["response"])
+        assert_matches_type(SyncPaginatedCursorPost[AgentDataAggregateResponse], agent_data, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -215,7 +215,7 @@ class TestAgentData:
             page_size=0,
             page_token="page_token",
         )
-        assert_matches_type(AgentDataAggregateResponse, agent_data, path=["response"])
+        assert_matches_type(SyncPaginatedCursorPost[AgentDataAggregateResponse], agent_data, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -227,7 +227,7 @@ class TestAgentData:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent_data = response.parse()
-        assert_matches_type(AgentDataAggregateResponse, agent_data, path=["response"])
+        assert_matches_type(SyncPaginatedCursorPost[AgentDataAggregateResponse], agent_data, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -239,7 +239,7 @@ class TestAgentData:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent_data = response.parse()
-            assert_matches_type(AgentDataAggregateResponse, agent_data, path=["response"])
+            assert_matches_type(SyncPaginatedCursorPost[AgentDataAggregateResponse], agent_data, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -356,7 +356,7 @@ class TestAgentData:
         agent_data = client.beta.agent_data.search(
             deployment_name="deployment_name",
         )
-        assert_matches_type(AgentDataSearchResponse, agent_data, path=["response"])
+        assert_matches_type(SyncPaginatedCursorPost[AgentData], agent_data, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -382,7 +382,7 @@ class TestAgentData:
             page_size=0,
             page_token="page_token",
         )
-        assert_matches_type(AgentDataSearchResponse, agent_data, path=["response"])
+        assert_matches_type(SyncPaginatedCursorPost[AgentData], agent_data, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -394,7 +394,7 @@ class TestAgentData:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent_data = response.parse()
-        assert_matches_type(AgentDataSearchResponse, agent_data, path=["response"])
+        assert_matches_type(SyncPaginatedCursorPost[AgentData], agent_data, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -406,7 +406,7 @@ class TestAgentData:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent_data = response.parse()
-            assert_matches_type(AgentDataSearchResponse, agent_data, path=["response"])
+            assert_matches_type(SyncPaginatedCursorPost[AgentData], agent_data, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -580,7 +580,7 @@ class TestAsyncAgentData:
         agent_data = await async_client.beta.agent_data.aggregate(
             deployment_name="deployment_name",
         )
-        assert_matches_type(AgentDataAggregateResponse, agent_data, path=["response"])
+        assert_matches_type(AsyncPaginatedCursorPost[AgentDataAggregateResponse], agent_data, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -608,7 +608,7 @@ class TestAsyncAgentData:
             page_size=0,
             page_token="page_token",
         )
-        assert_matches_type(AgentDataAggregateResponse, agent_data, path=["response"])
+        assert_matches_type(AsyncPaginatedCursorPost[AgentDataAggregateResponse], agent_data, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -620,7 +620,7 @@ class TestAsyncAgentData:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent_data = await response.parse()
-        assert_matches_type(AgentDataAggregateResponse, agent_data, path=["response"])
+        assert_matches_type(AsyncPaginatedCursorPost[AgentDataAggregateResponse], agent_data, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -632,7 +632,7 @@ class TestAsyncAgentData:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent_data = await response.parse()
-            assert_matches_type(AgentDataAggregateResponse, agent_data, path=["response"])
+            assert_matches_type(AsyncPaginatedCursorPost[AgentDataAggregateResponse], agent_data, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -749,7 +749,7 @@ class TestAsyncAgentData:
         agent_data = await async_client.beta.agent_data.search(
             deployment_name="deployment_name",
         )
-        assert_matches_type(AgentDataSearchResponse, agent_data, path=["response"])
+        assert_matches_type(AsyncPaginatedCursorPost[AgentData], agent_data, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -775,7 +775,7 @@ class TestAsyncAgentData:
             page_size=0,
             page_token="page_token",
         )
-        assert_matches_type(AgentDataSearchResponse, agent_data, path=["response"])
+        assert_matches_type(AsyncPaginatedCursorPost[AgentData], agent_data, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -787,7 +787,7 @@ class TestAsyncAgentData:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent_data = await response.parse()
-        assert_matches_type(AgentDataSearchResponse, agent_data, path=["response"])
+        assert_matches_type(AsyncPaginatedCursorPost[AgentData], agent_data, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -799,6 +799,6 @@ class TestAsyncAgentData:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent_data = await response.parse()
-            assert_matches_type(AgentDataSearchResponse, agent_data, path=["response"])
+            assert_matches_type(AsyncPaginatedCursorPost[AgentData], agent_data, path=["response"])
 
         assert cast(Any, response.is_closed) is True

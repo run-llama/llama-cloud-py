@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import TypedDict
 
-__all__ = ["ParseConfigurationGetParseConfigurationsParams"]
+__all__ = ["ParseConfigurationListParams"]
 
 
-class ParseConfigurationGetParseConfigurationsParams(TypedDict, total=False):
+class ParseConfigurationListParams(TypedDict, total=False):
     creator: Optional[str]
 
     name: Optional[str]
