@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0-beta.4 (2026-01-16)
+
+Full Changelog: [v1.0.0-beta.3...v1.0.0-beta.4](https://github.com/run-llama/llama-cloud-py/compare/v1.0.0-beta.3...v1.0.0-beta.4)
+
+### Features
+
+* **api:** api update ([4a23421](https://github.com/run-llama/llama-cloud-py/commit/4a23421a36a23a765afffa3526ace922191c1300))
+* **api:** Consolidate more pagination, rename functions ([0b099f3](https://github.com/run-llama/llama-cloud-py/commit/0b099f3f9b691b9045935e8dc0bd51b88f25eaf6))
+* **api:** update via SDK Studio ([318a8e9](https://github.com/run-llama/llama-cloud-py/commit/318a8e976b89e3f44b23ef8396d6faaf5bc243e3))
+* **api:** update via SDK Studio ([5dd21ce](https://github.com/run-llama/llama-cloud-py/commit/5dd21ce6aedf524101c2052f072f3593f11cd9a7))
+* **api:** update via SDK Studio ([18385da](https://github.com/run-llama/llama-cloud-py/commit/18385daf200044012e2ae466807f9a33f660a498))
+* **api:** update via SDK Studio ([48879bc](https://github.com/run-llama/llama-cloud-py/commit/48879bc4ece770f5e8506ee00eee3f2093a4932b))
+* **api:** update via SDK Studio ([bd46c8b](https://github.com/run-llama/llama-cloud-py/commit/bd46c8b14a66e950bf291e96ca8b4a06dd1c731d))
+
 ## 1.0.0-beta.3 (2026-01-14)
 
 Full Changelog: [v0.20.0...v1.0.0-beta.3](https://github.com/run-llama/llama-cloud-py/compare/v0.20.0...v1.0.0-beta.3)
