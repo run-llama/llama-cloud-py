@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.0-beta.5 (2026-01-17)
+
+Full Changelog: [v1.0.0-beta.4...v1.0.0-beta.5](https://github.com/run-llama/llama-cloud-py/compare/v1.0.0-beta.4...v1.0.0-beta.5)
+
+### Features
+
+* **api:** api update ([60cad6a](https://github.com/run-llama/llama-cloud-py/commit/60cad6afcfbe4723baea80c0590826d9272676d0))
+
+
+### Bug Fixes
+
+* Parse example in comment ([d5c8ed7](https://github.com/run-llama/llama-cloud-py/commit/d5c8ed79d8ee05019ccff98fe52c5183670e2d67))
+
 ## 1.0.0-beta.4 (2026-01-16)
 
 Full Changelog: [v1.0.0-beta.3...v1.0.0-beta.4](https://github.com/run-llama/llama-cloud-py/compare/v1.0.0-beta.3...v1.0.0-beta.4)
