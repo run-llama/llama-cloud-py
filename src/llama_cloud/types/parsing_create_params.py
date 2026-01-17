@@ -22,7 +22,6 @@ __all__ = [
     "OutputOptionsMarkdownPages",
     "OutputOptionsMarkdownTables",
     "OutputOptionsSpatialText",
-    "OutputOptionsSpatialTextPages",
     "OutputOptionsTablesAsSpreadsheet",
     "PageRanges",
     "ProcessingControl",
@@ -33,6 +32,7 @@ __all__ = [
     "ProcessingOptionsAutoModeConfigurationParsingConf",
     "ProcessingOptionsAutoModeConfigurationParsingConfCropBox",
     "ProcessingOptionsAutoModeConfigurationParsingConfIgnore",
+    "ProcessingOptionsAutoModeConfigurationParsingConfMarkdown",
     "ProcessingOptionsAutoModeConfigurationParsingConfPresentation",
     "ProcessingOptionsAutoModeConfigurationParsingConfSpatialText",
     "ProcessingOptionsIgnore",
@@ -207,21 +207,11 @@ class OutputOptionsMarkdown(TypedDict, total=False):
     """Table formatting options for markdown"""
 
 
-class OutputOptionsSpatialTextPages(TypedDict, total=False):
-    """Page formatting options for spatial text"""
-
-    merge_tables_across_pages_in_markdown: Optional[bool]
-    """Merge tables that span across pages in markdown output"""
-
-
 class OutputOptionsSpatialText(TypedDict, total=False):
     """Spatial text output options"""
 
     do_not_unroll_columns: Optional[bool]
     """Keep column structure intact without unrolling"""
-
-    pages: Optional[OutputOptionsSpatialTextPages]
-    """Page formatting options for spatial text"""
 
     preserve_layout_alignment_across_pages: Optional[bool]
     """Preserve text alignment across page boundaries"""
@@ -249,11 +239,11 @@ class OutputOptions(TypedDict, total=False):
     extract_printed_page_number: Optional[bool]
     """Extract printed page numbers from the document"""
 
-    images_to_save: Optional[List[Literal["screenshot", "embedded", "layout"]]]
+    images_to_save: List[Literal["screenshot", "embedded", "layout"]]
     """
     Image categories to save: 'screenshot' (full page), 'embedded' (images in
-    document), 'layout' (cropped images from layout detection). If not set or empty,
-    no images are saved.
+    document), 'layout' (cropped images from layout detection). Empty list means no
+    images are saved.
     """
 
     markdown: OutputOptionsMarkdown
@@ -341,6 +331,13 @@ class ProcessingOptionsAutoModeConfigurationParsingConfIgnore(TypedDict, total=F
     """Whether to ignore hidden text in the document"""
 
 
+class ProcessingOptionsAutoModeConfigurationParsingConfMarkdown(TypedDict, total=False):
+    """Markdown options for auto mode parsing configuration."""
+
+    merge_tables_across_pages_in_markdown: Optional[bool]
+    """Merge tables that span across pages in markdown output"""
+
+
 class ProcessingOptionsAutoModeConfigurationParsingConfPresentation(TypedDict, total=False):
     """Presentation-specific options for auto mode parsing configuration."""
 
@@ -356,9 +353,6 @@ class ProcessingOptionsAutoModeConfigurationParsingConfSpatialText(TypedDict, to
 
     do_not_unroll_columns: Optional[bool]
     """Keep column structure intact without unrolling"""
-
-    merge_tables_across_pages_in_markdown: Optional[bool]
-    """Merge tables that span across pages in markdown output"""
 
     preserve_layout_alignment_across_pages: Optional[bool]
     """Preserve text alignment across page boundaries"""
@@ -397,6 +391,9 @@ class ProcessingOptionsAutoModeConfigurationParsingConf(TypedDict, total=False):
 
     language: Optional[str]
     """Primary language of the document"""
+
+    markdown: Optional[ProcessingOptionsAutoModeConfigurationParsingConfMarkdown]
+    """Markdown options for auto mode parsing configuration."""
 
     outlined_table_extraction: Optional[bool]
     """Whether to use outlined table extraction"""
@@ -573,6 +570,12 @@ class ProcessingOptions(TypedDict, total=False):
 
     ocr_parameters: ProcessingOptionsOcrParameters
     """OCR configuration parameters"""
+
+    specialized_chart_parsing: Optional[Literal["agentic", "agentic_plus", "efficient"]]
+    """
+    Enable specialized chart parsing with the specified mode: 'agentic',
+    'agentic_plus', or 'efficient'
+    """
 
 
 class WebhookConfiguration(TypedDict, total=False):
