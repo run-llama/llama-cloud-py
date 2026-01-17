@@ -82,7 +82,6 @@ class TestParsing:
                 },
                 "spatial_text": {
                     "do_not_unroll_columns": True,
-                    "pages": {"merge_tables_across_pages_in_markdown": True},
                     "preserve_layout_alignment_across_pages": True,
                     "preserve_very_small_text": True,
                 },
@@ -129,6 +128,7 @@ class TestParsing:
                                 "ignore_hidden_text": True,
                             },
                             "language": "language",
+                            "markdown": {"merge_tables_across_pages_in_markdown": True},
                             "outlined_table_extraction": True,
                             "presentation": {
                                 "out_of_bounds_content": True,
@@ -136,7 +136,6 @@ class TestParsing:
                             },
                             "spatial_text": {
                                 "do_not_unroll_columns": True,
-                                "merge_tables_across_pages_in_markdown": True,
                                 "preserve_layout_alignment_across_pages": True,
                                 "preserve_very_small_text": True,
                             },
@@ -187,6 +186,7 @@ class TestParsing:
                     "ignore_text_in_image": True,
                 },
                 "ocr_parameters": {"languages": ["af"]},
+                "specialized_chart_parsing": "agentic",
             },
             source_url="https:",
             webhook_configurations=[
@@ -387,7 +387,6 @@ class TestAsyncParsing:
                 },
                 "spatial_text": {
                     "do_not_unroll_columns": True,
-                    "pages": {"merge_tables_across_pages_in_markdown": True},
                     "preserve_layout_alignment_across_pages": True,
                     "preserve_very_small_text": True,
                 },
@@ -434,6 +433,7 @@ class TestAsyncParsing:
                                 "ignore_hidden_text": True,
                             },
                             "language": "language",
+                            "markdown": {"merge_tables_across_pages_in_markdown": True},
                             "outlined_table_extraction": True,
                             "presentation": {
                                 "out_of_bounds_content": True,
@@ -441,7 +441,6 @@ class TestAsyncParsing:
                             },
                             "spatial_text": {
                                 "do_not_unroll_columns": True,
-                                "merge_tables_across_pages_in_markdown": True,
                                 "preserve_layout_alignment_across_pages": True,
                                 "preserve_very_small_text": True,
                             },
@@ -492,6 +491,7 @@ class TestAsyncParsing:
                     "ignore_text_in_image": True,
                 },
                 "ocr_parameters": {"languages": ["af"]},
+                "specialized_chart_parsing": "agentic",
             },
             source_url="https:",
             webhook_configurations=[
