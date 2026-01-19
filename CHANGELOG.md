@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.0-beta.6 (2026-01-19)
+
+Full Changelog: [v1.0.0-beta.5...v1.0.0-beta.6](https://github.com/run-llama/llama-cloud-py/compare/v1.0.0-beta.5...v1.0.0-beta.6)
+
+### Features
+
+* **api:** api update ([a2bbe4d](https://github.com/run-llama/llama-cloud-py/commit/a2bbe4de7b2827f99fb211059bebe7d3900f176d))
+
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([77fe7c0](https://github.com/run-llama/llama-cloud-py/commit/77fe7c0d78fa243bba2b4aef380b4b6e62bd7212))
+
 ## 1.0.0-beta.5 (2026-01-17)
 
 Full Changelog: [v1.0.0-beta.4...v1.0.0-beta.5](https://github.com/run-llama/llama-cloud-py/compare/v1.0.0-beta.4...v1.0.0-beta.5)
