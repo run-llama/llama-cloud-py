@@ -404,6 +404,9 @@ class ProcessingOptionsAutoModeConfigurationParsingConf(TypedDict, total=False):
     spatial_text: Optional[ProcessingOptionsAutoModeConfigurationParsingConfSpatialText]
     """Spatial text options for auto mode parsing configuration."""
 
+    specialized_chart_parsing: Optional[Literal["agentic_plus", "agentic", "efficient"]]
+    """Enable specialized chart parsing with the specified mode"""
+
     tier: Optional[Literal["fast", "cost_effective", "agentic", "agentic_plus"]]
     """The parsing tier to use"""
 
@@ -571,11 +574,8 @@ class ProcessingOptions(TypedDict, total=False):
     ocr_parameters: ProcessingOptionsOcrParameters
     """OCR configuration parameters"""
 
-    specialized_chart_parsing: Optional[Literal["agentic", "agentic_plus", "efficient"]]
-    """
-    Enable specialized chart parsing with the specified mode: 'agentic',
-    'agentic_plus', or 'efficient'
-    """
+    specialized_chart_parsing: Optional[Literal["agentic_plus", "agentic", "efficient"]]
+    """Enable specialized chart parsing with the specified mode"""
 
 
 class WebhookConfiguration(TypedDict, total=False):
