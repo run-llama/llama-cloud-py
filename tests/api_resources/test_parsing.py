@@ -139,6 +139,7 @@ class TestParsing:
                                 "preserve_layout_alignment_across_pages": True,
                                 "preserve_very_small_text": True,
                             },
+                            "specialized_chart_parsing": "agentic_plus",
                             "tier": "fast",
                             "version": "2026-01-08",
                         },
@@ -186,7 +187,7 @@ class TestParsing:
                     "ignore_text_in_image": True,
                 },
                 "ocr_parameters": {"languages": ["af"]},
-                "specialized_chart_parsing": "agentic",
+                "specialized_chart_parsing": "agentic_plus",
             },
             source_url="https:",
             webhook_configurations=[
@@ -444,6 +445,7 @@ class TestAsyncParsing:
                                 "preserve_layout_alignment_across_pages": True,
                                 "preserve_very_small_text": True,
                             },
+                            "specialized_chart_parsing": "agentic_plus",
                             "tier": "fast",
                             "version": "2026-01-08",
                         },
@@ -491,7 +493,7 @@ class TestAsyncParsing:
                     "ignore_text_in_image": True,
                 },
                 "ocr_parameters": {"languages": ["af"]},
-                "specialized_chart_parsing": "agentic",
+                "specialized_chart_parsing": "agentic_plus",
             },
             source_url="https:",
             webhook_configurations=[
