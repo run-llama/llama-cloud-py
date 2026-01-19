@@ -9,16 +9,14 @@ Example Usage:
     from llama_cloud.types.beta import ExtractedData, ExtractedFieldMetadata
     from pydantic import BaseModel
 
+
     class Person(BaseModel):
         name: str
         age: int
 
+
     # Parse extraction result into typed data
-    extracted = ExtractedData.from_extraction_result(
-        extract_run,
-        Person,
-        status="pending_review"
-    )
+    extracted = ExtractedData.from_extraction_result(extract_run, Person, status="pending_review")
 
     # Access typed data and metadata
     print(extracted.data.name)  # Type-safe access
@@ -28,20 +26,21 @@ Example Usage:
 
 from __future__ import annotations
 
-from pydantic import BaseModel, Field, ValidationError, model_validator, ConfigDict
 from typing import (
-    Generic,
-    List,
-    Literal,
-    Optional,
-    Dict,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
     Any,
+    Dict,
+    List,
+    Type,
+    Tuple,
+    Union,
+    Generic,
+    Literal,
+    TypeVar,
+    Optional,
     cast,
 )
+
+from pydantic import Field, BaseModel, ConfigDict, ValidationError, model_validator
 
 from ..extraction import ExtractRun
 
@@ -83,9 +82,7 @@ class PageDimensions(BaseModel):
 class FieldCitation(BaseModel):
     """Citation information linking an extracted field to its source location."""
 
-    page: Optional[int] = Field(
-        None, description="The page number that the field occurred on"
-    )
+    page: Optional[int] = Field(None, description="The page number that the field occurred on")
     matching_text: Optional[str] = Field(
         None,
         description="The original text this field's value was derived from",
@@ -130,9 +127,7 @@ class ExtractedFieldMetadata(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
-ExtractedFieldMetaDataDict = Dict[
-    str, Union[ExtractedFieldMetadata, Dict[str, Any], List[Any]]
-]
+ExtractedFieldMetaDataDict = Dict[str, Union[ExtractedFieldMetadata, Dict[str, Any], List[Any]]]
 
 
 def parse_extracted_field_metadata(
@@ -194,9 +189,7 @@ def _parse_extracted_field_metadata_recursive(
                 return validated
             except ValidationError:
                 pass
-        new_additional_fields: Dict[str, Any] = {
-            k: v for k, v in field_dict.items() if _is_reasoning_field(k, v)
-        }
+        new_additional_fields: Dict[str, Any] = {k: v for k, v in field_dict.items() if _is_reasoning_field(k, v)}
         return {
             k: _parse_extracted_field_metadata_recursive(v, new_additional_fields)
             for k, v in field_dict.items()
@@ -205,9 +198,7 @@ def _parse_extracted_field_metadata_recursive(
     elif isinstance(field_value, list):
         return [_parse_extracted_field_metadata_recursive(item) for item in cast(List[Any], field_value)]
     else:
-        raise ValueError(
-            f"Invalid field value: {field_value}. Expected ExtractedFieldMetadata, dict, or list"
-        )
+        raise ValueError(f"Invalid field value: {field_value}. Expected ExtractedFieldMetadata, dict, or list")
 
 
 class ExtractedData(BaseModel, Generic[ExtractedT]):
@@ -239,9 +230,7 @@ class ExtractedData(BaseModel, Generic[ExtractedT]):
         ```python
         # Create extracted data for review
         extracted = ExtractedData.create(
-            data=person_data,
-            status="pending_review",
-            field_metadata={"name": ExtractedFieldMetadata(confidence=0.95)}
+            data=person_data, status="pending_review", field_metadata={"name": ExtractedFieldMetadata(confidence=0.95)}
         )
 
         # Later, after review
@@ -250,12 +239,8 @@ class ExtractedData(BaseModel, Generic[ExtractedT]):
         ```
     """
 
-    original_data: ExtractedT = Field(
-        description="The original data that was extracted from the document"
-    )
-    data: ExtractedT = Field(
-        description="The latest state of the data. Will differ if data has been updated"
-    )
+    original_data: ExtractedT = Field(description="The original data that was extracted from the document")
+    data: ExtractedT = Field(description="The latest state of the data. Will differ if data has been updated")
     status: StatusType = Field(description="The status of the extracted data")
     overall_confidence: Optional[float] = Field(
         None,
@@ -265,15 +250,9 @@ class ExtractedData(BaseModel, Generic[ExtractedT]):
         default_factory=dict,
         description="Per-field metadata including confidence scores and citations",
     )
-    file_id: Optional[str] = Field(
-        None, description="The ID of the file that was used to extract the data"
-    )
-    file_name: Optional[str] = Field(
-        None, description="The name of the file that was used to extract the data"
-    )
-    file_hash: Optional[str] = Field(
-        None, description="The hash of the file that was used to extract the data"
-    )
+    file_id: Optional[str] = Field(None, description="The ID of the file that was used to extract the data")
+    file_name: Optional[str] = Field(None, description="The name of the file that was used to extract the data")
+    file_hash: Optional[str] = Field(None, description="The hash of the file that was used to extract the data")
     metadata: Optional[Dict[str, Any]] = Field(
         default_factory=dict,
         description="Additional metadata about the extracted data, such as errors, tokens, etc.",

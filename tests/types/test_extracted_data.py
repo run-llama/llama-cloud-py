@@ -2,24 +2,24 @@
 
 import json
 import uuid
-from pathlib import Path
 from typing import Any, Dict, Optional
+from pathlib import Path
 
 import pytest
-from pydantic import BaseModel, Field
+from pydantic import Field, BaseModel
 
+from llama_cloud.types.file import File
+from llama_cloud.types.extraction import ExtractRun
 from llama_cloud.types.beta.extracted_data import (
     BoundingBox,
     ExtractedData,
-    ExtractedFieldMetadata,
     FieldCitation,
-    InvalidExtractionData,
     PageDimensions,
+    InvalidExtractionData,
+    ExtractedFieldMetadata,
     calculate_overall_confidence,
     parse_extracted_field_metadata,
 )
-from llama_cloud.types.extraction import ExtractRun
-from llama_cloud.types.file import File
 
 
 # Test data models
@@ -49,16 +49,10 @@ def test_extracted_data_create_method():
 
     # Test with custom values using ExtractedFieldMetadata
     field_metadata = {
-        "name": ExtractedFieldMetadata(
-            confidence=0.99, citation=[FieldCitation(page=1)]
-        ),
-        "age": ExtractedFieldMetadata(
-            confidence=0.85, citation=[FieldCitation(page=1)]
-        ),
+        "name": ExtractedFieldMetadata(confidence=0.99, citation=[FieldCitation(page=1)]),
+        "age": ExtractedFieldMetadata(confidence=0.85, citation=[FieldCitation(page=1)]),
     }
-    extracted_custom = ExtractedData.create(
-        person, status="accepted", field_metadata=field_metadata
-    )
+    extracted_custom = ExtractedData.create(person, status="accepted", field_metadata=field_metadata)
     assert extracted_custom.status == "accepted"
     assert extracted_custom.field_metadata["name"].confidence == 0.99
     assert extracted_custom.field_metadata["age"].confidence == 0.85
@@ -69,9 +63,7 @@ def test_extracted_data_with_dict():
     """Test ExtractedData with dict data instead of Pydantic model."""
     data_dict = {"name": "Dict Person", "age": 45, "email": "dict@example.com"}
 
-    extracted = ExtractedData[Dict[str, Any]](
-        original_data=data_dict, data=data_dict, status="accepted"
-    )
+    extracted = ExtractedData[Dict[str, Any]](original_data=data_dict, data=data_dict, status="accepted")
 
     assert extracted.original_data["name"] == "Dict Person"
     assert extracted.data["age"] == 45
@@ -193,15 +185,11 @@ def test_parse_extracted_field_metadata():
 
     assert isinstance(result["name"], ExtractedFieldMetadata)
     assert result["name"].confidence == 0.95
-    assert result["name"].citation == [
-        FieldCitation(page=1, matching_text="John Smith")
-    ]
+    assert result["name"].citation == [FieldCitation(page=1, matching_text="John Smith")]
 
     assert isinstance(result["age"], ExtractedFieldMetadata)
     assert result["age"].confidence == 0.87
-    assert result["age"].citation == [
-        FieldCitation(page=2, matching_text="25 years old")
-    ]
+    assert result["age"].citation == [FieldCitation(page=2, matching_text="25 years old")]
 
     assert isinstance(result["email"], ExtractedFieldMetadata)
     assert result["email"].confidence == 0.92
@@ -263,12 +251,14 @@ def create_file(
     external_file_id: str = "external-file-id",
     project_id: str = "project-123",
 ) -> File:
-    return File.model_validate({
-        "id": id,
-        "name": name,
-        "external_file_id": external_file_id,
-        "project_id": project_id,
-    })
+    return File.model_validate(
+        {
+            "id": id,
+            "name": name,
+            "external_file_id": external_file_id,
+            "project_id": project_id,
+        }
+    )
 
 
 def create_extract_run(
@@ -292,19 +282,21 @@ def create_extract_run(
     if file is None:
         file = create_file()
 
-    return ExtractRun.model_validate({
-        "id": id,
-        "job_id": job_id,
-        "data": data,
-        "extraction_metadata": {"field_metadata": extraction_metadata},
-        "data_schema": data_schema,
-        "file": file,
-        "extraction_agent_id": "extraction-agent-123",
-        "config": {},
-        "status": "SUCCESS",
-        "project_id": str(uuid.uuid4()),
-        "from_ui": False,
-    })
+    return ExtractRun.model_validate(
+        {
+            "id": id,
+            "job_id": job_id,
+            "data": data,
+            "extraction_metadata": {"field_metadata": extraction_metadata},
+            "data_schema": data_schema,
+            "file": file,
+            "extraction_agent_id": "extraction-agent-123",
+            "config": {},
+            "status": "SUCCESS",
+            "project_id": str(uuid.uuid4()),
+            "from_ui": False,
+        }
+    )
 
 
 def test_extracted_data_from_extraction_result_success():
@@ -331,9 +323,7 @@ def test_extracted_data_from_extraction_result_success():
 
     assert isinstance(extracted.field_metadata["name"], ExtractedFieldMetadata)
     assert extracted.field_metadata["name"].confidence == 0.95
-    assert extracted.field_metadata["name"].citation == [
-        FieldCitation(page=1, matching_text="John Doe")
-    ]
+    assert extracted.field_metadata["name"].citation == [FieldCitation(page=1, matching_text="John Doe")]
 
     expected_confidence = (0.95 + 0.87 + 0.92) / 3
     assert extracted.overall_confidence == pytest.approx(expected_confidence)
@@ -370,9 +360,7 @@ def test_extracted_data_from_extraction_result_invalid_data():
     )
 
     with pytest.raises(InvalidExtractionData) as exc_info:
-        ExtractedData.from_extraction_result(
-            extract_run, Person, metadata={"test": "metadata"}
-        )
+        ExtractedData.from_extraction_result(extract_run, Person, metadata={"test": "metadata"})
 
     invalid_data = exc_info.value.invalid_item
     assert isinstance(invalid_data, ExtractedData)
@@ -402,9 +390,7 @@ def test_full_parse_nested_dimensions():
     """Test parsing real extraction result with nested dimensions."""
     with open(Path(__file__).parent.parent / "data" / "capacitor.json") as f:
         data = json.load(f)
-    result = ExtractedData.from_extraction_result(
-        ExtractRun.model_validate(data), Capacitor
-    )
+    result = ExtractedData.from_extraction_result(ExtractRun.model_validate(data), Capacitor)
     expected = {
         "dimensions": {
             "diameter": ExtractedFieldMetadata(
@@ -484,12 +470,14 @@ def test_parse_extracted_field_metadata_with_bounding_boxes():
     """Test parse_extracted_field_metadata with bounding boxes and page dimensions."""
     raw_metadata = {
         "document_type": {
-            "citation": [{
-                "page": 1,
-                "matching_text": "FACTURE ORIGINALE",
-                "bounding_boxes": [{"x": 77.28, "y": 615.12, "w": 70.6, "h": 7.2}],
-                "page_dimensions": {"width": 222.24, "height": 736.56},
-            }],
+            "citation": [
+                {
+                    "page": 1,
+                    "matching_text": "FACTURE ORIGINALE",
+                    "bounding_boxes": [{"x": 77.28, "y": 615.12, "w": 70.6, "h": 7.2}],
+                    "page_dimensions": {"width": 222.24, "height": 736.56},
+                }
+            ],
             "parsing_confidence": 1.0,
             "extraction_confidence": 0.725,
             "confidence": 0.725,

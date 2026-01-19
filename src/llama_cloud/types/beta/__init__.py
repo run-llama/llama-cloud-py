@@ -4,6 +4,19 @@ from __future__ import annotations
 
 from .agent_data import AgentData as AgentData
 from .sheets_job import SheetsJob as SheetsJob
+
+# Custom types - not auto-generated
+from .extracted_data import (
+    BoundingBox as BoundingBox,
+    ExtractedData as ExtractedData,
+    FieldCitation as FieldCitation,
+    PageDimensions as PageDimensions,
+    InvalidExtractionData as InvalidExtractionData,
+    ExtractedFieldMetadata as ExtractedFieldMetadata,
+    ExtractedFieldMetaDataDict as ExtractedFieldMetaDataDict,
+    calculate_overall_confidence as calculate_overall_confidence,
+    parse_extracted_field_metadata as parse_extracted_field_metadata,
+)
 from .split_category import SplitCategory as SplitCategory
 from .sheet_get_params import SheetGetParams as SheetGetParams
 from .split_get_params import SplitGetParams as SplitGetParams
@@ -57,16 +70,3 @@ from .parse_configuration_delete_params import ParseConfigurationDeleteParams as
 from .parse_configuration_update_params import ParseConfigurationUpdateParams as ParseConfigurationUpdateParams
 from .parse_configuration_query_response import ParseConfigurationQueryResponse as ParseConfigurationQueryResponse
 from .agent_data_delete_by_query_response import AgentDataDeleteByQueryResponse as AgentDataDeleteByQueryResponse
-
-# Custom types - not auto-generated
-from .extracted_data import (
-    BoundingBox as BoundingBox,
-    PageDimensions as PageDimensions,
-    FieldCitation as FieldCitation,
-    ExtractedFieldMetadata as ExtractedFieldMetadata,
-    ExtractedFieldMetaDataDict as ExtractedFieldMetaDataDict,
-    parse_extracted_field_metadata as parse_extracted_field_metadata,
-    ExtractedData as ExtractedData,
-    InvalidExtractionData as InvalidExtractionData,
-    calculate_overall_confidence as calculate_overall_confidence,
-)
