@@ -47,7 +47,7 @@ from ..._compat import PYDANTIC_V1, ConfigDict, GenericModel, model_parse, get_m
 from ..extraction import ExtractRun
 
 if PYDANTIC_V1:
-    from pydantic import root_validator
+    from pydantic import root_validator  # pyright: ignore[reportDeprecated]
 else:
     from pydantic import model_validator
 
@@ -295,13 +295,13 @@ class ExtractedData(GenericModel, Generic[ExtractedT]):
 
     if PYDANTIC_V1:
 
-        @root_validator(pre=True)
+        @root_validator(pre=True)  # pyright: ignore[reportDeprecated,reportPossiblyUnboundVariable]
         @classmethod
-        def _normalize_field_metadata_on_input(cls, value: Any) -> Dict[str, Any]:
+        def _normalize_field_metadata_on_input(cls, value: Any) -> Dict[str, Any]:  # pyright: ignore[reportRedeclaration]
             return _normalize_field_metadata_value(value)
     else:
 
-        @model_validator(mode="before")
+        @model_validator(mode="before")  # pyright: ignore[reportPossiblyUnboundVariable]
         @classmethod
         def _normalize_field_metadata_on_input(cls, value: Any) -> Dict[str, Any]:
             return _normalize_field_metadata_value(value)
@@ -399,9 +399,9 @@ class ExtractedData(GenericModel, Generic[ExtractedT]):
 
         try:
             # schema is expected to be a Pydantic model class
-            data: ExtractedT = model_parse(schema, result.data)  # type: ignore[union-attr, attr-defined, assignment]
+            data: ExtractedT = model_parse(schema, result.data)  # type: ignore[union-attr, attr-defined, assignment, type-var]
             return cls.create(
-                data=data,
+                data=data,  # pyright: ignore[reportUnknownArgumentType]
                 status=status,
                 field_metadata=job_field_metadata,
                 file_id=resolved_file_id,

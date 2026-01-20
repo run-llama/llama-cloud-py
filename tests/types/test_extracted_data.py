@@ -1,4 +1,4 @@
-# pyright: reportCallIssue=false, reportUnknownMemberType=false, reportUnknownVariableType=false
+# pyright: reportCallIssue=false, reportUnknownMemberType=false, reportUnknownVariableType=false, reportUnknownArgumentType=false
 """Tests for ExtractedData types and helper functions."""
 
 import json
