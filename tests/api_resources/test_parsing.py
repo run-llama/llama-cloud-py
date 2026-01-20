@@ -496,7 +496,6 @@ class TestAsyncParsing:
                 "specialized_chart_parsing": "agentic_plus",
             },
             source_url="https:",
-
             webhook_configurations=[
                 {
                     "webhook_events": ["string"],

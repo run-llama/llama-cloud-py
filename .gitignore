@@ -8,8 +8,12 @@ dist
 
 .venv
 .idea
+.claude/settings.local.json
 
 .env
 .envrc
 codegen.log
 Brewfile.lock.json
+
+# uses rye still
+uv.lock
