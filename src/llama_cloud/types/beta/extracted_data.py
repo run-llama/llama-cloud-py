@@ -371,7 +371,7 @@ class ExtractedData(BaseModel, Generic[ExtractedT]):
 
         try:
             # schema is expected to be a Pydantic model class with model_validate
-            data: ExtractedT = schema.model_validate(result.data)  # type: ignore[union-attr]
+            data: ExtractedT = schema.model_validate(result.data)  # type: ignore[union-attr, attr-defined, assignment]
             return cls.create(
                 data=data,
                 status=status,

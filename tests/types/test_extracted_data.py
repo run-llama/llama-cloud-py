@@ -1,3 +1,4 @@
+# pyright: reportCallIssue=false, reportUnknownMemberType=false, reportUnknownVariableType=false
 """Tests for ExtractedData types and helper functions."""
 
 import json
@@ -48,22 +49,30 @@ def test_extracted_data_create_method():
     assert extracted.overall_confidence is None
 
     # Test with custom values using ExtractedFieldMetadata
-    field_metadata = {
+    field_metadata: Dict[str, Any] = {
         "name": ExtractedFieldMetadata(confidence=0.99, citation=[FieldCitation(page=1)]),
         "age": ExtractedFieldMetadata(confidence=0.85, citation=[FieldCitation(page=1)]),
     }
     extracted_custom = ExtractedData.create(person, status="accepted", field_metadata=field_metadata)
     assert extracted_custom.status == "accepted"
-    assert extracted_custom.field_metadata["name"].confidence == 0.99
-    assert extracted_custom.field_metadata["age"].confidence == 0.85
+    name_meta = extracted_custom.field_metadata["name"]
+    age_meta = extracted_custom.field_metadata["age"]
+    assert isinstance(name_meta, ExtractedFieldMetadata)
+    assert isinstance(age_meta, ExtractedFieldMetadata)
+    assert name_meta.confidence == 0.99
+    assert age_meta.confidence == 0.85
     assert extracted_custom.overall_confidence == pytest.approx((0.99 + 0.85) / 2)
 
 
 def test_extracted_data_with_dict():
     """Test ExtractedData with dict data instead of Pydantic model."""
-    data_dict = {"name": "Dict Person", "age": 45, "email": "dict@example.com"}
+    data_dict: Dict[str, Any] = {"name": "Dict Person", "age": 45, "email": "dict@example.com"}
 
-    extracted = ExtractedData[Dict[str, Any]](original_data=data_dict, data=data_dict, status="accepted")
+    extracted = ExtractedData[Dict[str, Any]](
+        original_data=data_dict,
+        data=data_dict,
+        status="accepted",
+    )
 
     assert extracted.original_data["name"] == "Dict Person"
     assert extracted.data["age"] == 45
@@ -71,7 +80,7 @@ def test_extracted_data_with_dict():
 
 def test_calculate_overall_confidence_simple_flat():
     """Test calculate_overall_confidence with simple flat dictionary of ExtractedFieldMetadata."""
-    field_metadata = {
+    field_metadata: Dict[str, Any] = {
         "name": ExtractedFieldMetadata(confidence=0.9),
         "age": ExtractedFieldMetadata(confidence=0.8),
         "email": ExtractedFieldMetadata(confidence=0.95),
@@ -83,7 +92,7 @@ def test_calculate_overall_confidence_simple_flat():
 
 def test_calculate_overall_confidence_nested():
     """Test calculate_overall_confidence with nested dictionary structure."""
-    field_metadata = {
+    field_metadata: Dict[str, Any] = {
         "person": {
             "name": ExtractedFieldMetadata(confidence=0.9),
             "age": ExtractedFieldMetadata(confidence=0.8),
@@ -101,7 +110,7 @@ def test_calculate_overall_confidence_nested():
 
 def test_calculate_overall_confidence_with_lists():
     """Test calculate_overall_confidence with lists of ExtractedFieldMetadata and nested structures."""
-    field_metadata = {
+    field_metadata: Dict[str, Any] = {
         "scores": [
             ExtractedFieldMetadata(confidence=0.9),
             ExtractedFieldMetadata(confidence=0.8),
@@ -126,7 +135,7 @@ def test_calculate_overall_confidence_with_lists():
 
 def test_calculate_overall_confidence_invalid_types():
     """Test calculate_overall_confidence with invalid/mixed types alongside valid ExtractedFieldMetadata."""
-    field_metadata = {
+    field_metadata: Dict[str, Any] = {
         "valid_metadata": ExtractedFieldMetadata(confidence=0.8),
         "valid_metadata_no_confidence": ExtractedFieldMetadata(),
         "valid_list": [
@@ -150,12 +159,13 @@ def test_calculate_overall_confidence_invalid_types():
 def test_calculate_overall_confidence_empty():
     """Test calculate_overall_confidence with empty inputs."""
     assert calculate_overall_confidence({}) is None
-    assert calculate_overall_confidence([]) is None
+    # Test with empty list (type ignore since function expects dict but handles lists internally)
+    assert calculate_overall_confidence([]) is None  # type: ignore[arg-type]
 
-    field_metadata_invalid = {"invalid": "not_a_number", "also_invalid": None}
+    field_metadata_invalid: Dict[str, Any] = {"invalid": "not_a_number", "also_invalid": None}
     assert calculate_overall_confidence(field_metadata_invalid) is None
 
-    field_metadata_no_confidence = {
+    field_metadata_no_confidence: Dict[str, Any] = {
         "field1": ExtractedFieldMetadata(),
         "field2": ExtractedFieldMetadata(),
     }
@@ -164,7 +174,7 @@ def test_calculate_overall_confidence_empty():
 
 def test_parse_extracted_field_metadata():
     """Test parse_extracted_field_metadata with legacy citation format."""
-    raw_metadata = {
+    raw_metadata: Dict[str, Any] = {
         "name": {
             "confidence": 0.95,
             "citation": [{"page": 1, "matching_text": "John Smith"}],
@@ -197,7 +207,7 @@ def test_parse_extracted_field_metadata():
 
 def test_parse_extracted_field_metadata_complex():
     """Test parse_extracted_field_metadata with new citation format and reasoning field."""
-    raw_metadata = {
+    raw_metadata: Dict[str, Any] = {
         "title": {
             "reasoning": "Combined key parametrics",
             "citation": [{"page": 1, "matching_text": "PHE844/F844"}],
@@ -347,6 +357,7 @@ def test_extracted_data_from_extraction_result_with_file_params():
     assert extracted.file_id == "custom-file-id"
     assert extracted.file_name == "custom-name.pdf"
     assert extracted.file_hash == "custom-hash"
+    assert extracted.metadata is not None
     assert extracted.metadata["source"] == "api_test"
 
 
@@ -369,6 +380,7 @@ def test_extracted_data_from_extraction_result_invalid_data():
     assert invalid_data.file_id == "error-file"
     assert invalid_data.file_name == "bad_data.pdf"
 
+    assert invalid_data.metadata is not None
     assert "extraction_error" in invalid_data.metadata
     assert "test" in invalid_data.metadata
     assert "2 validation errors" in invalid_data.metadata["extraction_error"]
@@ -432,13 +444,14 @@ def test_parses_field_metadata_with_error_field():
             citation=[FieldCitation(page=1, matching_text="John Smith")],
         ),
     }
+    assert parsed.metadata is not None
     assert parsed.metadata.get("field_errors") == "This is an error"
     assert parsed.metadata.get("job_id") == "job-123"
 
 
 def test_field_conflict_in_schema():
     """Test handling of 'reasoning' field conflict between schema and metadata."""
-    raw_metadata = {
+    raw_metadata: Dict[str, Any] = {
         "majority_opinion": {
             "type": {
                 "citation": [{"page": 4, "matching_text": "BARRETT, J."}],
@@ -463,12 +476,14 @@ def test_field_conflict_in_schema():
 
     extracted = parse_extracted_field_metadata(raw_metadata)
     assert isinstance(extracted["reasoning"], ExtractedFieldMetadata)
-    assert isinstance(extracted["majority_opinion"]["reasoning"], ExtractedFieldMetadata)
+    majority_opinion = extracted["majority_opinion"]
+    assert isinstance(majority_opinion, dict)
+    assert isinstance(majority_opinion["reasoning"], ExtractedFieldMetadata)
 
 
 def test_parse_extracted_field_metadata_with_bounding_boxes():
     """Test parse_extracted_field_metadata with bounding boxes and page dimensions."""
-    raw_metadata = {
+    raw_metadata: Dict[str, Any] = {
         "document_type": {
             "citation": [
                 {
@@ -508,16 +523,19 @@ def test_parse_extracted_field_metadata_with_bounding_boxes():
     assert isinstance(result["document_type"], ExtractedFieldMetadata)
     assert result["document_type"].parsing_confidence == 1.0
     assert result["document_type"].extraction_confidence == 0.725
+    assert result["document_type"].citation is not None
     assert len(result["document_type"].citation) == 1
 
     citation = result["document_type"].citation[0]
     assert citation.page == 1
     assert citation.matching_text == "FACTURE ORIGINALE"
+    assert citation.bounding_boxes is not None
     assert len(citation.bounding_boxes) == 1
     assert citation.bounding_boxes[0] == BoundingBox(x=77.28, y=615.12, w=70.6, h=7.2)
     assert citation.page_dimensions == PageDimensions(width=222.24, height=736.56)
 
     assert isinstance(result["summary"], ExtractedFieldMetadata)
+    assert result["summary"].citation is not None
     assert len(result["summary"].citation) == 2
 
     # Verify round-trip serialization
