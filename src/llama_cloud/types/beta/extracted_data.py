@@ -36,13 +36,20 @@ from typing import (
     Generic,
     Literal,
     TypeVar,
+    ClassVar,
     Optional,
     cast,
 )
 
-from pydantic import Field, BaseModel, ConfigDict, ValidationError, model_validator
+from pydantic import Field, BaseModel, ValidationError
 
+from ..._compat import PYDANTIC_V1, ConfigDict, GenericModel, model_parse, get_model_fields
 from ..extraction import ExtractRun
+
+if PYDANTIC_V1:
+    from pydantic import root_validator
+else:
+    from pydantic import model_validator
 
 __all__ = [
     "BoundingBox",
@@ -124,7 +131,12 @@ class ExtractedFieldMetadata(BaseModel):
     )
 
     # Forbid unknown keys to avoid swallowing nested dicts
-    model_config = ConfigDict(extra="forbid")
+    if PYDANTIC_V1:
+
+        class Config:
+            extra = "forbid"
+    else:
+        model_config: ClassVar[ConfigDict] = ConfigDict(extra="forbid")  # type: ignore[misc]
 
 
 ExtractedFieldMetaDataDict = Dict[str, Union[ExtractedFieldMetadata, Dict[str, Any], List[Any]]]
@@ -182,9 +194,9 @@ def _parse_extracted_field_metadata_recursive(
         if len(indicator_fields.intersection(field_dict.keys())) > 0:
             try:
                 merged: Dict[str, Any] = {**field_dict, **additional_fields}
-                allowed_fields = set(ExtractedFieldMetadata.model_fields.keys())
+                allowed_fields = set(get_model_fields(ExtractedFieldMetadata).keys())
                 merged = {k: v for k, v in merged.items() if k in allowed_fields}
-                validated = ExtractedFieldMetadata.model_validate(merged)
+                validated = model_parse(ExtractedFieldMetadata, merged)
 
                 return validated
             except ValidationError:
@@ -201,7 +213,30 @@ def _parse_extracted_field_metadata_recursive(
         raise ValueError(f"Invalid field value: {field_value}. Expected ExtractedFieldMetadata, dict, or list")
 
 
-class ExtractedData(BaseModel, Generic[ExtractedT]):
+def _normalize_field_metadata_value(value: Any) -> Dict[str, Any]:
+    """
+    Helper to normalize field_metadata in inbound data.
+
+    Ensures any inbound representation (including JSON round-trips)
+    gets normalized so nested dicts become ExtractedFieldMetadata where appropriate.
+    """
+    if isinstance(value, dict):
+        value_dict = cast(Dict[str, Any], value)
+        if "field_metadata" in value_dict and isinstance(value_dict["field_metadata"], dict):
+            try:
+                field_metadata_dict = cast(Dict[str, Any], value_dict["field_metadata"])
+                return {
+                    **value_dict,
+                    "field_metadata": parse_extracted_field_metadata(field_metadata_dict),
+                }
+            except Exception:
+                # Let pydantic surface detailed errors later rather than swallowing completely
+                pass
+        return value_dict
+    return cast(Dict[str, Any], value)
+
+
+class ExtractedData(GenericModel, Generic[ExtractedT]):
     """
     Wrapper for extracted data with workflow status tracking.
 
@@ -258,25 +293,18 @@ class ExtractedData(BaseModel, Generic[ExtractedT]):
         description="Additional metadata about the extracted data, such as errors, tokens, etc.",
     )
 
-    @model_validator(mode="before")
-    @classmethod
-    def _normalize_field_metadata_on_input(cls, value: Any) -> Dict[str, Any]:
-        # Ensure any inbound representation (including JSON round-trips)
-        # gets normalized so nested dicts become ExtractedFieldMetadata where appropriate.
-        if isinstance(value, dict):
-            value_dict = cast(Dict[str, Any], value)
-            if "field_metadata" in value_dict and isinstance(value_dict["field_metadata"], dict):
-                try:
-                    field_metadata_dict = cast(Dict[str, Any], value_dict["field_metadata"])
-                    return {
-                        **value_dict,
-                        "field_metadata": parse_extracted_field_metadata(field_metadata_dict),
-                    }
-                except Exception:
-                    # Let pydantic surface detailed errors later rather than swallowing completely
-                    pass
-            return value_dict
-        return cast(Dict[str, Any], value)
+    if PYDANTIC_V1:
+
+        @root_validator(pre=True)
+        @classmethod
+        def _normalize_field_metadata_on_input(cls, value: Any) -> Dict[str, Any]:
+            return _normalize_field_metadata_value(value)
+    else:
+
+        @model_validator(mode="before")
+        @classmethod
+        def _normalize_field_metadata_on_input(cls, value: Any) -> Dict[str, Any]:
+            return _normalize_field_metadata_value(value)
 
     @classmethod
     def create(
@@ -370,8 +398,8 @@ class ExtractedData(BaseModel, Generic[ExtractedT]):
             field_metadata = {}
 
         try:
-            # schema is expected to be a Pydantic model class with model_validate
-            data: ExtractedT = schema.model_validate(result.data)  # type: ignore[union-attr, attr-defined, assignment]
+            # schema is expected to be a Pydantic model class
+            data: ExtractedT = model_parse(schema, result.data)  # type: ignore[union-attr, attr-defined, assignment]
             return cls.create(
                 data=data,
                 status=status,

@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 from pydantic import Field, BaseModel
 
+from llama_cloud._compat import model_json, model_parse
 from llama_cloud.types.file import File
 from llama_cloud.types.extraction import ExtractRun
 from llama_cloud.types.beta.extracted_data import (
@@ -261,13 +262,14 @@ def create_file(
     external_file_id: str = "external-file-id",
     project_id: str = "project-123",
 ) -> File:
-    return File.model_validate(
+    return model_parse(
+        File,
         {
             "id": id,
             "name": name,
             "external_file_id": external_file_id,
             "project_id": project_id,
-        }
+        },
     )
 
 
@@ -292,7 +294,8 @@ def create_extract_run(
     if file is None:
         file = create_file()
 
-    return ExtractRun.model_validate(
+    return model_parse(
+        ExtractRun,
         {
             "id": id,
             "job_id": job_id,
@@ -305,7 +308,7 @@ def create_extract_run(
             "status": "SUCCESS",
             "project_id": str(uuid.uuid4()),
             "from_ui": False,
-        }
+        },
     )
 
 
@@ -402,7 +405,7 @@ def test_full_parse_nested_dimensions():
     """Test parsing real extraction result with nested dimensions."""
     with open(Path(__file__).parent.parent / "data" / "capacitor.json") as f:
         data = json.load(f)
-    result = ExtractedData.from_extraction_result(ExtractRun.model_validate(data), Capacitor)
+    result = ExtractedData.from_extraction_result(model_parse(ExtractRun, data), Capacitor)
     expected = {
         "dimensions": {
             "diameter": ExtractedFieldMetadata(
@@ -423,7 +426,9 @@ def test_full_parse_nested_dimensions():
         }
     }
     assert result.field_metadata == expected
-    parsed = ExtractedData.model_validate_json(result.model_dump_json())
+    # Round-trip through JSON to verify serialization/deserialization
+    json_str = model_json(result)
+    parsed = model_parse(ExtractedData, json.loads(json_str))
     assert parsed.field_metadata == expected
 
 
