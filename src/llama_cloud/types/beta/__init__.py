@@ -4,19 +4,6 @@ from __future__ import annotations
 
 from .agent_data import AgentData as AgentData
 from .sheets_job import SheetsJob as SheetsJob
-
-# Custom types - not auto-generated
-from .extracted_data import (
-    BoundingBox as BoundingBox,
-    ExtractedData as ExtractedData,
-    FieldCitation as FieldCitation,
-    PageDimensions as PageDimensions,
-    InvalidExtractionData as InvalidExtractionData,
-    ExtractedFieldMetadata as ExtractedFieldMetadata,
-    ExtractedFieldMetaDataDict as ExtractedFieldMetaDataDict,
-    calculate_overall_confidence as calculate_overall_confidence,
-    parse_extracted_field_metadata as parse_extracted_field_metadata,
-)
 from .split_category import SplitCategory as SplitCategory
 from .sheet_get_params import SheetGetParams as SheetGetParams
 from .split_get_params import SplitGetParams as SplitGetParams
