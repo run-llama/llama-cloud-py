@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0-beta.7 (2026-01-20)
+
+Full Changelog: [v1.0.0-beta.6...v1.0.0-beta.7](https://github.com/run-llama/llama-cloud-py/compare/v1.0.0-beta.6...v1.0.0-beta.7)
+
 ## 1.0.0-beta.6 (2026-01-19)
 
 Full Changelog: [v1.0.0-beta.5...v1.0.0-beta.6](https://github.com/run-llama/llama-cloud-py/compare/v1.0.0-beta.5...v1.0.0-beta.6)
