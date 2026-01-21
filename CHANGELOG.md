@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0 (2026-01-21)
+
+Full Changelog: [v1.0.0-beta.7...v1.0.0](https://github.com/run-llama/llama-cloud-py/compare/v1.0.0-beta.7...v1.0.0)
+
+### Features
+
+* **api:** api update ([fcfeefb](https://github.com/run-llama/llama-cloud-py/commit/fcfeefbbe1905a3cb6f5514de065998d167b7968))
+
 ## 1.0.0-beta.7 (2026-01-20)
 
 Full Changelog: [v1.0.0-beta.6...v1.0.0-beta.7](https://github.com/run-llama/llama-cloud-py/compare/v1.0.0-beta.6...v1.0.0-beta.7)
