@@ -17,9 +17,7 @@ __all__ = [
     "InputOptionsPresentation",
     "InputOptionsSpreadsheet",
     "OutputOptions",
-    "OutputOptionsExportPdf",
     "OutputOptionsMarkdown",
-    "OutputOptionsMarkdownPages",
     "OutputOptionsMarkdownTables",
     "OutputOptionsSpatialText",
     "OutputOptionsTablesAsSpreadsheet",
@@ -32,7 +30,6 @@ __all__ = [
     "ProcessingOptionsAutoModeConfigurationParsingConf",
     "ProcessingOptionsAutoModeConfigurationParsingConfCropBox",
     "ProcessingOptionsAutoModeConfigurationParsingConfIgnore",
-    "ProcessingOptionsAutoModeConfigurationParsingConfMarkdown",
     "ProcessingOptionsAutoModeConfigurationParsingConfPresentation",
     "ProcessingOptionsAutoModeConfigurationParsingConfSpatialText",
     "ProcessingOptionsIgnore",
@@ -45,7 +42,11 @@ class ParsingCreateParams(TypedDict, total=False):
     tier: Required[Literal["fast", "cost_effective", "agentic", "agentic_plus"]]
     """The parsing tier to use"""
 
-    version: Required[Union[Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "latest"], str]]
+    version: Required[
+        Union[
+            Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "2026-01-16", "2026-01-21", "latest"], str
+        ]
+    ]
     """Version of the tier configuration"""
 
     organization_id: Optional[str]
@@ -167,20 +168,6 @@ class InputOptions(TypedDict, total=False):
     """Spreadsheet-specific parsing options"""
 
 
-class OutputOptionsExportPdf(TypedDict, total=False):
-    """PDF export options"""
-
-    enable: Optional[bool]
-    """Whether this option is enabled"""
-
-
-class OutputOptionsMarkdownPages(TypedDict, total=False):
-    """Page formatting options for markdown"""
-
-    merge_tables_across_pages_in_markdown: Optional[bool]
-    """Merge tables that span across pages in markdown output"""
-
-
 class OutputOptionsMarkdownTables(TypedDict, total=False):
     """Table formatting options for markdown"""
 
@@ -199,9 +186,6 @@ class OutputOptionsMarkdown(TypedDict, total=False):
 
     annotate_links: Optional[bool]
     """Add annotations to links in markdown output"""
-
-    pages: OutputOptionsMarkdownPages
-    """Page formatting options for markdown"""
 
     tables: OutputOptionsMarkdownTables
     """Table formatting options for markdown"""
@@ -232,9 +216,6 @@ class OutputOptionsTablesAsSpreadsheet(TypedDict, total=False):
 
 class OutputOptions(TypedDict, total=False):
     """Output format and styling options"""
-
-    export_pdf: OutputOptionsExportPdf
-    """PDF export options"""
 
     extract_printed_page_number: Optional[bool]
     """Extract printed page numbers from the document"""
@@ -331,13 +312,6 @@ class ProcessingOptionsAutoModeConfigurationParsingConfIgnore(TypedDict, total=F
     """Whether to ignore hidden text in the document"""
 
 
-class ProcessingOptionsAutoModeConfigurationParsingConfMarkdown(TypedDict, total=False):
-    """Markdown options for auto mode parsing configuration."""
-
-    merge_tables_across_pages_in_markdown: Optional[bool]
-    """Merge tables that span across pages in markdown output"""
-
-
 class ProcessingOptionsAutoModeConfigurationParsingConfPresentation(TypedDict, total=False):
     """Presentation-specific options for auto mode parsing configuration."""
 
@@ -392,9 +366,6 @@ class ProcessingOptionsAutoModeConfigurationParsingConf(TypedDict, total=False):
     language: Optional[str]
     """Primary language of the document"""
 
-    markdown: Optional[ProcessingOptionsAutoModeConfigurationParsingConfMarkdown]
-    """Markdown options for auto mode parsing configuration."""
-
     outlined_table_extraction: Optional[bool]
     """Whether to use outlined table extraction"""
 
@@ -410,7 +381,9 @@ class ProcessingOptionsAutoModeConfigurationParsingConf(TypedDict, total=False):
     tier: Optional[Literal["fast", "cost_effective", "agentic", "agentic_plus"]]
     """The parsing tier to use"""
 
-    version: Union[Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "latest"], str, None]
+    version: Union[
+        Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "2026-01-16", "2026-01-21", "latest"], str, None
+    ]
     """Version of the tier configuration"""
 
 

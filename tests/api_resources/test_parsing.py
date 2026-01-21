@@ -68,12 +68,10 @@ class TestParsing:
                 },
             },
             output_options={
-                "export_pdf": {"enable": True},
                 "extract_printed_page_number": True,
                 "images_to_save": ["screenshot"],
                 "markdown": {
                     "annotate_links": True,
-                    "pages": {"merge_tables_across_pages_in_markdown": True},
                     "tables": {
                         "compact_markdown_tables": True,
                         "markdown_table_multiline_separator": "markdown_table_multiline_separator",
@@ -128,7 +126,6 @@ class TestParsing:
                                 "ignore_hidden_text": True,
                             },
                             "language": "language",
-                            "markdown": {"merge_tables_across_pages_in_markdown": True},
                             "outlined_table_extraction": True,
                             "presentation": {
                                 "out_of_bounds_content": True,
@@ -374,12 +371,10 @@ class TestAsyncParsing:
                 },
             },
             output_options={
-                "export_pdf": {"enable": True},
                 "extract_printed_page_number": True,
                 "images_to_save": ["screenshot"],
                 "markdown": {
                     "annotate_links": True,
-                    "pages": {"merge_tables_across_pages_in_markdown": True},
                     "tables": {
                         "compact_markdown_tables": True,
                         "markdown_table_multiline_separator": "markdown_table_multiline_separator",
@@ -434,7 +429,6 @@ class TestAsyncParsing:
                                 "ignore_hidden_text": True,
                             },
                             "language": "language",
-                            "markdown": {"merge_tables_across_pages_in_markdown": True},
                             "outlined_table_extraction": True,
                             "presentation": {
                                 "out_of_bounds_content": True,

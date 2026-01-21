@@ -5,8 +5,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, List, Union, Optional
 from typing_extensions import Literal, TypeAlias, TypeAliasType
 
-from pydantic import Field as FieldInfo
-
 from .b_box import BBox
 from .._compat import PYDANTIC_V1
 from .._models import BaseModel
@@ -21,7 +19,7 @@ class ItemTextItem(BaseModel):
     value: str
     """Text content"""
 
-    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    bbox: Optional[List[BBox]] = None
     """List of bounding boxes"""
 
     type: Optional[Literal["text"]] = None
@@ -41,7 +39,7 @@ class ListItem(BaseModel):
     ordered: bool
     """Whether the list is ordered or unordered"""
 
-    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    bbox: Optional[List[BBox]] = None
     """List of bounding boxes"""
 
     type: Optional[Literal["list"]] = None
