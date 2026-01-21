@@ -2,8 +2,6 @@
 
 from typing import Optional
 
-from pydantic import Field as FieldInfo
-
 from .._models import BaseModel
 
 __all__ = ["BBox"]
@@ -27,11 +25,11 @@ class BBox(BaseModel):
     confidence: Optional[float] = None
     """Confidence score"""
 
-    end_index: Optional[int] = FieldInfo(alias="endIndex", default=None)
+    end_index: Optional[int] = None
     """End index in the text"""
 
     label: Optional[str] = None
     """Label for the bounding box"""
 
-    start_index: Optional[int] = FieldInfo(alias="startIndex", default=None)
+    start_index: Optional[int] = None
     """Start index in the text"""

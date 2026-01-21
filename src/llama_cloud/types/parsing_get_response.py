@@ -6,8 +6,6 @@ from typing import Dict, List, Union, Optional
 from datetime import datetime
 from typing_extensions import Literal, Annotated, TypeAlias
 
-from pydantic import Field as FieldInfo
-
 from .b_box import BBox
 from .._utils import PropertyInfo
 from .._models import BaseModel
@@ -60,6 +58,9 @@ class Job(BaseModel):
     error_message: Optional[str] = None
     """Error message if job failed"""
 
+    name: Optional[str] = None
+    """User friendly name"""
+
     updated_at: Optional[datetime] = None
     """Update datetime"""
 
@@ -100,7 +101,7 @@ class ItemsPageStructuredResultPageItemTextItem(BaseModel):
     value: str
     """Text content"""
 
-    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    bbox: Optional[List[BBox]] = None
     """List of bounding boxes"""
 
     type: Optional[Literal["text"]] = None
@@ -117,7 +118,7 @@ class ItemsPageStructuredResultPageItemHeadingItem(BaseModel):
     value: str
     """Heading text content"""
 
-    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    bbox: Optional[List[BBox]] = None
     """List of bounding boxes"""
 
     type: Optional[Literal["heading"]] = None
@@ -131,7 +132,7 @@ class ItemsPageStructuredResultPageItemCodeItem(BaseModel):
     value: str
     """Code content"""
 
-    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    bbox: Optional[List[BBox]] = None
     """List of bounding boxes"""
 
     language: Optional[str] = None
@@ -154,7 +155,7 @@ class ItemsPageStructuredResultPageItemTableItem(BaseModel):
     rows: List[List[Union[str, float, None]]]
     """Table data as array of arrays (string, number, or null)"""
 
-    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    bbox: Optional[List[BBox]] = None
     """List of bounding boxes"""
 
     type: Optional[Literal["table"]] = None
@@ -171,7 +172,7 @@ class ItemsPageStructuredResultPageItemImageItem(BaseModel):
     url: str
     """URL to the image"""
 
-    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    bbox: Optional[List[BBox]] = None
     """List of bounding boxes"""
 
     type: Optional[Literal["image"]] = None
@@ -185,7 +186,7 @@ class ItemsPageStructuredResultPageItemLinkItem(BaseModel):
     url: str
     """URL of the link"""
 
-    b_box: Optional[List[BBox]] = FieldInfo(alias="bBox", default=None)
+    bbox: Optional[List[BBox]] = None
     """List of bounding boxes"""
 
     type: Optional[Literal["link"]] = None
