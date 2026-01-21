@@ -29,5 +29,8 @@ class ParsingCreateResponse(BaseModel):
     error_message: Optional[str] = None
     """Error message if job failed"""
 
+    name: Optional[str] = None
+    """User friendly name"""
+
     updated_at: Optional[datetime] = None
     """Update datetime"""
