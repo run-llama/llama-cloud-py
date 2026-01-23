@@ -55,7 +55,17 @@ class ParsingResource(SyncAPIResource):
         *,
         tier: Literal["fast", "cost_effective", "agentic", "agentic_plus"],
         version: Union[
-            Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "2026-01-16", "2026-01-21", "latest"], str
+            Literal[
+                "2026-01-08",
+                "2025-12-31",
+                "2025-12-18",
+                "2025-12-11",
+                "2026-01-16",
+                "2026-01-21",
+                "2026-01-22",
+                "latest",
+            ],
+            str,
         ],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
@@ -660,7 +670,17 @@ class AsyncParsingResource(AsyncAPIResource):
         *,
         tier: Literal["fast", "cost_effective", "agentic", "agentic_plus"],
         version: Union[
-            Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "2026-01-16", "2026-01-21", "latest"], str
+            Literal[
+                "2026-01-08",
+                "2025-12-31",
+                "2025-12-18",
+                "2025-12-11",
+                "2026-01-16",
+                "2026-01-21",
+                "2026-01-22",
+                "latest",
+            ],
+            str,
         ],
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,

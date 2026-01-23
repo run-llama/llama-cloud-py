@@ -36,6 +36,9 @@ class ListItem(BaseModel):
     items: List[Item]
     """List of nested text or list items"""
 
+    md: str
+    """Markdown representation preserving formatting"""
+
     ordered: bool
     """Whether the list is ordered or unordered"""
 
