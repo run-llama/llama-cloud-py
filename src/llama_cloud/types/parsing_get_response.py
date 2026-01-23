@@ -127,7 +127,7 @@ class ItemsPageStructuredResultPageItemHeadingItem(BaseModel):
 
 class ItemsPageStructuredResultPageItemCodeItem(BaseModel):
     md: str
-    """Markdown representation with code fences"""
+    """Markdown representation preserving formatting"""
 
     value: str
     """Code content"""
@@ -150,13 +150,25 @@ class ItemsPageStructuredResultPageItemTableItem(BaseModel):
     """HTML representation of the table"""
 
     md: str
-    """Markdown representation of the table"""
+    """Markdown representation preserving formatting"""
 
     rows: List[List[Union[str, float, None]]]
     """Table data as array of arrays (string, number, or null)"""
 
     bbox: Optional[List[BBox]] = None
     """List of bounding boxes"""
+
+    merged_from_pages: Optional[List[int]] = None
+    """
+    List of page numbers with tables that were merged into this table (e.g., [1, 2,
+    3, 4])
+    """
+
+    merged_into_page: Optional[int] = None
+    """Populated when merged into another table.
+
+    Page number where the full merged table begins (used on empty tables).
+    """
 
     type: Optional[Literal["table"]] = None
     """Table item type"""
@@ -167,7 +179,7 @@ class ItemsPageStructuredResultPageItemImageItem(BaseModel):
     """Image caption"""
 
     md: str
-    """Markdown representation of the image"""
+    """Markdown representation preserving formatting"""
 
     url: str
     """URL to the image"""
@@ -180,6 +192,9 @@ class ItemsPageStructuredResultPageItemImageItem(BaseModel):
 
 
 class ItemsPageStructuredResultPageItemLinkItem(BaseModel):
+    md: str
+    """Markdown representation preserving formatting"""
+
     text: str
     """Display text of the link"""
 
@@ -286,6 +301,9 @@ class MetadataPage(BaseModel):
     confidence: Optional[float] = None
     """Confidence score for the page parsing (0-1)"""
 
+    cost_optimized: Optional[bool] = None
+    """Whether cost-optimized parsing was used for the page"""
+
     original_orientation_angle: Optional[int] = None
     """Original orientation angle of the page in degrees"""
 
@@ -297,6 +315,9 @@ class MetadataPage(BaseModel):
 
     speaker_notes: Optional[str] = None
     """Speaker notes from presentation slides"""
+
+    triggered_auto_mode: Optional[bool] = None
+    """Whether auto mode was triggered for the page"""
 
 
 class Metadata(BaseModel):
@@ -351,6 +372,9 @@ class ParsingGetResponse(BaseModel):
 
     markdown: Optional[Markdown] = None
     """Markdown result (if requested)"""
+
+    markdown_full: Optional[str] = None
+    """Full raw markdown content (if requested)"""
 
     metadata: Optional[Metadata] = None
     """Result containing page-level metadata for the parsed document."""

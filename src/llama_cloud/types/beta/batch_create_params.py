@@ -126,6 +126,8 @@ class JobConfigBatchParseJobRecordCreateParameters(TypedDict, total=False):
 
     do_not_unroll_columns: Optional[bool]
 
+    enable_cost_optimizer: Optional[bool]
+
     extract_charts: Optional[bool]
 
     extract_layout: Optional[bool]

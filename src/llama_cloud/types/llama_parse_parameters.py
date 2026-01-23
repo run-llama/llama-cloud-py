@@ -73,6 +73,8 @@ class LlamaParseParameters(BaseModel):
 
     do_not_unroll_columns: Optional[bool] = None
 
+    enable_cost_optimizer: Optional[bool] = None
+
     extract_charts: Optional[bool] = None
 
     extract_layout: Optional[bool] = None

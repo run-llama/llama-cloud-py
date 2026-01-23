@@ -32,6 +32,7 @@ __all__ = [
     "ProcessingOptionsAutoModeConfigurationParsingConfIgnore",
     "ProcessingOptionsAutoModeConfigurationParsingConfPresentation",
     "ProcessingOptionsAutoModeConfigurationParsingConfSpatialText",
+    "ProcessingOptionsCostOptimizer",
     "ProcessingOptionsIgnore",
     "ProcessingOptionsOcrParameters",
     "WebhookConfiguration",
@@ -44,7 +45,17 @@ class ParsingCreateParams(TypedDict, total=False):
 
     version: Required[
         Union[
-            Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "2026-01-16", "2026-01-21", "latest"], str
+            Literal[
+                "2026-01-08",
+                "2025-12-31",
+                "2025-12-18",
+                "2025-12-11",
+                "2026-01-16",
+                "2026-01-21",
+                "2026-01-22",
+                "latest",
+            ],
+            str,
         ]
     ]
     """Version of the tier configuration"""
@@ -177,6 +188,9 @@ class OutputOptionsMarkdownTables(TypedDict, total=False):
     markdown_table_multiline_separator: Optional[str]
     """Separator for multiline content in markdown tables"""
 
+    merge_continued_tables: Optional[bool]
+    """Merge tables that continue across or within pages. Affects markdown and items"""
+
     output_tables_as_markdown: Optional[bool]
     """Output tables in markdown format"""
 
@@ -186,6 +200,9 @@ class OutputOptionsMarkdown(TypedDict, total=False):
 
     annotate_links: Optional[bool]
     """Add annotations to links in markdown output"""
+
+    inline_images: Optional[bool]
+    """Instead of transcribing images, inline them in the markdown output"""
 
     tables: OutputOptionsMarkdownTables
     """Table formatting options for markdown"""
@@ -382,7 +399,11 @@ class ProcessingOptionsAutoModeConfigurationParsingConf(TypedDict, total=False):
     """The parsing tier to use"""
 
     version: Union[
-        Literal["2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "2026-01-16", "2026-01-21", "latest"], str, None
+        Literal[
+            "2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "2026-01-16", "2026-01-21", "2026-01-22", "latest"
+        ],
+        str,
+        None,
     ]
     """Version of the tier configuration"""
 
@@ -506,6 +527,16 @@ class ProcessingOptionsAutoModeConfiguration(TypedDict, total=False):
     """
 
 
+class ProcessingOptionsCostOptimizer(TypedDict, total=False):
+    """Cost optimizer parameters for parsing configuration."""
+
+    enable: Optional[bool]
+    """Use cost-optimized parsing for the document.
+
+    May negatively impact parsing speed and quality.
+    """
+
+
 class ProcessingOptionsIgnore(TypedDict, total=False):
     """Options for ignoring specific text types"""
 
@@ -534,6 +565,9 @@ class ProcessingOptions(TypedDict, total=False):
 
     auto_mode_configuration: Optional[Iterable[ProcessingOptionsAutoModeConfiguration]]
     """Configuration for auto mode parsing with triggers and parsing options"""
+
+    cost_optimizer: Optional[ProcessingOptionsCostOptimizer]
+    """Cost optimizer parameters for parsing configuration."""
 
     disable_heuristics: Optional[bool]
     """
