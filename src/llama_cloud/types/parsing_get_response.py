@@ -192,9 +192,6 @@ class ItemsPageStructuredResultPageItemImageItem(BaseModel):
 
 
 class ItemsPageStructuredResultPageItemLinkItem(BaseModel):
-    md: str
-    """Markdown representation preserving formatting"""
-
     text: str
     """Display text of the link"""
 
@@ -203,6 +200,9 @@ class ItemsPageStructuredResultPageItemLinkItem(BaseModel):
 
     bbox: Optional[List[BBox]] = None
     """List of bounding boxes"""
+
+    md: Optional[str] = None
+    """Markdown representation preserving formatting"""
 
     type: Optional[Literal["link"]] = None
     """Link item type"""
