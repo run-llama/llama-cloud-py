@@ -72,9 +72,11 @@ class TestParsing:
                 "images_to_save": ["screenshot"],
                 "markdown": {
                     "annotate_links": True,
+                    "inline_images": True,
                     "tables": {
                         "compact_markdown_tables": True,
                         "markdown_table_multiline_separator": "markdown_table_multiline_separator",
+                        "merge_continued_tables": True,
                         "output_tables_as_markdown": True,
                     },
                 },
@@ -177,6 +179,7 @@ class TestParsing:
                         "trigger_mode": "trigger_mode",
                     }
                 ],
+                "cost_optimizer": {"enable": True},
                 "disable_heuristics": True,
                 "ignore": {
                     "ignore_diagonal_text": True,
@@ -375,9 +378,11 @@ class TestAsyncParsing:
                 "images_to_save": ["screenshot"],
                 "markdown": {
                     "annotate_links": True,
+                    "inline_images": True,
                     "tables": {
                         "compact_markdown_tables": True,
                         "markdown_table_multiline_separator": "markdown_table_multiline_separator",
+                        "merge_continued_tables": True,
                         "output_tables_as_markdown": True,
                     },
                 },
@@ -480,6 +485,7 @@ class TestAsyncParsing:
                         "trigger_mode": "trigger_mode",
                     }
                 ],
+                "cost_optimizer": {"enable": True},
                 "disable_heuristics": True,
                 "ignore": {
                     "ignore_diagonal_text": True,
