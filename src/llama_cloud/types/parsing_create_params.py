@@ -53,6 +53,7 @@ class ParsingCreateParams(TypedDict, total=False):
                 "2026-01-16",
                 "2026-01-21",
                 "2026-01-22",
+                "2026-01-24",
                 "latest",
             ],
             str,
@@ -400,7 +401,15 @@ class ProcessingOptionsAutoModeConfigurationParsingConf(TypedDict, total=False):
 
     version: Union[
         Literal[
-            "2026-01-08", "2025-12-31", "2025-12-18", "2025-12-11", "2026-01-16", "2026-01-21", "2026-01-22", "latest"
+            "2026-01-08",
+            "2025-12-31",
+            "2025-12-18",
+            "2025-12-11",
+            "2026-01-16",
+            "2026-01-21",
+            "2026-01-22",
+            "2026-01-24",
+            "latest",
         ],
         str,
         None,
