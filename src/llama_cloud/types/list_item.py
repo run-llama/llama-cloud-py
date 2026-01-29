@@ -36,14 +36,14 @@ class ListItem(BaseModel):
     items: List[Item]
     """List of nested text or list items"""
 
+    md: str
+    """Markdown representation preserving formatting"""
+
     ordered: bool
     """Whether the list is ordered or unordered"""
 
     bbox: Optional[List[BBox]] = None
     """List of bounding boxes"""
-
-    md: Optional[str] = None
-    """Markdown representation preserving formatting"""
 
     type: Optional[Literal["list"]] = None
     """List item type"""
