@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.2.0 (2026-01-29)
+
+Full Changelog: [v1.1.0...v1.2.0](https://github.com/run-llama/llama-cloud-py/compare/v1.1.0...v1.2.0)
+
+### Features
+
+* **api:** api update ([69eaf93](https://github.com/run-llama/llama-cloud-py/commit/69eaf939dcd2d4bb6d3966eccd46f14e03e3d146))
+* **api:** api update ([21505e6](https://github.com/run-llama/llama-cloud-py/commit/21505e669af80fec2e50e4fd4d52b716c094f35e))
+
+
+### Bug Fixes
+
+* **docs:** fix mcp installation instructions for remote servers ([c2d87ea](https://github.com/run-llama/llama-cloud-py/commit/c2d87ea743e52c8fa8a1fe631d13432f84f40023))
+
 ## 1.1.0 (2026-01-24)
 
 Full Changelog: [v1.0.0...v1.1.0](https://github.com/run-llama/llama-cloud-py/compare/v1.0.0...v1.1.0)
