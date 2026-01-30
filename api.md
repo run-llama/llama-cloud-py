@@ -7,6 +7,7 @@ from llama_cloud.types import (
     CloudAzureAISearchVectorStore,
     CloudBoxDataSource,
     CloudConfluenceDataSource,
+    CloudGoogleDriveDataSource,
     CloudJiraDataSource,
     CloudJiraDataSourceV2,
     CloudMilvusVectorStore,
