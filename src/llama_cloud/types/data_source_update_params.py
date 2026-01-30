@@ -16,7 +16,7 @@ from .shared_params.cloud_sharepoint_data_source import CloudSharepointDataSourc
 from .shared_params.cloud_notion_page_data_source import CloudNotionPageDataSource
 from .shared_params.cloud_az_storage_blob_data_source import CloudAzStorageBlobDataSource
 
-__all__ = ["DataSourceUpdateParams", "Component"]
+__all__ = ["DataSourceUpdateParams", "Component", "ComponentCloudGoogleDriveDataSource"]
 
 
 class DataSourceUpdateParams(TypedDict, total=False):
@@ -46,10 +46,23 @@ class DataSourceUpdateParams(TypedDict, total=False):
     """The name of the data source."""
 
 
+class ComponentCloudGoogleDriveDataSource(TypedDict, total=False):
+    folder_id: Required[str]
+    """The ID of the Google Drive folder to read from."""
+
+    class_name: str
+
+    service_account_key: Optional[Dict[str, str]]
+    """A dictionary containing secret values"""
+
+    supports_access_control: bool
+
+
 Component: TypeAlias = Union[
     Dict[str, object],
     CloudS3DataSource,
     CloudAzStorageBlobDataSource,
+    ComponentCloudGoogleDriveDataSource,
     CloudOneDriveDataSource,
     CloudSharepointDataSource,
     CloudSlackDataSource,

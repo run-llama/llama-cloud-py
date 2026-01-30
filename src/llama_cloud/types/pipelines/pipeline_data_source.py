@@ -17,12 +17,26 @@ from ..shared.cloud_sharepoint_data_source import CloudSharepointDataSource
 from ..shared.cloud_notion_page_data_source import CloudNotionPageDataSource
 from ..shared.cloud_az_storage_blob_data_source import CloudAzStorageBlobDataSource
 
-__all__ = ["PipelineDataSource", "Component"]
+__all__ = ["PipelineDataSource", "Component", "ComponentCloudGoogleDriveDataSource"]
+
+
+class ComponentCloudGoogleDriveDataSource(BaseModel):
+    folder_id: str
+    """The ID of the Google Drive folder to read from."""
+
+    class_name: Optional[str] = None
+
+    service_account_key: Optional[Dict[str, str]] = None
+    """A dictionary containing secret values"""
+
+    supports_access_control: Optional[bool] = None
+
 
 Component: TypeAlias = Union[
     Dict[str, object],
     CloudS3DataSource,
     CloudAzStorageBlobDataSource,
+    ComponentCloudGoogleDriveDataSource,
     CloudOneDriveDataSource,
     CloudSharepointDataSource,
     CloudSlackDataSource,
