@@ -158,20 +158,20 @@ from .hugging_face_inference_api_embedding_config_param import (
 # Pydantic can resolve the necessary references.
 # See: https://github.com/pydantic/pydantic/issues/11250 for more context.
 if _compat.PYDANTIC_V1:
+    list_item.ListItem.update_forward_refs()  # type: ignore
+    parsing_get_response.ParsingGetResponse.update_forward_refs()  # type: ignore
     metadata_filters.MetadataFilters.update_forward_refs()  # type: ignore
     pipeline.Pipeline.update_forward_refs()  # type: ignore
     preset_retrieval_params.PresetRetrievalParams.update_forward_refs()  # type: ignore
     pipeline_retrieve_response.PipelineRetrieveResponse.update_forward_refs()  # type: ignore
     retriever.Retriever.update_forward_refs()  # type: ignore
     retriever_pipeline.RetrieverPipeline.update_forward_refs()  # type: ignore
-    list_item.ListItem.update_forward_refs()  # type: ignore
-    parsing_get_response.ParsingGetResponse.update_forward_refs()  # type: ignore
 else:
+    list_item.ListItem.model_rebuild(_parent_namespace_depth=0)
+    parsing_get_response.ParsingGetResponse.model_rebuild(_parent_namespace_depth=0)
     metadata_filters.MetadataFilters.model_rebuild(_parent_namespace_depth=0)
     pipeline.Pipeline.model_rebuild(_parent_namespace_depth=0)
     preset_retrieval_params.PresetRetrievalParams.model_rebuild(_parent_namespace_depth=0)
     pipeline_retrieve_response.PipelineRetrieveResponse.model_rebuild(_parent_namespace_depth=0)
     retriever.Retriever.model_rebuild(_parent_namespace_depth=0)
     retriever_pipeline.RetrieverPipeline.model_rebuild(_parent_namespace_depth=0)
-    list_item.ListItem.model_rebuild(_parent_namespace_depth=0)
-    parsing_get_response.ParsingGetResponse.model_rebuild(_parent_namespace_depth=0)
