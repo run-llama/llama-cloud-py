@@ -32,6 +32,7 @@ from .shared import (
     CloudConfluenceDataSource as CloudConfluenceDataSource,
     CloudNotionPageDataSource as CloudNotionPageDataSource,
     CloudSharepointDataSource as CloudSharepointDataSource,
+    CloudGoogleDriveDataSource as CloudGoogleDriveDataSource,
     CloudAzStorageBlobDataSource as CloudAzStorageBlobDataSource,
     CloudAzureAISearchVectorStore as CloudAzureAISearchVectorStore,
     CloudMongoDBAtlasVectorSearch as CloudMongoDBAtlasVectorSearch,

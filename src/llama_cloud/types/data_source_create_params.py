@@ -14,9 +14,10 @@ from .shared_params.cloud_one_drive_data_source import CloudOneDriveDataSource
 from .shared_params.cloud_confluence_data_source import CloudConfluenceDataSource
 from .shared_params.cloud_sharepoint_data_source import CloudSharepointDataSource
 from .shared_params.cloud_notion_page_data_source import CloudNotionPageDataSource
+from .shared_params.cloud_google_drive_data_source import CloudGoogleDriveDataSource
 from .shared_params.cloud_az_storage_blob_data_source import CloudAzStorageBlobDataSource
 
-__all__ = ["DataSourceCreateParams", "Component", "ComponentCloudGoogleDriveDataSource"]
+__all__ = ["DataSourceCreateParams", "Component"]
 
 
 class DataSourceCreateParams(TypedDict, total=False):
@@ -50,23 +51,11 @@ class DataSourceCreateParams(TypedDict, total=False):
     """Custom metadata that will be present on all data loaded from the data source"""
 
 
-class ComponentCloudGoogleDriveDataSource(TypedDict, total=False):
-    folder_id: Required[str]
-    """The ID of the Google Drive folder to read from."""
-
-    class_name: str
-
-    service_account_key: Optional[Dict[str, str]]
-    """A dictionary containing secret values"""
-
-    supports_access_control: bool
-
-
 Component: TypeAlias = Union[
     Dict[str, object],
     CloudS3DataSource,
     CloudAzStorageBlobDataSource,
-    ComponentCloudGoogleDriveDataSource,
+    CloudGoogleDriveDataSource,
     CloudOneDriveDataSource,
     CloudSharepointDataSource,
     CloudSlackDataSource,

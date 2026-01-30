@@ -15,28 +15,16 @@ from .data_source_reader_version_metadata import DataSourceReaderVersionMetadata
 from .shared.cloud_confluence_data_source import CloudConfluenceDataSource
 from .shared.cloud_sharepoint_data_source import CloudSharepointDataSource
 from .shared.cloud_notion_page_data_source import CloudNotionPageDataSource
+from .shared.cloud_google_drive_data_source import CloudGoogleDriveDataSource
 from .shared.cloud_az_storage_blob_data_source import CloudAzStorageBlobDataSource
 
-__all__ = ["DataSource", "Component", "ComponentCloudGoogleDriveDataSource"]
-
-
-class ComponentCloudGoogleDriveDataSource(BaseModel):
-    folder_id: str
-    """The ID of the Google Drive folder to read from."""
-
-    class_name: Optional[str] = None
-
-    service_account_key: Optional[Dict[str, str]] = None
-    """A dictionary containing secret values"""
-
-    supports_access_control: Optional[bool] = None
-
+__all__ = ["DataSource", "Component"]
 
 Component: TypeAlias = Union[
     Dict[str, object],
     CloudS3DataSource,
     CloudAzStorageBlobDataSource,
-    ComponentCloudGoogleDriveDataSource,
+    CloudGoogleDriveDataSource,
     CloudOneDriveDataSource,
     CloudSharepointDataSource,
     CloudSlackDataSource,
