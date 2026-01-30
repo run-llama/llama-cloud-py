@@ -321,7 +321,7 @@ class MetadataPage(BaseModel):
 
 
 class Metadata(BaseModel):
-    """Result containing page-level metadata for the parsed document."""
+    """Result containing metadata (page level and general) for the parsed document."""
 
     pages: List[MetadataPage]
     """List of page metadata entries"""
@@ -377,7 +377,7 @@ class ParsingGetResponse(BaseModel):
     """Full raw markdown content (if requested)"""
 
     metadata: Optional[Metadata] = None
-    """Result containing page-level metadata for the parsed document."""
+    """Result containing metadata (page level and general) for the parsed document."""
 
     result_content_metadata: Optional[Dict[str, ResultContentMetadata]] = None
     """Metadata including size, existence, and presigned URLs for result files"""
