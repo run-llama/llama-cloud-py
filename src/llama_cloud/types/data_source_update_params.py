@@ -14,6 +14,7 @@ from .shared_params.cloud_one_drive_data_source import CloudOneDriveDataSource
 from .shared_params.cloud_confluence_data_source import CloudConfluenceDataSource
 from .shared_params.cloud_sharepoint_data_source import CloudSharepointDataSource
 from .shared_params.cloud_notion_page_data_source import CloudNotionPageDataSource
+from .shared_params.cloud_google_drive_data_source import CloudGoogleDriveDataSource
 from .shared_params.cloud_az_storage_blob_data_source import CloudAzStorageBlobDataSource
 
 __all__ = ["DataSourceUpdateParams", "Component"]
@@ -50,6 +51,7 @@ Component: TypeAlias = Union[
     Dict[str, object],
     CloudS3DataSource,
     CloudAzStorageBlobDataSource,
+    CloudGoogleDriveDataSource,
     CloudOneDriveDataSource,
     CloudSharepointDataSource,
     CloudSlackDataSource,

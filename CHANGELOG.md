@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.2.0 (2026-01-30)
+
+Full Changelog: [v1.1.0...v1.2.0](https://github.com/run-llama/llama-cloud-py/compare/v1.1.0...v1.2.0)
+
+### Features
+
+* **api:** api update ([5ae5d42](https://github.com/run-llama/llama-cloud-py/commit/5ae5d4233af1d4a32ffb517ccb53698ca12071b7))
+* **api:** api update ([4950cda](https://github.com/run-llama/llama-cloud-py/commit/4950cdab74a4e3bb888027bc2ed31f637e16c207))
+* **api:** api update ([69eaf93](https://github.com/run-llama/llama-cloud-py/commit/69eaf939dcd2d4bb6d3966eccd46f14e03e3d146))
+* **api:** api update ([21505e6](https://github.com/run-llama/llama-cloud-py/commit/21505e669af80fec2e50e4fd4d52b716c094f35e))
+* **api:** manual updates - Google Drive ([eb76f4b](https://github.com/run-llama/llama-cloud-py/commit/eb76f4bd8edf5bfa5ab9ad85a148877493fb8eeb))
+* **api:** Reordering resources ([7f8e9aa](https://github.com/run-llama/llama-cloud-py/commit/7f8e9aa951112460f50d1064e51930cb86eaf654))
+* **client:** add custom JSON encoder for extended type support ([90b5864](https://github.com/run-llama/llama-cloud-py/commit/90b58643d5ec8701b0492479cb4a65d0258ed674))
+
+
+### Bug Fixes
+
+* **docs:** fix mcp installation instructions for remote servers ([c2d87ea](https://github.com/run-llama/llama-cloud-py/commit/c2d87ea743e52c8fa8a1fe631d13432f84f40023))
+
 ## 1.1.0 (2026-01-24)
 
 Full Changelog: [v1.0.0...v1.1.0](https://github.com/run-llama/llama-cloud-py/compare/v1.0.0...v1.1.0)
