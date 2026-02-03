@@ -25,6 +25,22 @@ __all__ = [
     "ItemsPageStructuredResultPageItemTableItem",
     "ItemsPageStructuredResultPageItemImageItem",
     "ItemsPageStructuredResultPageItemLinkItem",
+    "ItemsPageStructuredResultPageItemHeaderItem",
+    "ItemsPageStructuredResultPageItemHeaderItemItem",
+    "ItemsPageStructuredResultPageItemHeaderItemItemTextItem",
+    "ItemsPageStructuredResultPageItemHeaderItemItemHeadingItem",
+    "ItemsPageStructuredResultPageItemHeaderItemItemCodeItem",
+    "ItemsPageStructuredResultPageItemHeaderItemItemTableItem",
+    "ItemsPageStructuredResultPageItemHeaderItemItemImageItem",
+    "ItemsPageStructuredResultPageItemHeaderItemItemLinkItem",
+    "ItemsPageStructuredResultPageItemFooterItem",
+    "ItemsPageStructuredResultPageItemFooterItemItem",
+    "ItemsPageStructuredResultPageItemFooterItemItemTextItem",
+    "ItemsPageStructuredResultPageItemFooterItemItemHeadingItem",
+    "ItemsPageStructuredResultPageItemFooterItemItemCodeItem",
+    "ItemsPageStructuredResultPageItemFooterItemItemTableItem",
+    "ItemsPageStructuredResultPageItemFooterItemItemImageItem",
+    "ItemsPageStructuredResultPageItemFooterItemItemLinkItem",
     "ItemsPageFailedStructuredPage",
     "Markdown",
     "MarkdownPage",
@@ -208,6 +224,290 @@ class ItemsPageStructuredResultPageItemLinkItem(BaseModel):
     """Link item type"""
 
 
+class ItemsPageStructuredResultPageItemHeaderItemItemTextItem(BaseModel):
+    md: str
+    """Markdown representation preserving formatting"""
+
+    value: str
+    """Text content"""
+
+    bbox: Optional[List[BBox]] = None
+    """List of bounding boxes"""
+
+    type: Optional[Literal["text"]] = None
+    """Text item type"""
+
+
+class ItemsPageStructuredResultPageItemHeaderItemItemHeadingItem(BaseModel):
+    level: int
+    """Heading level (1-6)"""
+
+    md: str
+    """Markdown representation preserving formatting"""
+
+    value: str
+    """Heading text content"""
+
+    bbox: Optional[List[BBox]] = None
+    """List of bounding boxes"""
+
+    type: Optional[Literal["heading"]] = None
+    """Heading item type"""
+
+
+class ItemsPageStructuredResultPageItemHeaderItemItemCodeItem(BaseModel):
+    md: str
+    """Markdown representation preserving formatting"""
+
+    value: str
+    """Code content"""
+
+    bbox: Optional[List[BBox]] = None
+    """List of bounding boxes"""
+
+    language: Optional[str] = None
+    """Programming language identifier"""
+
+    type: Optional[Literal["code"]] = None
+    """Code block item type"""
+
+
+class ItemsPageStructuredResultPageItemHeaderItemItemTableItem(BaseModel):
+    csv: str
+    """CSV representation of the table"""
+
+    html: str
+    """HTML representation of the table"""
+
+    md: str
+    """Markdown representation preserving formatting"""
+
+    rows: List[List[Union[str, float, None]]]
+    """Table data as array of arrays (string, number, or null)"""
+
+    bbox: Optional[List[BBox]] = None
+    """List of bounding boxes"""
+
+    merged_from_pages: Optional[List[int]] = None
+    """
+    List of page numbers with tables that were merged into this table (e.g., [1, 2,
+    3, 4])
+    """
+
+    merged_into_page: Optional[int] = None
+    """Populated when merged into another table.
+
+    Page number where the full merged table begins (used on empty tables).
+    """
+
+    type: Optional[Literal["table"]] = None
+    """Table item type"""
+
+
+class ItemsPageStructuredResultPageItemHeaderItemItemImageItem(BaseModel):
+    caption: str
+    """Image caption"""
+
+    md: str
+    """Markdown representation preserving formatting"""
+
+    url: str
+    """URL to the image"""
+
+    bbox: Optional[List[BBox]] = None
+    """List of bounding boxes"""
+
+    type: Optional[Literal["image"]] = None
+    """Image item type"""
+
+
+class ItemsPageStructuredResultPageItemHeaderItemItemLinkItem(BaseModel):
+    md: str
+    """Markdown representation preserving formatting"""
+
+    text: str
+    """Display text of the link"""
+
+    url: str
+    """URL of the link"""
+
+    bbox: Optional[List[BBox]] = None
+    """List of bounding boxes"""
+
+    type: Optional[Literal["link"]] = None
+    """Link item type"""
+
+
+ItemsPageStructuredResultPageItemHeaderItemItem: TypeAlias = Annotated[
+    Union[
+        ItemsPageStructuredResultPageItemHeaderItemItemTextItem,
+        ItemsPageStructuredResultPageItemHeaderItemItemHeadingItem,
+        "ListItem",
+        ItemsPageStructuredResultPageItemHeaderItemItemCodeItem,
+        ItemsPageStructuredResultPageItemHeaderItemItemTableItem,
+        ItemsPageStructuredResultPageItemHeaderItemItemImageItem,
+        ItemsPageStructuredResultPageItemHeaderItemItemLinkItem,
+    ],
+    PropertyInfo(discriminator="type"),
+]
+
+
+class ItemsPageStructuredResultPageItemHeaderItem(BaseModel):
+    items: List[ItemsPageStructuredResultPageItemHeaderItemItem]
+    """List of items within the header"""
+
+    md: str
+    """Markdown representation preserving formatting"""
+
+    bbox: Optional[List[BBox]] = None
+    """List of bounding boxes"""
+
+    type: Optional[Literal["header"]] = None
+    """Page header container"""
+
+
+class ItemsPageStructuredResultPageItemFooterItemItemTextItem(BaseModel):
+    md: str
+    """Markdown representation preserving formatting"""
+
+    value: str
+    """Text content"""
+
+    bbox: Optional[List[BBox]] = None
+    """List of bounding boxes"""
+
+    type: Optional[Literal["text"]] = None
+    """Text item type"""
+
+
+class ItemsPageStructuredResultPageItemFooterItemItemHeadingItem(BaseModel):
+    level: int
+    """Heading level (1-6)"""
+
+    md: str
+    """Markdown representation preserving formatting"""
+
+    value: str
+    """Heading text content"""
+
+    bbox: Optional[List[BBox]] = None
+    """List of bounding boxes"""
+
+    type: Optional[Literal["heading"]] = None
+    """Heading item type"""
+
+
+class ItemsPageStructuredResultPageItemFooterItemItemCodeItem(BaseModel):
+    md: str
+    """Markdown representation preserving formatting"""
+
+    value: str
+    """Code content"""
+
+    bbox: Optional[List[BBox]] = None
+    """List of bounding boxes"""
+
+    language: Optional[str] = None
+    """Programming language identifier"""
+
+    type: Optional[Literal["code"]] = None
+    """Code block item type"""
+
+
+class ItemsPageStructuredResultPageItemFooterItemItemTableItem(BaseModel):
+    csv: str
+    """CSV representation of the table"""
+
+    html: str
+    """HTML representation of the table"""
+
+    md: str
+    """Markdown representation preserving formatting"""
+
+    rows: List[List[Union[str, float, None]]]
+    """Table data as array of arrays (string, number, or null)"""
+
+    bbox: Optional[List[BBox]] = None
+    """List of bounding boxes"""
+
+    merged_from_pages: Optional[List[int]] = None
+    """
+    List of page numbers with tables that were merged into this table (e.g., [1, 2,
+    3, 4])
+    """
+
+    merged_into_page: Optional[int] = None
+    """Populated when merged into another table.
+
+    Page number where the full merged table begins (used on empty tables).
+    """
+
+    type: Optional[Literal["table"]] = None
+    """Table item type"""
+
+
+class ItemsPageStructuredResultPageItemFooterItemItemImageItem(BaseModel):
+    caption: str
+    """Image caption"""
+
+    md: str
+    """Markdown representation preserving formatting"""
+
+    url: str
+    """URL to the image"""
+
+    bbox: Optional[List[BBox]] = None
+    """List of bounding boxes"""
+
+    type: Optional[Literal["image"]] = None
+    """Image item type"""
+
+
+class ItemsPageStructuredResultPageItemFooterItemItemLinkItem(BaseModel):
+    md: str
+    """Markdown representation preserving formatting"""
+
+    text: str
+    """Display text of the link"""
+
+    url: str
+    """URL of the link"""
+
+    bbox: Optional[List[BBox]] = None
+    """List of bounding boxes"""
+
+    type: Optional[Literal["link"]] = None
+    """Link item type"""
+
+
+ItemsPageStructuredResultPageItemFooterItemItem: TypeAlias = Annotated[
+    Union[
+        ItemsPageStructuredResultPageItemFooterItemItemTextItem,
+        ItemsPageStructuredResultPageItemFooterItemItemHeadingItem,
+        "ListItem",
+        ItemsPageStructuredResultPageItemFooterItemItemCodeItem,
+        ItemsPageStructuredResultPageItemFooterItemItemTableItem,
+        ItemsPageStructuredResultPageItemFooterItemItemImageItem,
+        ItemsPageStructuredResultPageItemFooterItemItemLinkItem,
+    ],
+    PropertyInfo(discriminator="type"),
+]
+
+
+class ItemsPageStructuredResultPageItemFooterItem(BaseModel):
+    items: List[ItemsPageStructuredResultPageItemFooterItemItem]
+    """List of items within the footer"""
+
+    md: str
+    """Markdown representation preserving formatting"""
+
+    bbox: Optional[List[BBox]] = None
+    """List of bounding boxes"""
+
+    type: Optional[Literal["footer"]] = None
+    """Page footer container"""
+
+
 ItemsPageStructuredResultPageItem: TypeAlias = Annotated[
     Union[
         ItemsPageStructuredResultPageItemTextItem,
@@ -217,6 +517,8 @@ ItemsPageStructuredResultPageItem: TypeAlias = Annotated[
         ItemsPageStructuredResultPageItemTableItem,
         ItemsPageStructuredResultPageItemImageItem,
         ItemsPageStructuredResultPageItemLinkItem,
+        ItemsPageStructuredResultPageItemHeaderItem,
+        ItemsPageStructuredResultPageItemFooterItem,
     ],
     PropertyInfo(discriminator="type"),
 ]
@@ -235,7 +537,7 @@ class ItemsPageStructuredResultPage(BaseModel):
     page_width: float
     """Width of the page in points"""
 
-    success: Optional[Literal[True]] = None
+    success: Literal[True]
     """Success indicator"""
 
 
@@ -246,7 +548,7 @@ class ItemsPageFailedStructuredPage(BaseModel):
     page_number: int
     """Page number of the document"""
 
-    success: Optional[bool] = None
+    success: bool
     """Failure indicator"""
 
 
@@ -267,8 +569,14 @@ class MarkdownPageMarkdownResultPage(BaseModel):
     page_number: int
     """Page number of the document"""
 
-    success: Optional[Literal[True]] = None
+    success: Literal[True]
     """Success indicator"""
+
+    footer: Optional[str] = None
+    """Footer of the page in markdown"""
+
+    header: Optional[str] = None
+    """Header of the page in markdown"""
 
 
 class MarkdownPageFailedMarkdownPage(BaseModel):
@@ -278,7 +586,7 @@ class MarkdownPageFailedMarkdownPage(BaseModel):
     page_number: int
     """Page number of the document"""
 
-    success: Optional[bool] = None
+    success: bool
     """Failure indicator"""
 
 
@@ -384,6 +692,9 @@ class ParsingGetResponse(BaseModel):
 
     text: Optional[Text] = None
     """Plain text result (if requested)"""
+
+    text_full: Optional[str] = None
+    """Full raw text content (if requested)"""
 
 
 from .list_item import ListItem
