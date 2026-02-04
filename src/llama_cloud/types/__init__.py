@@ -6,6 +6,8 @@ from . import (
     pipeline,
     list_item,
     retriever,
+    footer_item,
+    header_item,
     metadata_filters,
     retriever_pipeline,
     parsing_get_response,
@@ -39,11 +41,19 @@ from .shared import (
 )
 from .project import Project as Project
 from .pipeline import Pipeline as Pipeline
+from .code_item import CodeItem as CodeItem
 from .data_sink import DataSink as DataSink
+from .link_item import LinkItem as LinkItem
 from .list_item import ListItem as ListItem
 from .retriever import Retriever as Retriever
+from .text_item import TextItem as TextItem
+from .image_item import ImageItem as ImageItem
+from .table_item import TableItem as TableItem
 from .data_source import DataSource as DataSource
+from .footer_item import FooterItem as FooterItem
+from .header_item import HeaderItem as HeaderItem
 from .status_enum import StatusEnum as StatusEnum
+from .heading_item import HeadingItem as HeadingItem
 from .message_role import MessageRole as MessageRole
 from .parsing_mode import ParsingMode as ParsingMode
 from .pipeline_type import PipelineType as PipelineType
@@ -161,6 +171,8 @@ from .hugging_face_inference_api_embedding_config_param import (
 # Pydantic can resolve the necessary references.
 # See: https://github.com/pydantic/pydantic/issues/11250 for more context.
 if _compat.PYDANTIC_V1:
+    footer_item.FooterItem.update_forward_refs()  # type: ignore
+    header_item.HeaderItem.update_forward_refs()  # type: ignore
     list_item.ListItem.update_forward_refs()  # type: ignore
     parsing_get_response.ParsingGetResponse.update_forward_refs()  # type: ignore
     metadata_filters.MetadataFilters.update_forward_refs()  # type: ignore
@@ -170,6 +182,8 @@ if _compat.PYDANTIC_V1:
     retriever.Retriever.update_forward_refs()  # type: ignore
     retriever_pipeline.RetrieverPipeline.update_forward_refs()  # type: ignore
 else:
+    footer_item.FooterItem.model_rebuild(_parent_namespace_depth=0)
+    header_item.HeaderItem.model_rebuild(_parent_namespace_depth=0)
     list_item.ListItem.model_rebuild(_parent_namespace_depth=0)
     parsing_get_response.ParsingGetResponse.model_rebuild(_parent_namespace_depth=0)
     metadata_filters.MetadataFilters.model_rebuild(_parent_namespace_depth=0)
