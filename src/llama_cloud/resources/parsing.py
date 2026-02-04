@@ -473,6 +473,8 @@ class ParsingResource(SyncAPIResource):
             print(result.markdown)
             ```
         """
+        if isinstance(expand, Omit) or (not isinstance(expand, Omit) and len(expand) == 0):
+            raise ValueError("You should provide a non-empty sequence for the `expand` parameter")
         # Create the parsing job
         job = self.create(
             tier=tier,
@@ -1090,6 +1092,8 @@ class AsyncParsingResource(AsyncAPIResource):
             print(result.markdown)
             ```
         """
+        if isinstance(expand, Omit) or (not isinstance(expand, Omit) and len(expand) == 0):
+            raise ValueError("You should provide a non-empty sequence for the `expand` parameter")
         # Create the parsing job
         job = await self.create(
             tier=tier,
