@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.3.0 (2026-02-04)
+
+Full Changelog: [v1.2.0...v1.3.0](https://github.com/run-llama/llama-cloud-py/compare/v1.2.0...v1.3.0)
+
+### Features
+
+* **api:** api update ([39e243f](https://github.com/run-llama/llama-cloud-py/commit/39e243f710d7bdf60e8ab877ab12fcb69385f292))
+* **api:** manual updates ([5a1a439](https://github.com/run-llama/llama-cloud-py/commit/5a1a4395a12fc5636503c5cd545feac413572661))
+
+
+### Bug Fixes
+
+* throw error on empty expand parameter in e2e parse method ([02fbe93](https://github.com/run-llama/llama-cloud-py/commit/02fbe933b1182ab24811b96d4047033afbd377af))
+
 ## 1.2.0 (2026-01-30)
 
 Full Changelog: [v1.1.0...v1.2.0](https://github.com/run-llama/llama-cloud-py/compare/v1.1.0...v1.2.0)
