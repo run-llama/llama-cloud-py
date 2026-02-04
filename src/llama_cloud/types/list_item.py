@@ -8,28 +8,14 @@ from typing_extensions import Literal, TypeAlias, TypeAliasType
 from .b_box import BBox
 from .._compat import PYDANTIC_V1
 from .._models import BaseModel
+from .text_item import TextItem
 
-__all__ = ["ListItem", "Item", "ItemTextItem"]
-
-
-class ItemTextItem(BaseModel):
-    md: str
-    """Markdown representation preserving formatting"""
-
-    value: str
-    """Text content"""
-
-    bbox: Optional[List[BBox]] = None
-    """List of bounding boxes"""
-
-    type: Optional[Literal["text"]] = None
-    """Text item type"""
-
+__all__ = ["ListItem", "Item"]
 
 if TYPE_CHECKING or not PYDANTIC_V1:
-    Item = TypeAliasType("Item", Union[ItemTextItem, "ListItem"])
+    Item = TypeAliasType("Item", Union[TextItem, "ListItem"])
 else:
-    Item: TypeAlias = Union[ItemTextItem, "ListItem"]
+    Item: TypeAlias = Union[TextItem, "ListItem"]
 
 
 class ListItem(BaseModel):

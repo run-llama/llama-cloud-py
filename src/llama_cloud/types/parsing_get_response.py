@@ -6,9 +6,14 @@ from typing import Dict, List, Union, Optional
 from datetime import datetime
 from typing_extensions import Literal, Annotated, TypeAlias
 
-from .b_box import BBox
 from .._utils import PropertyInfo
 from .._models import BaseModel
+from .code_item import CodeItem
+from .link_item import LinkItem
+from .text_item import TextItem
+from .image_item import ImageItem
+from .table_item import TableItem
+from .heading_item import HeadingItem
 
 __all__ = [
     "ParsingGetResponse",
@@ -19,12 +24,6 @@ __all__ = [
     "ItemsPage",
     "ItemsPageStructuredResultPage",
     "ItemsPageStructuredResultPageItem",
-    "ItemsPageStructuredResultPageItemTextItem",
-    "ItemsPageStructuredResultPageItemHeadingItem",
-    "ItemsPageStructuredResultPageItemCodeItem",
-    "ItemsPageStructuredResultPageItemTableItem",
-    "ItemsPageStructuredResultPageItemImageItem",
-    "ItemsPageStructuredResultPageItemLinkItem",
     "ItemsPageFailedStructuredPage",
     "Markdown",
     "MarkdownPage",
@@ -94,130 +93,8 @@ class ImagesContentMetadata(BaseModel):
     """Total number of extracted images"""
 
 
-class ItemsPageStructuredResultPageItemTextItem(BaseModel):
-    md: str
-    """Markdown representation preserving formatting"""
-
-    value: str
-    """Text content"""
-
-    bbox: Optional[List[BBox]] = None
-    """List of bounding boxes"""
-
-    type: Optional[Literal["text"]] = None
-    """Text item type"""
-
-
-class ItemsPageStructuredResultPageItemHeadingItem(BaseModel):
-    level: int
-    """Heading level (1-6)"""
-
-    md: str
-    """Markdown representation preserving formatting"""
-
-    value: str
-    """Heading text content"""
-
-    bbox: Optional[List[BBox]] = None
-    """List of bounding boxes"""
-
-    type: Optional[Literal["heading"]] = None
-    """Heading item type"""
-
-
-class ItemsPageStructuredResultPageItemCodeItem(BaseModel):
-    md: str
-    """Markdown representation preserving formatting"""
-
-    value: str
-    """Code content"""
-
-    bbox: Optional[List[BBox]] = None
-    """List of bounding boxes"""
-
-    language: Optional[str] = None
-    """Programming language identifier"""
-
-    type: Optional[Literal["code"]] = None
-    """Code block item type"""
-
-
-class ItemsPageStructuredResultPageItemTableItem(BaseModel):
-    csv: str
-    """CSV representation of the table"""
-
-    html: str
-    """HTML representation of the table"""
-
-    md: str
-    """Markdown representation preserving formatting"""
-
-    rows: List[List[Union[str, float, None]]]
-    """Table data as array of arrays (string, number, or null)"""
-
-    bbox: Optional[List[BBox]] = None
-    """List of bounding boxes"""
-
-    merged_from_pages: Optional[List[int]] = None
-    """
-    List of page numbers with tables that were merged into this table (e.g., [1, 2,
-    3, 4])
-    """
-
-    merged_into_page: Optional[int] = None
-    """Populated when merged into another table.
-
-    Page number where the full merged table begins (used on empty tables).
-    """
-
-    type: Optional[Literal["table"]] = None
-    """Table item type"""
-
-
-class ItemsPageStructuredResultPageItemImageItem(BaseModel):
-    caption: str
-    """Image caption"""
-
-    md: str
-    """Markdown representation preserving formatting"""
-
-    url: str
-    """URL to the image"""
-
-    bbox: Optional[List[BBox]] = None
-    """List of bounding boxes"""
-
-    type: Optional[Literal["image"]] = None
-    """Image item type"""
-
-
-class ItemsPageStructuredResultPageItemLinkItem(BaseModel):
-    md: str
-    """Markdown representation preserving formatting"""
-
-    text: str
-    """Display text of the link"""
-
-    url: str
-    """URL of the link"""
-
-    bbox: Optional[List[BBox]] = None
-    """List of bounding boxes"""
-
-    type: Optional[Literal["link"]] = None
-    """Link item type"""
-
-
 ItemsPageStructuredResultPageItem: TypeAlias = Annotated[
-    Union[
-        ItemsPageStructuredResultPageItemTextItem,
-        ItemsPageStructuredResultPageItemHeadingItem,
-        "ListItem",
-        ItemsPageStructuredResultPageItemCodeItem,
-        ItemsPageStructuredResultPageItemTableItem,
-        ItemsPageStructuredResultPageItemImageItem,
-        ItemsPageStructuredResultPageItemLinkItem,
-    ],
+    Union[TextItem, HeadingItem, "ListItem", CodeItem, TableItem, ImageItem, LinkItem, "HeaderItem", "FooterItem"],
     PropertyInfo(discriminator="type"),
 ]
 
@@ -235,7 +112,7 @@ class ItemsPageStructuredResultPage(BaseModel):
     page_width: float
     """Width of the page in points"""
 
-    success: Optional[Literal[True]] = None
+    success: Literal[True]
     """Success indicator"""
 
 
@@ -246,7 +123,7 @@ class ItemsPageFailedStructuredPage(BaseModel):
     page_number: int
     """Page number of the document"""
 
-    success: Optional[bool] = None
+    success: bool
     """Failure indicator"""
 
 
@@ -267,8 +144,14 @@ class MarkdownPageMarkdownResultPage(BaseModel):
     page_number: int
     """Page number of the document"""
 
-    success: Optional[Literal[True]] = None
+    success: Literal[True]
     """Success indicator"""
+
+    footer: Optional[str] = None
+    """Footer of the page in markdown"""
+
+    header: Optional[str] = None
+    """Header of the page in markdown"""
 
 
 class MarkdownPageFailedMarkdownPage(BaseModel):
@@ -278,7 +161,7 @@ class MarkdownPageFailedMarkdownPage(BaseModel):
     page_number: int
     """Page number of the document"""
 
-    success: Optional[bool] = None
+    success: bool
     """Failure indicator"""
 
 
@@ -385,5 +268,10 @@ class ParsingGetResponse(BaseModel):
     text: Optional[Text] = None
     """Plain text result (if requested)"""
 
+    text_full: Optional[str] = None
+    """Full raw text content (if requested)"""
+
 
 from .list_item import ListItem
+from .footer_item import FooterItem
+from .header_item import HeaderItem
