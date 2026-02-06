@@ -123,7 +123,7 @@ class ItemsPageFailedStructuredPage(BaseModel):
     page_number: int
     """Page number of the document"""
 
-    success: bool
+    success: Literal[False]
     """Failure indicator"""
 
 
@@ -161,7 +161,7 @@ class MarkdownPageFailedMarkdownPage(BaseModel):
     page_number: int
     """Page number of the document"""
 
-    success: bool
+    success: Literal[False]
     """Failure indicator"""
 
 
