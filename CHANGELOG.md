@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.4.0 (2026-02-06)
+
+Full Changelog: [v1.3.0...v1.4.0](https://github.com/run-llama/llama-cloud-py/compare/v1.3.0...v1.4.0)
+
+### Features
+
+* **api:** api update ([ba237e3](https://github.com/run-llama/llama-cloud-py/commit/ba237e3f1c2510c6af462f06f84c3184091a9c8b))
+
+
+### Bug Fixes
+
+* **types:** correctly define false enum ([9c9182f](https://github.com/run-llama/llama-cloud-py/commit/9c9182fa746a5811bc4d4e83e2a0ed633e83c597))
+
 ## 1.3.0 (2026-02-04)
 
 Full Changelog: [v1.2.0...v1.3.0](https://github.com/run-llama/llama-cloud-py/compare/v1.2.0...v1.3.0)
