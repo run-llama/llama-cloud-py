@@ -164,13 +164,13 @@ class BatchResource(SyncAPIResource):
         Args:
           directory_id: Filter by directory ID
 
-          job_type: Type of batch processing operation.
+          job_type: Filter by job type (PARSE, EXTRACT, CLASSIFY)
 
           limit: Maximum number of jobs to return
 
           offset: Number of jobs to skip for pagination
 
-          status: Status of a batch processing job.
+          status: Filter by job status (PENDING, RUNNING, COMPLETED, FAILED, CANCELLED)
 
           extra_headers: Send extra headers
 
@@ -434,13 +434,13 @@ class AsyncBatchResource(AsyncAPIResource):
         Args:
           directory_id: Filter by directory ID
 
-          job_type: Type of batch processing operation.
+          job_type: Filter by job type (PARSE, EXTRACT, CLASSIFY)
 
           limit: Maximum number of jobs to return
 
           offset: Number of jobs to skip for pagination
 
-          status: Status of a batch processing job.
+          status: Filter by job status (PENDING, RUNNING, COMPLETED, FAILED, CANCELLED)
 
           extra_headers: Send extra headers
 

@@ -10,7 +10,7 @@ __all__ = ["JobItemGetProcessingResultsParams"]
 
 class JobItemGetProcessingResultsParams(TypedDict, total=False):
     job_type: Optional[Literal["parse", "extract", "classify"]]
-    """Type of batch processing operation."""
+    """Filter results by job type"""
 
     organization_id: Optional[str]
 
