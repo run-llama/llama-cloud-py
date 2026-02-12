@@ -74,7 +74,7 @@ class JobItemsResource(SyncAPIResource):
 
           offset: Number of items to skip
 
-          status: Status of an individual file in a batch job.
+          status: Filter items by status
 
           extra_headers: Send extra headers
 
@@ -131,7 +131,7 @@ class JobItemsResource(SyncAPIResource):
         by job type to see only specific processing operations.
 
         Args:
-          job_type: Type of batch processing operation.
+          job_type: Filter results by job type
 
           extra_headers: Send extra headers
 
@@ -211,7 +211,7 @@ class AsyncJobItemsResource(AsyncAPIResource):
 
           offset: Number of items to skip
 
-          status: Status of an individual file in a batch job.
+          status: Filter items by status
 
           extra_headers: Send extra headers
 
@@ -268,7 +268,7 @@ class AsyncJobItemsResource(AsyncAPIResource):
         by job type to see only specific processing operations.
 
         Args:
-          job_type: Type of batch processing operation.
+          job_type: Filter results by job type
 
           extra_headers: Send extra headers
 

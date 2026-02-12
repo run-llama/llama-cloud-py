@@ -13,7 +13,7 @@ class BatchListParams(TypedDict, total=False):
     """Filter by directory ID"""
 
     job_type: Optional[Literal["parse", "extract", "classify"]]
-    """Type of batch processing operation."""
+    """Filter by job type (PARSE, EXTRACT, CLASSIFY)"""
 
     limit: int
     """Maximum number of jobs to return"""
@@ -26,4 +26,4 @@ class BatchListParams(TypedDict, total=False):
     project_id: Optional[str]
 
     status: Optional[Literal["pending", "running", "dispatched", "completed", "failed", "cancelled"]]
-    """Status of a batch processing job."""
+    """Filter by job status (PENDING, RUNNING, COMPLETED, FAILED, CANCELLED)"""

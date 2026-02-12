@@ -20,4 +20,4 @@ class JobItemListParams(TypedDict, total=False):
     project_id: Optional[str]
 
     status: Optional[Literal["pending", "processing", "completed", "failed", "skipped", "cancelled"]]
-    """Status of an individual file in a batch job."""
+    """Filter items by status"""
