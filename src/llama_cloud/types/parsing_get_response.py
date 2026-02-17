@@ -262,6 +262,8 @@ class ParsingGetResponse(BaseModel):
     metadata: Optional[Metadata] = None
     """Result containing metadata (page level and general) for the parsed document."""
 
+    raw_parameters: Optional[Dict[str, object]] = None
+
     result_content_metadata: Optional[Dict[str, ResultContentMetadata]] = None
     """Metadata including size, existence, and presigned URLs for result files"""
 

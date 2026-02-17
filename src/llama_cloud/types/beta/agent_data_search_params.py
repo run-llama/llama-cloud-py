@@ -58,6 +58,8 @@ class Filter(TypedDict, total=False):
 
     eq: Annotated[Union[float, str, Union[str, datetime], None], PropertyInfo(format="iso8601")]
 
+    excludes: Annotated[SequenceNotStr[Union[float, str, Union[str, datetime], None]], PropertyInfo(format="iso8601")]
+
     gt: Annotated[Union[float, str, Union[str, datetime], None], PropertyInfo(format="iso8601")]
 
     gte: Annotated[Union[float, str, Union[str, datetime], None], PropertyInfo(format="iso8601")]
@@ -67,3 +69,5 @@ class Filter(TypedDict, total=False):
     lt: Annotated[Union[float, str, Union[str, datetime], None], PropertyInfo(format="iso8601")]
 
     lte: Annotated[Union[float, str, Union[str, datetime], None], PropertyInfo(format="iso8601")]
+
+    ne: Annotated[Union[float, str, Union[str, datetime], None], PropertyInfo(format="iso8601")]

@@ -46,15 +46,18 @@ class ParsingCreateParams(TypedDict, total=False):
     version: Required[
         Union[
             Literal[
-                "2026-01-08",
-                "2025-12-31",
-                "2025-12-18",
                 "2025-12-11",
+                "2025-12-18",
+                "2025-12-31",
+                "2026-01-08",
+                "2026-01-09",
                 "2026-01-16",
                 "2026-01-21",
                 "2026-01-22",
                 "2026-01-24",
                 "2026-01-29",
+                "2026-01-30",
+                "2026-02-03",
                 "latest",
             ],
             str,
@@ -163,6 +166,9 @@ class InputOptionsSpreadsheet(TypedDict, total=False):
 
     force_formula_computation_in_sheets: Optional[bool]
     """Force re-computation of spreadsheet cells containing formulas"""
+
+    include_hidden_sheets: Optional[bool]
+    """Include hidden sheets when parsing spreadsheet files"""
 
 
 class InputOptions(TypedDict, total=False):
@@ -402,15 +408,18 @@ class ProcessingOptionsAutoModeConfigurationParsingConf(TypedDict, total=False):
 
     version: Union[
         Literal[
-            "2026-01-08",
-            "2025-12-31",
-            "2025-12-18",
             "2025-12-11",
+            "2025-12-18",
+            "2025-12-31",
+            "2026-01-08",
+            "2026-01-09",
             "2026-01-16",
             "2026-01-21",
             "2026-01-22",
             "2026-01-24",
             "2026-01-29",
+            "2026-01-30",
+            "2026-02-03",
             "latest",
         ],
         str,

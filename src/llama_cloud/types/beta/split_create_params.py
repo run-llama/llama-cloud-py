@@ -13,7 +13,7 @@ __all__ = ["SplitCreateParams", "SplittingStrategy"]
 
 class SplitCreateParams(TypedDict, total=False):
     categories: Required[Iterable[SplitCategoryParam]]
-    """Categories to split the document into."""
+    """Categories to split documents into."""
 
     document_input: Required[SplitDocumentInputParam]
     """Document to be split."""
@@ -23,11 +23,11 @@ class SplitCreateParams(TypedDict, total=False):
     project_id: Optional[str]
 
     splitting_strategy: SplittingStrategy
-    """Strategy for splitting the document."""
+    """Strategy for splitting documents."""
 
 
 class SplittingStrategy(TypedDict, total=False):
-    """Strategy for splitting the document."""
+    """Strategy for splitting documents."""
 
     allow_uncategorized: bool
     """

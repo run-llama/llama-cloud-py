@@ -259,6 +259,8 @@ class ProcessingResultJobConfigBatchParseJobRecordCreateParameters(BaseModel):
 
     spreadsheet_force_formula_computation: Optional[bool] = None
 
+    spreadsheet_include_hidden_sheets: Optional[bool] = None
+
     strict_mode_buggy_font: Optional[bool] = None
 
     strict_mode_image_extraction: Optional[bool] = None

@@ -219,7 +219,7 @@ client = LlamaCloud()
 
 parsing = client.parsing.create(
     tier="fast",
-    version="2026-01-08",
+    version="2025-12-11",
     agentic_options={},
 )
 print(parsing.agentic_options)

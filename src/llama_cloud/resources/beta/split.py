@@ -69,11 +69,11 @@ class SplitResource(SyncAPIResource):
         production use and is subject to change at any time.
 
         Args:
-          categories: Categories to split the document into.
+          categories: Categories to split documents into.
 
           document_input: Document to be split.
 
-          splitting_strategy: Strategy for splitting the document.
+          splitting_strategy: Strategy for splitting documents.
 
           extra_headers: Send extra headers
 
@@ -248,11 +248,11 @@ class AsyncSplitResource(AsyncAPIResource):
         production use and is subject to change at any time.
 
         Args:
-          categories: Categories to split the document into.
+          categories: Categories to split documents into.
 
           document_input: Document to be split.
 
-          splitting_strategy: Strategy for splitting the document.
+          splitting_strategy: Strategy for splitting documents.
 
           extra_headers: Send extra headers
 

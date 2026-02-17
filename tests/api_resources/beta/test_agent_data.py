@@ -201,11 +201,13 @@ class TestAgentData:
             filter={
                 "foo": {
                     "eq": 0,
+                    "excludes": [0],
                     "gt": 0,
                     "gte": 0,
                     "includes": [0],
                     "lt": 0,
                     "lte": 0,
+                    "ne": 0,
                 }
             },
             first=True,
@@ -262,11 +264,13 @@ class TestAgentData:
             filter={
                 "foo": {
                     "eq": 0,
+                    "excludes": [0],
                     "gt": 0,
                     "gte": 0,
                     "includes": [0],
                     "lt": 0,
                     "lte": 0,
+                    "ne": 0,
                 }
             },
         )
@@ -369,11 +373,13 @@ class TestAgentData:
             filter={
                 "foo": {
                     "eq": 0,
+                    "excludes": [0],
                     "gt": 0,
                     "gte": 0,
                     "includes": [0],
                     "lt": 0,
                     "lte": 0,
+                    "ne": 0,
                 }
             },
             include_total=True,
@@ -594,11 +600,13 @@ class TestAsyncAgentData:
             filter={
                 "foo": {
                     "eq": 0,
+                    "excludes": [0],
                     "gt": 0,
                     "gte": 0,
                     "includes": [0],
                     "lt": 0,
                     "lte": 0,
+                    "ne": 0,
                 }
             },
             first=True,
@@ -655,11 +663,13 @@ class TestAsyncAgentData:
             filter={
                 "foo": {
                     "eq": 0,
+                    "excludes": [0],
                     "gt": 0,
                     "gte": 0,
                     "includes": [0],
                     "lt": 0,
                     "lte": 0,
+                    "ne": 0,
                 }
             },
         )
@@ -762,11 +772,13 @@ class TestAsyncAgentData:
             filter={
                 "foo": {
                     "eq": 0,
+                    "excludes": [0],
                     "gt": 0,
                     "gte": 0,
                     "includes": [0],
                     "lt": 0,
                     "lte": 0,
+                    "ne": 0,
                 }
             },
             include_total=True,
