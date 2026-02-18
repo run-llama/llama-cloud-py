@@ -12,6 +12,7 @@ P = ParamSpec("P")
 T = TypeVar("T")
 logger = getLogger(__name__)
 
+DEFAULT_TIMEOUT = 60.0 * 60.0 * 2.0  # 2 hours
 BackoffStrategy = Literal["constant", "linear", "exponential"]
 
 
@@ -51,7 +52,7 @@ def poll_until_complete(
     *,
     polling_interval: float = 1.0,
     max_interval: float = 5.0,
-    timeout: float = 2000.0,
+    timeout: float = DEFAULT_TIMEOUT,
     backoff: BackoffStrategy = "linear",
     verbose: bool = False,
 ) -> T:
@@ -119,7 +120,7 @@ async def poll_until_complete_async(
     *,
     polling_interval: float = 1.0,
     max_interval: float = 5.0,
-    timeout: float = 2000.0,
+    timeout: float = DEFAULT_TIMEOUT,
     backoff: BackoffStrategy = "linear",
     verbose: bool = False,
 ) -> T:

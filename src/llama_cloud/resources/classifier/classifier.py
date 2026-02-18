@@ -15,6 +15,7 @@ from .jobs import (
 from ..._types import Body, Omit, Query, Headers, SequenceNotStr, omit
 from ..._compat import cached_property
 from ..._polling import (
+    DEFAULT_TIMEOUT,
     BackoffStrategy,
     poll_until_complete,
     poll_until_complete_async,
@@ -41,7 +42,7 @@ class ClassifierResource(SyncAPIResource):
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
-        timeout: float = 300.0,
+        timeout: float = DEFAULT_TIMEOUT,
         backoff: BackoffStrategy = "linear",
         verbose: bool = False,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -163,7 +164,7 @@ class ClassifierResource(SyncAPIResource):
         project_id: Optional[str] | Omit = omit,
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
-        timeout: float = 300.0,
+        timeout: float = DEFAULT_TIMEOUT,
         backoff: BackoffStrategy = "linear",
         verbose: bool = False,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -326,7 +327,7 @@ class AsyncClassifierResource(AsyncAPIResource):
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
-        timeout: float = 300.0,
+        timeout: float = DEFAULT_TIMEOUT,
         backoff: BackoffStrategy = "linear",
         verbose: bool = False,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -448,7 +449,7 @@ class AsyncClassifierResource(AsyncAPIResource):
         project_id: Optional[str] | Omit = omit,
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
-        timeout: float = 300.0,
+        timeout: float = DEFAULT_TIMEOUT,
         backoff: BackoffStrategy = "linear",
         verbose: bool = False,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.

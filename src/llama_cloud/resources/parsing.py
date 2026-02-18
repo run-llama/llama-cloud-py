@@ -13,7 +13,7 @@ from .._files import to_httpx_files, async_to_httpx_files
 from .._types import Body, Omit, Query, Headers, NotGiven, FileTypes, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
-from .._polling import BackoffStrategy, poll_until_complete, poll_until_complete_async
+from .._polling import DEFAULT_TIMEOUT, BackoffStrategy, poll_until_complete, poll_until_complete_async
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
     to_raw_response_wrapper,
@@ -365,7 +365,7 @@ class ParsingResource(SyncAPIResource):
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
-        timeout: float = 300.0,
+        timeout: float = DEFAULT_TIMEOUT,
         backoff: BackoffStrategy = "linear",
         verbose: bool = False,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -536,7 +536,7 @@ class ParsingResource(SyncAPIResource):
         project_id: Optional[str] | Omit = omit,
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
-        timeout: float = 300.0,
+        timeout: float = DEFAULT_TIMEOUT,
         backoff: BackoffStrategy = "linear",
         verbose: bool = False,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -984,7 +984,7 @@ class AsyncParsingResource(AsyncAPIResource):
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
-        timeout: float = 300.0,
+        timeout: float = DEFAULT_TIMEOUT,
         backoff: BackoffStrategy = "linear",
         verbose: bool = False,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -1155,7 +1155,7 @@ class AsyncParsingResource(AsyncAPIResource):
         project_id: Optional[str] | Omit = omit,
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
-        timeout: float = 300.0,
+        timeout: float = DEFAULT_TIMEOUT,
         backoff: BackoffStrategy = "linear",
         verbose: bool = False,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.

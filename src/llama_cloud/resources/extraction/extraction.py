@@ -26,7 +26,7 @@ from ...types import extraction_run_params
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
-from ..._polling import BackoffStrategy
+from ..._polling import DEFAULT_TIMEOUT, BackoffStrategy
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
     to_raw_response_wrapper,
@@ -170,7 +170,7 @@ class ExtractionResource(SyncAPIResource):
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
-        timeout: float = 2000.0,
+        timeout: float = DEFAULT_TIMEOUT,
         backoff: BackoffStrategy = "linear",
         verbose: bool = False,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -407,7 +407,7 @@ class AsyncExtractionResource(AsyncAPIResource):
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
-        timeout: float = 2000.0,
+        timeout: float = DEFAULT_TIMEOUT,
         backoff: BackoffStrategy = "linear",
         verbose: bool = False,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.

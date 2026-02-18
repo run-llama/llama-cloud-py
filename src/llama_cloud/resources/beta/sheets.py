@@ -11,6 +11,7 @@ from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._polling import (
+    DEFAULT_TIMEOUT,
     BackoffStrategy,
     poll_until_complete,
     poll_until_complete_async,
@@ -68,7 +69,7 @@ class SheetsResource(SyncAPIResource):
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
-        timeout: float = 300.0,
+        timeout: float = DEFAULT_TIMEOUT,
         backoff: BackoffStrategy = "linear",
         verbose: bool = False,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -170,7 +171,7 @@ class SheetsResource(SyncAPIResource):
         project_id: Optional[str] | Omit = omit,
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
-        timeout: float = 300.0,
+        timeout: float = DEFAULT_TIMEOUT,
         backoff: BackoffStrategy = "linear",
         verbose: bool = False,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -572,7 +573,7 @@ class AsyncSheetsResource(AsyncAPIResource):
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
-        timeout: float = 300.0,
+        timeout: float = DEFAULT_TIMEOUT,
         backoff: BackoffStrategy = "linear",
         verbose: bool = False,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -674,7 +675,7 @@ class AsyncSheetsResource(AsyncAPIResource):
         project_id: Optional[str] | Omit = omit,
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
-        timeout: float = 300.0,
+        timeout: float = DEFAULT_TIMEOUT,
         backoff: BackoffStrategy = "linear",
         verbose: bool = False,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
