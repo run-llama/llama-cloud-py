@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.4.1 (2026-02-18)
+
+Full Changelog: [v1.4.0...v1.4.1](https://github.com/run-llama/llama-cloud-py/compare/v1.4.0...v1.4.1)
+
+### Chores
+
+* format all `api.md` files ([32fcd56](https://github.com/run-llama/llama-cloud-py/commit/32fcd56e165cc69515a851fc50b99b429593751e))
+* **internal:** fix lint error on Python 3.14 ([5db45de](https://github.com/run-llama/llama-cloud-py/commit/5db45decf8c416919e3a27f4c146ad791e43f9bb))
+
 ## 1.4.0 (2026-02-12)
 
 Full Changelog: [v1.3.0...v1.4.0](https://github.com/run-llama/llama-cloud-py/compare/v1.3.0...v1.4.0)
