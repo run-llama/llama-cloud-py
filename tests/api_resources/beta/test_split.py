@@ -22,7 +22,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestSplit:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create(self, client: LlamaCloud) -> None:
         split = client.beta.split.create(
@@ -34,7 +34,7 @@ class TestSplit:
         )
         assert_matches_type(SplitCreateResponse, split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
         split = client.beta.split.create(
@@ -54,7 +54,7 @@ class TestSplit:
         )
         assert_matches_type(SplitCreateResponse, split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: LlamaCloud) -> None:
         response = client.beta.split.with_raw_response.create(
@@ -70,7 +70,7 @@ class TestSplit:
         split = response.parse()
         assert_matches_type(SplitCreateResponse, split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
         with client.beta.split.with_streaming_response.create(
@@ -88,13 +88,13 @@ class TestSplit:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: LlamaCloud) -> None:
         split = client.beta.split.list()
         assert_matches_type(SyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         split = client.beta.split.list(
@@ -105,7 +105,7 @@ class TestSplit:
         )
         assert_matches_type(SyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: LlamaCloud) -> None:
         response = client.beta.split.with_raw_response.list()
@@ -115,7 +115,7 @@ class TestSplit:
         split = response.parse()
         assert_matches_type(SyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: LlamaCloud) -> None:
         with client.beta.split.with_streaming_response.list() as response:
@@ -127,7 +127,7 @@ class TestSplit:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get(self, client: LlamaCloud) -> None:
         split = client.beta.split.get(
@@ -135,7 +135,7 @@ class TestSplit:
         )
         assert_matches_type(SplitGetResponse, split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_with_all_params(self, client: LlamaCloud) -> None:
         split = client.beta.split.get(
@@ -145,7 +145,7 @@ class TestSplit:
         )
         assert_matches_type(SplitGetResponse, split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get(self, client: LlamaCloud) -> None:
         response = client.beta.split.with_raw_response.get(
@@ -157,7 +157,7 @@ class TestSplit:
         split = response.parse()
         assert_matches_type(SplitGetResponse, split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get(self, client: LlamaCloud) -> None:
         with client.beta.split.with_streaming_response.get(
@@ -171,7 +171,7 @@ class TestSplit:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_get(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `split_job_id` but received ''"):
@@ -185,7 +185,7 @@ class TestAsyncSplit:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
         split = await async_client.beta.split.create(
@@ -197,7 +197,7 @@ class TestAsyncSplit:
         )
         assert_matches_type(SplitCreateResponse, split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         split = await async_client.beta.split.create(
@@ -217,7 +217,7 @@ class TestAsyncSplit:
         )
         assert_matches_type(SplitCreateResponse, split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.split.with_raw_response.create(
@@ -233,7 +233,7 @@ class TestAsyncSplit:
         split = await response.parse()
         assert_matches_type(SplitCreateResponse, split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.split.with_streaming_response.create(
@@ -251,13 +251,13 @@ class TestAsyncSplit:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloud) -> None:
         split = await async_client.beta.split.list()
         assert_matches_type(AsyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         split = await async_client.beta.split.list(
@@ -268,7 +268,7 @@ class TestAsyncSplit:
         )
         assert_matches_type(AsyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.split.with_raw_response.list()
@@ -278,7 +278,7 @@ class TestAsyncSplit:
         split = await response.parse()
         assert_matches_type(AsyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.split.with_streaming_response.list() as response:
@@ -290,7 +290,7 @@ class TestAsyncSplit:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get(self, async_client: AsyncLlamaCloud) -> None:
         split = await async_client.beta.split.get(
@@ -298,7 +298,7 @@ class TestAsyncSplit:
         )
         assert_matches_type(SplitGetResponse, split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         split = await async_client.beta.split.get(
@@ -308,7 +308,7 @@ class TestAsyncSplit:
         )
         assert_matches_type(SplitGetResponse, split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.split.with_raw_response.get(
@@ -320,7 +320,7 @@ class TestAsyncSplit:
         split = await response.parse()
         assert_matches_type(SplitGetResponse, split, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.split.with_streaming_response.get(
@@ -334,7 +334,7 @@ class TestAsyncSplit:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_get(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `split_job_id` but received ''"):

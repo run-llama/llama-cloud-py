@@ -20,13 +20,13 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestSchema:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_generate_schema(self, client: LlamaCloud) -> None:
         schema = client.extraction.extraction_agents.schema.generate_schema()
         assert_matches_type(SchemaGenerateSchemaResponse, schema, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_generate_schema_with_all_params(self, client: LlamaCloud) -> None:
         schema = client.extraction.extraction_agents.schema.generate_schema(
@@ -38,7 +38,7 @@ class TestSchema:
         )
         assert_matches_type(SchemaGenerateSchemaResponse, schema, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_generate_schema(self, client: LlamaCloud) -> None:
         response = client.extraction.extraction_agents.schema.with_raw_response.generate_schema()
@@ -48,7 +48,7 @@ class TestSchema:
         schema = response.parse()
         assert_matches_type(SchemaGenerateSchemaResponse, schema, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_generate_schema(self, client: LlamaCloud) -> None:
         with client.extraction.extraction_agents.schema.with_streaming_response.generate_schema() as response:
@@ -60,7 +60,7 @@ class TestSchema:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_validate_schema(self, client: LlamaCloud) -> None:
         schema = client.extraction.extraction_agents.schema.validate_schema(
@@ -68,7 +68,7 @@ class TestSchema:
         )
         assert_matches_type(SchemaValidateSchemaResponse, schema, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_validate_schema(self, client: LlamaCloud) -> None:
         response = client.extraction.extraction_agents.schema.with_raw_response.validate_schema(
@@ -80,7 +80,7 @@ class TestSchema:
         schema = response.parse()
         assert_matches_type(SchemaValidateSchemaResponse, schema, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_validate_schema(self, client: LlamaCloud) -> None:
         with client.extraction.extraction_agents.schema.with_streaming_response.validate_schema(
@@ -100,13 +100,13 @@ class TestAsyncSchema:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_generate_schema(self, async_client: AsyncLlamaCloud) -> None:
         schema = await async_client.extraction.extraction_agents.schema.generate_schema()
         assert_matches_type(SchemaGenerateSchemaResponse, schema, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_generate_schema_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         schema = await async_client.extraction.extraction_agents.schema.generate_schema(
@@ -118,7 +118,7 @@ class TestAsyncSchema:
         )
         assert_matches_type(SchemaGenerateSchemaResponse, schema, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_generate_schema(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.extraction.extraction_agents.schema.with_raw_response.generate_schema()
@@ -128,7 +128,7 @@ class TestAsyncSchema:
         schema = await response.parse()
         assert_matches_type(SchemaGenerateSchemaResponse, schema, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_generate_schema(self, async_client: AsyncLlamaCloud) -> None:
         async with (
@@ -142,7 +142,7 @@ class TestAsyncSchema:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_validate_schema(self, async_client: AsyncLlamaCloud) -> None:
         schema = await async_client.extraction.extraction_agents.schema.validate_schema(
@@ -150,7 +150,7 @@ class TestAsyncSchema:
         )
         assert_matches_type(SchemaValidateSchemaResponse, schema, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_validate_schema(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.extraction.extraction_agents.schema.with_raw_response.validate_schema(
@@ -162,7 +162,7 @@ class TestAsyncSchema:
         schema = await response.parse()
         assert_matches_type(SchemaValidateSchemaResponse, schema, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_validate_schema(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.extraction.extraction_agents.schema.with_streaming_response.validate_schema(

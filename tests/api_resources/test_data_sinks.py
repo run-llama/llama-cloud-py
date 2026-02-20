@@ -20,7 +20,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestDataSinks:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create(self, client: LlamaCloud) -> None:
         data_sink = client.data_sinks.create(
@@ -30,7 +30,7 @@ class TestDataSinks:
         )
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
         data_sink = client.data_sinks.create(
@@ -42,7 +42,7 @@ class TestDataSinks:
         )
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: LlamaCloud) -> None:
         response = client.data_sinks.with_raw_response.create(
@@ -56,7 +56,7 @@ class TestDataSinks:
         data_sink = response.parse()
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
         with client.data_sinks.with_streaming_response.create(
@@ -72,7 +72,7 @@ class TestDataSinks:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update(self, client: LlamaCloud) -> None:
         data_sink = client.data_sinks.update(
@@ -81,7 +81,7 @@ class TestDataSinks:
         )
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: LlamaCloud) -> None:
         data_sink = client.data_sinks.update(
@@ -92,7 +92,7 @@ class TestDataSinks:
         )
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: LlamaCloud) -> None:
         response = client.data_sinks.with_raw_response.update(
@@ -105,7 +105,7 @@ class TestDataSinks:
         data_sink = response.parse()
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: LlamaCloud) -> None:
         with client.data_sinks.with_streaming_response.update(
@@ -120,7 +120,7 @@ class TestDataSinks:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_update(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_sink_id` but received ''"):
@@ -129,13 +129,13 @@ class TestDataSinks:
                 sink_type="PINECONE",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: LlamaCloud) -> None:
         data_sink = client.data_sinks.list()
         assert_matches_type(DataSinkListResponse, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         data_sink = client.data_sinks.list(
@@ -144,7 +144,7 @@ class TestDataSinks:
         )
         assert_matches_type(DataSinkListResponse, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: LlamaCloud) -> None:
         response = client.data_sinks.with_raw_response.list()
@@ -154,7 +154,7 @@ class TestDataSinks:
         data_sink = response.parse()
         assert_matches_type(DataSinkListResponse, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: LlamaCloud) -> None:
         with client.data_sinks.with_streaming_response.list() as response:
@@ -166,7 +166,7 @@ class TestDataSinks:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_delete(self, client: LlamaCloud) -> None:
         data_sink = client.data_sinks.delete(
@@ -174,7 +174,7 @@ class TestDataSinks:
         )
         assert data_sink is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: LlamaCloud) -> None:
         response = client.data_sinks.with_raw_response.delete(
@@ -186,7 +186,7 @@ class TestDataSinks:
         data_sink = response.parse()
         assert data_sink is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: LlamaCloud) -> None:
         with client.data_sinks.with_streaming_response.delete(
@@ -200,7 +200,7 @@ class TestDataSinks:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_sink_id` but received ''"):
@@ -208,7 +208,7 @@ class TestDataSinks:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get(self, client: LlamaCloud) -> None:
         data_sink = client.data_sinks.get(
@@ -216,7 +216,7 @@ class TestDataSinks:
         )
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get(self, client: LlamaCloud) -> None:
         response = client.data_sinks.with_raw_response.get(
@@ -228,7 +228,7 @@ class TestDataSinks:
         data_sink = response.parse()
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get(self, client: LlamaCloud) -> None:
         with client.data_sinks.with_streaming_response.get(
@@ -242,7 +242,7 @@ class TestDataSinks:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_get(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_sink_id` but received ''"):
@@ -256,7 +256,7 @@ class TestAsyncDataSinks:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
         data_sink = await async_client.data_sinks.create(
@@ -266,7 +266,7 @@ class TestAsyncDataSinks:
         )
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         data_sink = await async_client.data_sinks.create(
@@ -278,7 +278,7 @@ class TestAsyncDataSinks:
         )
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.data_sinks.with_raw_response.create(
@@ -292,7 +292,7 @@ class TestAsyncDataSinks:
         data_sink = await response.parse()
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.data_sinks.with_streaming_response.create(
@@ -308,7 +308,7 @@ class TestAsyncDataSinks:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncLlamaCloud) -> None:
         data_sink = await async_client.data_sinks.update(
@@ -317,7 +317,7 @@ class TestAsyncDataSinks:
         )
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         data_sink = await async_client.data_sinks.update(
@@ -328,7 +328,7 @@ class TestAsyncDataSinks:
         )
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.data_sinks.with_raw_response.update(
@@ -341,7 +341,7 @@ class TestAsyncDataSinks:
         data_sink = await response.parse()
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.data_sinks.with_streaming_response.update(
@@ -356,7 +356,7 @@ class TestAsyncDataSinks:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_sink_id` but received ''"):
@@ -365,13 +365,13 @@ class TestAsyncDataSinks:
                 sink_type="PINECONE",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloud) -> None:
         data_sink = await async_client.data_sinks.list()
         assert_matches_type(DataSinkListResponse, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         data_sink = await async_client.data_sinks.list(
@@ -380,7 +380,7 @@ class TestAsyncDataSinks:
         )
         assert_matches_type(DataSinkListResponse, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.data_sinks.with_raw_response.list()
@@ -390,7 +390,7 @@ class TestAsyncDataSinks:
         data_sink = await response.parse()
         assert_matches_type(DataSinkListResponse, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.data_sinks.with_streaming_response.list() as response:
@@ -402,7 +402,7 @@ class TestAsyncDataSinks:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncLlamaCloud) -> None:
         data_sink = await async_client.data_sinks.delete(
@@ -410,7 +410,7 @@ class TestAsyncDataSinks:
         )
         assert data_sink is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.data_sinks.with_raw_response.delete(
@@ -422,7 +422,7 @@ class TestAsyncDataSinks:
         data_sink = await response.parse()
         assert data_sink is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.data_sinks.with_streaming_response.delete(
@@ -436,7 +436,7 @@ class TestAsyncDataSinks:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_sink_id` but received ''"):
@@ -444,7 +444,7 @@ class TestAsyncDataSinks:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get(self, async_client: AsyncLlamaCloud) -> None:
         data_sink = await async_client.data_sinks.get(
@@ -452,7 +452,7 @@ class TestAsyncDataSinks:
         )
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.data_sinks.with_raw_response.get(
@@ -464,7 +464,7 @@ class TestAsyncDataSinks:
         data_sink = await response.parse()
         assert_matches_type(DataSink, data_sink, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.data_sinks.with_streaming_response.get(
@@ -478,7 +478,7 @@ class TestAsyncDataSinks:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_get(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `data_sink_id` but received ''"):

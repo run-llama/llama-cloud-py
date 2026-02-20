@@ -21,7 +21,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestRetrievers:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.create(
@@ -29,7 +29,7 @@ class TestRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.create(
@@ -71,7 +71,7 @@ class TestRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: LlamaCloud) -> None:
         response = client.retrievers.with_raw_response.create(
@@ -83,7 +83,7 @@ class TestRetrievers:
         retriever = response.parse()
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
         with client.retrievers.with_streaming_response.create(
@@ -97,7 +97,7 @@ class TestRetrievers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.update(
@@ -112,7 +112,7 @@ class TestRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.update(
@@ -153,7 +153,7 @@ class TestRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: LlamaCloud) -> None:
         response = client.retrievers.with_raw_response.update(
@@ -172,7 +172,7 @@ class TestRetrievers:
         retriever = response.parse()
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: LlamaCloud) -> None:
         with client.retrievers.with_streaming_response.update(
@@ -193,7 +193,7 @@ class TestRetrievers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_update(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `retriever_id` but received ''"):
@@ -208,13 +208,13 @@ class TestRetrievers:
                 ],
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.list()
         assert_matches_type(RetrieverListResponse, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.list(
@@ -224,7 +224,7 @@ class TestRetrievers:
         )
         assert_matches_type(RetrieverListResponse, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: LlamaCloud) -> None:
         response = client.retrievers.with_raw_response.list()
@@ -234,7 +234,7 @@ class TestRetrievers:
         retriever = response.parse()
         assert_matches_type(RetrieverListResponse, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: LlamaCloud) -> None:
         with client.retrievers.with_streaming_response.list() as response:
@@ -246,7 +246,7 @@ class TestRetrievers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_delete(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.delete(
@@ -254,7 +254,7 @@ class TestRetrievers:
         )
         assert retriever is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: LlamaCloud) -> None:
         response = client.retrievers.with_raw_response.delete(
@@ -266,7 +266,7 @@ class TestRetrievers:
         retriever = response.parse()
         assert retriever is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: LlamaCloud) -> None:
         with client.retrievers.with_streaming_response.delete(
@@ -280,7 +280,7 @@ class TestRetrievers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `retriever_id` but received ''"):
@@ -288,7 +288,7 @@ class TestRetrievers:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.get(
@@ -296,7 +296,7 @@ class TestRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_with_all_params(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.get(
@@ -306,7 +306,7 @@ class TestRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get(self, client: LlamaCloud) -> None:
         response = client.retrievers.with_raw_response.get(
@@ -318,7 +318,7 @@ class TestRetrievers:
         retriever = response.parse()
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get(self, client: LlamaCloud) -> None:
         with client.retrievers.with_streaming_response.get(
@@ -332,7 +332,7 @@ class TestRetrievers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_get(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `retriever_id` but received ''"):
@@ -340,7 +340,7 @@ class TestRetrievers:
                 retriever_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_search(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.search(
@@ -348,7 +348,7 @@ class TestRetrievers:
         )
         assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_search_with_all_params(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.search(
@@ -396,7 +396,7 @@ class TestRetrievers:
         )
         assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_search(self, client: LlamaCloud) -> None:
         response = client.retrievers.with_raw_response.search(
@@ -408,7 +408,7 @@ class TestRetrievers:
         retriever = response.parse()
         assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_search(self, client: LlamaCloud) -> None:
         with client.retrievers.with_streaming_response.search(
@@ -422,7 +422,7 @@ class TestRetrievers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_upsert(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.upsert(
@@ -430,7 +430,7 @@ class TestRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_upsert_with_all_params(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.upsert(
@@ -472,7 +472,7 @@ class TestRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_upsert(self, client: LlamaCloud) -> None:
         response = client.retrievers.with_raw_response.upsert(
@@ -484,7 +484,7 @@ class TestRetrievers:
         retriever = response.parse()
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_upsert(self, client: LlamaCloud) -> None:
         with client.retrievers.with_streaming_response.upsert(
@@ -504,7 +504,7 @@ class TestAsyncRetrievers:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
         retriever = await async_client.retrievers.create(
@@ -512,7 +512,7 @@ class TestAsyncRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         retriever = await async_client.retrievers.create(
@@ -554,7 +554,7 @@ class TestAsyncRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.retrievers.with_raw_response.create(
@@ -566,7 +566,7 @@ class TestAsyncRetrievers:
         retriever = await response.parse()
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.retrievers.with_streaming_response.create(
@@ -580,7 +580,7 @@ class TestAsyncRetrievers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncLlamaCloud) -> None:
         retriever = await async_client.retrievers.update(
@@ -595,7 +595,7 @@ class TestAsyncRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         retriever = await async_client.retrievers.update(
@@ -636,7 +636,7 @@ class TestAsyncRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.retrievers.with_raw_response.update(
@@ -655,7 +655,7 @@ class TestAsyncRetrievers:
         retriever = await response.parse()
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.retrievers.with_streaming_response.update(
@@ -676,7 +676,7 @@ class TestAsyncRetrievers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `retriever_id` but received ''"):
@@ -691,13 +691,13 @@ class TestAsyncRetrievers:
                 ],
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloud) -> None:
         retriever = await async_client.retrievers.list()
         assert_matches_type(RetrieverListResponse, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         retriever = await async_client.retrievers.list(
@@ -707,7 +707,7 @@ class TestAsyncRetrievers:
         )
         assert_matches_type(RetrieverListResponse, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.retrievers.with_raw_response.list()
@@ -717,7 +717,7 @@ class TestAsyncRetrievers:
         retriever = await response.parse()
         assert_matches_type(RetrieverListResponse, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.retrievers.with_streaming_response.list() as response:
@@ -729,7 +729,7 @@ class TestAsyncRetrievers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncLlamaCloud) -> None:
         retriever = await async_client.retrievers.delete(
@@ -737,7 +737,7 @@ class TestAsyncRetrievers:
         )
         assert retriever is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.retrievers.with_raw_response.delete(
@@ -749,7 +749,7 @@ class TestAsyncRetrievers:
         retriever = await response.parse()
         assert retriever is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.retrievers.with_streaming_response.delete(
@@ -763,7 +763,7 @@ class TestAsyncRetrievers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `retriever_id` but received ''"):
@@ -771,7 +771,7 @@ class TestAsyncRetrievers:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get(self, async_client: AsyncLlamaCloud) -> None:
         retriever = await async_client.retrievers.get(
@@ -779,7 +779,7 @@ class TestAsyncRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         retriever = await async_client.retrievers.get(
@@ -789,7 +789,7 @@ class TestAsyncRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.retrievers.with_raw_response.get(
@@ -801,7 +801,7 @@ class TestAsyncRetrievers:
         retriever = await response.parse()
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.retrievers.with_streaming_response.get(
@@ -815,7 +815,7 @@ class TestAsyncRetrievers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_get(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `retriever_id` but received ''"):
@@ -823,7 +823,7 @@ class TestAsyncRetrievers:
                 retriever_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_search(self, async_client: AsyncLlamaCloud) -> None:
         retriever = await async_client.retrievers.search(
@@ -831,7 +831,7 @@ class TestAsyncRetrievers:
         )
         assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_search_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         retriever = await async_client.retrievers.search(
@@ -879,7 +879,7 @@ class TestAsyncRetrievers:
         )
         assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_search(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.retrievers.with_raw_response.search(
@@ -891,7 +891,7 @@ class TestAsyncRetrievers:
         retriever = await response.parse()
         assert_matches_type(CompositeRetrievalResult, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_search(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.retrievers.with_streaming_response.search(
@@ -905,7 +905,7 @@ class TestAsyncRetrievers:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_upsert(self, async_client: AsyncLlamaCloud) -> None:
         retriever = await async_client.retrievers.upsert(
@@ -913,7 +913,7 @@ class TestAsyncRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_upsert_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         retriever = await async_client.retrievers.upsert(
@@ -955,7 +955,7 @@ class TestAsyncRetrievers:
         )
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_upsert(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.retrievers.with_raw_response.upsert(
@@ -967,7 +967,7 @@ class TestAsyncRetrievers:
         retriever = await response.parse()
         assert_matches_type(Retriever, retriever, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_upsert(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.retrievers.with_streaming_response.upsert(

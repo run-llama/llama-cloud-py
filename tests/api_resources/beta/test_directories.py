@@ -23,7 +23,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestDirectories:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create(self, client: LlamaCloud) -> None:
         directory = client.beta.directories.create(
@@ -31,7 +31,7 @@ class TestDirectories:
         )
         assert_matches_type(DirectoryCreateResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
         directory = client.beta.directories.create(
@@ -43,7 +43,7 @@ class TestDirectories:
         )
         assert_matches_type(DirectoryCreateResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: LlamaCloud) -> None:
         response = client.beta.directories.with_raw_response.create(
@@ -55,7 +55,7 @@ class TestDirectories:
         directory = response.parse()
         assert_matches_type(DirectoryCreateResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
         with client.beta.directories.with_streaming_response.create(
@@ -69,7 +69,7 @@ class TestDirectories:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update(self, client: LlamaCloud) -> None:
         directory = client.beta.directories.update(
@@ -77,7 +77,7 @@ class TestDirectories:
         )
         assert_matches_type(DirectoryUpdateResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: LlamaCloud) -> None:
         directory = client.beta.directories.update(
@@ -89,7 +89,7 @@ class TestDirectories:
         )
         assert_matches_type(DirectoryUpdateResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: LlamaCloud) -> None:
         response = client.beta.directories.with_raw_response.update(
@@ -101,7 +101,7 @@ class TestDirectories:
         directory = response.parse()
         assert_matches_type(DirectoryUpdateResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: LlamaCloud) -> None:
         with client.beta.directories.with_streaming_response.update(
@@ -115,7 +115,7 @@ class TestDirectories:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_update(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
@@ -123,13 +123,13 @@ class TestDirectories:
                 directory_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: LlamaCloud) -> None:
         directory = client.beta.directories.list()
         assert_matches_type(SyncPaginatedCursor[DirectoryListResponse], directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         directory = client.beta.directories.list(
@@ -143,7 +143,7 @@ class TestDirectories:
         )
         assert_matches_type(SyncPaginatedCursor[DirectoryListResponse], directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: LlamaCloud) -> None:
         response = client.beta.directories.with_raw_response.list()
@@ -153,7 +153,7 @@ class TestDirectories:
         directory = response.parse()
         assert_matches_type(SyncPaginatedCursor[DirectoryListResponse], directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: LlamaCloud) -> None:
         with client.beta.directories.with_streaming_response.list() as response:
@@ -165,7 +165,7 @@ class TestDirectories:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_delete(self, client: LlamaCloud) -> None:
         directory = client.beta.directories.delete(
@@ -173,7 +173,7 @@ class TestDirectories:
         )
         assert directory is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_delete_with_all_params(self, client: LlamaCloud) -> None:
         directory = client.beta.directories.delete(
@@ -183,7 +183,7 @@ class TestDirectories:
         )
         assert directory is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: LlamaCloud) -> None:
         response = client.beta.directories.with_raw_response.delete(
@@ -195,7 +195,7 @@ class TestDirectories:
         directory = response.parse()
         assert directory is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: LlamaCloud) -> None:
         with client.beta.directories.with_streaming_response.delete(
@@ -209,7 +209,7 @@ class TestDirectories:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
@@ -217,7 +217,7 @@ class TestDirectories:
                 directory_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get(self, client: LlamaCloud) -> None:
         directory = client.beta.directories.get(
@@ -225,7 +225,7 @@ class TestDirectories:
         )
         assert_matches_type(DirectoryGetResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_with_all_params(self, client: LlamaCloud) -> None:
         directory = client.beta.directories.get(
@@ -235,7 +235,7 @@ class TestDirectories:
         )
         assert_matches_type(DirectoryGetResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get(self, client: LlamaCloud) -> None:
         response = client.beta.directories.with_raw_response.get(
@@ -247,7 +247,7 @@ class TestDirectories:
         directory = response.parse()
         assert_matches_type(DirectoryGetResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get(self, client: LlamaCloud) -> None:
         with client.beta.directories.with_streaming_response.get(
@@ -261,7 +261,7 @@ class TestDirectories:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_get(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
@@ -275,7 +275,7 @@ class TestAsyncDirectories:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
         directory = await async_client.beta.directories.create(
@@ -283,7 +283,7 @@ class TestAsyncDirectories:
         )
         assert_matches_type(DirectoryCreateResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         directory = await async_client.beta.directories.create(
@@ -295,7 +295,7 @@ class TestAsyncDirectories:
         )
         assert_matches_type(DirectoryCreateResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.directories.with_raw_response.create(
@@ -307,7 +307,7 @@ class TestAsyncDirectories:
         directory = await response.parse()
         assert_matches_type(DirectoryCreateResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.directories.with_streaming_response.create(
@@ -321,7 +321,7 @@ class TestAsyncDirectories:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncLlamaCloud) -> None:
         directory = await async_client.beta.directories.update(
@@ -329,7 +329,7 @@ class TestAsyncDirectories:
         )
         assert_matches_type(DirectoryUpdateResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         directory = await async_client.beta.directories.update(
@@ -341,7 +341,7 @@ class TestAsyncDirectories:
         )
         assert_matches_type(DirectoryUpdateResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.directories.with_raw_response.update(
@@ -353,7 +353,7 @@ class TestAsyncDirectories:
         directory = await response.parse()
         assert_matches_type(DirectoryUpdateResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.directories.with_streaming_response.update(
@@ -367,7 +367,7 @@ class TestAsyncDirectories:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
@@ -375,13 +375,13 @@ class TestAsyncDirectories:
                 directory_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloud) -> None:
         directory = await async_client.beta.directories.list()
         assert_matches_type(AsyncPaginatedCursor[DirectoryListResponse], directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         directory = await async_client.beta.directories.list(
@@ -395,7 +395,7 @@ class TestAsyncDirectories:
         )
         assert_matches_type(AsyncPaginatedCursor[DirectoryListResponse], directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.directories.with_raw_response.list()
@@ -405,7 +405,7 @@ class TestAsyncDirectories:
         directory = await response.parse()
         assert_matches_type(AsyncPaginatedCursor[DirectoryListResponse], directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.directories.with_streaming_response.list() as response:
@@ -417,7 +417,7 @@ class TestAsyncDirectories:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncLlamaCloud) -> None:
         directory = await async_client.beta.directories.delete(
@@ -425,7 +425,7 @@ class TestAsyncDirectories:
         )
         assert directory is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_delete_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         directory = await async_client.beta.directories.delete(
@@ -435,7 +435,7 @@ class TestAsyncDirectories:
         )
         assert directory is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.directories.with_raw_response.delete(
@@ -447,7 +447,7 @@ class TestAsyncDirectories:
         directory = await response.parse()
         assert directory is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.directories.with_streaming_response.delete(
@@ -461,7 +461,7 @@ class TestAsyncDirectories:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
@@ -469,7 +469,7 @@ class TestAsyncDirectories:
                 directory_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get(self, async_client: AsyncLlamaCloud) -> None:
         directory = await async_client.beta.directories.get(
@@ -477,7 +477,7 @@ class TestAsyncDirectories:
         )
         assert_matches_type(DirectoryGetResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         directory = await async_client.beta.directories.get(
@@ -487,7 +487,7 @@ class TestAsyncDirectories:
         )
         assert_matches_type(DirectoryGetResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.directories.with_raw_response.get(
@@ -499,7 +499,7 @@ class TestAsyncDirectories:
         directory = await response.parse()
         assert_matches_type(DirectoryGetResponse, directory, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.directories.with_streaming_response.get(
@@ -513,7 +513,7 @@ class TestAsyncDirectories:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_get(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):

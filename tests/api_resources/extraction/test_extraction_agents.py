@@ -20,7 +20,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestExtractionAgents:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create(self, client: LlamaCloud) -> None:
         extraction_agent = client.extraction.extraction_agents.create(
@@ -30,7 +30,7 @@ class TestExtractionAgents:
         )
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
         extraction_agent = client.extraction.extraction_agents.create(
@@ -59,7 +59,7 @@ class TestExtractionAgents:
         )
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: LlamaCloud) -> None:
         response = client.extraction.extraction_agents.with_raw_response.create(
@@ -73,7 +73,7 @@ class TestExtractionAgents:
         extraction_agent = response.parse()
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
         with client.extraction.extraction_agents.with_streaming_response.create(
@@ -89,7 +89,7 @@ class TestExtractionAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update(self, client: LlamaCloud) -> None:
         extraction_agent = client.extraction.extraction_agents.update(
@@ -99,7 +99,7 @@ class TestExtractionAgents:
         )
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: LlamaCloud) -> None:
         extraction_agent = client.extraction.extraction_agents.update(
@@ -126,7 +126,7 @@ class TestExtractionAgents:
         )
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: LlamaCloud) -> None:
         response = client.extraction.extraction_agents.with_raw_response.update(
@@ -140,7 +140,7 @@ class TestExtractionAgents:
         extraction_agent = response.parse()
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: LlamaCloud) -> None:
         with client.extraction.extraction_agents.with_streaming_response.update(
@@ -156,7 +156,7 @@ class TestExtractionAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_update(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `extraction_agent_id` but received ''"):
@@ -166,13 +166,13 @@ class TestExtractionAgents:
                 data_schema={"foo": {"foo": "bar"}},
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: LlamaCloud) -> None:
         extraction_agent = client.extraction.extraction_agents.list()
         assert_matches_type(ExtractionAgentListResponse, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         extraction_agent = client.extraction.extraction_agents.list(
@@ -182,7 +182,7 @@ class TestExtractionAgents:
         )
         assert_matches_type(ExtractionAgentListResponse, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: LlamaCloud) -> None:
         response = client.extraction.extraction_agents.with_raw_response.list()
@@ -192,7 +192,7 @@ class TestExtractionAgents:
         extraction_agent = response.parse()
         assert_matches_type(ExtractionAgentListResponse, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: LlamaCloud) -> None:
         with client.extraction.extraction_agents.with_streaming_response.list() as response:
@@ -204,7 +204,7 @@ class TestExtractionAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_delete(self, client: LlamaCloud) -> None:
         extraction_agent = client.extraction.extraction_agents.delete(
@@ -212,7 +212,7 @@ class TestExtractionAgents:
         )
         assert_matches_type(object, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: LlamaCloud) -> None:
         response = client.extraction.extraction_agents.with_raw_response.delete(
@@ -224,7 +224,7 @@ class TestExtractionAgents:
         extraction_agent = response.parse()
         assert_matches_type(object, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: LlamaCloud) -> None:
         with client.extraction.extraction_agents.with_streaming_response.delete(
@@ -238,7 +238,7 @@ class TestExtractionAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `extraction_agent_id` but received ''"):
@@ -246,7 +246,7 @@ class TestExtractionAgents:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get(self, client: LlamaCloud) -> None:
         extraction_agent = client.extraction.extraction_agents.get(
@@ -254,7 +254,7 @@ class TestExtractionAgents:
         )
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get(self, client: LlamaCloud) -> None:
         response = client.extraction.extraction_agents.with_raw_response.get(
@@ -266,7 +266,7 @@ class TestExtractionAgents:
         extraction_agent = response.parse()
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get(self, client: LlamaCloud) -> None:
         with client.extraction.extraction_agents.with_streaming_response.get(
@@ -280,7 +280,7 @@ class TestExtractionAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_get(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `extraction_agent_id` but received ''"):
@@ -294,7 +294,7 @@ class TestAsyncExtractionAgents:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
         extraction_agent = await async_client.extraction.extraction_agents.create(
@@ -304,7 +304,7 @@ class TestAsyncExtractionAgents:
         )
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         extraction_agent = await async_client.extraction.extraction_agents.create(
@@ -333,7 +333,7 @@ class TestAsyncExtractionAgents:
         )
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.extraction.extraction_agents.with_raw_response.create(
@@ -347,7 +347,7 @@ class TestAsyncExtractionAgents:
         extraction_agent = await response.parse()
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.extraction.extraction_agents.with_streaming_response.create(
@@ -363,7 +363,7 @@ class TestAsyncExtractionAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncLlamaCloud) -> None:
         extraction_agent = await async_client.extraction.extraction_agents.update(
@@ -373,7 +373,7 @@ class TestAsyncExtractionAgents:
         )
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         extraction_agent = await async_client.extraction.extraction_agents.update(
@@ -400,7 +400,7 @@ class TestAsyncExtractionAgents:
         )
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.extraction.extraction_agents.with_raw_response.update(
@@ -414,7 +414,7 @@ class TestAsyncExtractionAgents:
         extraction_agent = await response.parse()
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.extraction.extraction_agents.with_streaming_response.update(
@@ -430,7 +430,7 @@ class TestAsyncExtractionAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `extraction_agent_id` but received ''"):
@@ -440,13 +440,13 @@ class TestAsyncExtractionAgents:
                 data_schema={"foo": {"foo": "bar"}},
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloud) -> None:
         extraction_agent = await async_client.extraction.extraction_agents.list()
         assert_matches_type(ExtractionAgentListResponse, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         extraction_agent = await async_client.extraction.extraction_agents.list(
@@ -456,7 +456,7 @@ class TestAsyncExtractionAgents:
         )
         assert_matches_type(ExtractionAgentListResponse, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.extraction.extraction_agents.with_raw_response.list()
@@ -466,7 +466,7 @@ class TestAsyncExtractionAgents:
         extraction_agent = await response.parse()
         assert_matches_type(ExtractionAgentListResponse, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.extraction.extraction_agents.with_streaming_response.list() as response:
@@ -478,7 +478,7 @@ class TestAsyncExtractionAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncLlamaCloud) -> None:
         extraction_agent = await async_client.extraction.extraction_agents.delete(
@@ -486,7 +486,7 @@ class TestAsyncExtractionAgents:
         )
         assert_matches_type(object, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.extraction.extraction_agents.with_raw_response.delete(
@@ -498,7 +498,7 @@ class TestAsyncExtractionAgents:
         extraction_agent = await response.parse()
         assert_matches_type(object, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.extraction.extraction_agents.with_streaming_response.delete(
@@ -512,7 +512,7 @@ class TestAsyncExtractionAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `extraction_agent_id` but received ''"):
@@ -520,7 +520,7 @@ class TestAsyncExtractionAgents:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get(self, async_client: AsyncLlamaCloud) -> None:
         extraction_agent = await async_client.extraction.extraction_agents.get(
@@ -528,7 +528,7 @@ class TestAsyncExtractionAgents:
         )
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.extraction.extraction_agents.with_raw_response.get(
@@ -540,7 +540,7 @@ class TestAsyncExtractionAgents:
         extraction_agent = await response.parse()
         assert_matches_type(ExtractAgent, extraction_agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.extraction.extraction_agents.with_streaming_response.get(
@@ -554,7 +554,7 @@ class TestAsyncExtractionAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_get(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `extraction_agent_id` but received ''"):

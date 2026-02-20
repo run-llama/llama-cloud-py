@@ -22,7 +22,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestDataSources:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update(self, client: LlamaCloud) -> None:
         data_source = client.pipelines.data_sources.update(
@@ -31,7 +31,7 @@ class TestDataSources:
         )
         assert_matches_type(PipelineDataSource, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: LlamaCloud) -> None:
         data_source = client.pipelines.data_sources.update(
@@ -41,7 +41,7 @@ class TestDataSources:
         )
         assert_matches_type(PipelineDataSource, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: LlamaCloud) -> None:
         response = client.pipelines.data_sources.with_raw_response.update(
@@ -54,7 +54,7 @@ class TestDataSources:
         data_source = response.parse()
         assert_matches_type(PipelineDataSource, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: LlamaCloud) -> None:
         with client.pipelines.data_sources.with_streaming_response.update(
@@ -69,7 +69,7 @@ class TestDataSources:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_update(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
@@ -84,7 +84,7 @@ class TestDataSources:
                 pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_data_sources(self, client: LlamaCloud) -> None:
         data_source = client.pipelines.data_sources.get_data_sources(
@@ -92,7 +92,7 @@ class TestDataSources:
         )
         assert_matches_type(DataSourceGetDataSourcesResponse, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get_data_sources(self, client: LlamaCloud) -> None:
         response = client.pipelines.data_sources.with_raw_response.get_data_sources(
@@ -104,7 +104,7 @@ class TestDataSources:
         data_source = response.parse()
         assert_matches_type(DataSourceGetDataSourcesResponse, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get_data_sources(self, client: LlamaCloud) -> None:
         with client.pipelines.data_sources.with_streaming_response.get_data_sources(
@@ -118,7 +118,7 @@ class TestDataSources:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_get_data_sources(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
@@ -126,7 +126,7 @@ class TestDataSources:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_status(self, client: LlamaCloud) -> None:
         data_source = client.pipelines.data_sources.get_status(
@@ -135,7 +135,7 @@ class TestDataSources:
         )
         assert_matches_type(ManagedIngestionStatusResponse, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get_status(self, client: LlamaCloud) -> None:
         response = client.pipelines.data_sources.with_raw_response.get_status(
@@ -148,7 +148,7 @@ class TestDataSources:
         data_source = response.parse()
         assert_matches_type(ManagedIngestionStatusResponse, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get_status(self, client: LlamaCloud) -> None:
         with client.pipelines.data_sources.with_streaming_response.get_status(
@@ -163,7 +163,7 @@ class TestDataSources:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_get_status(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
@@ -178,7 +178,7 @@ class TestDataSources:
                 pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_sync(self, client: LlamaCloud) -> None:
         data_source = client.pipelines.data_sources.sync(
@@ -187,7 +187,7 @@ class TestDataSources:
         )
         assert_matches_type(Pipeline, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_sync_with_all_params(self, client: LlamaCloud) -> None:
         data_source = client.pipelines.data_sources.sync(
@@ -197,7 +197,7 @@ class TestDataSources:
         )
         assert_matches_type(Pipeline, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_sync(self, client: LlamaCloud) -> None:
         response = client.pipelines.data_sources.with_raw_response.sync(
@@ -210,7 +210,7 @@ class TestDataSources:
         data_source = response.parse()
         assert_matches_type(Pipeline, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_sync(self, client: LlamaCloud) -> None:
         with client.pipelines.data_sources.with_streaming_response.sync(
@@ -225,7 +225,7 @@ class TestDataSources:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_sync(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
@@ -240,7 +240,7 @@ class TestDataSources:
                 pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update_data_sources(self, client: LlamaCloud) -> None:
         data_source = client.pipelines.data_sources.update_data_sources(
@@ -249,7 +249,7 @@ class TestDataSources:
         )
         assert_matches_type(DataSourceUpdateDataSourcesResponse, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update_data_sources(self, client: LlamaCloud) -> None:
         response = client.pipelines.data_sources.with_raw_response.update_data_sources(
@@ -262,7 +262,7 @@ class TestDataSources:
         data_source = response.parse()
         assert_matches_type(DataSourceUpdateDataSourcesResponse, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_update_data_sources(self, client: LlamaCloud) -> None:
         with client.pipelines.data_sources.with_streaming_response.update_data_sources(
@@ -277,7 +277,7 @@ class TestDataSources:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_update_data_sources(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
@@ -292,7 +292,7 @@ class TestAsyncDataSources:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncLlamaCloud) -> None:
         data_source = await async_client.pipelines.data_sources.update(
@@ -301,7 +301,7 @@ class TestAsyncDataSources:
         )
         assert_matches_type(PipelineDataSource, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         data_source = await async_client.pipelines.data_sources.update(
@@ -311,7 +311,7 @@ class TestAsyncDataSources:
         )
         assert_matches_type(PipelineDataSource, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.pipelines.data_sources.with_raw_response.update(
@@ -324,7 +324,7 @@ class TestAsyncDataSources:
         data_source = await response.parse()
         assert_matches_type(PipelineDataSource, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.pipelines.data_sources.with_streaming_response.update(
@@ -339,7 +339,7 @@ class TestAsyncDataSources:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
@@ -354,7 +354,7 @@ class TestAsyncDataSources:
                 pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_data_sources(self, async_client: AsyncLlamaCloud) -> None:
         data_source = await async_client.pipelines.data_sources.get_data_sources(
@@ -362,7 +362,7 @@ class TestAsyncDataSources:
         )
         assert_matches_type(DataSourceGetDataSourcesResponse, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get_data_sources(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.pipelines.data_sources.with_raw_response.get_data_sources(
@@ -374,7 +374,7 @@ class TestAsyncDataSources:
         data_source = await response.parse()
         assert_matches_type(DataSourceGetDataSourcesResponse, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get_data_sources(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.pipelines.data_sources.with_streaming_response.get_data_sources(
@@ -388,7 +388,7 @@ class TestAsyncDataSources:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_get_data_sources(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
@@ -396,7 +396,7 @@ class TestAsyncDataSources:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_status(self, async_client: AsyncLlamaCloud) -> None:
         data_source = await async_client.pipelines.data_sources.get_status(
@@ -405,7 +405,7 @@ class TestAsyncDataSources:
         )
         assert_matches_type(ManagedIngestionStatusResponse, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get_status(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.pipelines.data_sources.with_raw_response.get_status(
@@ -418,7 +418,7 @@ class TestAsyncDataSources:
         data_source = await response.parse()
         assert_matches_type(ManagedIngestionStatusResponse, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get_status(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.pipelines.data_sources.with_streaming_response.get_status(
@@ -433,7 +433,7 @@ class TestAsyncDataSources:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_get_status(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
@@ -448,7 +448,7 @@ class TestAsyncDataSources:
                 pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_sync(self, async_client: AsyncLlamaCloud) -> None:
         data_source = await async_client.pipelines.data_sources.sync(
@@ -457,7 +457,7 @@ class TestAsyncDataSources:
         )
         assert_matches_type(Pipeline, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_sync_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         data_source = await async_client.pipelines.data_sources.sync(
@@ -467,7 +467,7 @@ class TestAsyncDataSources:
         )
         assert_matches_type(Pipeline, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_sync(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.pipelines.data_sources.with_raw_response.sync(
@@ -480,7 +480,7 @@ class TestAsyncDataSources:
         data_source = await response.parse()
         assert_matches_type(Pipeline, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_sync(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.pipelines.data_sources.with_streaming_response.sync(
@@ -495,7 +495,7 @@ class TestAsyncDataSources:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_sync(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
@@ -510,7 +510,7 @@ class TestAsyncDataSources:
                 pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update_data_sources(self, async_client: AsyncLlamaCloud) -> None:
         data_source = await async_client.pipelines.data_sources.update_data_sources(
@@ -519,7 +519,7 @@ class TestAsyncDataSources:
         )
         assert_matches_type(DataSourceUpdateDataSourcesResponse, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update_data_sources(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.pipelines.data_sources.with_raw_response.update_data_sources(
@@ -532,7 +532,7 @@ class TestAsyncDataSources:
         data_source = await response.parse()
         assert_matches_type(DataSourceUpdateDataSourcesResponse, data_source, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_update_data_sources(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.pipelines.data_sources.with_streaming_response.update_data_sources(
@@ -547,7 +547,7 @@ class TestAsyncDataSources:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_update_data_sources(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):

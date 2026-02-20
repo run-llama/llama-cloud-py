@@ -20,7 +20,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestImages:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_page_figure(self, client: LlamaCloud) -> None:
         image = client.pipelines.images.get_page_figure(
@@ -30,7 +30,7 @@ class TestImages:
         )
         assert_matches_type(object, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_page_figure_with_all_params(self, client: LlamaCloud) -> None:
         image = client.pipelines.images.get_page_figure(
@@ -42,7 +42,7 @@ class TestImages:
         )
         assert_matches_type(object, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get_page_figure(self, client: LlamaCloud) -> None:
         response = client.pipelines.images.with_raw_response.get_page_figure(
@@ -56,7 +56,7 @@ class TestImages:
         image = response.parse()
         assert_matches_type(object, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get_page_figure(self, client: LlamaCloud) -> None:
         with client.pipelines.images.with_streaming_response.get_page_figure(
@@ -72,7 +72,7 @@ class TestImages:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_get_page_figure(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -89,7 +89,7 @@ class TestImages:
                 page_index=0,
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_page_screenshot(self, client: LlamaCloud) -> None:
         image = client.pipelines.images.get_page_screenshot(
@@ -98,7 +98,7 @@ class TestImages:
         )
         assert_matches_type(object, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_page_screenshot_with_all_params(self, client: LlamaCloud) -> None:
         image = client.pipelines.images.get_page_screenshot(
@@ -109,7 +109,7 @@ class TestImages:
         )
         assert_matches_type(object, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get_page_screenshot(self, client: LlamaCloud) -> None:
         response = client.pipelines.images.with_raw_response.get_page_screenshot(
@@ -122,7 +122,7 @@ class TestImages:
         image = response.parse()
         assert_matches_type(object, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get_page_screenshot(self, client: LlamaCloud) -> None:
         with client.pipelines.images.with_streaming_response.get_page_screenshot(
@@ -137,7 +137,7 @@ class TestImages:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_get_page_screenshot(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -146,7 +146,7 @@ class TestImages:
                 id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_page_figures(self, client: LlamaCloud) -> None:
         image = client.pipelines.images.list_page_figures(
@@ -154,7 +154,7 @@ class TestImages:
         )
         assert_matches_type(ImageListPageFiguresResponse, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_page_figures_with_all_params(self, client: LlamaCloud) -> None:
         image = client.pipelines.images.list_page_figures(
@@ -164,7 +164,7 @@ class TestImages:
         )
         assert_matches_type(ImageListPageFiguresResponse, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list_page_figures(self, client: LlamaCloud) -> None:
         response = client.pipelines.images.with_raw_response.list_page_figures(
@@ -176,7 +176,7 @@ class TestImages:
         image = response.parse()
         assert_matches_type(ImageListPageFiguresResponse, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list_page_figures(self, client: LlamaCloud) -> None:
         with client.pipelines.images.with_streaming_response.list_page_figures(
@@ -190,7 +190,7 @@ class TestImages:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_list_page_figures(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -198,7 +198,7 @@ class TestImages:
                 id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_page_screenshots(self, client: LlamaCloud) -> None:
         image = client.pipelines.images.list_page_screenshots(
@@ -206,7 +206,7 @@ class TestImages:
         )
         assert_matches_type(ImageListPageScreenshotsResponse, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_page_screenshots_with_all_params(self, client: LlamaCloud) -> None:
         image = client.pipelines.images.list_page_screenshots(
@@ -216,7 +216,7 @@ class TestImages:
         )
         assert_matches_type(ImageListPageScreenshotsResponse, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list_page_screenshots(self, client: LlamaCloud) -> None:
         response = client.pipelines.images.with_raw_response.list_page_screenshots(
@@ -228,7 +228,7 @@ class TestImages:
         image = response.parse()
         assert_matches_type(ImageListPageScreenshotsResponse, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list_page_screenshots(self, client: LlamaCloud) -> None:
         with client.pipelines.images.with_streaming_response.list_page_screenshots(
@@ -242,7 +242,7 @@ class TestImages:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_list_page_screenshots(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -256,7 +256,7 @@ class TestAsyncImages:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_page_figure(self, async_client: AsyncLlamaCloud) -> None:
         image = await async_client.pipelines.images.get_page_figure(
@@ -266,7 +266,7 @@ class TestAsyncImages:
         )
         assert_matches_type(object, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_page_figure_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         image = await async_client.pipelines.images.get_page_figure(
@@ -278,7 +278,7 @@ class TestAsyncImages:
         )
         assert_matches_type(object, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get_page_figure(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.pipelines.images.with_raw_response.get_page_figure(
@@ -292,7 +292,7 @@ class TestAsyncImages:
         image = await response.parse()
         assert_matches_type(object, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get_page_figure(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.pipelines.images.with_streaming_response.get_page_figure(
@@ -308,7 +308,7 @@ class TestAsyncImages:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_get_page_figure(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -325,7 +325,7 @@ class TestAsyncImages:
                 page_index=0,
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_page_screenshot(self, async_client: AsyncLlamaCloud) -> None:
         image = await async_client.pipelines.images.get_page_screenshot(
@@ -334,7 +334,7 @@ class TestAsyncImages:
         )
         assert_matches_type(object, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_page_screenshot_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         image = await async_client.pipelines.images.get_page_screenshot(
@@ -345,7 +345,7 @@ class TestAsyncImages:
         )
         assert_matches_type(object, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get_page_screenshot(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.pipelines.images.with_raw_response.get_page_screenshot(
@@ -358,7 +358,7 @@ class TestAsyncImages:
         image = await response.parse()
         assert_matches_type(object, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get_page_screenshot(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.pipelines.images.with_streaming_response.get_page_screenshot(
@@ -373,7 +373,7 @@ class TestAsyncImages:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_get_page_screenshot(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -382,7 +382,7 @@ class TestAsyncImages:
                 id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_page_figures(self, async_client: AsyncLlamaCloud) -> None:
         image = await async_client.pipelines.images.list_page_figures(
@@ -390,7 +390,7 @@ class TestAsyncImages:
         )
         assert_matches_type(ImageListPageFiguresResponse, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_page_figures_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         image = await async_client.pipelines.images.list_page_figures(
@@ -400,7 +400,7 @@ class TestAsyncImages:
         )
         assert_matches_type(ImageListPageFiguresResponse, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list_page_figures(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.pipelines.images.with_raw_response.list_page_figures(
@@ -412,7 +412,7 @@ class TestAsyncImages:
         image = await response.parse()
         assert_matches_type(ImageListPageFiguresResponse, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list_page_figures(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.pipelines.images.with_streaming_response.list_page_figures(
@@ -426,7 +426,7 @@ class TestAsyncImages:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_list_page_figures(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
@@ -434,7 +434,7 @@ class TestAsyncImages:
                 id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_page_screenshots(self, async_client: AsyncLlamaCloud) -> None:
         image = await async_client.pipelines.images.list_page_screenshots(
@@ -442,7 +442,7 @@ class TestAsyncImages:
         )
         assert_matches_type(ImageListPageScreenshotsResponse, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_page_screenshots_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         image = await async_client.pipelines.images.list_page_screenshots(
@@ -452,7 +452,7 @@ class TestAsyncImages:
         )
         assert_matches_type(ImageListPageScreenshotsResponse, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list_page_screenshots(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.pipelines.images.with_raw_response.list_page_screenshots(
@@ -464,7 +464,7 @@ class TestAsyncImages:
         image = await response.parse()
         assert_matches_type(ImageListPageScreenshotsResponse, image, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list_page_screenshots(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.pipelines.images.with_streaming_response.list_page_screenshots(
@@ -478,7 +478,7 @@ class TestAsyncImages:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_list_page_screenshots(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
