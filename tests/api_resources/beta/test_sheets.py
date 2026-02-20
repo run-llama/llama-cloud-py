@@ -21,7 +21,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestSheets:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create(self, client: LlamaCloud) -> None:
         sheet = client.beta.sheets.create(
@@ -29,7 +29,7 @@ class TestSheets:
         )
         assert_matches_type(SheetsJob, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
         sheet = client.beta.sheets.create(
@@ -48,7 +48,7 @@ class TestSheets:
         )
         assert_matches_type(SheetsJob, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: LlamaCloud) -> None:
         response = client.beta.sheets.with_raw_response.create(
@@ -60,7 +60,7 @@ class TestSheets:
         sheet = response.parse()
         assert_matches_type(SheetsJob, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
         with client.beta.sheets.with_streaming_response.create(
@@ -74,13 +74,13 @@ class TestSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: LlamaCloud) -> None:
         sheet = client.beta.sheets.list()
         assert_matches_type(SyncPaginatedCursor[SheetsJob], sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         sheet = client.beta.sheets.list(
@@ -92,7 +92,7 @@ class TestSheets:
         )
         assert_matches_type(SyncPaginatedCursor[SheetsJob], sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: LlamaCloud) -> None:
         response = client.beta.sheets.with_raw_response.list()
@@ -102,7 +102,7 @@ class TestSheets:
         sheet = response.parse()
         assert_matches_type(SyncPaginatedCursor[SheetsJob], sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: LlamaCloud) -> None:
         with client.beta.sheets.with_streaming_response.list() as response:
@@ -114,7 +114,7 @@ class TestSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_delete_job(self, client: LlamaCloud) -> None:
         sheet = client.beta.sheets.delete_job(
@@ -122,7 +122,7 @@ class TestSheets:
         )
         assert_matches_type(object, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_delete_job_with_all_params(self, client: LlamaCloud) -> None:
         sheet = client.beta.sheets.delete_job(
@@ -132,7 +132,7 @@ class TestSheets:
         )
         assert_matches_type(object, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_delete_job(self, client: LlamaCloud) -> None:
         response = client.beta.sheets.with_raw_response.delete_job(
@@ -144,7 +144,7 @@ class TestSheets:
         sheet = response.parse()
         assert_matches_type(object, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_delete_job(self, client: LlamaCloud) -> None:
         with client.beta.sheets.with_streaming_response.delete_job(
@@ -158,7 +158,7 @@ class TestSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_delete_job(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `spreadsheet_job_id` but received ''"):
@@ -166,7 +166,7 @@ class TestSheets:
                 spreadsheet_job_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get(self, client: LlamaCloud) -> None:
         sheet = client.beta.sheets.get(
@@ -174,7 +174,7 @@ class TestSheets:
         )
         assert_matches_type(SheetsJob, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_with_all_params(self, client: LlamaCloud) -> None:
         sheet = client.beta.sheets.get(
@@ -185,7 +185,7 @@ class TestSheets:
         )
         assert_matches_type(SheetsJob, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get(self, client: LlamaCloud) -> None:
         response = client.beta.sheets.with_raw_response.get(
@@ -197,7 +197,7 @@ class TestSheets:
         sheet = response.parse()
         assert_matches_type(SheetsJob, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get(self, client: LlamaCloud) -> None:
         with client.beta.sheets.with_streaming_response.get(
@@ -211,7 +211,7 @@ class TestSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_get(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `spreadsheet_job_id` but received ''"):
@@ -219,7 +219,7 @@ class TestSheets:
                 spreadsheet_job_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_result_table(self, client: LlamaCloud) -> None:
         sheet = client.beta.sheets.get_result_table(
@@ -229,7 +229,7 @@ class TestSheets:
         )
         assert_matches_type(PresignedURL, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_result_table_with_all_params(self, client: LlamaCloud) -> None:
         sheet = client.beta.sheets.get_result_table(
@@ -242,7 +242,7 @@ class TestSheets:
         )
         assert_matches_type(PresignedURL, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get_result_table(self, client: LlamaCloud) -> None:
         response = client.beta.sheets.with_raw_response.get_result_table(
@@ -256,7 +256,7 @@ class TestSheets:
         sheet = response.parse()
         assert_matches_type(PresignedURL, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get_result_table(self, client: LlamaCloud) -> None:
         with client.beta.sheets.with_streaming_response.get_result_table(
@@ -272,7 +272,7 @@ class TestSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_get_result_table(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `spreadsheet_job_id` but received ''"):
@@ -295,7 +295,7 @@ class TestAsyncSheets:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
         sheet = await async_client.beta.sheets.create(
@@ -303,7 +303,7 @@ class TestAsyncSheets:
         )
         assert_matches_type(SheetsJob, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         sheet = await async_client.beta.sheets.create(
@@ -322,7 +322,7 @@ class TestAsyncSheets:
         )
         assert_matches_type(SheetsJob, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.sheets.with_raw_response.create(
@@ -334,7 +334,7 @@ class TestAsyncSheets:
         sheet = await response.parse()
         assert_matches_type(SheetsJob, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.sheets.with_streaming_response.create(
@@ -348,13 +348,13 @@ class TestAsyncSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloud) -> None:
         sheet = await async_client.beta.sheets.list()
         assert_matches_type(AsyncPaginatedCursor[SheetsJob], sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         sheet = await async_client.beta.sheets.list(
@@ -366,7 +366,7 @@ class TestAsyncSheets:
         )
         assert_matches_type(AsyncPaginatedCursor[SheetsJob], sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.sheets.with_raw_response.list()
@@ -376,7 +376,7 @@ class TestAsyncSheets:
         sheet = await response.parse()
         assert_matches_type(AsyncPaginatedCursor[SheetsJob], sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.sheets.with_streaming_response.list() as response:
@@ -388,7 +388,7 @@ class TestAsyncSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_delete_job(self, async_client: AsyncLlamaCloud) -> None:
         sheet = await async_client.beta.sheets.delete_job(
@@ -396,7 +396,7 @@ class TestAsyncSheets:
         )
         assert_matches_type(object, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_delete_job_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         sheet = await async_client.beta.sheets.delete_job(
@@ -406,7 +406,7 @@ class TestAsyncSheets:
         )
         assert_matches_type(object, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_delete_job(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.sheets.with_raw_response.delete_job(
@@ -418,7 +418,7 @@ class TestAsyncSheets:
         sheet = await response.parse()
         assert_matches_type(object, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_delete_job(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.sheets.with_streaming_response.delete_job(
@@ -432,7 +432,7 @@ class TestAsyncSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_delete_job(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `spreadsheet_job_id` but received ''"):
@@ -440,7 +440,7 @@ class TestAsyncSheets:
                 spreadsheet_job_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get(self, async_client: AsyncLlamaCloud) -> None:
         sheet = await async_client.beta.sheets.get(
@@ -448,7 +448,7 @@ class TestAsyncSheets:
         )
         assert_matches_type(SheetsJob, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         sheet = await async_client.beta.sheets.get(
@@ -459,7 +459,7 @@ class TestAsyncSheets:
         )
         assert_matches_type(SheetsJob, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.sheets.with_raw_response.get(
@@ -471,7 +471,7 @@ class TestAsyncSheets:
         sheet = await response.parse()
         assert_matches_type(SheetsJob, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.sheets.with_streaming_response.get(
@@ -485,7 +485,7 @@ class TestAsyncSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_get(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `spreadsheet_job_id` but received ''"):
@@ -493,7 +493,7 @@ class TestAsyncSheets:
                 spreadsheet_job_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_result_table(self, async_client: AsyncLlamaCloud) -> None:
         sheet = await async_client.beta.sheets.get_result_table(
@@ -503,7 +503,7 @@ class TestAsyncSheets:
         )
         assert_matches_type(PresignedURL, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_result_table_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         sheet = await async_client.beta.sheets.get_result_table(
@@ -516,7 +516,7 @@ class TestAsyncSheets:
         )
         assert_matches_type(PresignedURL, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get_result_table(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.sheets.with_raw_response.get_result_table(
@@ -530,7 +530,7 @@ class TestAsyncSheets:
         sheet = await response.parse()
         assert_matches_type(PresignedURL, sheet, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get_result_table(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.sheets.with_streaming_response.get_result_table(
@@ -546,7 +546,7 @@ class TestAsyncSheets:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_get_result_table(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `spreadsheet_job_id` but received ''"):

@@ -21,7 +21,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestJobs:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create(self, client: LlamaCloud) -> None:
         job = client.classifier.jobs.create(
@@ -35,7 +35,7 @@ class TestJobs:
         )
         assert_matches_type(ClassifyJob, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
         job = client.classifier.jobs.create(
@@ -64,7 +64,7 @@ class TestJobs:
         )
         assert_matches_type(ClassifyJob, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: LlamaCloud) -> None:
         response = client.classifier.jobs.with_raw_response.create(
@@ -82,7 +82,7 @@ class TestJobs:
         job = response.parse()
         assert_matches_type(ClassifyJob, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
         with client.classifier.jobs.with_streaming_response.create(
@@ -102,13 +102,13 @@ class TestJobs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: LlamaCloud) -> None:
         job = client.classifier.jobs.list()
         assert_matches_type(SyncPaginatedCursor[ClassifyJob], job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         job = client.classifier.jobs.list(
@@ -119,7 +119,7 @@ class TestJobs:
         )
         assert_matches_type(SyncPaginatedCursor[ClassifyJob], job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: LlamaCloud) -> None:
         response = client.classifier.jobs.with_raw_response.list()
@@ -129,7 +129,7 @@ class TestJobs:
         job = response.parse()
         assert_matches_type(SyncPaginatedCursor[ClassifyJob], job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: LlamaCloud) -> None:
         with client.classifier.jobs.with_streaming_response.list() as response:
@@ -141,7 +141,7 @@ class TestJobs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get(self, client: LlamaCloud) -> None:
         job = client.classifier.jobs.get(
@@ -149,7 +149,7 @@ class TestJobs:
         )
         assert_matches_type(ClassifyJob, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_with_all_params(self, client: LlamaCloud) -> None:
         job = client.classifier.jobs.get(
@@ -159,7 +159,7 @@ class TestJobs:
         )
         assert_matches_type(ClassifyJob, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get(self, client: LlamaCloud) -> None:
         response = client.classifier.jobs.with_raw_response.get(
@@ -171,7 +171,7 @@ class TestJobs:
         job = response.parse()
         assert_matches_type(ClassifyJob, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get(self, client: LlamaCloud) -> None:
         with client.classifier.jobs.with_streaming_response.get(
@@ -185,7 +185,7 @@ class TestJobs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_get(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `classify_job_id` but received ''"):
@@ -193,7 +193,7 @@ class TestJobs:
                 classify_job_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_results(self, client: LlamaCloud) -> None:
         job = client.classifier.jobs.get_results(
@@ -201,7 +201,7 @@ class TestJobs:
         )
         assert_matches_type(JobGetResultsResponse, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_results_with_all_params(self, client: LlamaCloud) -> None:
         job = client.classifier.jobs.get_results(
@@ -211,7 +211,7 @@ class TestJobs:
         )
         assert_matches_type(JobGetResultsResponse, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get_results(self, client: LlamaCloud) -> None:
         response = client.classifier.jobs.with_raw_response.get_results(
@@ -223,7 +223,7 @@ class TestJobs:
         job = response.parse()
         assert_matches_type(JobGetResultsResponse, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get_results(self, client: LlamaCloud) -> None:
         with client.classifier.jobs.with_streaming_response.get_results(
@@ -237,7 +237,7 @@ class TestJobs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_get_results(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `classify_job_id` but received ''"):
@@ -251,7 +251,7 @@ class TestAsyncJobs:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
         job = await async_client.classifier.jobs.create(
@@ -265,7 +265,7 @@ class TestAsyncJobs:
         )
         assert_matches_type(ClassifyJob, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         job = await async_client.classifier.jobs.create(
@@ -294,7 +294,7 @@ class TestAsyncJobs:
         )
         assert_matches_type(ClassifyJob, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.classifier.jobs.with_raw_response.create(
@@ -312,7 +312,7 @@ class TestAsyncJobs:
         job = await response.parse()
         assert_matches_type(ClassifyJob, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.classifier.jobs.with_streaming_response.create(
@@ -332,13 +332,13 @@ class TestAsyncJobs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloud) -> None:
         job = await async_client.classifier.jobs.list()
         assert_matches_type(AsyncPaginatedCursor[ClassifyJob], job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         job = await async_client.classifier.jobs.list(
@@ -349,7 +349,7 @@ class TestAsyncJobs:
         )
         assert_matches_type(AsyncPaginatedCursor[ClassifyJob], job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.classifier.jobs.with_raw_response.list()
@@ -359,7 +359,7 @@ class TestAsyncJobs:
         job = await response.parse()
         assert_matches_type(AsyncPaginatedCursor[ClassifyJob], job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.classifier.jobs.with_streaming_response.list() as response:
@@ -371,7 +371,7 @@ class TestAsyncJobs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get(self, async_client: AsyncLlamaCloud) -> None:
         job = await async_client.classifier.jobs.get(
@@ -379,7 +379,7 @@ class TestAsyncJobs:
         )
         assert_matches_type(ClassifyJob, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         job = await async_client.classifier.jobs.get(
@@ -389,7 +389,7 @@ class TestAsyncJobs:
         )
         assert_matches_type(ClassifyJob, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.classifier.jobs.with_raw_response.get(
@@ -401,7 +401,7 @@ class TestAsyncJobs:
         job = await response.parse()
         assert_matches_type(ClassifyJob, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.classifier.jobs.with_streaming_response.get(
@@ -415,7 +415,7 @@ class TestAsyncJobs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_get(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `classify_job_id` but received ''"):
@@ -423,7 +423,7 @@ class TestAsyncJobs:
                 classify_job_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_results(self, async_client: AsyncLlamaCloud) -> None:
         job = await async_client.classifier.jobs.get_results(
@@ -431,7 +431,7 @@ class TestAsyncJobs:
         )
         assert_matches_type(JobGetResultsResponse, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_results_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         job = await async_client.classifier.jobs.get_results(
@@ -441,7 +441,7 @@ class TestAsyncJobs:
         )
         assert_matches_type(JobGetResultsResponse, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get_results(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.classifier.jobs.with_raw_response.get_results(
@@ -453,7 +453,7 @@ class TestAsyncJobs:
         job = await response.parse()
         assert_matches_type(JobGetResultsResponse, job, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get_results(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.classifier.jobs.with_streaming_response.get_results(
@@ -467,7 +467,7 @@ class TestAsyncJobs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_get_results(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `classify_job_id` but received ''"):
