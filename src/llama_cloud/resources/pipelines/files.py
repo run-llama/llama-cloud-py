@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import typing_extensions
-from typing import Dict, Union, Iterable, Optional
+from typing import Dict, List, Union, Iterable, Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -135,6 +136,7 @@ class FilesResource(SyncAPIResource):
         offset: Optional[int] | Omit = omit,
         only_manually_uploaded: bool | Omit = omit,
         order_by: Optional[str] | Omit = omit,
+        statuses: Optional[List[Literal["NOT_STARTED", "IN_PROGRESS", "SUCCESS", "ERROR", "CANCELLED"]]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -143,14 +145,11 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPaginatedPipelineFiles[PipelineFile]:
         """
-        Get files for a pipeline.
-
-        Args: pipeline_id: ID of the pipeline data_source_id: Optional filter by data
-        source ID only_manually_uploaded: Filter for only manually uploaded files
-        file_name_contains: Optional filter by file name (substring match) limit: Limit
-        number of results offset: Offset for pagination order_by: Field to order by
+        List files for a pipeline with optional filtering, sorting, and pagination.
 
         Args:
+          statuses: Filter by file statuses
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -177,6 +176,7 @@ class FilesResource(SyncAPIResource):
                         "offset": offset,
                         "only_manually_uploaded": only_manually_uploaded,
                         "order_by": order_by,
+                        "statuses": statuses,
                     },
                     file_list_params.FileListParams,
                 ),
@@ -410,6 +410,7 @@ class AsyncFilesResource(AsyncAPIResource):
         offset: Optional[int] | Omit = omit,
         only_manually_uploaded: bool | Omit = omit,
         order_by: Optional[str] | Omit = omit,
+        statuses: Optional[List[Literal["NOT_STARTED", "IN_PROGRESS", "SUCCESS", "ERROR", "CANCELLED"]]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -418,14 +419,11 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[PipelineFile, AsyncPaginatedPipelineFiles[PipelineFile]]:
         """
-        Get files for a pipeline.
-
-        Args: pipeline_id: ID of the pipeline data_source_id: Optional filter by data
-        source ID only_manually_uploaded: Filter for only manually uploaded files
-        file_name_contains: Optional filter by file name (substring match) limit: Limit
-        number of results offset: Offset for pagination order_by: Field to order by
+        List files for a pipeline with optional filtering, sorting, and pagination.
 
         Args:
+          statuses: Filter by file statuses
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -452,6 +450,7 @@ class AsyncFilesResource(AsyncAPIResource):
                         "offset": offset,
                         "only_manually_uploaded": only_manually_uploaded,
                         "order_by": order_by,
+                        "statuses": statuses,
                     },
                     file_list_params.FileListParams,
                 ),

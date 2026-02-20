@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Optional
-from typing_extensions import TypedDict
+from typing import List, Optional
+from typing_extensions import Literal, TypedDict
 
 __all__ = ["FileListParams"]
 
@@ -20,3 +20,6 @@ class FileListParams(TypedDict, total=False):
     only_manually_uploaded: bool
 
     order_by: Optional[str]
+
+    statuses: Optional[List[Literal["NOT_STARTED", "IN_PROGRESS", "SUCCESS", "ERROR", "CANCELLED"]]]
+    """Filter by file statuses"""
