@@ -294,6 +294,8 @@ class JobConfigBatchParseJobRecordCreateParameters(TypedDict, total=False):
 
     spreadsheet_force_formula_computation: Optional[bool]
 
+    spreadsheet_include_hidden_sheets: Optional[bool]
+
     strict_mode_buggy_font: Optional[bool]
 
     strict_mode_image_extraction: Optional[bool]

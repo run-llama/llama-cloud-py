@@ -65,6 +65,7 @@ class TestParsing:
                 "spreadsheet": {
                     "detect_sub_tables_in_sheets": True,
                     "force_formula_computation_in_sheets": True,
+                    "include_hidden_sheets": True,
                 },
             },
             output_options={
@@ -140,7 +141,7 @@ class TestParsing:
                             },
                             "specialized_chart_parsing": "agentic_plus",
                             "tier": "fast",
-                            "version": "2026-01-08",
+                            "version": "2025-12-11",
                         },
                         "filename_match_glob": "filename_match_glob",
                         "filename_match_glob_list": ["string"],
@@ -371,6 +372,7 @@ class TestAsyncParsing:
                 "spreadsheet": {
                     "detect_sub_tables_in_sheets": True,
                     "force_formula_computation_in_sheets": True,
+                    "include_hidden_sheets": True,
                 },
             },
             output_options={
@@ -446,7 +448,7 @@ class TestAsyncParsing:
                             },
                             "specialized_chart_parsing": "agentic_plus",
                             "tier": "fast",
-                            "version": "2026-01-08",
+                            "version": "2025-12-11",
                         },
                         "filename_match_glob": "filename_match_glob",
                         "filename_match_glob_list": ["string"],
