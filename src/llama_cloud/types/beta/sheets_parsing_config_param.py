@@ -40,6 +40,13 @@ class SheetsParsingConfigParam(TypedDict, total=False):
     If empty, all sheets will be processed.
     """
 
+    specialization: Optional[str]
+    """Optional specialization mode for domain-specific extraction.
+
+    Supported values: 'financial-standard', 'financial-enhanced',
+    'financial-precise'. Default None uses the general-purpose pipeline.
+    """
+
     table_merge_sensitivity: Literal["strong", "weak"]
     """Influences how likely similar-looking regions are merged into a single table.
 

@@ -37,5 +37,11 @@ class TableItem(BaseModel):
     Page number where the full merged table begins (used on empty tables).
     """
 
+    parse_concerns: Optional[List[str]] = None
+    """
+    Quality concerns detected during table extraction, indicating the table may have
+    issues
+    """
+
     type: Optional[Literal["table"]] = None
     """Table item type"""
