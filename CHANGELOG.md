@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.5.0 (2026-03-03)
+
+Full Changelog: [v1.4.1...v1.5.0](https://github.com/run-llama/llama-cloud-py/compare/v1.4.1...v1.5.0)
+
+### Features
+
+* **api:** api update ([0537b16](https://github.com/run-llama/llama-cloud-py/commit/0537b16dd8f8588160d6c1469f0f9821dff6435e))
+* **api:** api update ([0deee0e](https://github.com/run-llama/llama-cloud-py/commit/0deee0e231533b60f75e2fb44434bb3c8b287d93))
+* **api:** api update ([dededce](https://github.com/run-llama/llama-cloud-py/commit/dededce0585c70ec82b3b1ce2b4ea7b11559de60))
+* **api:** api update ([855c7e3](https://github.com/run-llama/llama-cloud-py/commit/855c7e3d51cbb6e08f4cebcbbcd1f77088fea0f3))
+
+
+### Chores
+
+* **internal:** add request options to SSE classes ([6094c9f](https://github.com/run-llama/llama-cloud-py/commit/6094c9f8c678e748f26a7b35954d24871e08a58b))
+* **internal:** make `test_proxy_environment_variables` more resilient ([a025797](https://github.com/run-llama/llama-cloud-py/commit/a025797e811f3c47a657abf29fd806c0bfd61dca))
+* **internal:** make `test_proxy_environment_variables` more resilient to env ([7edce65](https://github.com/run-llama/llama-cloud-py/commit/7edce65945fe2721d288e630aa94cc708837ea0b))
+* **internal:** remove mock server code ([35ae99c](https://github.com/run-llama/llama-cloud-py/commit/35ae99cc5a7ac3abb6c49da4e2c7ec6f0ff4807b))
+* update mock server docs ([c3031de](https://github.com/run-llama/llama-cloud-py/commit/c3031de3d6a7d93e74a60325480aaa54a1faac99))
+
 ## 1.4.1 (2026-02-18)
 
 Full Changelog: [v1.4.0...v1.4.1](https://github.com/run-llama/llama-cloud-py/compare/v1.4.0...v1.4.1)
