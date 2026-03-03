@@ -17,3 +17,5 @@ Brewfile.lock.json
 
 # uses rye still
 uv.lock
+requirements.lock
+requirements-dev.lock
