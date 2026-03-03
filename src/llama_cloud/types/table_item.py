@@ -6,7 +6,18 @@ from typing_extensions import Literal
 from .b_box import BBox
 from .._models import BaseModel
 
-__all__ = ["TableItem"]
+__all__ = ["TableItem", "ParseConcern"]
+
+
+class ParseConcern(BaseModel):
+    details: str
+    """Human-readable details about the concern"""
+
+    type: str
+    """Type of parse concern (e.g.
+
+    header_value_type_mismatch, inconsistent_row_cell_count)
+    """
 
 
 class TableItem(BaseModel):
@@ -37,7 +48,7 @@ class TableItem(BaseModel):
     Page number where the full merged table begins (used on empty tables).
     """
 
-    parse_concerns: Optional[List[str]] = None
+    parse_concerns: Optional[List[ParseConcern]] = None
     """
     Quality concerns detected during table extraction, indicating the table may have
     issues

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Iterable, Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
 from .split_category_param import SplitCategoryParam
 from .split_document_input_param import SplitDocumentInputParam
@@ -29,8 +29,10 @@ class SplitCreateParams(TypedDict, total=False):
 class SplittingStrategy(TypedDict, total=False):
     """Strategy for splitting documents."""
 
-    allow_uncategorized: bool
-    """
-    Whether to allow pages that don't match any category to be grouped as
-    'uncategorized'. If False, all pages must be assigned to a defined category.
+    allow_uncategorized: Literal["include", "forbid", "omit"]
+    """Controls handling of pages that don't match any category.
+
+    'include': pages can be grouped as 'uncategorized' and included in results.
+    'forbid': all pages must be assigned to a defined category. 'omit': pages can be
+    classified as 'uncategorized' but are excluded from results.
     """

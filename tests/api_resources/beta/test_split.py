@@ -50,7 +50,7 @@ class TestSplit:
             },
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            splitting_strategy={"allow_uncategorized": True},
+            splitting_strategy={"allow_uncategorized": "include"},
         )
         assert_matches_type(SplitCreateResponse, split, path=["response"])
 
@@ -213,7 +213,7 @@ class TestAsyncSplit:
             },
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            splitting_strategy={"allow_uncategorized": True},
+            splitting_strategy={"allow_uncategorized": "include"},
         )
         assert_matches_type(SplitCreateResponse, split, path=["response"])
 
