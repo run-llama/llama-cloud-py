@@ -136,7 +136,7 @@ class LlamaCloudRetriever(BaseRetriever):
     ) -> List[NodeWithScore]:
         nodes: List[NodeWithScore] = []
         for res in result_nodes:
-            text_node = TextNode.model_validate(res.node.model_dump())
+            text_node = TextNode.model_validate(res.node.model_dump(exclude_none=True))
             text_node.metadata.update(metadata or {})
             nodes.append(NodeWithScore(node=text_node, score=res.score))
 

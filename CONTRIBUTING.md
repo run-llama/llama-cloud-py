@@ -89,7 +89,7 @@ Most tests require you to [set up a mock server](https://github.com/stoplightio/
 
 ```sh
 # you will need npm installed
-$ npx prism mock path/to/your/openapi.yml
+$ ./scripts/mock --daemon
 ```
 
 ```sh
