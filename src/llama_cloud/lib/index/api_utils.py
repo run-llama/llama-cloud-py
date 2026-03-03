@@ -192,12 +192,13 @@ async def apage_screenshot_nodes_to_node_with_score(
         page_index: int,
         project_id: str,
     ) -> str:
-        figure_bytes_str = await client.pipelines.images.get_page_screenshot(
+        resp = await client.pipelines.images.with_raw_response.get_page_screenshot(
             page_index=page_index,
             id=file_id,
             project_id=project_id,
         )
-        return base64.b64encode(str(figure_bytes_str).encode("utf-8")).decode("utf-8")
+        figure_bytes = resp.http_response.content
+        return base64.b64encode(figure_bytes).decode("utf-8")
 
     image_nodes: List[NodeWithScore] = []
     tasks = [
@@ -262,13 +263,14 @@ async def apage_figure_nodes_to_node_with_score(
         page_index: int,
         project_id: str,
     ) -> str:
-        figure_bytes_str = await client.pipelines.images.get_page_figure(
+        resp = await client.pipelines.images.with_raw_response.get_page_figure(
             page_index=page_index,
             figure_name=figure_name,
             id=file_id,
             project_id=project_id,
         )
-        return base64.b64encode(str(figure_bytes_str).encode("utf-8")).decode("utf-8")
+        figure_bytes = resp.http_response.content
+        return base64.b64encode(figure_bytes).decode("utf-8")
 
     figure_nodes: List[NodeWithScore] = []
     tasks = [
