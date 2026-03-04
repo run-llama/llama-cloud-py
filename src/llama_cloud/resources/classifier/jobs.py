@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import typing_extensions
 from typing import Iterable, Optional
 from typing_extensions import Literal
 
@@ -53,6 +54,7 @@ class JobsResource(SyncAPIResource):
         """
         return JobsResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("Please use 'client.classify'")
     def create(
         self,
         *,
@@ -122,6 +124,7 @@ class JobsResource(SyncAPIResource):
             cast_to=ClassifyJob,
         )
 
+    @typing_extensions.deprecated("Please use 'client.classify'")
     def list(
         self,
         *,
@@ -171,6 +174,7 @@ class JobsResource(SyncAPIResource):
             model=ClassifyJob,
         )
 
+    @typing_extensions.deprecated("Please use 'client.classify'")
     def get(
         self,
         classify_job_id: str,
@@ -218,6 +222,7 @@ class JobsResource(SyncAPIResource):
             cast_to=ClassifyJob,
         )
 
+    @typing_extensions.deprecated("Please use 'client.classify'")
     def get_results(
         self,
         classify_job_id: str,
@@ -286,6 +291,7 @@ class AsyncJobsResource(AsyncAPIResource):
         """
         return AsyncJobsResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("Please use 'client.classify'")
     async def create(
         self,
         *,
@@ -355,6 +361,7 @@ class AsyncJobsResource(AsyncAPIResource):
             cast_to=ClassifyJob,
         )
 
+    @typing_extensions.deprecated("Please use 'client.classify'")
     def list(
         self,
         *,
@@ -404,6 +411,7 @@ class AsyncJobsResource(AsyncAPIResource):
             model=ClassifyJob,
         )
 
+    @typing_extensions.deprecated("Please use 'client.classify'")
     async def get(
         self,
         classify_job_id: str,
@@ -451,6 +459,7 @@ class AsyncJobsResource(AsyncAPIResource):
             cast_to=ClassifyJob,
         )
 
+    @typing_extensions.deprecated("Please use 'client.classify'")
     async def get_results(
         self,
         classify_job_id: str,
@@ -503,17 +512,25 @@ class JobsResourceWithRawResponse:
     def __init__(self, jobs: JobsResource) -> None:
         self._jobs = jobs
 
-        self.create = to_raw_response_wrapper(
-            jobs.create,
+        self.create = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                jobs.create,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.list = to_raw_response_wrapper(
-            jobs.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                jobs.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.get = to_raw_response_wrapper(
-            jobs.get,
+        self.get = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                jobs.get,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.get_results = to_raw_response_wrapper(
-            jobs.get_results,
+        self.get_results = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                jobs.get_results,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -521,17 +538,25 @@ class AsyncJobsResourceWithRawResponse:
     def __init__(self, jobs: AsyncJobsResource) -> None:
         self._jobs = jobs
 
-        self.create = async_to_raw_response_wrapper(
-            jobs.create,
+        self.create = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                jobs.create,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.list = async_to_raw_response_wrapper(
-            jobs.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                jobs.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.get = async_to_raw_response_wrapper(
-            jobs.get,
+        self.get = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                jobs.get,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.get_results = async_to_raw_response_wrapper(
-            jobs.get_results,
+        self.get_results = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                jobs.get_results,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -539,17 +564,25 @@ class JobsResourceWithStreamingResponse:
     def __init__(self, jobs: JobsResource) -> None:
         self._jobs = jobs
 
-        self.create = to_streamed_response_wrapper(
-            jobs.create,
+        self.create = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                jobs.create,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.list = to_streamed_response_wrapper(
-            jobs.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                jobs.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.get = to_streamed_response_wrapper(
-            jobs.get,
+        self.get = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                jobs.get,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.get_results = to_streamed_response_wrapper(
-            jobs.get_results,
+        self.get_results = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                jobs.get_results,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -557,15 +590,23 @@ class AsyncJobsResourceWithStreamingResponse:
     def __init__(self, jobs: AsyncJobsResource) -> None:
         self._jobs = jobs
 
-        self.create = async_to_streamed_response_wrapper(
-            jobs.create,
+        self.create = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                jobs.create,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.list = async_to_streamed_response_wrapper(
-            jobs.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                jobs.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.get = async_to_streamed_response_wrapper(
-            jobs.get,
+        self.get = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                jobs.get,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.get_results = async_to_streamed_response_wrapper(
-            jobs.get_results,
+        self.get_results = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                jobs.get_results,  # pyright: ignore[reportDeprecated],
+            )
         )
