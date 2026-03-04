@@ -179,6 +179,27 @@ Methods:
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}">client.classifier.jobs.<a href="./src/llama_cloud/resources/classifier/jobs.py">get</a>(classify_job_id, \*\*<a href="src/llama_cloud/types/classifier/job_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/classifier/classify_job.py">ClassifyJob</a></code>
 - <code title="get /api/v1/classifier/jobs/{classify_job_id}/results">client.classifier.jobs.<a href="./src/llama_cloud/resources/classifier/jobs.py">get_results</a>(classify_job_id, \*\*<a href="src/llama_cloud/types/classifier/job_get_results_params.py">params</a>) -> <a href="./src/llama_cloud/types/classifier/job_get_results_response.py">JobGetResultsResponse</a></code>
 
+# Classify
+
+Types:
+
+```python
+from llama_cloud.types import (
+    ClassifyConfiguration,
+    ClassifyCreateRequest,
+    ClassifyResult,
+    ClassifyCreateResponse,
+    ClassifyListResponse,
+    ClassifyGetResponse,
+)
+```
+
+Methods:
+
+- <code title="post /api/v2/classify">client.classify.<a href="./src/llama_cloud/resources/classify.py">create</a>(\*\*<a href="src/llama_cloud/types/classify_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/classify_create_response.py">ClassifyCreateResponse</a></code>
+- <code title="get /api/v2/classify">client.classify.<a href="./src/llama_cloud/resources/classify.py">list</a>(\*\*<a href="src/llama_cloud/types/classify_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/classify_list_response.py">SyncPaginatedCursor[ClassifyListResponse]</a></code>
+- <code title="get /api/v2/classify/{job_id}">client.classify.<a href="./src/llama_cloud/resources/classify.py">get</a>(job_id, \*\*<a href="src/llama_cloud/types/classify_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/classify_get_response.py">ClassifyGetResponse</a></code>
+
 # Projects
 
 Types:
