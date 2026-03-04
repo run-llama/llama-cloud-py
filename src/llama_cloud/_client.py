@@ -35,6 +35,7 @@ if TYPE_CHECKING:
         beta,
         files,
         parsing,
+        classify,
         projects,
         pipelines,
         classifier,
@@ -45,6 +46,7 @@ if TYPE_CHECKING:
     )
     from .resources.files import FilesResource, AsyncFilesResource
     from .resources.parsing import ParsingResource, AsyncParsingResource
+    from .resources.classify import ClassifyResource, AsyncClassifyResource
     from .resources.projects import ProjectsResource, AsyncProjectsResource
     from .resources.beta.beta import BetaResource, AsyncBetaResource
     from .resources.data_sinks import DataSinksResource, AsyncDataSinksResource
@@ -144,6 +146,12 @@ class LlamaCloud(SyncAPIClient):
         from .resources.classifier import ClassifierResource
 
         return ClassifierResource(self)
+
+    @cached_property
+    def classify(self) -> ClassifyResource:
+        from .resources.classify import ClassifyResource
+
+        return ClassifyResource(self)
 
     @cached_property
     def projects(self) -> ProjectsResource:
@@ -374,6 +382,12 @@ class AsyncLlamaCloud(AsyncAPIClient):
         return AsyncClassifierResource(self)
 
     @cached_property
+    def classify(self) -> AsyncClassifyResource:
+        from .resources.classify import AsyncClassifyResource
+
+        return AsyncClassifyResource(self)
+
+    @cached_property
     def projects(self) -> AsyncProjectsResource:
         from .resources.projects import AsyncProjectsResource
 
@@ -553,6 +567,12 @@ class LlamaCloudWithRawResponse:
         return ClassifierResourceWithRawResponse(self._client.classifier)
 
     @cached_property
+    def classify(self) -> classify.ClassifyResourceWithRawResponse:
+        from .resources.classify import ClassifyResourceWithRawResponse
+
+        return ClassifyResourceWithRawResponse(self._client.classify)
+
+    @cached_property
     def projects(self) -> projects.ProjectsResourceWithRawResponse:
         from .resources.projects import ProjectsResourceWithRawResponse
 
@@ -618,6 +638,12 @@ class AsyncLlamaCloudWithRawResponse:
         from .resources.classifier import AsyncClassifierResourceWithRawResponse
 
         return AsyncClassifierResourceWithRawResponse(self._client.classifier)
+
+    @cached_property
+    def classify(self) -> classify.AsyncClassifyResourceWithRawResponse:
+        from .resources.classify import AsyncClassifyResourceWithRawResponse
+
+        return AsyncClassifyResourceWithRawResponse(self._client.classify)
 
     @cached_property
     def projects(self) -> projects.AsyncProjectsResourceWithRawResponse:
@@ -687,6 +713,12 @@ class LlamaCloudWithStreamedResponse:
         return ClassifierResourceWithStreamingResponse(self._client.classifier)
 
     @cached_property
+    def classify(self) -> classify.ClassifyResourceWithStreamingResponse:
+        from .resources.classify import ClassifyResourceWithStreamingResponse
+
+        return ClassifyResourceWithStreamingResponse(self._client.classify)
+
+    @cached_property
     def projects(self) -> projects.ProjectsResourceWithStreamingResponse:
         from .resources.projects import ProjectsResourceWithStreamingResponse
 
@@ -752,6 +784,12 @@ class AsyncLlamaCloudWithStreamedResponse:
         from .resources.classifier import AsyncClassifierResourceWithStreamingResponse
 
         return AsyncClassifierResourceWithStreamingResponse(self._client.classifier)
+
+    @cached_property
+    def classify(self) -> classify.AsyncClassifyResourceWithStreamingResponse:
+        from .resources.classify import AsyncClassifyResourceWithStreamingResponse
+
+        return AsyncClassifyResourceWithStreamingResponse(self._client.classify)
 
     @cached_property
     def projects(self) -> projects.AsyncProjectsResourceWithStreamingResponse:

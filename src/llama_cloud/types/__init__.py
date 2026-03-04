@@ -60,6 +60,7 @@ from .pipeline_type import PipelineType as PipelineType
 from .presigned_url import PresignedURL as PresignedURL
 from .fail_page_mode import FailPageMode as FailPageMode
 from .retrieval_mode import RetrievalMode as RetrievalMode
+from .classify_result import ClassifyResult as ClassifyResult
 from .file_get_params import FileGetParams as FileGetParams
 from .cohere_embedding import CohereEmbedding as CohereEmbedding
 from .file_list_params import FileListParams as FileListParams
@@ -75,16 +76,19 @@ from .file_list_response import FileListResponse as FileListResponse
 from .parsing_get_params import ParsingGetParams as ParsingGetParams
 from .project_get_params import ProjectGetParams as ProjectGetParams
 from .retriever_pipeline import RetrieverPipeline as RetrieverPipeline
+from .classify_get_params import ClassifyGetParams as ClassifyGetParams
 from .file_query_response import FileQueryResponse as FileQueryResponse
 from .parsing_list_params import ParsingListParams as ParsingListParams
 from .project_list_params import ProjectListParams as ProjectListParams
 from .sparse_model_config import SparseModelConfig as SparseModelConfig
+from .classify_list_params import ClassifyListParams as ClassifyListParams
 from .file_create_response import FileCreateResponse as FileCreateResponse
 from .parsing_get_response import ParsingGetResponse as ParsingGetResponse
 from .pipeline_list_params import PipelineListParams as PipelineListParams
 from .re_rank_config_param import ReRankConfigParam as ReRankConfigParam
 from .retriever_get_params import RetrieverGetParams as RetrieverGetParams
 from .auto_transform_config import AutoTransformConfig as AutoTransformConfig
+from .classify_get_response import ClassifyGetResponse as ClassifyGetResponse
 from .data_sink_list_params import DataSinkListParams as DataSinkListParams
 from .extraction_run_params import ExtractionRunParams as ExtractionRunParams
 from .parsing_create_params import ParsingCreateParams as ParsingCreateParams
@@ -93,6 +97,9 @@ from .project_list_response import ProjectListResponse as ProjectListResponse
 from .retriever_list_params import RetrieverListParams as RetrieverListParams
 from .vertex_text_embedding import VertexTextEmbedding as VertexTextEmbedding
 from .azure_openai_embedding import AzureOpenAIEmbedding as AzureOpenAIEmbedding
+from .classify_configuration import ClassifyConfiguration as ClassifyConfiguration
+from .classify_create_params import ClassifyCreateParams as ClassifyCreateParams
+from .classify_list_response import ClassifyListResponse as ClassifyListResponse
 from .cohere_embedding_param import CohereEmbeddingParam as CohereEmbeddingParam
 from .data_sink_create_param import DataSinkCreateParam as DataSinkCreateParam
 from .gemini_embedding_param import GeminiEmbeddingParam as GeminiEmbeddingParam
@@ -119,6 +126,7 @@ from .retriever_search_params import RetrieverSearchParams as RetrieverSearchPar
 from .retriever_update_params import RetrieverUpdateParams as RetrieverUpdateParams
 from .retriever_upsert_params import RetrieverUpsertParams as RetrieverUpsertParams
 from .bedrock_embedding_config import BedrockEmbeddingConfig as BedrockEmbeddingConfig
+from .classify_create_response import ClassifyCreateResponse as ClassifyCreateResponse
 from .composite_retrieval_mode import CompositeRetrievalMode as CompositeRetrievalMode
 from .pipeline_metadata_config import PipelineMetadataConfig as PipelineMetadataConfig
 from .pipeline_retrieve_params import PipelineRetrieveParams as PipelineRetrieveParams
@@ -135,6 +143,7 @@ from .auto_transform_config_param import AutoTransformConfigParam as AutoTransfo
 from .page_figure_node_with_score import PageFigureNodeWithScore as PageFigureNodeWithScore
 from .vertex_text_embedding_param import VertexTextEmbeddingParam as VertexTextEmbeddingParam
 from .azure_openai_embedding_param import AzureOpenAIEmbeddingParam as AzureOpenAIEmbeddingParam
+from .classify_configuration_param import ClassifyConfigurationParam as ClassifyConfigurationParam
 from .llama_parse_parameters_param import LlamaParseParametersParam as LlamaParseParametersParam
 from .azure_openai_embedding_config import AzureOpenAIEmbeddingConfig as AzureOpenAIEmbeddingConfig
 from .cohere_embedding_config_param import CohereEmbeddingConfigParam as CohereEmbeddingConfigParam

@@ -24,6 +24,14 @@ from .parsing import (
     ParsingResourceWithStreamingResponse,
     AsyncParsingResourceWithStreamingResponse,
 )
+from .classify import (
+    ClassifyResource,
+    AsyncClassifyResource,
+    ClassifyResourceWithRawResponse,
+    AsyncClassifyResourceWithRawResponse,
+    ClassifyResourceWithStreamingResponse,
+    AsyncClassifyResourceWithStreamingResponse,
+)
 from .projects import (
     ProjectsResource,
     AsyncProjectsResource,
@@ -106,6 +114,12 @@ __all__ = [
     "AsyncClassifierResourceWithRawResponse",
     "ClassifierResourceWithStreamingResponse",
     "AsyncClassifierResourceWithStreamingResponse",
+    "ClassifyResource",
+    "AsyncClassifyResource",
+    "ClassifyResourceWithRawResponse",
+    "AsyncClassifyResourceWithRawResponse",
+    "ClassifyResourceWithStreamingResponse",
+    "AsyncClassifyResourceWithStreamingResponse",
     "ProjectsResource",
     "AsyncProjectsResource",
     "ProjectsResourceWithRawResponse",
