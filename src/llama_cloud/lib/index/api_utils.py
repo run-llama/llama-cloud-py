@@ -197,7 +197,7 @@ async def apage_screenshot_nodes_to_node_with_score(
             id=file_id,
             project_id=project_id,
         )
-        figure_bytes = resp.http_response.content
+        figure_bytes = await resp.read()
         return base64.b64encode(figure_bytes).decode("utf-8")
 
     image_nodes: List[NodeWithScore] = []
@@ -269,7 +269,7 @@ async def apage_figure_nodes_to_node_with_score(
             id=file_id,
             project_id=project_id,
         )
-        figure_bytes = resp.http_response.content
+        figure_bytes = await resp.read()
         return base64.b64encode(figure_bytes).decode("utf-8")
 
     figure_nodes: List[NodeWithScore] = []
