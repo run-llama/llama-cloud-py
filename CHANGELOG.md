@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.6.0 (2026-03-05)
+
+Full Changelog: [v1.5.0...v1.6.0](https://github.com/run-llama/llama-cloud-py/compare/v1.5.0...v1.6.0)
+
+### Features
+
+* **api:** add better deprecation messages ([67d464b](https://github.com/run-llama/llama-cloud-py/commit/67d464b17ad38286fa67fe167f400a73f5ca937a))
+* **api:** Add Classify V2 API ([48ecb15](https://github.com/run-llama/llama-cloud-py/commit/48ecb15528509b3a34607ef0cb968d2d38956c3b))
+* **api:** api update ([5d70486](https://github.com/run-llama/llama-cloud-py/commit/5d70486e29d0ad50cb41a5a350d7b68ea3b862e2))
+* **api:** better deprecation config ([22e56e5](https://github.com/run-llama/llama-cloud-py/commit/22e56e58f63c1420f1f40392ed69328567984031))
+
 ## 1.5.0 (2026-03-03)
 
 Full Changelog: [v1.4.1...v1.5.0](https://github.com/run-llama/llama-cloud-py/compare/v1.4.1...v1.5.0)
