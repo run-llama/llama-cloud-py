@@ -54,7 +54,7 @@ class JobsResource(SyncAPIResource):
         """
         return JobsResourceWithStreamingResponse(self)
 
-    @typing_extensions.deprecated("Please use 'client.classify'")
+    @typing_extensions.deprecated("Please use `client.classify.create()`")
     def create(
         self,
         *,
@@ -124,7 +124,7 @@ class JobsResource(SyncAPIResource):
             cast_to=ClassifyJob,
         )
 
-    @typing_extensions.deprecated("Please use 'client.classify'")
+    @typing_extensions.deprecated("Please use `client.classify.list()`")
     def list(
         self,
         *,
@@ -174,7 +174,7 @@ class JobsResource(SyncAPIResource):
             model=ClassifyJob,
         )
 
-    @typing_extensions.deprecated("Please use 'client.classify'")
+    @typing_extensions.deprecated("Please use `client.classify.get()`")
     def get(
         self,
         classify_job_id: str,
@@ -222,7 +222,7 @@ class JobsResource(SyncAPIResource):
             cast_to=ClassifyJob,
         )
 
-    @typing_extensions.deprecated("Please use 'client.classify'")
+    @typing_extensions.deprecated("Please use `client.classify.get()`")
     def get_results(
         self,
         classify_job_id: str,
@@ -291,7 +291,7 @@ class AsyncJobsResource(AsyncAPIResource):
         """
         return AsyncJobsResourceWithStreamingResponse(self)
 
-    @typing_extensions.deprecated("Please use 'client.classify'")
+    @typing_extensions.deprecated("Please use `client.classify.create()`")
     async def create(
         self,
         *,
@@ -361,7 +361,7 @@ class AsyncJobsResource(AsyncAPIResource):
             cast_to=ClassifyJob,
         )
 
-    @typing_extensions.deprecated("Please use 'client.classify'")
+    @typing_extensions.deprecated("Please use `client.classify.list()`")
     def list(
         self,
         *,
@@ -411,7 +411,7 @@ class AsyncJobsResource(AsyncAPIResource):
             model=ClassifyJob,
         )
 
-    @typing_extensions.deprecated("Please use 'client.classify'")
+    @typing_extensions.deprecated("Please use `client.classify.get()`")
     async def get(
         self,
         classify_job_id: str,
@@ -459,7 +459,7 @@ class AsyncJobsResource(AsyncAPIResource):
             cast_to=ClassifyJob,
         )
 
-    @typing_extensions.deprecated("Please use 'client.classify'")
+    @typing_extensions.deprecated("Please use `client.classify.get()`")
     async def get_results(
         self,
         classify_job_id: str,
