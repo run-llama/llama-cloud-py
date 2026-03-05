@@ -20,6 +20,7 @@ __all__ = [
     "Job",
     "ImagesContentMetadata",
     "ImagesContentMetadataImage",
+    "ImagesContentMetadataImageBbox",
     "Items",
     "ItemsPage",
     "ItemsPageStructuredResultPage",
@@ -64,6 +65,22 @@ class Job(BaseModel):
     """Update datetime"""
 
 
+class ImagesContentMetadataImageBbox(BaseModel):
+    """Bounding box for an image on its page."""
+
+    h: int
+    """Height of the bounding box"""
+
+    w: int
+    """Width of the bounding box"""
+
+    x: int
+    """X coordinate of the bounding box"""
+
+    y: int
+    """Y coordinate of the bounding box"""
+
+
 class ImagesContentMetadataImage(BaseModel):
     """Metadata for a single extracted image."""
 
@@ -72,6 +89,15 @@ class ImagesContentMetadataImage(BaseModel):
 
     index: int
     """Index of the image in the extraction order"""
+
+    bbox: Optional[ImagesContentMetadataImageBbox] = None
+    """Bounding box for an image on its page."""
+
+    category: Optional[Literal["screenshot", "embedded", "layout"]] = None
+    """
+    Image category: 'screenshot' (full page), 'embedded' (images in document), or
+    'layout' (cropped from layout detection)
+    """
 
     content_type: Optional[str] = None
     """MIME type of the image"""
