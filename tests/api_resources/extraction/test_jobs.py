@@ -135,7 +135,7 @@ class TestJobs:
     def test_method_file(self, client: LlamaCloud) -> None:
         job = client.extraction.jobs.file(
             extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file=b"raw file contents",
+            file=b"Example data",
         )
         assert_matches_type(ExtractJob, job, path=["response"])
 
@@ -144,7 +144,7 @@ class TestJobs:
     def test_method_file_with_all_params(self, client: LlamaCloud) -> None:
         job = client.extraction.jobs.file(
             extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file=b"raw file contents",
+            file=b"Example data",
             from_ui=True,
             config_override="config_override",
             data_schema_override="data_schema_override",
@@ -156,7 +156,7 @@ class TestJobs:
     def test_raw_response_file(self, client: LlamaCloud) -> None:
         response = client.extraction.jobs.with_raw_response.file(
             extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file=b"raw file contents",
+            file=b"Example data",
         )
 
         assert response.is_closed is True
@@ -169,7 +169,7 @@ class TestJobs:
     def test_streaming_response_file(self, client: LlamaCloud) -> None:
         with client.extraction.jobs.with_streaming_response.file(
             extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file=b"raw file contents",
+            file=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -393,7 +393,7 @@ class TestAsyncJobs:
     async def test_method_file(self, async_client: AsyncLlamaCloud) -> None:
         job = await async_client.extraction.jobs.file(
             extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file=b"raw file contents",
+            file=b"Example data",
         )
         assert_matches_type(ExtractJob, job, path=["response"])
 
@@ -402,7 +402,7 @@ class TestAsyncJobs:
     async def test_method_file_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         job = await async_client.extraction.jobs.file(
             extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file=b"raw file contents",
+            file=b"Example data",
             from_ui=True,
             config_override="config_override",
             data_schema_override="data_schema_override",
@@ -414,7 +414,7 @@ class TestAsyncJobs:
     async def test_raw_response_file(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.extraction.jobs.with_raw_response.file(
             extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file=b"raw file contents",
+            file=b"Example data",
         )
 
         assert response.is_closed is True
@@ -427,7 +427,7 @@ class TestAsyncJobs:
     async def test_streaming_response_file(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.extraction.jobs.with_streaming_response.file(
             extraction_agent_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            file=b"raw file contents",
+            file=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
