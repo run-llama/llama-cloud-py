@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.6.1 (2026-03-07)
+
+Full Changelog: [v1.6.0...v1.6.1](https://github.com/run-llama/llama-cloud-py/compare/v1.6.0...v1.6.1)
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([388c369](https://github.com/run-llama/llama-cloud-py/commit/388c3690c388604dfe905f2987b33543b9feba6e))
+* update placeholder string ([31b38d9](https://github.com/run-llama/llama-cloud-py/commit/31b38d990e0fc58e5027e9fb7b59675088230803))
+
 ## 1.6.0 (2026-03-05)
 
 Full Changelog: [v1.5.0...v1.6.0](https://github.com/run-llama/llama-cloud-py/compare/v1.5.0...v1.6.0)
