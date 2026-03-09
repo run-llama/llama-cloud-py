@@ -279,6 +279,9 @@ class ParsingGetResponse(BaseModel):
     items: Optional[Items] = None
     """Structured JSON result (if requested)"""
 
+    job_metadata: Optional[Dict[str, object]] = None
+    """Job execution metadata (if requested)"""
+
     markdown: Optional[Markdown] = None
     """Markdown result (if requested)"""
 
