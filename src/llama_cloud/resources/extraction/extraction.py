@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import typing_extensions
 from typing import Dict, Union, Iterable, Optional
 
 import httpx
@@ -81,6 +82,7 @@ class ExtractionResource(SyncAPIResource):
         """
         return ExtractionResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("Use `client.extract` instead")
     def run(
         self,
         *,
@@ -187,6 +189,7 @@ class AsyncExtractionResource(AsyncAPIResource):
         """
         return AsyncExtractionResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("Use `client.extract` instead")
     async def run(
         self,
         *,
@@ -265,8 +268,10 @@ class ExtractionResourceWithRawResponse:
     def __init__(self, extraction: ExtractionResource) -> None:
         self._extraction = extraction
 
-        self.run = to_raw_response_wrapper(
-            extraction.run,
+        self.run = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                extraction.run,  # pyright: ignore[reportDeprecated],
+            )
         )
 
     @cached_property
@@ -286,8 +291,10 @@ class AsyncExtractionResourceWithRawResponse:
     def __init__(self, extraction: AsyncExtractionResource) -> None:
         self._extraction = extraction
 
-        self.run = async_to_raw_response_wrapper(
-            extraction.run,
+        self.run = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                extraction.run,  # pyright: ignore[reportDeprecated],
+            )
         )
 
     @cached_property
@@ -307,8 +314,10 @@ class ExtractionResourceWithStreamingResponse:
     def __init__(self, extraction: ExtractionResource) -> None:
         self._extraction = extraction
 
-        self.run = to_streamed_response_wrapper(
-            extraction.run,
+        self.run = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                extraction.run,  # pyright: ignore[reportDeprecated],
+            )
         )
 
     @cached_property
@@ -328,8 +337,10 @@ class AsyncExtractionResourceWithStreamingResponse:
     def __init__(self, extraction: AsyncExtractionResource) -> None:
         self._extraction = extraction
 
-        self.run = async_to_streamed_response_wrapper(
-            extraction.run,
+        self.run = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                extraction.run,  # pyright: ignore[reportDeprecated],
+            )
         )
 
     @cached_property

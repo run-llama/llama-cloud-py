@@ -138,16 +138,14 @@ from llama_cloud import LlamaCloud
 
 client = LlamaCloud()
 
-all_runs = []
+all_extracts = []
 # Automatically fetches more pages as needed.
-for run in client.extraction.runs.list(
-    extraction_agent_id="30988414-9163-4a0b-a7e0-35dd760109d7",
-    limit=20,
-    skip=0,
+for extract in client.extract.list(
+    page_size=20,
 ):
-    # Do something with run here
-    all_runs.append(run)
-print(all_runs)
+    # Do something with extract here
+    all_extracts.append(extract)
+print(all_extracts)
 ```
 
 Or, asynchronously:
@@ -160,15 +158,13 @@ client = AsyncLlamaCloud()
 
 
 async def main() -> None:
-    all_runs = []
+    all_extracts = []
     # Iterate through items across all pages, issuing requests as needed.
-    async for run in client.extraction.runs.list(
-        extraction_agent_id="30988414-9163-4a0b-a7e0-35dd760109d7",
-        limit=20,
-        skip=0,
+    async for extract in client.extract.list(
+        page_size=20,
     ):
-        all_runs.append(run)
-    print(all_runs)
+        all_extracts.append(extract)
+    print(all_extracts)
 
 
 asyncio.run(main())
@@ -177,10 +173,8 @@ asyncio.run(main())
 Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get_next_page()` methods for more granular control working with pages:
 
 ```python
-first_page = await client.extraction.runs.list(
-    extraction_agent_id="30988414-9163-4a0b-a7e0-35dd760109d7",
-    limit=20,
-    skip=0,
+first_page = await client.extract.list(
+    page_size=20,
 )
 if first_page.has_next_page():
     print(f"will fetch next page using these details: {first_page.next_page_info()}")
@@ -193,17 +187,13 @@ if first_page.has_next_page():
 Or just work directly with the returned data:
 
 ```python
-first_page = await client.extraction.runs.list(
-    extraction_agent_id="30988414-9163-4a0b-a7e0-35dd760109d7",
-    limit=20,
-    skip=0,
+first_page = await client.extract.list(
+    page_size=20,
 )
 
-print(
-    f"the current start offset for this page: {first_page.skip}"
-)  # => "the current start offset for this page: 1"
-for run in first_page.items:
-    print(run.id)
+print(f"next page cursor: {first_page.next_page_token}")  # => "next page cursor: ..."
+for extract in first_page.items:
+    print(extract.id)
 
 # Remove `await` for non-async usage.
 ```

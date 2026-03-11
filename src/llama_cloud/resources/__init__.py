@@ -16,6 +16,14 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
+from .extract import (
+    ExtractResource,
+    AsyncExtractResource,
+    ExtractResourceWithRawResponse,
+    AsyncExtractResourceWithRawResponse,
+    ExtractResourceWithStreamingResponse,
+    AsyncExtractResourceWithStreamingResponse,
+)
 from .parsing import (
     ParsingResource,
     AsyncParsingResource,
@@ -102,6 +110,12 @@ __all__ = [
     "AsyncParsingResourceWithRawResponse",
     "ParsingResourceWithStreamingResponse",
     "AsyncParsingResourceWithStreamingResponse",
+    "ExtractResource",
+    "AsyncExtractResource",
+    "ExtractResourceWithRawResponse",
+    "AsyncExtractResourceWithRawResponse",
+    "ExtractResourceWithStreamingResponse",
+    "AsyncExtractResourceWithStreamingResponse",
     "ExtractionResource",
     "AsyncExtractionResource",
     "ExtractionResourceWithRawResponse",
