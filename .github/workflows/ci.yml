@@ -100,3 +100,5 @@ jobs:
 
       - name: Run tests
         run: ./scripts/test
+        env:
+          LLAMA_CLOUD_API_KEY: ${{ secrets.LLAMA_CLOUD_API_KEY }}
