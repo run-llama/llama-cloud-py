@@ -34,6 +34,7 @@ if TYPE_CHECKING:
     from .resources import (
         beta,
         files,
+        extract,
         parsing,
         classify,
         projects,
@@ -45,6 +46,7 @@ if TYPE_CHECKING:
         data_sources,
     )
     from .resources.files import FilesResource, AsyncFilesResource
+    from .resources.extract import ExtractResource, AsyncExtractResource
     from .resources.parsing import ParsingResource, AsyncParsingResource
     from .resources.classify import ClassifyResource, AsyncClassifyResource
     from .resources.projects import ProjectsResource, AsyncProjectsResource
@@ -134,6 +136,12 @@ class LlamaCloud(SyncAPIClient):
         from .resources.parsing import ParsingResource
 
         return ParsingResource(self)
+
+    @cached_property
+    def extract(self) -> ExtractResource:
+        from .resources.extract import ExtractResource
+
+        return ExtractResource(self)
 
     @cached_property
     def extraction(self) -> ExtractionResource:
@@ -370,6 +378,12 @@ class AsyncLlamaCloud(AsyncAPIClient):
         return AsyncParsingResource(self)
 
     @cached_property
+    def extract(self) -> AsyncExtractResource:
+        from .resources.extract import AsyncExtractResource
+
+        return AsyncExtractResource(self)
+
+    @cached_property
     def extraction(self) -> AsyncExtractionResource:
         from .resources.extraction import AsyncExtractionResource
 
@@ -555,6 +569,12 @@ class LlamaCloudWithRawResponse:
         return ParsingResourceWithRawResponse(self._client.parsing)
 
     @cached_property
+    def extract(self) -> extract.ExtractResourceWithRawResponse:
+        from .resources.extract import ExtractResourceWithRawResponse
+
+        return ExtractResourceWithRawResponse(self._client.extract)
+
+    @cached_property
     def extraction(self) -> extraction.ExtractionResourceWithRawResponse:
         from .resources.extraction import ExtractionResourceWithRawResponse
 
@@ -626,6 +646,12 @@ class AsyncLlamaCloudWithRawResponse:
         from .resources.parsing import AsyncParsingResourceWithRawResponse
 
         return AsyncParsingResourceWithRawResponse(self._client.parsing)
+
+    @cached_property
+    def extract(self) -> extract.AsyncExtractResourceWithRawResponse:
+        from .resources.extract import AsyncExtractResourceWithRawResponse
+
+        return AsyncExtractResourceWithRawResponse(self._client.extract)
 
     @cached_property
     def extraction(self) -> extraction.AsyncExtractionResourceWithRawResponse:
@@ -701,6 +727,12 @@ class LlamaCloudWithStreamedResponse:
         return ParsingResourceWithStreamingResponse(self._client.parsing)
 
     @cached_property
+    def extract(self) -> extract.ExtractResourceWithStreamingResponse:
+        from .resources.extract import ExtractResourceWithStreamingResponse
+
+        return ExtractResourceWithStreamingResponse(self._client.extract)
+
+    @cached_property
     def extraction(self) -> extraction.ExtractionResourceWithStreamingResponse:
         from .resources.extraction import ExtractionResourceWithStreamingResponse
 
@@ -772,6 +804,12 @@ class AsyncLlamaCloudWithStreamedResponse:
         from .resources.parsing import AsyncParsingResourceWithStreamingResponse
 
         return AsyncParsingResourceWithStreamingResponse(self._client.parsing)
+
+    @cached_property
+    def extract(self) -> extract.AsyncExtractResourceWithStreamingResponse:
+        from .resources.extract import AsyncExtractResourceWithStreamingResponse
+
+        return AsyncExtractResourceWithStreamingResponse(self._client.extract)
 
     @cached_property
     def extraction(self) -> extraction.AsyncExtractionResourceWithStreamingResponse:
