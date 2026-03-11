@@ -18,13 +18,13 @@ from ..types import (
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
-from .._resource import SyncAPIResource, AsyncAPIResource
 from .._polling import (
-    BackoffStrategy,
     DEFAULT_TIMEOUT,
+    BackoffStrategy,
     poll_until_complete,
     poll_until_complete_async,
 )
+from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
