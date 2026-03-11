@@ -1,11 +1,3 @@
-"""Extract V2 — end-to-end convenience method.
-
-Upload a file and extract structured data in a single call using
-client.extract.run(), which handles job creation, polling, and
-returning the completed result.
-"""
-from __future__ import annotations
-
 import asyncio
 from typing import Optional
 
@@ -18,7 +10,7 @@ class Models(BaseModel):
     model_names: Optional[list[str]] = Field(description="List of models mentioned.")
 
 
-async def main() -> None:
+async def extract_document() -> None:
     client = AsyncLlamaCloud()
 
     # Upload a file for extraction
@@ -44,4 +36,4 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(extract_document())
