@@ -16,7 +16,7 @@ from pathlib import Path
 import pytest
 
 from llama_cloud import LlamaCloud, AsyncLlamaCloud
-from llama_cloud.types import ExtractV2Job
+from llama_cloud.types import ExtractV2Job, ExtractConfigurationParam
 
 pytestmark = [
     pytest.mark.skipif(
@@ -28,10 +28,12 @@ pytestmark = [
 
 TEST_PDF = Path(__file__).parent.parent / "test_files" / "TOS.pdf"
 
-SIMPLE_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "title": {"type": "string", "description": "The title or heading of the document"},
+SIMPLE_CONFIG: ExtractConfigurationParam = {
+    "extract_options": {
+        "data_schema": {
+            "type": "object",
+            "properties": {"title": {"type": "string", "description": "The title or heading of the document"}},
+        },
     },
 }
 
@@ -60,7 +62,7 @@ class TestExtractE2ESync:
         job = client.extract.create(
             type="file_id",
             value=file_id,
-            config={"extract_options": {"data_schema": SIMPLE_SCHEMA}},
+            config=SIMPLE_CONFIG,
         )
         assert isinstance(job, ExtractV2Job)
         assert job.id
@@ -74,7 +76,7 @@ class TestExtractE2ESync:
         job = client.extract.create(
             type="file_id",
             value=file_id,
-            config={"extract_options": {"data_schema": SIMPLE_SCHEMA}},
+            config=SIMPLE_CONFIG,
         )
 
         completed = client.extract.wait_for_completion(
@@ -90,7 +92,7 @@ class TestExtractE2ESync:
         result = client.extract.run(
             type="file_id",
             value=file_id,
-            config={"extract_options": {"data_schema": SIMPLE_SCHEMA}},
+            config=SIMPLE_CONFIG,
             polling_interval=2.0,
             verbose=True,
         )
@@ -112,7 +114,7 @@ class TestExtractE2EAsync:
         job = await async_client.extract.create(
             type="file_id",
             value=file_id,
-            config={"extract_options": {"data_schema": SIMPLE_SCHEMA}},
+            config=SIMPLE_CONFIG,
         )
         assert isinstance(job, ExtractV2Job)
         assert job.id
@@ -125,7 +127,7 @@ class TestExtractE2EAsync:
         job = await async_client.extract.create(
             type="file_id",
             value=file_id,
-            config={"extract_options": {"data_schema": SIMPLE_SCHEMA}},
+            config=SIMPLE_CONFIG,
         )
 
         completed = await async_client.extract.wait_for_completion(
@@ -141,7 +143,7 @@ class TestExtractE2EAsync:
         result = await async_client.extract.run(
             type="file_id",
             value=file_id,
-            config={"extract_options": {"data_schema": SIMPLE_SCHEMA}},
+            config=SIMPLE_CONFIG,
             polling_interval=2.0,
             verbose=True,
         )
