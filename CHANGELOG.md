@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.7.0 (2026-03-13)
+
+Full Changelog: [v1.6.0...v1.7.0](https://github.com/run-llama/llama-cloud-py/compare/v1.6.0...v1.7.0)
+
+### Features
+
+* add run() and wait_for_completion() convenience methods to extract resource ([82b3c7e](https://github.com/run-llama/llama-cloud-py/commit/82b3c7e647e7004b1978d6c7ad6ddb99e16d514b))
+* **api:** api update ([1f02c28](https://github.com/run-llama/llama-cloud-py/commit/1f02c28b55253a13de092e25f8920e241705e35c))
+* **api:** api update ([e2f0045](https://github.com/run-llama/llama-cloud-py/commit/e2f0045c6d215a7571d9c934e3b5318b69b8933d))
+* **api:** api update ([94c5a92](https://github.com/run-llama/llama-cloud-py/commit/94c5a92da70b170abab7e897e2fb599e7edfb64b))
+* **api:** manual updates ([b841369](https://github.com/run-llama/llama-cloud-py/commit/b8413695a96e5e039dc4845b145660a4a448be48))
+
+
+### Bug Fixes
+
+* sort imports in extract.py ([1884833](https://github.com/run-llama/llama-cloud-py/commit/1884833098d541f3deb3c2ff006da8fb765616df))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([388c369](https://github.com/run-llama/llama-cloud-py/commit/388c3690c388604dfe905f2987b33543b9feba6e))
+* update placeholder string ([31b38d9](https://github.com/run-llama/llama-cloud-py/commit/31b38d990e0fc58e5027e9fb7b59675088230803))
+
 ## 1.6.0 (2026-03-05)
 
 Full Changelog: [v1.5.0...v1.6.0](https://github.com/run-llama/llama-cloud-py/compare/v1.5.0...v1.6.0)

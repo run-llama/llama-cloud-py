@@ -75,6 +75,10 @@ class ParsingResource(SyncAPIResource):
                 "2026-03-02",
                 "2026-03-03",
                 "2026-03-04",
+                "2026-03-05",
+                "2026-03-09",
+                "2026-03-10",
+                "2026-03-11",
                 "latest",
             ],
             str,
@@ -311,10 +315,10 @@ class ParsingResource(SyncAPIResource):
         Retrieve parse job with optional content or metadata.
 
         Args:
-          expand: Fields to include: text, markdown, items, metadata, text_content_metadata,
-              markdown_content_metadata, items_content_metadata, metadata_content_metadata,
-              xlsx_content_metadata, output_pdf_content_metadata, images_content_metadata.
-              Metadata fields include presigned URLs.
+          expand: Fields to include: text, markdown, items, metadata, job_metadata,
+              text_content_metadata, markdown_content_metadata, items_content_metadata,
+              metadata_content_metadata, xlsx_content_metadata, output_pdf_content_metadata,
+              images_content_metadata. Metadata fields include presigned URLs.
 
           image_filenames: Filter to specific image filenames (optional). Example: image_0.png,image_1.jpg
 
@@ -704,6 +708,10 @@ class AsyncParsingResource(AsyncAPIResource):
                 "2026-03-02",
                 "2026-03-03",
                 "2026-03-04",
+                "2026-03-05",
+                "2026-03-09",
+                "2026-03-10",
+                "2026-03-11",
                 "latest",
             ],
             str,
@@ -940,10 +948,10 @@ class AsyncParsingResource(AsyncAPIResource):
         Retrieve parse job with optional content or metadata.
 
         Args:
-          expand: Fields to include: text, markdown, items, metadata, text_content_metadata,
-              markdown_content_metadata, items_content_metadata, metadata_content_metadata,
-              xlsx_content_metadata, output_pdf_content_metadata, images_content_metadata.
-              Metadata fields include presigned URLs.
+          expand: Fields to include: text, markdown, items, metadata, job_metadata,
+              text_content_metadata, markdown_content_metadata, items_content_metadata,
+              metadata_content_metadata, xlsx_content_metadata, output_pdf_content_metadata,
+              images_content_metadata. Metadata fields include presigned URLs.
 
           image_filenames: Filter to specific image filenames (optional). Example: image_0.png,image_1.jpg
 
