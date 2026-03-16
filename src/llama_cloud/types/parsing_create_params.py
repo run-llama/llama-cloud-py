@@ -69,6 +69,7 @@ class ParsingCreateParams(TypedDict, total=False):
                 "2026-03-09",
                 "2026-03-10",
                 "2026-03-11",
+                "2026-03-12",
                 "latest",
             ],
             str,
@@ -259,8 +260,7 @@ class OutputOptions(TypedDict, total=False):
     images_to_save: List[Literal["screenshot", "embedded", "layout"]]
     """
     Image categories to save: 'screenshot' (full page), 'embedded' (images in
-    document), 'layout' (cropped images from layout detection). Empty list means no
-    images are saved.
+    document), 'layout' (cropped images from layout detection).
     """
 
     markdown: OutputOptionsMarkdown
@@ -442,6 +442,7 @@ class ProcessingOptionsAutoModeConfigurationParsingConf(TypedDict, total=False):
             "2026-03-09",
             "2026-03-10",
             "2026-03-11",
+            "2026-03-12",
             "latest",
         ],
         str,
