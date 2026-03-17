@@ -260,7 +260,8 @@ class OutputOptions(TypedDict, total=False):
     images_to_save: List[Literal["screenshot", "embedded", "layout"]]
     """
     Image categories to save: 'screenshot' (full page), 'embedded' (images in
-    document), 'layout' (cropped images from layout detection).
+    document), 'layout' (cropped images from layout detection). Empty list means no
+    images are saved.
     """
 
     markdown: OutputOptionsMarkdown
