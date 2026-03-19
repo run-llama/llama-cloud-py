@@ -41,7 +41,7 @@ from ...types import (
     pipeline_get_status_params,
 )
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from .metadata import (
     MetadataResource,
     AsyncMetadataResource,
@@ -313,7 +313,7 @@ class PipelinesResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._post(
-            f"/api/v1/pipelines/{pipeline_id}/retrieve",
+            path_template("/api/v1/pipelines/{pipeline_id}/retrieve", pipeline_id=pipeline_id),
             body=maybe_transform(
                 {
                     "query": query,
@@ -415,7 +415,7 @@ class PipelinesResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._put(
-            f"/api/v1/pipelines/{pipeline_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}", pipeline_id=pipeline_id),
             body=maybe_transform(
                 {
                     "data_sink": data_sink,
@@ -516,7 +516,7 @@ class PipelinesResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/api/v1/pipelines/{pipeline_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -549,7 +549,7 @@ class PipelinesResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._get(
-            f"/api/v1/pipelines/{pipeline_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -583,7 +583,7 @@ class PipelinesResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/status",
+            path_template("/api/v1/pipelines/{pipeline_id}/status", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -922,7 +922,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._post(
-            f"/api/v1/pipelines/{pipeline_id}/retrieve",
+            path_template("/api/v1/pipelines/{pipeline_id}/retrieve", pipeline_id=pipeline_id),
             body=await async_maybe_transform(
                 {
                     "query": query,
@@ -1024,7 +1024,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._put(
-            f"/api/v1/pipelines/{pipeline_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}", pipeline_id=pipeline_id),
             body=await async_maybe_transform(
                 {
                     "data_sink": data_sink,
@@ -1125,7 +1125,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/api/v1/pipelines/{pipeline_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -1158,7 +1158,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -1192,7 +1192,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/status",
+            path_template("/api/v1/pipelines/{pipeline_id}/status", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

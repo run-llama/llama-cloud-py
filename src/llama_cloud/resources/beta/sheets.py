@@ -8,7 +8,7 @@ from typing_extensions import Literal
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -192,7 +192,7 @@ class SheetsResource(SyncAPIResource):
         if not spreadsheet_job_id:
             raise ValueError(f"Expected a non-empty value for `spreadsheet_job_id` but received {spreadsheet_job_id!r}")
         return self._delete(
-            f"/api/v1/beta/sheets/jobs/{spreadsheet_job_id}",
+            path_template("/api/v1/beta/sheets/jobs/{spreadsheet_job_id}", spreadsheet_job_id=spreadsheet_job_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -245,7 +245,7 @@ class SheetsResource(SyncAPIResource):
         if not spreadsheet_job_id:
             raise ValueError(f"Expected a non-empty value for `spreadsheet_job_id` but received {spreadsheet_job_id!r}")
         return self._get(
-            f"/api/v1/beta/sheets/jobs/{spreadsheet_job_id}",
+            path_template("/api/v1/beta/sheets/jobs/{spreadsheet_job_id}", spreadsheet_job_id=spreadsheet_job_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -301,7 +301,12 @@ class SheetsResource(SyncAPIResource):
         if not region_type:
             raise ValueError(f"Expected a non-empty value for `region_type` but received {region_type!r}")
         return self._get(
-            f"/api/v1/beta/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}",
+            path_template(
+                "/api/v1/beta/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}",
+                spreadsheet_job_id=spreadsheet_job_id,
+                region_id=region_id,
+                region_type=region_type,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -479,7 +484,7 @@ class AsyncSheetsResource(AsyncAPIResource):
         if not spreadsheet_job_id:
             raise ValueError(f"Expected a non-empty value for `spreadsheet_job_id` but received {spreadsheet_job_id!r}")
         return await self._delete(
-            f"/api/v1/beta/sheets/jobs/{spreadsheet_job_id}",
+            path_template("/api/v1/beta/sheets/jobs/{spreadsheet_job_id}", spreadsheet_job_id=spreadsheet_job_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -532,7 +537,7 @@ class AsyncSheetsResource(AsyncAPIResource):
         if not spreadsheet_job_id:
             raise ValueError(f"Expected a non-empty value for `spreadsheet_job_id` but received {spreadsheet_job_id!r}")
         return await self._get(
-            f"/api/v1/beta/sheets/jobs/{spreadsheet_job_id}",
+            path_template("/api/v1/beta/sheets/jobs/{spreadsheet_job_id}", spreadsheet_job_id=spreadsheet_job_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -588,7 +593,12 @@ class AsyncSheetsResource(AsyncAPIResource):
         if not region_type:
             raise ValueError(f"Expected a non-empty value for `region_type` but received {region_type!r}")
         return await self._get(
-            f"/api/v1/beta/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}",
+            path_template(
+                "/api/v1/beta/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}",
+                spreadsheet_job_id=spreadsheet_job_id,
+                region_id=region_id,
+                region_type=region_type,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

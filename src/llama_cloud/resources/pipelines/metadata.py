@@ -7,7 +7,7 @@ from typing import Mapping, cast
 import httpx
 
 from ..._types import Body, Query, Headers, NoneType, NotGiven, FileTypes, not_given
-from ..._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
+from ..._utils import extract_files, path_template, maybe_transform, deepcopy_minimal, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -76,7 +76,7 @@ class MetadataResource(SyncAPIResource):
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._put(
-            f"/api/v1/pipelines/{pipeline_id}/metadata",
+            path_template("/api/v1/pipelines/{pipeline_id}/metadata", pipeline_id=pipeline_id),
             body=maybe_transform(body, metadata_create_params.MetadataCreateParams),
             files=files,
             options=make_request_options(
@@ -112,7 +112,7 @@ class MetadataResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/api/v1/pipelines/{pipeline_id}/metadata",
+            path_template("/api/v1/pipelines/{pipeline_id}/metadata", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -173,7 +173,7 @@ class AsyncMetadataResource(AsyncAPIResource):
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._put(
-            f"/api/v1/pipelines/{pipeline_id}/metadata",
+            path_template("/api/v1/pipelines/{pipeline_id}/metadata", pipeline_id=pipeline_id),
             body=await async_maybe_transform(body, metadata_create_params.MetadataCreateParams),
             files=files,
             options=make_request_options(
@@ -209,7 +209,7 @@ class AsyncMetadataResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/api/v1/pipelines/{pipeline_id}/metadata",
+            path_template("/api/v1/pipelines/{pipeline_id}/metadata", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

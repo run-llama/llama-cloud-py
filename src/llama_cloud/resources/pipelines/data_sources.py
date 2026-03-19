@@ -7,7 +7,7 @@ from typing import Iterable, Optional
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -83,7 +83,11 @@ class DataSourcesResource(SyncAPIResource):
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return self._put(
-            f"/api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}",
+                pipeline_id=pipeline_id,
+                data_source_id=data_source_id,
+            ),
             body=maybe_transform({"sync_interval": sync_interval}, data_source_update_params.DataSourceUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -117,7 +121,7 @@ class DataSourcesResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/data-sources",
+            path_template("/api/v1/pipelines/{pipeline_id}/data-sources", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -153,7 +157,11 @@ class DataSourcesResource(SyncAPIResource):
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/status",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/status",
+                pipeline_id=pipeline_id,
+                data_source_id=data_source_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -191,7 +199,11 @@ class DataSourcesResource(SyncAPIResource):
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return self._post(
-            f"/api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/sync",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/sync",
+                pipeline_id=pipeline_id,
+                data_source_id=data_source_id,
+            ),
             body=maybe_transform(
                 {"pipeline_file_ids": pipeline_file_ids}, data_source_sync_params.DataSourceSyncParams
             ),
@@ -228,7 +240,7 @@ class DataSourcesResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._put(
-            f"/api/v1/pipelines/{pipeline_id}/data-sources",
+            path_template("/api/v1/pipelines/{pipeline_id}/data-sources", pipeline_id=pipeline_id),
             body=maybe_transform(body, Iterable[data_source_update_data_sources_params.Body]),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -289,7 +301,11 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return await self._put(
-            f"/api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}",
+                pipeline_id=pipeline_id,
+                data_source_id=data_source_id,
+            ),
             body=await async_maybe_transform(
                 {"sync_interval": sync_interval}, data_source_update_params.DataSourceUpdateParams
             ),
@@ -325,7 +341,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/data-sources",
+            path_template("/api/v1/pipelines/{pipeline_id}/data-sources", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -361,7 +377,11 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/status",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/status",
+                pipeline_id=pipeline_id,
+                data_source_id=data_source_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -399,7 +419,11 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return await self._post(
-            f"/api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/sync",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/sync",
+                pipeline_id=pipeline_id,
+                data_source_id=data_source_id,
+            ),
             body=await async_maybe_transform(
                 {"pipeline_file_ids": pipeline_file_ids}, data_source_sync_params.DataSourceSyncParams
             ),
@@ -436,7 +460,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._put(
-            f"/api/v1/pipelines/{pipeline_id}/data-sources",
+            path_template("/api/v1/pipelines/{pipeline_id}/data-sources", pipeline_id=pipeline_id),
             body=await async_maybe_transform(body, Iterable[data_source_update_data_sources_params.Body]),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout

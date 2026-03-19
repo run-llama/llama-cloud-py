@@ -7,7 +7,7 @@ from typing import Dict, Optional
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -84,7 +84,7 @@ class AgentDataResource(SyncAPIResource):
         if not item_id:
             raise ValueError(f"Expected a non-empty value for `item_id` but received {item_id!r}")
         return self._put(
-            f"/api/v1/beta/agent-data/{item_id}",
+            path_template("/api/v1/beta/agent-data/{item_id}", item_id=item_id),
             body=maybe_transform({"data": data}, agent_data_update_params.AgentDataUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -130,7 +130,7 @@ class AgentDataResource(SyncAPIResource):
         if not item_id:
             raise ValueError(f"Expected a non-empty value for `item_id` but received {item_id!r}")
         return self._delete(
-            f"/api/v1/beta/agent-data/{item_id}",
+            path_template("/api/v1/beta/agent-data/{item_id}", item_id=item_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -381,7 +381,7 @@ class AgentDataResource(SyncAPIResource):
         if not item_id:
             raise ValueError(f"Expected a non-empty value for `item_id` but received {item_id!r}")
         return self._get(
-            f"/api/v1/beta/agent-data/{item_id}",
+            path_template("/api/v1/beta/agent-data/{item_id}", item_id=item_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -533,7 +533,7 @@ class AsyncAgentDataResource(AsyncAPIResource):
         if not item_id:
             raise ValueError(f"Expected a non-empty value for `item_id` but received {item_id!r}")
         return await self._put(
-            f"/api/v1/beta/agent-data/{item_id}",
+            path_template("/api/v1/beta/agent-data/{item_id}", item_id=item_id),
             body=await async_maybe_transform({"data": data}, agent_data_update_params.AgentDataUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -579,7 +579,7 @@ class AsyncAgentDataResource(AsyncAPIResource):
         if not item_id:
             raise ValueError(f"Expected a non-empty value for `item_id` but received {item_id!r}")
         return await self._delete(
-            f"/api/v1/beta/agent-data/{item_id}",
+            path_template("/api/v1/beta/agent-data/{item_id}", item_id=item_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -830,7 +830,7 @@ class AsyncAgentDataResource(AsyncAPIResource):
         if not item_id:
             raise ValueError(f"Expected a non-empty value for `item_id` but received {item_id!r}")
         return await self._get(
-            f"/api/v1/beta/agent-data/{item_id}",
+            path_template("/api/v1/beta/agent-data/{item_id}", item_id=item_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

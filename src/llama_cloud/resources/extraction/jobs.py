@@ -8,7 +8,7 @@ from typing_extensions import Literal
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
-from ..._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
+from ..._utils import extract_files, path_template, maybe_transform, deepcopy_minimal, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -245,7 +245,7 @@ class JobsResource(SyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return self._get(
-            f"/api/v1/extraction/jobs/{job_id}",
+            path_template("/api/v1/extraction/jobs/{job_id}", job_id=job_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -280,7 +280,7 @@ class JobsResource(SyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return self._get(
-            f"/api/v1/extraction/jobs/{job_id}/result",
+            path_template("/api/v1/extraction/jobs/{job_id}/result", job_id=job_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -512,7 +512,7 @@ class AsyncJobsResource(AsyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return await self._get(
-            f"/api/v1/extraction/jobs/{job_id}",
+            path_template("/api/v1/extraction/jobs/{job_id}", job_id=job_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -547,7 +547,7 @@ class AsyncJobsResource(AsyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return await self._get(
-            f"/api/v1/extraction/jobs/{job_id}/result",
+            path_template("/api/v1/extraction/jobs/{job_id}/result", job_id=job_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
