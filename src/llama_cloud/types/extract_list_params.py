@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Optional
-from typing_extensions import Literal, TypedDict
+from typing import Union, Optional
+from datetime import datetime
+from typing_extensions import Literal, Annotated, TypedDict
+
+from .._utils import PropertyInfo
 
 __all__ = ["ExtractListParams"]
 
@@ -11,6 +14,12 @@ __all__ = ["ExtractListParams"]
 class ExtractListParams(TypedDict, total=False):
     configuration_id: Optional[str]
     """Filter by configuration ID"""
+
+    created_at_on_or_after: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
+    """Include jobs created at or after this timestamp (inclusive)"""
+
+    created_at_on_or_before: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
+    """Include jobs created at or before this timestamp (inclusive)"""
 
     document_input_type: Optional[str]
     """Filter by document input type (file_id or parse_job_id)"""

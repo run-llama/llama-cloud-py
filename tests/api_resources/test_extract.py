@@ -14,6 +14,7 @@ from llama_cloud.types import (
     ExtractGenerateSchemaResponse,
     ExtractV2SchemaValidateResponse,
 )
+from llama_cloud._utils import parse_datetime
 from llama_cloud.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -26,8 +27,7 @@ class TestExtract:
     @parametrize
     def test_method_create(self, client: LlamaCloud) -> None:
         extract = client.extract.create(
-            type="url",
-            value="value",
+            document_input_value="document_input_value",
         )
         assert_matches_type(ExtractV2Job, extract, path=["response"])
 
@@ -35,8 +35,7 @@ class TestExtract:
     @parametrize
     def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
         extract = client.extract.create(
-            type="url",
-            value="value",
+            document_input_value="document_input_value",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             config={
@@ -46,7 +45,10 @@ class TestExtract:
                     "confidence_scores": True,
                     "extract_version": "extract_version",
                     "extraction_target": "per_doc",
+                    "lang": "lang",
+                    "max_pages": 1,
                     "system_prompt": "system_prompt",
+                    "target_pages": "target_pages",
                     "tier": "cost_effective",
                 },
                 "parse_config_id": "parse_config_id",
@@ -68,8 +70,7 @@ class TestExtract:
     @parametrize
     def test_raw_response_create(self, client: LlamaCloud) -> None:
         response = client.extract.with_raw_response.create(
-            type="url",
-            value="value",
+            document_input_value="document_input_value",
         )
 
         assert response.is_closed is True
@@ -81,8 +82,7 @@ class TestExtract:
     @parametrize
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
         with client.extract.with_streaming_response.create(
-            type="url",
-            value="value",
+            document_input_value="document_input_value",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -103,6 +103,8 @@ class TestExtract:
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         extract = client.extract.list(
             configuration_id="configuration_id",
+            created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
+            created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
             document_input_type="document_input_type",
             document_input_value="document_input_value",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -241,6 +243,7 @@ class TestExtract:
     def test_method_get_with_all_params(self, client: LlamaCloud) -> None:
         extract = client.extract.get(
             job_id="job_id",
+            expand=["string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
@@ -324,8 +327,7 @@ class TestAsyncExtract:
     @parametrize
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
         extract = await async_client.extract.create(
-            type="url",
-            value="value",
+            document_input_value="document_input_value",
         )
         assert_matches_type(ExtractV2Job, extract, path=["response"])
 
@@ -333,8 +335,7 @@ class TestAsyncExtract:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         extract = await async_client.extract.create(
-            type="url",
-            value="value",
+            document_input_value="document_input_value",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             config={
@@ -344,7 +345,10 @@ class TestAsyncExtract:
                     "confidence_scores": True,
                     "extract_version": "extract_version",
                     "extraction_target": "per_doc",
+                    "lang": "lang",
+                    "max_pages": 1,
                     "system_prompt": "system_prompt",
+                    "target_pages": "target_pages",
                     "tier": "cost_effective",
                 },
                 "parse_config_id": "parse_config_id",
@@ -366,8 +370,7 @@ class TestAsyncExtract:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.extract.with_raw_response.create(
-            type="url",
-            value="value",
+            document_input_value="document_input_value",
         )
 
         assert response.is_closed is True
@@ -379,8 +382,7 @@ class TestAsyncExtract:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.extract.with_streaming_response.create(
-            type="url",
-            value="value",
+            document_input_value="document_input_value",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -401,6 +403,8 @@ class TestAsyncExtract:
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         extract = await async_client.extract.list(
             configuration_id="configuration_id",
+            created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
+            created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
             document_input_type="document_input_type",
             document_input_value="document_input_value",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -539,6 +543,7 @@ class TestAsyncExtract:
     async def test_method_get_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         extract = await async_client.extract.get(
             job_id="job_id",
+            expand=["string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )

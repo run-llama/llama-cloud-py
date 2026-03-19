@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Union, Optional
+from datetime import datetime
 from typing_extensions import Literal
 
 import httpx
@@ -119,6 +120,8 @@ class ClassifyResource(SyncAPIResource):
         self,
         *,
         configuration_id: Optional[str] | Omit = omit,
+        created_at_on_or_after: Union[str, datetime, None] | Omit = omit,
+        created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
         job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
@@ -137,6 +140,10 @@ class ClassifyResource(SyncAPIResource):
 
         Args:
           configuration_id: Filter by configuration ID
+
+          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+
+          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
 
           job_ids: Filter by specific job IDs
 
@@ -165,6 +172,8 @@ class ClassifyResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "configuration_id": configuration_id,
+                        "created_at_on_or_after": created_at_on_or_after,
+                        "created_at_on_or_before": created_at_on_or_before,
                         "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,
@@ -315,6 +324,8 @@ class AsyncClassifyResource(AsyncAPIResource):
         self,
         *,
         configuration_id: Optional[str] | Omit = omit,
+        created_at_on_or_after: Union[str, datetime, None] | Omit = omit,
+        created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
         job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
@@ -333,6 +344,10 @@ class AsyncClassifyResource(AsyncAPIResource):
 
         Args:
           configuration_id: Filter by configuration ID
+
+          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+
+          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
 
           job_ids: Filter by specific job IDs
 
@@ -361,6 +376,8 @@ class AsyncClassifyResource(AsyncAPIResource):
                 query=maybe_transform(
                     {
                         "configuration_id": configuration_id,
+                        "created_at_on_or_after": created_at_on_or_after,
+                        "created_at_on_or_before": created_at_on_or_before,
                         "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,
