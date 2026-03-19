@@ -18,6 +18,7 @@ __all__ = [
     "ParametersExtractV2Parameters",
     "ParametersClassifyV2Parameters",
     "ParametersClassifyV2ParametersRule",
+    "ParametersClassifyV2ParametersParsingConfiguration",
     "ParametersParseV2Parameters",
 ]
 
@@ -73,6 +74,22 @@ class ParametersClassifyV2ParametersRule(BaseModel):
     """Document type to assign when rule matches"""
 
 
+class ParametersClassifyV2ParametersParsingConfiguration(BaseModel):
+    """Parsing configuration for classify jobs."""
+
+    lang: Optional[str] = None
+    """Language of the document"""
+
+    max_pages: Optional[int] = None
+    """Maximum number of pages to process"""
+
+    target_pages: Optional[str] = None
+    """
+    Comma-separated list of page numbers or ranges to process (1-based, e.g.,
+    '1,3,5-7,9' or '1-3,8-10')
+    """
+
+
 class ParametersClassifyV2Parameters(BaseModel):
     """Typed parameters for a *classify v2* product configuration."""
 
@@ -84,6 +101,9 @@ class ParametersClassifyV2Parameters(BaseModel):
 
     mode: Optional[Literal["FAST"]] = None
     """Classification execution mode"""
+
+    parsing_configuration: Optional[ParametersClassifyV2ParametersParsingConfiguration] = None
+    """Parsing configuration for classify jobs."""
 
 
 class ParametersParseV2Parameters(BaseModel):

@@ -29,7 +29,7 @@ class SplitGetResponse(BaseModel):
     status: str
     """Current status of the job.
 
-    Valid values are: pending, processing, completed, failed.
+    Valid values are: pending, processing, completed, failed, cancelled.
     """
 
     user_id: str

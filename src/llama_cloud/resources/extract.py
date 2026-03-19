@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, Union, Iterable, Optional
+from datetime import datetime
 from typing_extensions import Literal
 
 import httpx
@@ -15,7 +16,7 @@ from ..types import (
     extract_generate_schema_params,
     extract_validate_schema_params,
 )
-from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -59,8 +60,7 @@ class ExtractResource(SyncAPIResource):
     def create(
         self,
         *,
-        type: Literal["url", "file_id", "parse_job_id"],
-        value: str,
+        document_input_value: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         config: Optional[ExtractConfigurationParam] | Omit = omit,
@@ -79,9 +79,7 @@ class ExtractResource(SyncAPIResource):
         Provide exactly one of configuration_id (saved configuration) or inline config.
 
         Args:
-          type: Type of document input.
-
-          value: Document identifier (URL, file ID, or parse job ID).
+          document_input_value: File ID or Parse Job ID to extract from
 
           config: Extraction configuration combining parse and extract settings.
 
@@ -101,8 +99,7 @@ class ExtractResource(SyncAPIResource):
             "/api/v2/extract",
             body=maybe_transform(
                 {
-                    "type": type,
-                    "value": value,
+                    "document_input_value": document_input_value,
                     "config": config,
                     "configuration_id": configuration_id,
                     "webhook_configurations": webhook_configurations,
@@ -129,6 +126,8 @@ class ExtractResource(SyncAPIResource):
         self,
         *,
         configuration_id: Optional[str] | Omit = omit,
+        created_at_on_or_after: Union[str, datetime, None] | Omit = omit,
+        created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
         document_input_type: Optional[str] | Omit = omit,
         document_input_value: Optional[str] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
@@ -148,6 +147,10 @@ class ExtractResource(SyncAPIResource):
 
         Args:
           configuration_id: Filter by configuration ID
+
+          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+
+          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
 
           document_input_type: Filter by document input type (file_id or parse_job_id)
 
@@ -178,6 +181,8 @@ class ExtractResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "configuration_id": configuration_id,
+                        "created_at_on_or_after": created_at_on_or_after,
+                        "created_at_on_or_before": created_at_on_or_before,
                         "document_input_type": document_input_type,
                         "document_input_value": document_input_value,
                         "organization_id": organization_id,
@@ -242,7 +247,7 @@ class ExtractResource(SyncAPIResource):
         *,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str, None]
+        data_schema: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
         | Omit = omit,
         file_id: Optional[str] | Omit = omit,
         name: Optional[str] | Omit = omit,
@@ -305,6 +310,7 @@ class ExtractResource(SyncAPIResource):
         self,
         job_id: str,
         *,
+        expand: SequenceNotStr[str] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -318,6 +324,8 @@ class ExtractResource(SyncAPIResource):
         Get a single extraction job by ID.
 
         Args:
+          expand: Additional fields to include: extract_metadata
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -337,6 +345,7 @@ class ExtractResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "expand": expand,
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
@@ -349,7 +358,7 @@ class ExtractResource(SyncAPIResource):
     def validate_schema(
         self,
         *,
-        data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str],
+        data_schema: Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -361,7 +370,7 @@ class ExtractResource(SyncAPIResource):
         Validate a JSON schema for extraction.
 
         Args:
-          data_schema: Schema to validate
+          data_schema: JSON schema to validate
 
           extra_headers: Send extra headers
 
@@ -406,8 +415,7 @@ class AsyncExtractResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        type: Literal["url", "file_id", "parse_job_id"],
-        value: str,
+        document_input_value: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         config: Optional[ExtractConfigurationParam] | Omit = omit,
@@ -426,9 +434,7 @@ class AsyncExtractResource(AsyncAPIResource):
         Provide exactly one of configuration_id (saved configuration) or inline config.
 
         Args:
-          type: Type of document input.
-
-          value: Document identifier (URL, file ID, or parse job ID).
+          document_input_value: File ID or Parse Job ID to extract from
 
           config: Extraction configuration combining parse and extract settings.
 
@@ -448,8 +454,7 @@ class AsyncExtractResource(AsyncAPIResource):
             "/api/v2/extract",
             body=await async_maybe_transform(
                 {
-                    "type": type,
-                    "value": value,
+                    "document_input_value": document_input_value,
                     "config": config,
                     "configuration_id": configuration_id,
                     "webhook_configurations": webhook_configurations,
@@ -476,6 +481,8 @@ class AsyncExtractResource(AsyncAPIResource):
         self,
         *,
         configuration_id: Optional[str] | Omit = omit,
+        created_at_on_or_after: Union[str, datetime, None] | Omit = omit,
+        created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
         document_input_type: Optional[str] | Omit = omit,
         document_input_value: Optional[str] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
@@ -495,6 +502,10 @@ class AsyncExtractResource(AsyncAPIResource):
 
         Args:
           configuration_id: Filter by configuration ID
+
+          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+
+          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
 
           document_input_type: Filter by document input type (file_id or parse_job_id)
 
@@ -525,6 +536,8 @@ class AsyncExtractResource(AsyncAPIResource):
                 query=maybe_transform(
                     {
                         "configuration_id": configuration_id,
+                        "created_at_on_or_after": created_at_on_or_after,
+                        "created_at_on_or_before": created_at_on_or_before,
                         "document_input_type": document_input_type,
                         "document_input_value": document_input_value,
                         "organization_id": organization_id,
@@ -589,7 +602,7 @@ class AsyncExtractResource(AsyncAPIResource):
         *,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str, None]
+        data_schema: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
         | Omit = omit,
         file_id: Optional[str] | Omit = omit,
         name: Optional[str] | Omit = omit,
@@ -652,6 +665,7 @@ class AsyncExtractResource(AsyncAPIResource):
         self,
         job_id: str,
         *,
+        expand: SequenceNotStr[str] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -665,6 +679,8 @@ class AsyncExtractResource(AsyncAPIResource):
         Get a single extraction job by ID.
 
         Args:
+          expand: Additional fields to include: extract_metadata
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -684,6 +700,7 @@ class AsyncExtractResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "expand": expand,
                         "organization_id": organization_id,
                         "project_id": project_id,
                     },
@@ -696,7 +713,7 @@ class AsyncExtractResource(AsyncAPIResource):
     async def validate_schema(
         self,
         *,
-        data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str],
+        data_schema: Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -708,7 +725,7 @@ class AsyncExtractResource(AsyncAPIResource):
         Validate a JSON schema for extraction.
 
         Args:
-          data_schema: Schema to validate
+          data_schema: JSON schema to validate
 
           extra_headers: Send extra headers
 

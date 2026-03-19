@@ -13,7 +13,7 @@ class ExtractGenerateSchemaParams(TypedDict, total=False):
 
     project_id: Optional[str]
 
-    data_schema: Union[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]], str, None]
+    data_schema: Optional[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
     """Optional schema to validate, refine, or extend"""
 
     file_id: Optional[str]

@@ -14,6 +14,7 @@ from llama_cloud.types import (
     ClassifyListResponse,
     ClassifyCreateResponse,
 )
+from llama_cloud._utils import parse_datetime
 from llama_cloud.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -42,6 +43,11 @@ class TestClassify:
                     }
                 ],
                 "mode": "FAST",
+                "parsing_configuration": {
+                    "lang": "lang",
+                    "max_pages": 1,
+                    "target_pages": "target_pages",
+                },
             },
             configuration_id="configuration_id",
             file_id="file_id",
@@ -83,6 +89,8 @@ class TestClassify:
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         classify = client.classify.list(
             configuration_id="configuration_id",
+            created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
+            created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
             job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=1,
@@ -192,6 +200,11 @@ class TestAsyncClassify:
                     }
                 ],
                 "mode": "FAST",
+                "parsing_configuration": {
+                    "lang": "lang",
+                    "max_pages": 1,
+                    "target_pages": "target_pages",
+                },
             },
             configuration_id="configuration_id",
             file_id="file_id",
@@ -233,6 +246,8 @@ class TestAsyncClassify:
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         classify = await async_client.classify.list(
             configuration_id="configuration_id",
+            created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
+            created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
             job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=1,

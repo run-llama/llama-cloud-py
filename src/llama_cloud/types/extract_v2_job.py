@@ -2,7 +2,6 @@
 
 from typing import Dict, List, Union, Optional
 from datetime import datetime
-from typing_extensions import Literal
 
 from .._models import BaseModel
 from .extract_job_metadata import ExtractJobMetadata
@@ -19,23 +18,20 @@ class ExtractV2Job(BaseModel):
     created_at: datetime
     """Creation timestamp"""
 
+    document_input_value: str
+    """File ID or Parse Job ID used for this job"""
+
     parameters: Dict[str, Union[Dict[str, object], List[object], str, float, bool, None]]
     """Job configuration parameters (includes parse_config_id, extract_options)"""
 
     project_id: str
     """Project this job belongs to"""
 
-    status: Literal["PENDING", "THROTTLED", "RUNNING", "COMPLETED", "FAILED", "CANCELLED"]
-    """Current status of the job"""
-
-    type: Literal["url", "file_id", "parse_job_id"]
-    """Type of document input."""
+    status: str
+    """Current status: PENDING, THROTTLED, RUNNING, COMPLETED, FAILED, CANCELLED"""
 
     updated_at: datetime
     """Last update timestamp"""
-
-    value: str
-    """Document identifier (URL, file ID, or parse job ID)."""
 
     configuration_id: Optional[str] = None
     """Extract configuration ID (ProductConfiguration) used for this job (if any)"""

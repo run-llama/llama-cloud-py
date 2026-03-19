@@ -41,7 +41,11 @@ __all__ = [
 
 class ParsingCreateParams(TypedDict, total=False):
     tier: Required[Literal["fast", "cost_effective", "agentic", "agentic_plus"]]
-    """The parsing tier to use"""
+    """
+    Parsing tier: 'fast' (rule-based, cheapest), 'cost_effective' (balanced),
+    'agentic' (AI-powered with custom prompts), or 'agentic_plus' (premium AI with
+    highest accuracy)
+    """
 
     version: Required[
         Union[
@@ -70,257 +74,411 @@ class ParsingCreateParams(TypedDict, total=False):
                 "2026-03-10",
                 "2026-03-11",
                 "2026-03-12",
+                "2026-03-17",
+                "2026-03-19",
                 "latest",
             ],
             str,
         ]
     ]
-    """Version of the tier configuration"""
+    """Tier version.
+
+    Use 'latest' for the current stable version, or specify a specific version
+    (e.g., '1.0', '2.0') for reproducible results
+    """
 
     organization_id: Optional[str]
 
     project_id: Optional[str]
 
     agentic_options: Optional[AgenticOptions]
-    """Options for agentic tier parsing (with AI agents)."""
+    """Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
+
+    These options customize how the AI processes and interprets document content.
+    Only applicable when using non-fast tiers.
+    """
 
     client_name: Optional[str]
-    """Name of the client making the parsing request"""
+    """Identifier for the client/application making the request.
+
+    Used for analytics and debugging. Example: 'my-app-v2'
+    """
 
     crop_box: CropBox
-    """Document crop box boundaries"""
+    """Crop boundaries to process only a portion of each page.
+
+    Values are ratios 0-1 from page edges
+    """
 
     disable_cache: Optional[bool]
-    """Whether to disable caching for this parsing job"""
+    """Bypass result caching and force re-parsing.
+
+    Use when document content may have changed or you need fresh results
+    """
 
     fast_options: Optional[object]
-    """Options for fast tier parsing (without AI)."""
+    """Options for fast tier parsing (rule-based, no AI).
+
+    Fast tier uses deterministic algorithms for text extraction without AI
+    enhancement. It's the fastest and most cost-effective option, best suited for
+    simple documents with standard layouts. Currently has no configurable options
+    but reserved for future expansion.
+    """
 
     file_id: Optional[str]
-    """ID of an existing file in the project to parse"""
+    """ID of an existing file in the project to parse.
+
+    Mutually exclusive with source_url
+    """
 
     http_proxy: Optional[str]
-    """HTTP proxy URL for network requests (only used with source_url)"""
+    """HTTP/HTTPS proxy for fetching source_url. Ignored if using file_id"""
 
     input_options: InputOptions
-    """Input format-specific parsing options"""
+    """Format-specific options (HTML, PDF, spreadsheet, presentation).
+
+    Applied based on detected input file type
+    """
 
     output_options: OutputOptions
-    """Output format and styling options"""
+    """Output formatting options for markdown, text, and extracted images"""
 
     page_ranges: PageRanges
-    """Page range selection options"""
+    """Page selection: limit total pages or specify exact pages to process"""
 
     processing_control: ProcessingControl
-    """Job processing control and failure handling"""
+    """Job execution controls including timeouts and failure thresholds"""
 
     processing_options: ProcessingOptions
-    """Processing options shared across all tiers"""
+    """Document processing options including OCR, table extraction, and chart parsing"""
 
     source_url: Optional[str]
-    """Source URL to fetch document from"""
+    """Public URL of the document to parse. Mutually exclusive with file_id"""
 
     webhook_configurations: Iterable[WebhookConfiguration]
-    """List of webhook configurations for notifications"""
+    """Webhook endpoints for job status notifications.
+
+    Multiple webhooks can be configured for different events or services
+    """
 
 
 class AgenticOptions(TypedDict, total=False):
-    """Options for agentic tier parsing (with AI agents)."""
+    """Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
+
+    These options customize how the AI processes and interprets document content.
+    Only applicable when using non-fast tiers.
+    """
 
     custom_prompt: Optional[str]
-    """Custom prompt for AI-powered parsing"""
+    """Custom instructions for the AI parser.
+
+    Use to guide extraction behavior, specify output formatting, or provide
+    domain-specific context. Example: 'Extract financial tables with currency
+    symbols. Format dates as YYYY-MM-DD.'
+    """
 
 
 class CropBox(TypedDict, total=False):
-    """Document crop box boundaries"""
+    """Crop boundaries to process only a portion of each page.
+
+    Values are ratios 0-1 from page edges
+    """
 
     bottom: Optional[float]
-    """Bottom boundary of crop box as ratio (0-1)"""
+    """Bottom boundary as ratio (0-1).
+
+    0=top edge, 1=bottom edge. Content below this line is excluded
+    """
 
     left: Optional[float]
-    """Left boundary of crop box as ratio (0-1)"""
+    """Left boundary as ratio (0-1).
+
+    0=left edge, 1=right edge. Content left of this line is excluded
+    """
 
     right: Optional[float]
-    """Right boundary of crop box as ratio (0-1)"""
+    """Right boundary as ratio (0-1).
+
+    0=left edge, 1=right edge. Content right of this line is excluded
+    """
 
     top: Optional[float]
-    """Top boundary of crop box as ratio (0-1)"""
+    """Top boundary as ratio (0-1).
+
+    0=top edge, 1=bottom edge. Content above this line is excluded
+    """
 
 
 class InputOptionsHTML(TypedDict, total=False):
-    """HTML-specific parsing options"""
+    """HTML/web page parsing options (applies to .html, .htm files)"""
 
     make_all_elements_visible: Optional[bool]
-    """Make all HTML elements visible during parsing"""
+    """
+    Force all HTML elements to be visible by overriding CSS display/visibility
+    properties. Useful for parsing pages with hidden content or collapsed sections
+    """
 
     remove_fixed_elements: Optional[bool]
-    """Remove fixed position elements from HTML"""
+    """
+    Remove fixed-position elements (headers, footers, floating buttons) that appear
+    on every page render
+    """
 
     remove_navigation_elements: Optional[bool]
-    """Remove navigation elements from HTML"""
+    """Remove navigation elements (nav bars, sidebars, menus) to focus on main content"""
 
 
 class InputOptionsPresentation(TypedDict, total=False):
-    """Presentation-specific parsing options"""
+    """Presentation parsing options (applies to .pptx, .ppt, .odp, .key files)"""
 
     out_of_bounds_content: Optional[bool]
-    """Extract out of bounds content in presentation slides"""
+    """Extract content positioned outside the visible slide area.
+
+    Some presentations have hidden notes or content that extends beyond slide
+    boundaries
+    """
 
     skip_embedded_data: Optional[bool]
-    """Skip extraction of embedded data for charts in presentation slides"""
+    """Skip extraction of embedded chart data tables.
+
+    When true, only the visual representation of charts is captured, not the
+    underlying data
+    """
 
 
 class InputOptionsSpreadsheet(TypedDict, total=False):
-    """Spreadsheet-specific parsing options"""
+    """Spreadsheet parsing options (applies to .xlsx, .xls, .csv, .ods files)"""
 
     detect_sub_tables_in_sheets: Optional[bool]
-    """Detect and extract sub-tables within spreadsheet cells"""
+    """Detect and extract multiple tables within a single sheet.
+
+    Useful when spreadsheets contain several data regions separated by blank
+    rows/columns
+    """
 
     force_formula_computation_in_sheets: Optional[bool]
-    """Force re-computation of spreadsheet cells containing formulas"""
+    """Compute formula results instead of extracting formula text.
+
+    Use when you need calculated values rather than formula definitions
+    """
 
     include_hidden_sheets: Optional[bool]
-    """Include hidden sheets when parsing spreadsheet files"""
+    """Parse hidden sheets in addition to visible ones.
+
+    By default, hidden sheets are skipped
+    """
 
 
 class InputOptions(TypedDict, total=False):
-    """Input format-specific parsing options"""
+    """Format-specific options (HTML, PDF, spreadsheet, presentation).
+
+    Applied based on detected input file type
+    """
 
     html: InputOptionsHTML
-    """HTML-specific parsing options"""
+    """HTML/web page parsing options (applies to .html, .htm files)"""
 
     pdf: object
-    """PDF-specific parsing options"""
+    """PDF-specific parsing options (applies to .pdf files)"""
 
     presentation: InputOptionsPresentation
-    """Presentation-specific parsing options"""
+    """Presentation parsing options (applies to .pptx, .ppt, .odp, .key files)"""
 
     spreadsheet: InputOptionsSpreadsheet
-    """Spreadsheet-specific parsing options"""
+    """Spreadsheet parsing options (applies to .xlsx, .xls, .csv, .ods files)"""
 
 
 class OutputOptionsMarkdownTables(TypedDict, total=False):
-    """Table formatting options for markdown"""
+    """Table formatting options including markdown vs HTML format and merging behavior"""
 
     compact_markdown_tables: Optional[bool]
-    """Use compact formatting for markdown tables"""
+    """Remove extra whitespace padding in markdown table cells for more compact output"""
 
     markdown_table_multiline_separator: Optional[str]
-    """Separator for multiline content in markdown tables"""
+    """Separator string for multiline cell content in markdown tables.
+
+    Example: ' ' to preserve line breaks, ' ' to join with spaces
+    """
 
     merge_continued_tables: Optional[bool]
-    """Merge tables that continue across or within pages. Affects markdown and items"""
+    """Automatically merge tables that span multiple pages into a single table.
+
+    The merged table appears on the first page with merged_from_pages metadata
+    """
 
     output_tables_as_markdown: Optional[bool]
-    """Output tables in markdown format"""
+    """Output tables as markdown pipe tables instead of HTML <table> tags.
+
+    Markdown tables are simpler but cannot represent complex structures like merged
+    cells
+    """
 
 
 class OutputOptionsMarkdown(TypedDict, total=False):
-    """Markdown output formatting options"""
+    """Markdown formatting options including table styles and link annotations"""
 
     annotate_links: Optional[bool]
-    """Add annotations to links in markdown output"""
+    """Add link annotations to markdown output in the format [text](url).
+
+    When false, only the link text is included
+    """
 
     inline_images: Optional[bool]
-    """Instead of transcribing images, inline them in the markdown output"""
+    """
+    Embed images directly in markdown as base64 data URIs instead of extracting them
+    as separate files. Useful for self-contained markdown output
+    """
 
     tables: OutputOptionsMarkdownTables
-    """Table formatting options for markdown"""
+    """Table formatting options including markdown vs HTML format and merging behavior"""
 
 
 class OutputOptionsSpatialText(TypedDict, total=False):
-    """Spatial text output options"""
+    """Spatial text output options for preserving document layout structure"""
 
     do_not_unroll_columns: Optional[bool]
-    """Keep column structure intact without unrolling"""
+    """
+    Keep multi-column layouts intact instead of linearizing columns into sequential
+    text. Automatically enabled for non-fast tiers
+    """
 
     preserve_layout_alignment_across_pages: Optional[bool]
-    """Preserve text alignment across page boundaries"""
+    """Maintain consistent text column alignment across page boundaries.
+
+    Automatically enabled for document-level parsing modes
+    """
 
     preserve_very_small_text: Optional[bool]
-    """Include very small text in spatial output"""
+    """Include text below the normal size threshold.
+
+    Useful for footnotes, watermarks, or fine print that might otherwise be filtered
+    out
+    """
 
 
 class OutputOptionsTablesAsSpreadsheet(TypedDict, total=False):
-    """Table export as spreadsheet options"""
+    """Options for exporting tables as XLSX spreadsheets"""
 
     enable: Optional[bool]
     """Whether this option is enabled"""
 
     guess_sheet_name: bool
-    """Automatically guess sheet names when exporting tables"""
+    """
+    Automatically generate descriptive sheet names from table context (headers,
+    surrounding text) instead of using generic names like 'Table_1'
+    """
 
 
 class OutputOptions(TypedDict, total=False):
-    """Output format and styling options"""
+    """Output formatting options for markdown, text, and extracted images"""
 
     extract_printed_page_number: Optional[bool]
-    """Extract printed page numbers from the document"""
+    """
+    Extract the printed page number as it appears in the document (e.g., 'Page 5 of
+    10', 'v', 'A-3'). Useful for referencing original page numbers
+    """
 
     images_to_save: List[Literal["screenshot", "embedded", "layout"]]
-    """
-    Image categories to save: 'screenshot' (full page), 'embedded' (images in
-    document), 'layout' (cropped images from layout detection). Empty list means no
-    images are saved.
+    """Image categories to extract and save.
+
+    Options: 'screenshot' (full page renders useful for visual QA), 'embedded'
+    (images found within the document), 'layout' (cropped regions from layout
+    detection like figures and diagrams). Empty list saves no images
     """
 
     markdown: OutputOptionsMarkdown
-    """Markdown output formatting options"""
+    """Markdown formatting options including table styles and link annotations"""
 
     spatial_text: OutputOptionsSpatialText
-    """Spatial text output options"""
+    """Spatial text output options for preserving document layout structure"""
 
     tables_as_spreadsheet: OutputOptionsTablesAsSpreadsheet
-    """Table export as spreadsheet options"""
+    """Options for exporting tables as XLSX spreadsheets"""
 
 
 class PageRanges(TypedDict, total=False):
-    """Page range selection options"""
+    """Page selection: limit total pages or specify exact pages to process"""
 
     max_pages: Optional[int]
-    """Maximum number of pages to process"""
+    """Maximum number of pages to process.
+
+    Pages are processed in order starting from page 1. If both max_pages and
+    target_pages are set, target_pages takes precedence
+    """
 
     target_pages: Optional[str]
-    """Specific pages to process (e.g., '1,3,5-8') using 1-based indexing"""
+    """Comma-separated list of specific pages to process using 1-based indexing.
+
+    Supports individual pages and ranges. Examples: '1,3,5' (pages 1, 3, 5), '1-5'
+    (pages 1 through 5 inclusive), '1,3,5-8,10' (pages 1, 3, 5-8, and 10). Pages are
+    sorted and deduplicated automatically. Duplicate pages cause an error
+    """
 
 
 class ProcessingControlJobFailureConditions(TypedDict, total=False):
-    """Conditions that determine job failure"""
+    """
+    Quality thresholds that determine when a job should fail vs complete with partial results
+    """
 
     allowed_page_failure_ratio: Optional[float]
-    """Maximum ratio of pages allowed to fail (0-1)"""
+    """Maximum ratio of pages allowed to fail before the job fails (0-1).
+
+    Example: 0.1 means job fails if more than 10% of pages fail. Default is 0.05
+    (5%)
+    """
 
     fail_on_buggy_font: Optional[bool]
-    """Fail job if buggy fonts are detected"""
+    """
+    Fail the job if a problematic font is detected that may cause incorrect text
+    extraction. Buggy fonts can produce garbled or missing characters
+    """
 
     fail_on_image_extraction_error: Optional[bool]
-    """Fail job if image extraction encounters errors"""
+    """Fail the entire job if any embedded image cannot be extracted.
+
+    By default, image extraction errors are logged but don't fail the job
+    """
 
     fail_on_image_ocr_error: Optional[bool]
-    """Fail job if image OCR encounters errors"""
+    """Fail the entire job if OCR fails on any image.
+
+    By default, OCR errors result in empty text for that image
+    """
 
     fail_on_markdown_reconstruction_error: Optional[bool]
-    """Fail job if markdown reconstruction encounters errors"""
+    """Fail the entire job if markdown cannot be reconstructed for any page.
+
+    By default, failed pages use fallback text extraction
+    """
 
 
 class ProcessingControlTimeouts(TypedDict, total=False):
-    """Timeout configuration for parsing jobs"""
+    """Timeout settings for job execution. Increase for large or complex documents"""
 
     base_in_seconds: Optional[int]
-    """Base timeout in seconds (max 30 minutes)"""
+    """Base timeout for the job in seconds (max 1800 = 30 minutes).
+
+    This is the minimum time allowed regardless of document size
+    """
 
     extra_time_per_page_in_seconds: Optional[int]
-    """Additional timeout per page in seconds (max 5 minutes)"""
+    """Additional timeout per page in seconds (max 300 = 5 minutes).
+
+    Total timeout = base + (this value × page count)
+    """
 
 
 class ProcessingControl(TypedDict, total=False):
-    """Job processing control and failure handling"""
+    """Job execution controls including timeouts and failure thresholds"""
 
     job_failure_conditions: ProcessingControlJobFailureConditions
-    """Conditions that determine job failure"""
+    """
+    Quality thresholds that determine when a job should fail vs complete with
+    partial results
+    """
 
     timeouts: ProcessingControlTimeouts
-    """Timeout configuration for parsing jobs"""
+    """Timeout settings for job execution. Increase for large or complex documents"""
 
 
 class ProcessingOptionsAutoModeConfigurationParsingConfCropBox(TypedDict, total=False):
@@ -373,11 +531,7 @@ class ProcessingOptionsAutoModeConfigurationParsingConfSpatialText(TypedDict, to
 
 
 class ProcessingOptionsAutoModeConfigurationParsingConf(TypedDict, total=False):
-    """Configuration for parsing in auto mode (V2 format).
-
-    This uses V2 API naming conventions. The backend service will convert
-    these to the V1 format expected by the llamaparse worker.
-    """
+    """Parsing configuration to apply when trigger conditions are met"""
 
     adaptive_long_table: Optional[bool]
     """Whether to use adaptive long table handling"""
@@ -389,7 +543,7 @@ class ProcessingOptionsAutoModeConfigurationParsingConf(TypedDict, total=False):
     """Crop box options for auto mode parsing configuration."""
 
     custom_prompt: Optional[str]
-    """Custom prompt for AI-powered parsing"""
+    """Custom AI instructions for matched pages. Overrides the base custom_prompt"""
 
     extract_layout: Optional[bool]
     """Whether to extract layout information"""
@@ -416,7 +570,7 @@ class ProcessingOptionsAutoModeConfigurationParsingConf(TypedDict, total=False):
     """Enable specialized chart parsing with the specified mode"""
 
     tier: Optional[Literal["fast", "cost_effective", "agentic", "agentic_plus"]]
-    """The parsing tier to use"""
+    """Override the parsing tier for matched pages. Must be paired with version"""
 
     version: Union[
         Literal[
@@ -444,23 +598,26 @@ class ProcessingOptionsAutoModeConfigurationParsingConf(TypedDict, total=False):
             "2026-03-10",
             "2026-03-11",
             "2026-03-12",
+            "2026-03-17",
+            "2026-03-19",
             "latest",
         ],
         str,
         None,
     ]
-    """Version of the tier configuration"""
+    """Tier version when overriding tier. Required when tier is specified"""
 
 
 class ProcessingOptionsAutoModeConfiguration(TypedDict, total=False):
-    """A single entry in the auto mode configuration array."""
+    """A single auto mode rule with trigger conditions and parsing configuration.
+
+    Auto mode allows conditional parsing where different configurations are applied
+    based on page content, structure, or filename. When triggers match, the
+    parsing_conf overrides default settings for that page.
+    """
 
     parsing_conf: Required[ProcessingOptionsAutoModeConfigurationParsingConf]
-    """Configuration for parsing in auto mode (V2 format).
-
-    This uses V2 API naming conventions. The backend service will convert these to
-    the V1 format expected by the llamaparse worker.
-    """
+    """Parsing configuration to apply when trigger conditions are met"""
 
     filename_match_glob: Optional[str]
     """Single glob pattern to match against filename"""
@@ -566,75 +723,130 @@ class ProcessingOptionsAutoModeConfiguration(TypedDict, total=False):
 
     trigger_mode: Optional[str]
     """
-    How to combine multiple trigger conditions: 'and' (all must match, default) or
-    'or' (any can match)
+    How to combine multiple trigger conditions: 'and' (all conditions must match,
+    this is the default) or 'or' (any single condition can trigger)
     """
 
 
 class ProcessingOptionsCostOptimizer(TypedDict, total=False):
-    """Cost optimizer parameters for parsing configuration."""
+    """Cost optimizer configuration for reducing parsing costs on simpler pages.
+
+    When enabled, the parser analyzes each page and routes simpler pages to faster,
+    cheaper processing while preserving quality for complex pages. Only works with
+    'agentic' or 'agentic_plus' tiers.
+    """
 
     enable: Optional[bool]
-    """Use cost-optimized parsing for the document.
+    """Enable cost-optimized parsing.
 
-    May negatively impact parsing speed and quality.
+    Routes simpler pages to faster processing while complex pages use full AI
+    analysis. May reduce speed on some documents. IMPORTANT: Only available with
+    'agentic' or 'agentic_plus' tiers
     """
 
 
 class ProcessingOptionsIgnore(TypedDict, total=False):
-    """Options for ignoring specific text types"""
+    """Options for ignoring specific text types (diagonal, hidden, text in images)"""
 
     ignore_diagonal_text: Optional[bool]
-    """Whether to ignore diagonal text in the document"""
+    """Skip text rotated at an angle (not horizontal/vertical).
+
+    Useful for ignoring watermarks or decorative angled text
+    """
 
     ignore_hidden_text: Optional[bool]
-    """Whether to ignore hidden text in the document"""
+    """Skip text marked as hidden in the document structure.
+
+    Some PDFs contain invisible text layers used for accessibility or search
+    indexing
+    """
 
     ignore_text_in_image: Optional[bool]
-    """Whether to ignore text that appears within images"""
+    """Skip OCR text extraction from embedded images.
+
+    Use when images contain irrelevant text (watermarks, logos) that shouldn't be in
+    the output
+    """
 
 
 class ProcessingOptionsOcrParameters(TypedDict, total=False):
-    """OCR configuration parameters"""
+    """OCR configuration including language detection settings"""
 
     languages: Optional[List[ParsingLanguages]]
-    """List of languages to use for OCR processing"""
+    """Languages to use for OCR text recognition.
+
+    Specify multiple languages if document contains mixed-language content. Order
+    matters - put primary language first. Example: ['en', 'es'] for English with
+    Spanish
+    """
 
 
 class ProcessingOptions(TypedDict, total=False):
-    """Processing options shared across all tiers"""
+    """Document processing options including OCR, table extraction, and chart parsing"""
 
     aggressive_table_extraction: Optional[bool]
-    """Whether to use aggressive table extraction"""
+    """
+    Use aggressive heuristics to detect table boundaries, even without visible
+    borders. Useful for documents with borderless or complex tables
+    """
 
     auto_mode_configuration: Optional[Iterable[ProcessingOptionsAutoModeConfiguration]]
-    """Configuration for auto mode parsing with triggers and parsing options"""
+    """
+    Conditional processing rules that apply different parsing options based on page
+    content, document structure, or filename patterns. Each entry defines trigger
+    conditions and the parsing configuration to apply when triggered
+    """
 
     cost_optimizer: Optional[ProcessingOptionsCostOptimizer]
-    """Cost optimizer parameters for parsing configuration."""
+    """Cost optimizer configuration for reducing parsing costs on simpler pages.
+
+    When enabled, the parser analyzes each page and routes simpler pages to faster,
+    cheaper processing while preserving quality for complex pages. Only works with
+    'agentic' or 'agentic_plus' tiers.
+    """
 
     disable_heuristics: Optional[bool]
     """
-    Whether to disable heuristics like outlined table extraction and adaptive long
-    table handling
+    Disable automatic heuristics including outlined table extraction and adaptive
+    long table handling. Use when heuristics produce incorrect results
     """
 
     ignore: ProcessingOptionsIgnore
-    """Options for ignoring specific text types"""
+    """Options for ignoring specific text types (diagonal, hidden, text in images)"""
 
     ocr_parameters: ProcessingOptionsOcrParameters
-    """OCR configuration parameters"""
+    """OCR configuration including language detection settings"""
 
     specialized_chart_parsing: Optional[Literal["agentic_plus", "agentic", "efficient"]]
-    """Enable specialized chart parsing with the specified mode"""
+    """Enable AI-powered chart analysis.
+
+    Modes: 'efficient' (fast, lower cost), 'agentic' (balanced), 'agentic_plus'
+    (highest accuracy). Automatically enables extract_layout and
+    precise_bounding_box when set
+    """
 
 
 class WebhookConfiguration(TypedDict, total=False):
+    """Webhook configuration for receiving parsing job notifications.
+
+    Webhooks are called when specified events occur during job processing.
+    Configure multiple webhook configurations to send to different endpoints.
+    """
+
     webhook_events: Optional[SequenceNotStr[str]]
-    """List of events that trigger webhook notifications"""
+    """Events that trigger this webhook.
+
+    Options: 'parse.success' (job completed), 'parse.failure' (job failed),
+    'parse.partial' (some pages failed). If not specified, webhook fires for all
+    events
+    """
 
     webhook_headers: Optional[Dict[str, object]]
-    """Custom headers to include in webhook requests"""
+    """Custom HTTP headers to include in webhook requests.
+
+    Use for authentication tokens or custom routing. Example: {'Authorization':
+    'Bearer xyz'}
+    """
 
     webhook_url: Optional[str]
-    """Webhook URL for receiving parsing notifications"""
+    """HTTPS URL to receive webhook POST requests. Must be publicly accessible"""

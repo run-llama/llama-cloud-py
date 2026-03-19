@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Iterable, Optional
-from typing_extensions import Literal, Required, TypedDict
+from typing_extensions import Required, TypedDict
 
 from .extract_configuration_param import ExtractConfigurationParam
 from .extraction.webhook_configuration_param import WebhookConfigurationParam
@@ -12,11 +12,8 @@ __all__ = ["ExtractCreateParams"]
 
 
 class ExtractCreateParams(TypedDict, total=False):
-    type: Required[Literal["url", "file_id", "parse_job_id"]]
-    """Type of document input."""
-
-    value: Required[str]
-    """Document identifier (URL, file ID, or parse job ID)."""
+    document_input_value: Required[str]
+    """File ID or Parse Job ID to extract from"""
 
     organization_id: Optional[str]
 

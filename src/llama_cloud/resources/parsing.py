@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Union, Iterable, Optional
+from datetime import datetime
 from typing_extensions import Literal
 
 import httpx
@@ -77,6 +78,8 @@ class ParsingResource(SyncAPIResource):
                 "2026-03-10",
                 "2026-03-11",
                 "2026-03-12",
+                "2026-03-17",
+                "2026-03-19",
                 "latest",
             ],
             str,
@@ -108,37 +111,54 @@ class ParsingResource(SyncAPIResource):
         Parse a file by file ID or URL.
 
         Args:
-          tier: The parsing tier to use
+          tier: Parsing tier: 'fast' (rule-based, cheapest), 'cost_effective' (balanced),
+              'agentic' (AI-powered with custom prompts), or 'agentic_plus' (premium AI with
+              highest accuracy)
 
-          version: Version of the tier configuration
+          version: Tier version. Use 'latest' for the current stable version, or specify a specific
+              version (e.g., '1.0', '2.0') for reproducible results
 
-          agentic_options: Options for agentic tier parsing (with AI agents).
+          agentic_options: Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
 
-          client_name: Name of the client making the parsing request
+              These options customize how the AI processes and interprets document content.
+              Only applicable when using non-fast tiers.
 
-          crop_box: Document crop box boundaries
+          client_name: Identifier for the client/application making the request. Used for analytics and
+              debugging. Example: 'my-app-v2'
 
-          disable_cache: Whether to disable caching for this parsing job
+          crop_box: Crop boundaries to process only a portion of each page. Values are ratios 0-1
+              from page edges
 
-          fast_options: Options for fast tier parsing (without AI).
+          disable_cache: Bypass result caching and force re-parsing. Use when document content may have
+              changed or you need fresh results
 
-          file_id: ID of an existing file in the project to parse
+          fast_options: Options for fast tier parsing (rule-based, no AI).
 
-          http_proxy: HTTP proxy URL for network requests (only used with source_url)
+              Fast tier uses deterministic algorithms for text extraction without AI
+              enhancement. It's the fastest and most cost-effective option, best suited for
+              simple documents with standard layouts. Currently has no configurable options
+              but reserved for future expansion.
 
-          input_options: Input format-specific parsing options
+          file_id: ID of an existing file in the project to parse. Mutually exclusive with
+              source_url
 
-          output_options: Output format and styling options
+          http_proxy: HTTP/HTTPS proxy for fetching source_url. Ignored if using file_id
 
-          page_ranges: Page range selection options
+          input_options: Format-specific options (HTML, PDF, spreadsheet, presentation). Applied based on
+              detected input file type
 
-          processing_control: Job processing control and failure handling
+          output_options: Output formatting options for markdown, text, and extracted images
 
-          processing_options: Processing options shared across all tiers
+          page_ranges: Page selection: limit total pages or specify exact pages to process
 
-          source_url: Source URL to fetch document from
+          processing_control: Job execution controls including timeouts and failure thresholds
 
-          webhook_configurations: List of webhook configurations for notifications
+          processing_options: Document processing options including OCR, table extraction, and chart parsing
+
+          source_url: Public URL of the document to parse. Mutually exclusive with file_id
+
+          webhook_configurations: Webhook endpoints for job status notifications. Multiple webhooks can be
+              configured for different events or services
 
           extra_headers: Send extra headers
 
@@ -190,6 +210,8 @@ class ParsingResource(SyncAPIResource):
     def list(
         self,
         *,
+        created_at_on_or_after: Union[str, datetime, None] | Omit = omit,
+        created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
@@ -203,10 +225,13 @@ class ParsingResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPaginatedCursor[ParsingListResponse]:
         """
-        List parse jobs for the current project with optional status filtering and
-        pagination.
+        List parse jobs for the current project with optional filtering and pagination.
 
         Args:
+          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+
+          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+
           page_size: Number of items per page
 
           page_token: Token for pagination
@@ -231,6 +256,8 @@ class ParsingResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "created_at_on_or_after": created_at_on_or_after,
+                        "created_at_on_or_before": created_at_on_or_before,
                         "organization_id": organization_id,
                         "page_size": page_size,
                         "page_token": page_token,
@@ -350,6 +377,8 @@ class AsyncParsingResource(AsyncAPIResource):
                 "2026-03-10",
                 "2026-03-11",
                 "2026-03-12",
+                "2026-03-17",
+                "2026-03-19",
                 "latest",
             ],
             str,
@@ -381,37 +410,54 @@ class AsyncParsingResource(AsyncAPIResource):
         Parse a file by file ID or URL.
 
         Args:
-          tier: The parsing tier to use
+          tier: Parsing tier: 'fast' (rule-based, cheapest), 'cost_effective' (balanced),
+              'agentic' (AI-powered with custom prompts), or 'agentic_plus' (premium AI with
+              highest accuracy)
 
-          version: Version of the tier configuration
+          version: Tier version. Use 'latest' for the current stable version, or specify a specific
+              version (e.g., '1.0', '2.0') for reproducible results
 
-          agentic_options: Options for agentic tier parsing (with AI agents).
+          agentic_options: Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
 
-          client_name: Name of the client making the parsing request
+              These options customize how the AI processes and interprets document content.
+              Only applicable when using non-fast tiers.
 
-          crop_box: Document crop box boundaries
+          client_name: Identifier for the client/application making the request. Used for analytics and
+              debugging. Example: 'my-app-v2'
 
-          disable_cache: Whether to disable caching for this parsing job
+          crop_box: Crop boundaries to process only a portion of each page. Values are ratios 0-1
+              from page edges
 
-          fast_options: Options for fast tier parsing (without AI).
+          disable_cache: Bypass result caching and force re-parsing. Use when document content may have
+              changed or you need fresh results
 
-          file_id: ID of an existing file in the project to parse
+          fast_options: Options for fast tier parsing (rule-based, no AI).
 
-          http_proxy: HTTP proxy URL for network requests (only used with source_url)
+              Fast tier uses deterministic algorithms for text extraction without AI
+              enhancement. It's the fastest and most cost-effective option, best suited for
+              simple documents with standard layouts. Currently has no configurable options
+              but reserved for future expansion.
 
-          input_options: Input format-specific parsing options
+          file_id: ID of an existing file in the project to parse. Mutually exclusive with
+              source_url
 
-          output_options: Output format and styling options
+          http_proxy: HTTP/HTTPS proxy for fetching source_url. Ignored if using file_id
 
-          page_ranges: Page range selection options
+          input_options: Format-specific options (HTML, PDF, spreadsheet, presentation). Applied based on
+              detected input file type
 
-          processing_control: Job processing control and failure handling
+          output_options: Output formatting options for markdown, text, and extracted images
 
-          processing_options: Processing options shared across all tiers
+          page_ranges: Page selection: limit total pages or specify exact pages to process
 
-          source_url: Source URL to fetch document from
+          processing_control: Job execution controls including timeouts and failure thresholds
 
-          webhook_configurations: List of webhook configurations for notifications
+          processing_options: Document processing options including OCR, table extraction, and chart parsing
+
+          source_url: Public URL of the document to parse. Mutually exclusive with file_id
+
+          webhook_configurations: Webhook endpoints for job status notifications. Multiple webhooks can be
+              configured for different events or services
 
           extra_headers: Send extra headers
 
@@ -463,6 +509,8 @@ class AsyncParsingResource(AsyncAPIResource):
     def list(
         self,
         *,
+        created_at_on_or_after: Union[str, datetime, None] | Omit = omit,
+        created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
@@ -476,10 +524,13 @@ class AsyncParsingResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[ParsingListResponse, AsyncPaginatedCursor[ParsingListResponse]]:
         """
-        List parse jobs for the current project with optional status filtering and
-        pagination.
+        List parse jobs for the current project with optional filtering and pagination.
 
         Args:
+          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+
+          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+
           page_size: Number of items per page
 
           page_token: Token for pagination
@@ -504,6 +555,8 @@ class AsyncParsingResource(AsyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "created_at_on_or_after": created_at_on_or_after,
+                        "created_at_on_or_before": created_at_on_or_before,
                         "organization_id": organization_id,
                         "page_size": page_size,
                         "page_token": page_token,
