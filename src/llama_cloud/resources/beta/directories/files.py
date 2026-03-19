@@ -7,7 +7,7 @@ from typing import Mapping, Optional, cast
 import httpx
 
 from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, FileTypes, omit, not_given
-from ...._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
+from ...._utils import extract_files, path_template, maybe_transform, deepcopy_minimal, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
 from ...._response import (
@@ -101,7 +101,11 @@ class FilesResource(SyncAPIResource):
         if not directory_file_id:
             raise ValueError(f"Expected a non-empty value for `directory_file_id` but received {directory_file_id!r}")
         return self._patch(
-            f"/api/v1/beta/directories/{path_directory_id}/files/{directory_file_id}",
+            path_template(
+                "/api/v1/beta/directories/{path_directory_id}/files/{directory_file_id}",
+                path_directory_id=path_directory_id,
+                directory_file_id=directory_file_id,
+            ),
             body=maybe_transform(
                 {
                     "body_directory_id": body_directory_id,
@@ -162,7 +166,7 @@ class FilesResource(SyncAPIResource):
         if not directory_id:
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
         return self._get_api_list(
-            f"/api/v1/beta/directories/{directory_id}/files",
+            path_template("/api/v1/beta/directories/{directory_id}/files", directory_id=directory_id),
             page=SyncPaginatedCursor[FileListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -223,7 +227,11 @@ class FilesResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `directory_file_id` but received {directory_file_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
+            path_template(
+                "/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
+                directory_id=directory_id,
+                directory_file_id=directory_file_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -281,7 +289,7 @@ class FilesResource(SyncAPIResource):
         if not directory_id:
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
         return self._post(
-            f"/api/v1/beta/directories/{directory_id}/files",
+            path_template("/api/v1/beta/directories/{directory_id}/files", directory_id=directory_id),
             body=maybe_transform(
                 {
                     "file_id": file_id,
@@ -340,7 +348,11 @@ class FilesResource(SyncAPIResource):
         if not directory_file_id:
             raise ValueError(f"Expected a non-empty value for `directory_file_id` but received {directory_file_id!r}")
         return self._get(
-            f"/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
+            path_template(
+                "/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
+                directory_id=directory_id,
+                directory_file_id=directory_file_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -406,7 +418,7 @@ class FilesResource(SyncAPIResource):
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._post(
-            f"/api/v1/beta/directories/{directory_id}/files/upload",
+            path_template("/api/v1/beta/directories/{directory_id}/files/upload", directory_id=directory_id),
             body=maybe_transform(body, file_upload_params.FileUploadParams),
             files=files,
             options=make_request_options(
@@ -492,7 +504,11 @@ class AsyncFilesResource(AsyncAPIResource):
         if not directory_file_id:
             raise ValueError(f"Expected a non-empty value for `directory_file_id` but received {directory_file_id!r}")
         return await self._patch(
-            f"/api/v1/beta/directories/{path_directory_id}/files/{directory_file_id}",
+            path_template(
+                "/api/v1/beta/directories/{path_directory_id}/files/{directory_file_id}",
+                path_directory_id=path_directory_id,
+                directory_file_id=directory_file_id,
+            ),
             body=await async_maybe_transform(
                 {
                     "body_directory_id": body_directory_id,
@@ -553,7 +569,7 @@ class AsyncFilesResource(AsyncAPIResource):
         if not directory_id:
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
         return self._get_api_list(
-            f"/api/v1/beta/directories/{directory_id}/files",
+            path_template("/api/v1/beta/directories/{directory_id}/files", directory_id=directory_id),
             page=AsyncPaginatedCursor[FileListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -614,7 +630,11 @@ class AsyncFilesResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `directory_file_id` but received {directory_file_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
+            path_template(
+                "/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
+                directory_id=directory_id,
+                directory_file_id=directory_file_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -672,7 +692,7 @@ class AsyncFilesResource(AsyncAPIResource):
         if not directory_id:
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
         return await self._post(
-            f"/api/v1/beta/directories/{directory_id}/files",
+            path_template("/api/v1/beta/directories/{directory_id}/files", directory_id=directory_id),
             body=await async_maybe_transform(
                 {
                     "file_id": file_id,
@@ -731,7 +751,11 @@ class AsyncFilesResource(AsyncAPIResource):
         if not directory_file_id:
             raise ValueError(f"Expected a non-empty value for `directory_file_id` but received {directory_file_id!r}")
         return await self._get(
-            f"/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
+            path_template(
+                "/api/v1/beta/directories/{directory_id}/files/{directory_file_id}",
+                directory_id=directory_id,
+                directory_file_id=directory_file_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -797,7 +821,7 @@ class AsyncFilesResource(AsyncAPIResource):
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._post(
-            f"/api/v1/beta/directories/{directory_id}/files/upload",
+            path_template("/api/v1/beta/directories/{directory_id}/files/upload", directory_id=directory_id),
             body=await async_maybe_transform(body, file_upload_params.FileUploadParams),
             files=files,
             options=make_request_options(
