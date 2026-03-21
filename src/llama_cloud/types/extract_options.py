@@ -42,4 +42,4 @@ class ExtractOptions(BaseModel):
     """
 
     tier: Optional[Literal["cost_effective", "agentic"]] = None
-    """Extraction tier: cost_effective (4 credits/page) or agentic (15 credits/page)"""
+    """Extraction tier: cost_effective (5 credits/page) or agentic (15 credits/page)"""
