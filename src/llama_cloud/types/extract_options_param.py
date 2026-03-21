@@ -42,4 +42,4 @@ class ExtractOptionsParam(TypedDict, total=False):
     """
 
     tier: Literal["cost_effective", "agentic"]
-    """Extraction tier: cost_effective (4 credits/page) or agentic (15 credits/page)"""
+    """Extraction tier: cost_effective (5 credits/page) or agentic (15 credits/page)"""
