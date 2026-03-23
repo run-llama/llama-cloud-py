@@ -27,6 +27,13 @@ class GeminiEmbedding(BaseModel):
     num_workers: Optional[int] = None
     """The number of workers to use for async embedding calls."""
 
+    output_dimensionality: Optional[int] = None
+    """Optional reduced dimension for output embeddings.
+
+    Supported by models/text-embedding-004 and newer (e.g. gemini-embedding-001).
+    Not supported by models/embedding-001.
+    """
+
     task_type: Optional[str] = None
     """The task for embedding model."""
 
