@@ -298,7 +298,7 @@ class ProcessingResultJobConfigBatchParseJobRecordCreateParameters(BaseModel):
     version: Optional[str] = None
 
     webhook_configurations: Optional[List[WebhookConfiguration]] = None
-    """The outbound webhook configurations"""
+    """Outbound webhook endpoints to notify on job status changes"""
 
     webhook_url: Optional[str] = None
 
@@ -381,10 +381,10 @@ class ProcessingResult(BaseModel):
     """Type of processing performed"""
 
     output_s3_path: str
-    """S3 location of processing output"""
+    """Location of the processing output"""
 
     parameters_hash: str
-    """Hash of parameters for deduplication"""
+    """Content hash of the job configuration for dedup"""
 
     processed_at: datetime
     """When this processing occurred"""

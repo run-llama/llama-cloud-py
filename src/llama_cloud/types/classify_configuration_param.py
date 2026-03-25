@@ -12,7 +12,7 @@ class Rule(TypedDict, total=False):
     """A rule for classifying documents."""
 
     description: Required[str]
-    """Natural language description of what to classify"""
+    """Natural language criteria for matching this rule"""
 
     type: Required[str]
     """Document type to assign when rule matches"""
@@ -22,26 +22,26 @@ class ParsingConfiguration(TypedDict, total=False):
     """Parsing configuration for classify jobs."""
 
     lang: str
-    """Language of the document"""
+    """ISO 639-1 language code for the document"""
 
     max_pages: Optional[int]
-    """Maximum number of pages to process"""
+    """Maximum number of pages to process. Omit for no limit."""
 
     target_pages: Optional[str]
-    """
-    Comma-separated list of page numbers or ranges to process (1-based, e.g.,
-    '1,3,5-7,9' or '1-3,8-10')
+    """Comma-separated page numbers or ranges to process (1-based).
+
+    Omit to process all pages.
     """
 
 
 class ClassifyConfigurationParam(TypedDict, total=False):
-    """Configuration for classification."""
+    """Configuration for a classify job."""
 
     rules: Required[Iterable[Rule]]
-    """Classification rules to apply (at least one required)"""
+    """Classify rules to evaluate against the document (at least one required)"""
 
     mode: Literal["FAST"]
-    """Classification execution mode"""
+    """Classify execution mode"""
 
     parsing_configuration: Optional[ParsingConfiguration]
     """Parsing configuration for classify jobs."""

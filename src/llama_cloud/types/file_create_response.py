@@ -9,30 +9,34 @@ __all__ = ["FileCreateResponse"]
 
 
 class FileCreateResponse(BaseModel):
-    """Schema for a file in the v2 API."""
+    """An uploaded file."""
 
     id: str
-    """Unique identifier"""
+    """Unique file identifier"""
 
     name: str
+    """File name including extension"""
 
     project_id: str
-    """The ID of the project that the file belongs to"""
+    """Project this file belongs to"""
 
     expires_at: Optional[datetime] = None
-    """The expiration date for the file. Files past this date can be deleted."""
+    """When the file expires and may be automatically removed.
+
+    Null means no expiration.
+    """
 
     external_file_id: Optional[str] = None
-    """The ID of the file in the external system"""
+    """Optional ID for correlating with an external system"""
 
     file_type: Optional[str] = None
-    """File type (e.g. pdf, docx, etc.)"""
+    """File extension (pdf, docx, png, etc.)"""
 
     last_modified_at: Optional[datetime] = None
-    """The last modified time of the file"""
+    """When the file was last modified (ISO 8601)"""
 
     purpose: Optional[str] = None
     """
-    The intended purpose of the file (e.g., 'user_data', 'parse', 'extract',
-    'split', 'classify', 'sheet', 'agent_app')
+    How the file will be used: user_data, parse, extract, classify, split, sheet, or
+    agent_app
     """

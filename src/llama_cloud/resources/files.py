@@ -66,6 +66,12 @@ class FilesResource(SyncAPIResource):
         """
         Upload a file using multipart/form-data.
 
+        Set `purpose` to indicate how the file will be used: `user_data`, `parse`,
+        `extract`, `classify`, `split`, `sheet`, or `agent_app`.
+
+        Returns the created file metadata including its ID for use in subsequent parse,
+        extract, or classify operations.
+
         Args:
           file: The file to upload
 
@@ -136,8 +142,8 @@ class FilesResource(SyncAPIResource):
         """
         List files with optional filtering and pagination.
 
-        This endpoint retrieves files for the specified project with support for
-        filtering by various criteria and cursor-based pagination.
+        Filter by `file_name`, `file_ids`, or `external_file_id`. Supports cursor-based
+        pagination and custom ordering.
 
         Args:
           external_file_id: Filter by external file ID.
@@ -201,12 +207,7 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Delete a single file from the project.
-
-        Args: file_id: The ID of the file to delete project: Validated project from
-        dependency db: Database session
-
-        Returns: None (204 No Content on success)
+        Delete a file from the project.
 
         Args:
           extra_headers: Send extra headers
@@ -253,7 +254,7 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PresignedURL:
         """
-        Returns a presigned url to read the file content.
+        Get a presigned URL to download the file content.
 
         Args:
           extra_headers: Send extra headers
@@ -399,6 +400,12 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         Upload a file using multipart/form-data.
 
+        Set `purpose` to indicate how the file will be used: `user_data`, `parse`,
+        `extract`, `classify`, `split`, `sheet`, or `agent_app`.
+
+        Returns the created file metadata including its ID for use in subsequent parse,
+        extract, or classify operations.
+
         Args:
           file: The file to upload
 
@@ -469,8 +476,8 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         List files with optional filtering and pagination.
 
-        This endpoint retrieves files for the specified project with support for
-        filtering by various criteria and cursor-based pagination.
+        Filter by `file_name`, `file_ids`, or `external_file_id`. Supports cursor-based
+        pagination and custom ordering.
 
         Args:
           external_file_id: Filter by external file ID.
@@ -534,12 +541,7 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Delete a single file from the project.
-
-        Args: file_id: The ID of the file to delete project: Validated project from
-        dependency db: Database session
-
-        Returns: None (204 No Content on success)
+        Delete a file from the project.
 
         Args:
           extra_headers: Send extra headers
@@ -586,7 +588,7 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PresignedURL:
         """
-        Returns a presigned url to read the file content.
+        Get a presigned URL to download the file content.
 
         Args:
           extra_headers: Send extra headers

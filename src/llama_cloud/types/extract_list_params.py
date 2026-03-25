@@ -6,6 +6,7 @@ from typing import Union, Optional
 from datetime import datetime
 from typing_extensions import Literal, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["ExtractListParams"]
@@ -26,6 +27,9 @@ class ExtractListParams(TypedDict, total=False):
 
     document_input_value: Optional[str]
     """Filter by document input value"""
+
+    job_ids: Optional[SequenceNotStr[str]]
+    """Filter by specific job IDs"""
 
     organization_id: Optional[str]
 

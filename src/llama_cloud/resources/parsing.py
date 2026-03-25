@@ -85,6 +85,8 @@ class ParsingResource(SyncAPIResource):
                 "2026-03-19",
                 "2026-03-20",
                 "2026-03-22",
+                "2026-03-23",
+                "2026-03-24",
                 "latest",
             ],
             str,
@@ -115,6 +117,20 @@ class ParsingResource(SyncAPIResource):
     ) -> ParsingCreateResponse:
         """
         Parse a file by file ID, URL, or direct file upload.
+
+        Provide either `file_id` (a previously uploaded file) or `source_url` (a
+        publicly accessible URL). Configure parsing with options like `tier`,
+        `target_pages`, and `lang`.
+
+        ## Tiers
+
+        - `fast` — rule-based, cheapest, no AI
+        - `cost_effective` — balanced speed and quality
+        - `agentic` — full AI-powered parsing
+        - `agentic_plus` — premium AI with specialized features
+
+        The job runs asynchronously. Poll `GET /parse/{job_id}` with `expand=text` or
+        `expand=markdown` to retrieve results.
 
         Args:
           tier: Parsing tier: 'fast' (rule-based, cheapest), 'cost_effective' (balanced),
@@ -268,6 +284,7 @@ class ParsingResource(SyncAPIResource):
         *,
         created_at_on_or_after: Union[str, datetime, None] | Omit = omit,
         created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
+        job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
@@ -281,12 +298,17 @@ class ParsingResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPaginatedCursor[ParsingListResponse]:
         """
-        List parse jobs for the current project with optional filtering and pagination.
+        List parse jobs for the current project.
+
+        Filter by `status` or creation date range. Results are paginated — use
+        `page_token` from the response to fetch subsequent pages.
 
         Args:
           created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
 
           created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+
+          job_ids: Filter by specific job IDs
 
           page_size: Number of items per page
 
@@ -314,6 +336,7 @@ class ParsingResource(SyncAPIResource):
                     {
                         "created_at_on_or_after": created_at_on_or_after,
                         "created_at_on_or_before": created_at_on_or_before,
+                        "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,
                         "page_token": page_token,
@@ -342,7 +365,17 @@ class ParsingResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParsingGetResponse:
         """
-        Retrieve parse job with optional content or metadata.
+        Retrieve a parse job with optional expanded content.
+
+        By default returns job metadata only. Use `expand` to include parsed content:
+
+        - `text` — plain text output
+        - `markdown` — markdown output
+        - `items` — structured page-by-page output
+        - `job_metadata` — usage and processing details
+
+        Content metadata fields (e.g. `text_content_metadata`) return presigned URLs for
+        downloading large results.
 
         Args:
           expand: Fields to include: text, markdown, items, metadata, job_metadata,
@@ -747,6 +780,8 @@ class AsyncParsingResource(AsyncAPIResource):
                 "2026-03-19",
                 "2026-03-20",
                 "2026-03-22",
+                "2026-03-23",
+                "2026-03-24",
                 "latest",
             ],
             str,
@@ -777,6 +812,20 @@ class AsyncParsingResource(AsyncAPIResource):
     ) -> ParsingCreateResponse:
         """
         Parse a file by file ID, URL, or direct file upload.
+
+        Provide either `file_id` (a previously uploaded file) or `source_url` (a
+        publicly accessible URL). Configure parsing with options like `tier`,
+        `target_pages`, and `lang`.
+
+        ## Tiers
+
+        - `fast` — rule-based, cheapest, no AI
+        - `cost_effective` — balanced speed and quality
+        - `agentic` — full AI-powered parsing
+        - `agentic_plus` — premium AI with specialized features
+
+        The job runs asynchronously. Poll `GET /parse/{job_id}` with `expand=text` or
+        `expand=markdown` to retrieve results.
 
         Args:
           tier: Parsing tier: 'fast' (rule-based, cheapest), 'cost_effective' (balanced),
@@ -930,6 +979,7 @@ class AsyncParsingResource(AsyncAPIResource):
         *,
         created_at_on_or_after: Union[str, datetime, None] | Omit = omit,
         created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
+        job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
@@ -943,12 +993,17 @@ class AsyncParsingResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[ParsingListResponse, AsyncPaginatedCursor[ParsingListResponse]]:
         """
-        List parse jobs for the current project with optional filtering and pagination.
+        List parse jobs for the current project.
+
+        Filter by `status` or creation date range. Results are paginated — use
+        `page_token` from the response to fetch subsequent pages.
 
         Args:
           created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
 
           created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+
+          job_ids: Filter by specific job IDs
 
           page_size: Number of items per page
 
@@ -976,6 +1031,7 @@ class AsyncParsingResource(AsyncAPIResource):
                     {
                         "created_at_on_or_after": created_at_on_or_after,
                         "created_at_on_or_before": created_at_on_or_before,
+                        "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,
                         "page_token": page_token,
@@ -1004,7 +1060,17 @@ class AsyncParsingResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParsingGetResponse:
         """
-        Retrieve parse job with optional content or metadata.
+        Retrieve a parse job with optional expanded content.
+
+        By default returns job metadata only. Use `expand` to include parsed content:
+
+        - `text` — plain text output
+        - `markdown` — markdown output
+        - `items` — structured page-by-page output
+        - `job_metadata` — usage and processing details
+
+        Content metadata fields (e.g. `text_content_metadata`) return presigned URLs for
+        downloading large results.
 
         Args:
           expand: Fields to include: text, markdown, items, metadata, job_metadata,

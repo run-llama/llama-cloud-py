@@ -18,22 +18,22 @@ class ClassifyListResponse(BaseModel):
     """Unique identifier"""
 
     configuration: ClassifyConfiguration
-    """Classification configuration"""
+    """Classify configuration used for this job"""
 
     document_input_type: Literal["url", "file_id", "parse_job_id"]
-    """Type of document input"""
+    """Whether the input was a file or parse job (FILE or PARSE_JOB)"""
 
     document_input_value: str
-    """Document identifier"""
+    """ID of the input file or parse job"""
 
     project_id: str
-    """Project ID"""
+    """Project this job belongs to"""
 
     status: Literal["PENDING", "RUNNING", "COMPLETED", "FAILED"]
-    """Job status"""
+    """Current job status: PENDING, RUNNING, COMPLETED, or FAILED"""
 
     user_id: str
-    """User ID"""
+    """User who created this job"""
 
     configuration_id: Optional[str] = None
     """Product configuration ID"""

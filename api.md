@@ -92,7 +92,6 @@ from llama_cloud.types import (
     ExtractConfiguration,
     ExtractJobMetadata,
     ExtractJobUsage,
-    ExtractOptions,
     ExtractV2Job,
     ExtractV2JobCreate,
     ExtractV2JobQueryResponse,

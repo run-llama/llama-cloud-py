@@ -35,4 +35,4 @@ class JobCreateParams(TypedDict, total=False):
     """
 
     webhook_configurations: Optional[Iterable[WebhookConfigurationParam]]
-    """The outbound webhook configurations"""
+    """Outbound webhook endpoints to notify on job status changes"""

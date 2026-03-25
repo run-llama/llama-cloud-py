@@ -1,60 +1,60 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from __future__ import annotations
+from typing import Dict, List, Union, Optional
+from typing_extensions import Literal
 
-from typing import Dict, Union, Iterable, Optional
-from typing_extensions import Literal, Required, TypedDict
+from .._models import BaseModel
 
-__all__ = ["ExtractConfigurationParam"]
+__all__ = ["ExtractConfiguration"]
 
 
-class ExtractConfigurationParam(TypedDict, total=False):
+class ExtractConfiguration(BaseModel):
     """Extract configuration combining parse and extract settings."""
 
-    data_schema: Required[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
+    data_schema: Dict[str, Union[Dict[str, object], List[object], str, float, bool, None]]
     """JSON Schema defining the fields to extract.
 
     Validate with the /schema/validate endpoint first.
     """
 
-    cite_sources: bool
+    cite_sources: Optional[bool] = None
     """Include citations in results"""
 
-    confidence_scores: bool
+    confidence_scores: Optional[bool] = None
     """Include confidence scores in results"""
 
-    extract_version: str
+    extract_version: Optional[str] = None
     """Extract algorithm version. Use 'latest' or a date string."""
 
-    extraction_target: Literal["per_doc", "per_page", "per_table_row"]
+    extraction_target: Optional[Literal["per_doc", "per_page", "per_table_row"]] = None
     """
     Granularity of extraction: per_doc returns one object per document, per_page
     returns one object per page, per_table_row returns one object per table row
     """
 
-    lang: str
+    lang: Optional[str] = None
     """ISO 639-1 language code for the document"""
 
-    max_pages: Optional[int]
+    max_pages: Optional[int] = None
     """Maximum number of pages to process. Omit for no limit."""
 
-    parse_config_id: Optional[str]
+    parse_config_id: Optional[str] = None
     """
     Saved parse configuration ID to control how the document is parsed before
     extraction
     """
 
-    parse_tier: Optional[str]
+    parse_tier: Optional[str] = None
     """Parse tier to use before extraction (fast, cost_effective, or agentic)"""
 
-    system_prompt: Optional[str]
+    system_prompt: Optional[str] = None
     """Custom system prompt to guide extraction behavior"""
 
-    target_pages: Optional[str]
+    target_pages: Optional[str] = None
     """Comma-separated page numbers or ranges to process (1-based).
 
     Omit to process all pages.
     """
 
-    tier: Literal["cost_effective", "agentic"]
+    tier: Optional[Literal["cost_effective", "agentic"]] = None
     """Extract tier: cost_effective (5 credits/page) or agentic (15 credits/page)"""

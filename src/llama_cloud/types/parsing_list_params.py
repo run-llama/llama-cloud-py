@@ -6,6 +6,7 @@ from typing import Union, Optional
 from datetime import datetime
 from typing_extensions import Literal, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["ParsingListParams"]
@@ -17,6 +18,9 @@ class ParsingListParams(TypedDict, total=False):
 
     created_at_on_or_before: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
     """Include jobs created at or before this timestamp (inclusive)"""
+
+    job_ids: Optional[SequenceNotStr[str]]
+    """Filter by specific job IDs"""
 
     organization_id: Optional[str]
 

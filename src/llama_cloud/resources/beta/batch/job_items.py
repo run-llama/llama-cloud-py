@@ -65,9 +65,8 @@ class JobItemsResource(SyncAPIResource):
         """
         List items in a batch job with optional status filtering.
 
-        Useful for finding failed items, viewing completed items, or debugging issues.
-        Results are paginated for performance with configurable limit and offset
-        parameters.
+        Useful for finding failed items, viewing completed items, or debugging
+        processing issues.
 
         Args:
           limit: Maximum number of items to return
@@ -123,12 +122,11 @@ class JobItemsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> JobItemGetProcessingResultsResponse:
         """
-        Get all processing results for a specific item (lineage query).
+        Get all processing results for a specific item.
 
-        Shows complete processing history including what operations have been performed,
-        with what parameters, and where outputs are stored. Useful for understanding
-        what processing has already been done to avoid redundant work. Optionally filter
-        by job type to see only specific processing operations.
+        Returns the complete processing history for an item including what operations
+        were performed, parameters used, and where outputs are stored. Optionally filter
+        by `job_type`.
 
         Args:
           job_type: Filter results by job type
@@ -202,9 +200,8 @@ class AsyncJobItemsResource(AsyncAPIResource):
         """
         List items in a batch job with optional status filtering.
 
-        Useful for finding failed items, viewing completed items, or debugging issues.
-        Results are paginated for performance with configurable limit and offset
-        parameters.
+        Useful for finding failed items, viewing completed items, or debugging
+        processing issues.
 
         Args:
           limit: Maximum number of items to return
@@ -260,12 +257,11 @@ class AsyncJobItemsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> JobItemGetProcessingResultsResponse:
         """
-        Get all processing results for a specific item (lineage query).
+        Get all processing results for a specific item.
 
-        Shows complete processing history including what operations have been performed,
-        with what parameters, and where outputs are stored. Useful for understanding
-        what processing has already been done to avoid redundant work. Optionally filter
-        by job type to see only specific processing operations.
+        Returns the complete processing history for an item including what operations
+        were performed, parameters used, and where outputs are stored. Optionally filter
+        by `job_type`.
 
         Args:
           job_type: Filter results by job type

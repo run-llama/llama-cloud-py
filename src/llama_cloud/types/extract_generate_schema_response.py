@@ -7,7 +7,6 @@ from pydantic import Field as FieldInfo
 
 from .._utils import PropertyInfo
 from .._models import BaseModel
-from .extract_options import ExtractOptions
 from .parsing_languages import ParsingLanguages
 from .beta.split_category import SplitCategory
 
@@ -79,24 +78,63 @@ class ParametersSplitV1Parameters(BaseModel):
 class ParametersExtractV2Parameters(BaseModel):
     """Typed parameters for an *extract v2* product configuration."""
 
-    extract_options: ExtractOptions
-    """Extract-specific configuration options including the data schema"""
+    data_schema: Dict[str, Union[Dict[str, object], List[object], str, float, bool, None]]
+    """JSON Schema defining the fields to extract.
+
+    Validate with the /schema/validate endpoint first.
+    """
 
     product_type: Literal["extract_v2"]
     """Product type."""
 
+    cite_sources: Optional[bool] = None
+    """Include citations in results"""
+
+    confidence_scores: Optional[bool] = None
+    """Include confidence scores in results"""
+
+    extract_version: Optional[str] = None
+    """Extract algorithm version. Use 'latest' or a date string."""
+
+    extraction_target: Optional[Literal["per_doc", "per_page", "per_table_row"]] = None
+    """
+    Granularity of extraction: per_doc returns one object per document, per_page
+    returns one object per page, per_table_row returns one object per table row
+    """
+
+    lang: Optional[str] = None
+    """ISO 639-1 language code for the document"""
+
+    max_pages: Optional[int] = None
+    """Maximum number of pages to process. Omit for no limit."""
+
     parse_config_id: Optional[str] = None
-    """Parse config ID used for extraction"""
+    """
+    Saved parse configuration ID to control how the document is parsed before
+    extraction
+    """
 
     parse_tier: Optional[str] = None
-    """Parse tier to use for extraction (e.g. fast, cost_effective, agentic)."""
+    """Parse tier to use before extraction (fast, cost_effective, or agentic)"""
+
+    system_prompt: Optional[str] = None
+    """Custom system prompt to guide extraction behavior"""
+
+    target_pages: Optional[str] = None
+    """Comma-separated page numbers or ranges to process (1-based).
+
+    Omit to process all pages.
+    """
+
+    tier: Optional[Literal["cost_effective", "agentic"]] = None
+    """Extract tier: cost_effective (5 credits/page) or agentic (15 credits/page)"""
 
 
 class ParametersClassifyV2ParametersRule(BaseModel):
     """A rule for classifying documents."""
 
     description: str
-    """Natural language description of what to classify"""
+    """Natural language criteria for matching this rule"""
 
     type: str
     """Document type to assign when rule matches"""
@@ -106,15 +144,15 @@ class ParametersClassifyV2ParametersParsingConfiguration(BaseModel):
     """Parsing configuration for classify jobs."""
 
     lang: Optional[str] = None
-    """Language of the document"""
+    """ISO 639-1 language code for the document"""
 
     max_pages: Optional[int] = None
-    """Maximum number of pages to process"""
+    """Maximum number of pages to process. Omit for no limit."""
 
     target_pages: Optional[str] = None
-    """
-    Comma-separated list of page numbers or ranges to process (1-based, e.g.,
-    '1,3,5-7,9' or '1-3,8-10')
+    """Comma-separated page numbers or ranges to process (1-based).
+
+    Omit to process all pages.
     """
 
 
@@ -125,10 +163,10 @@ class ParametersClassifyV2Parameters(BaseModel):
     """Product type."""
 
     rules: List[ParametersClassifyV2ParametersRule]
-    """Classification rules to apply (at least one required)"""
+    """Classify rules to evaluate against the document (at least one required)"""
 
     mode: Optional[Literal["FAST"]] = None
-    """Classification execution mode"""
+    """Classify execution mode"""
 
     parsing_configuration: Optional[ParametersClassifyV2ParametersParsingConfiguration] = None
     """Parsing configuration for classify jobs."""
@@ -578,6 +616,8 @@ class ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingCo
             "2026-03-19",
             "2026-03-20",
             "2026-03-22",
+            "2026-03-23",
+            "2026-03-24",
             "latest",
         ],
         str,
@@ -878,6 +918,8 @@ class ParametersParseV2Parameters(BaseModel):
             "2026-03-19",
             "2026-03-20",
             "2026-03-22",
+            "2026-03-23",
+            "2026-03-24",
             "latest",
         ],
         str,

@@ -260,6 +260,6 @@ class LlamaParseParameters(BaseModel):
     version: Optional[str] = None
 
     webhook_configurations: Optional[List[WebhookConfiguration]] = None
-    """The outbound webhook configurations"""
+    """Outbound webhook endpoints to notify on job status changes"""
 
     webhook_url: Optional[str] = None

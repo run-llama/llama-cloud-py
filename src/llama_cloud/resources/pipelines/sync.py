@@ -52,8 +52,10 @@ class SyncResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Run ingestion for the pipeline by incrementally updating the data-sink with
-        upstream changes from data-sources & files.
+        Trigger an incremental sync for a managed pipeline.
+
+        Processes new and updated documents from data sources and files, then updates
+        the index for retrieval.
 
         Args:
           extra_headers: Send extra headers
@@ -86,7 +88,7 @@ class SyncResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Cancel Pipeline Sync
+        Cancel all running sync jobs for a pipeline.
 
         Args:
           extra_headers: Send extra headers
@@ -140,8 +142,10 @@ class AsyncSyncResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Run ingestion for the pipeline by incrementally updating the data-sink with
-        upstream changes from data-sources & files.
+        Trigger an incremental sync for a managed pipeline.
+
+        Processes new and updated documents from data sources and files, then updates
+        the index for retrieval.
 
         Args:
           extra_headers: Send extra headers
@@ -174,7 +178,7 @@ class AsyncSyncResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Cancel Pipeline Sync
+        Cancel all running sync jobs for a pipeline.
 
         Args:
           extra_headers: Send extra headers

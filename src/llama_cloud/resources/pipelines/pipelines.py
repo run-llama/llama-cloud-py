@@ -161,7 +161,10 @@ class PipelinesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Create a new pipeline for a project.
+        Create a new managed ingestion pipeline.
+
+        A pipeline connects data sources to a vector store for RAG. After creation, call
+        `POST /pipelines/{id}/sync` to start ingesting documents.
 
         Args:
           data_sink: Schema for creating a data sink.
@@ -268,7 +271,11 @@ class PipelinesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PipelineRetrieveResponse:
         """
-        Get retrieval results for a managed pipeline and a query
+        Run a retrieval query against a managed pipeline.
+
+        Searches the pipeline's vector store using the provided query and retrieval
+        parameters. Supports dense, sparse, and hybrid search modes with configurable
+        top-k and reranking.
 
         Args:
           query: The query to retrieve against.
@@ -374,7 +381,7 @@ class PipelinesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Update an existing pipeline for a project.
+        Update an existing pipeline's configuration.
 
         Args:
           data_sink: Schema for creating a data sink.
@@ -455,7 +462,7 @@ class PipelinesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PipelineListResponse:
         """
-        Search for pipelines by various parameters.
+        Search for pipelines by name, type, or project.
 
         Args:
           pipeline_type: Enum for representing the type of a pipeline
@@ -501,7 +508,10 @@ class PipelinesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Delete a pipeline by ID.
+        Delete a pipeline and all associated resources.
+
+        Removes pipeline files, data sources, and vector store data. This operation is
+        irreversible.
 
         Args:
           extra_headers: Send extra headers
@@ -535,7 +545,7 @@ class PipelinesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Get a pipeline by ID for a given project.
+        Get a pipeline by ID.
 
         Args:
           extra_headers: Send extra headers
@@ -569,7 +579,10 @@ class PipelinesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ManagedIngestionStatusResponse:
         """
-        Get the status of a pipeline by ID.
+        Get the ingestion status of a managed pipeline.
+
+        Returns document counts, sync progress, and the last effective timestamp. Only
+        available for managed pipelines.
 
         Args:
           extra_headers: Send extra headers
@@ -621,10 +634,11 @@ class PipelinesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
-        """Upsert a pipeline for a project.
+        """
+        Upsert a pipeline.
 
-        Updates if a pipeline with the same name and
-        project_id already exists. Otherwise, creates a new pipeline.
+        Updates the pipeline if one with the same name and project already exists,
+        otherwise creates a new one.
 
         Args:
           data_sink: Schema for creating a data sink.
@@ -770,7 +784,10 @@ class AsyncPipelinesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Create a new pipeline for a project.
+        Create a new managed ingestion pipeline.
+
+        A pipeline connects data sources to a vector store for RAG. After creation, call
+        `POST /pipelines/{id}/sync` to start ingesting documents.
 
         Args:
           data_sink: Schema for creating a data sink.
@@ -877,7 +894,11 @@ class AsyncPipelinesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PipelineRetrieveResponse:
         """
-        Get retrieval results for a managed pipeline and a query
+        Run a retrieval query against a managed pipeline.
+
+        Searches the pipeline's vector store using the provided query and retrieval
+        parameters. Supports dense, sparse, and hybrid search modes with configurable
+        top-k and reranking.
 
         Args:
           query: The query to retrieve against.
@@ -983,7 +1004,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Update an existing pipeline for a project.
+        Update an existing pipeline's configuration.
 
         Args:
           data_sink: Schema for creating a data sink.
@@ -1064,7 +1085,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PipelineListResponse:
         """
-        Search for pipelines by various parameters.
+        Search for pipelines by name, type, or project.
 
         Args:
           pipeline_type: Enum for representing the type of a pipeline
@@ -1110,7 +1131,10 @@ class AsyncPipelinesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Delete a pipeline by ID.
+        Delete a pipeline and all associated resources.
+
+        Removes pipeline files, data sources, and vector store data. This operation is
+        irreversible.
 
         Args:
           extra_headers: Send extra headers
@@ -1144,7 +1168,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Get a pipeline by ID for a given project.
+        Get a pipeline by ID.
 
         Args:
           extra_headers: Send extra headers
@@ -1178,7 +1202,10 @@ class AsyncPipelinesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ManagedIngestionStatusResponse:
         """
-        Get the status of a pipeline by ID.
+        Get the ingestion status of a managed pipeline.
+
+        Returns document counts, sync progress, and the last effective timestamp. Only
+        available for managed pipelines.
 
         Args:
           extra_headers: Send extra headers
@@ -1230,10 +1257,11 @@ class AsyncPipelinesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
-        """Upsert a pipeline for a project.
+        """
+        Upsert a pipeline.
 
-        Updates if a pipeline with the same name and
-        project_id already exists. Otherwise, creates a new pipeline.
+        Updates the pipeline if one with the same name and project already exists,
+        otherwise creates a new one.
 
         Args:
           data_sink: Schema for creating a data sink.

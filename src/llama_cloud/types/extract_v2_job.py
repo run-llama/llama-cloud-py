@@ -5,6 +5,7 @@ from datetime import datetime
 
 from .._models import BaseModel
 from .extract_job_metadata import ExtractJobMetadata
+from .extract_configuration import ExtractConfiguration
 
 __all__ = ["ExtractV2Job"]
 
@@ -19,25 +20,32 @@ class ExtractV2Job(BaseModel):
     """Creation timestamp"""
 
     document_input_value: str
-    """File ID or Parse Job ID used for this job"""
+    """File ID or parse job ID that was extracted"""
 
-    parameters: Dict[str, Union[Dict[str, object], List[object], str, float, bool, None]]
-    """Job configuration parameters (includes parse_config_id, extract_options)"""
+    parameters: ExtractConfiguration
+    """Full configuration used for this job (extract options, parse config)"""
 
     project_id: str
     """Project this job belongs to"""
 
     status: str
-    """Current status: PENDING, THROTTLED, RUNNING, COMPLETED, FAILED, CANCELLED"""
+    """Current job status.
+
+    - `PENDING` — queued, not yet started
+    - `RUNNING` — actively processing
+    - `COMPLETED` — finished successfully
+    - `FAILED` — terminated with an error
+    - `CANCELLED` — cancelled by user
+    """
 
     updated_at: datetime
     """Last update timestamp"""
 
     configuration_id: Optional[str] = None
-    """Extract configuration ID (ProductConfiguration) used for this job (if any)"""
+    """Saved extract configuration ID used for this job, if any"""
 
     error_message: Optional[str] = None
-    """Error message if failed"""
+    """Error details when status is FAILED"""
 
     extract_metadata: Optional[ExtractJobMetadata] = None
     """Extraction metadata."""
@@ -47,4 +55,7 @@ class ExtractV2Job(BaseModel):
         List[Dict[str, Union[Dict[str, object], List[object], str, float, bool, None]]],
         None,
     ] = None
-    """Extracted data (object or array depending on extraction_target)"""
+    """Extracted data conforming to the data_schema.
+
+    Returns a single object for per_doc, or an array for per_page / per_table_row.
+    """

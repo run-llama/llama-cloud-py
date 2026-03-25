@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Union, Optional
+from datetime import datetime
 from typing_extensions import Literal
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ...types import StatusEnum
+from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._polling import (
@@ -32,6 +34,7 @@ from ...types.beta import (
     sheet_get_result_table_params,
 )
 from ..._base_client import AsyncPaginator, make_request_options
+from ...types.status_enum import StatusEnum
 from ...types.presigned_url import PresignedURL
 from ...types.beta.sheets_job import SheetsJob
 from ...types.beta.sheets_parsing_config_param import SheetsParsingConfigParam
@@ -336,11 +339,15 @@ class SheetsResource(SyncAPIResource):
     def list(
         self,
         *,
+        created_at_on_or_after: Union[str, datetime, None] | Omit = omit,
+        created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
         include_results: bool | Omit = omit,
+        job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
+        status: Optional[StatusEnum] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -354,6 +361,14 @@ class SheetsResource(SyncAPIResource):
         production use and is subject to change at any time.
 
         Args:
+          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+
+          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+
+          job_ids: Filter by specific job IDs
+
+          status: Filter by job status
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -372,11 +387,15 @@ class SheetsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "created_at_on_or_after": created_at_on_or_after,
+                        "created_at_on_or_before": created_at_on_or_before,
                         "include_results": include_results,
+                        "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,
                         "page_token": page_token,
                         "project_id": project_id,
+                        "status": status,
                     },
                     sheet_list_params.SheetListParams,
                 ),
@@ -845,11 +864,15 @@ class AsyncSheetsResource(AsyncAPIResource):
     def list(
         self,
         *,
+        created_at_on_or_after: Union[str, datetime, None] | Omit = omit,
+        created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
         include_results: bool | Omit = omit,
+        job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
+        status: Optional[StatusEnum] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -863,6 +886,14 @@ class AsyncSheetsResource(AsyncAPIResource):
         production use and is subject to change at any time.
 
         Args:
+          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+
+          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+
+          job_ids: Filter by specific job IDs
+
+          status: Filter by job status
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -881,11 +912,15 @@ class AsyncSheetsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "created_at_on_or_after": created_at_on_or_after,
+                        "created_at_on_or_before": created_at_on_or_before,
                         "include_results": include_results,
+                        "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,
                         "page_token": page_token,
                         "project_id": project_id,
+                        "status": status,
                     },
                     sheet_list_params.SheetListParams,
                 ),
