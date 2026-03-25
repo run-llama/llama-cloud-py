@@ -66,11 +66,23 @@ class ClassifyResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ClassifyCreateResponse:
-        """
-        Create a classify job.
+        """Create a classify job.
+
+        Classifies a document against a set of rules.
+
+        Provide either `file_id` or
+        `parse_job_id` as the document input, and either inline `configuration` with
+        rules or a `configuration_id` referencing a saved preset.
+
+        Each rule has a `type` (the label to assign) and a `description` (natural
+        language criteria). The classifier returns the best matching rule with a
+        confidence score.
+
+        The job runs asynchronously. Poll `GET /classify/{job_id}` to check status and
+        retrieve results.
 
         Args:
-          configuration: Configuration for classification.
+          configuration: Configuration for a classify job.
 
           configuration_id: Product configuration ID for reusable presets
 
@@ -136,7 +148,10 @@ class ClassifyResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPaginatedCursor[ClassifyListResponse]:
         """
-        List classify jobs.
+        List classify jobs with optional filtering and pagination.
+
+        Filter by `status`, `configuration_id`, specific `job_ids`, or creation date
+        range.
 
         Args:
           configuration_id: Filter by configuration ID
@@ -201,7 +216,10 @@ class ClassifyResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ClassifyGetResponse:
         """
-        Retrieve classify job by ID.
+        Get a classify job by ID.
+
+        Returns the job status, configuration, and classify result when complete. The
+        result includes the matched document type, confidence score, and reasoning.
 
         Args:
           extra_headers: Send extra headers
@@ -270,11 +288,23 @@ class AsyncClassifyResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ClassifyCreateResponse:
-        """
-        Create a classify job.
+        """Create a classify job.
+
+        Classifies a document against a set of rules.
+
+        Provide either `file_id` or
+        `parse_job_id` as the document input, and either inline `configuration` with
+        rules or a `configuration_id` referencing a saved preset.
+
+        Each rule has a `type` (the label to assign) and a `description` (natural
+        language criteria). The classifier returns the best matching rule with a
+        confidence score.
+
+        The job runs asynchronously. Poll `GET /classify/{job_id}` to check status and
+        retrieve results.
 
         Args:
-          configuration: Configuration for classification.
+          configuration: Configuration for a classify job.
 
           configuration_id: Product configuration ID for reusable presets
 
@@ -340,7 +370,10 @@ class AsyncClassifyResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[ClassifyListResponse, AsyncPaginatedCursor[ClassifyListResponse]]:
         """
-        List classify jobs.
+        List classify jobs with optional filtering and pagination.
+
+        Filter by `status`, `configuration_id`, specific `job_ids`, or creation date
+        range.
 
         Args:
           configuration_id: Filter by configuration ID
@@ -405,7 +438,10 @@ class AsyncClassifyResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ClassifyGetResponse:
         """
-        Retrieve classify job by ID.
+        Get a classify job by ID.
+
+        Returns the job status, configuration, and classify result when complete. The
+        result includes the matched document type, confidence score, and reasoning.
 
         Args:
           extra_headers: Send extra headers

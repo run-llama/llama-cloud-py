@@ -62,7 +62,6 @@ from .extract_v2_job import ExtractV2Job as ExtractV2Job
 from .fail_page_mode import FailPageMode as FailPageMode
 from .retrieval_mode import RetrievalMode as RetrievalMode
 from .classify_result import ClassifyResult as ClassifyResult
-from .extract_options import ExtractOptions as ExtractOptions
 from .file_get_params import FileGetParams as FileGetParams
 from .cohere_embedding import CohereEmbedding as CohereEmbedding
 from .file_list_params import FileListParams as FileListParams
@@ -96,9 +95,9 @@ from .retriever_get_params import RetrieverGetParams as RetrieverGetParams
 from .auto_transform_config import AutoTransformConfig as AutoTransformConfig
 from .classify_get_response import ClassifyGetResponse as ClassifyGetResponse
 from .data_sink_list_params import DataSinkListParams as DataSinkListParams
+from .extract_configuration import ExtractConfiguration as ExtractConfiguration
 from .extract_create_params import ExtractCreateParams as ExtractCreateParams
 from .extract_delete_params import ExtractDeleteParams as ExtractDeleteParams
-from .extract_options_param import ExtractOptionsParam as ExtractOptionsParam
 from .extraction_run_params import ExtractionRunParams as ExtractionRunParams
 from .parsing_create_params import ParsingCreateParams as ParsingCreateParams
 from .parsing_list_response import ParsingListResponse as ParsingListResponse

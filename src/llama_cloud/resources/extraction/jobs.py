@@ -88,7 +88,7 @@ class JobsResource(SyncAPIResource):
           priority: The priority for the request. This field may be ignored or overwritten depending
               on the organization tier.
 
-          webhook_configurations: The outbound webhook configurations
+          webhook_configurations: Outbound webhook endpoints to notify on job status changes
 
           extra_headers: Send extra headers
 
@@ -353,7 +353,7 @@ class AsyncJobsResource(AsyncAPIResource):
           priority: The priority for the request. This field may be ignored or overwritten depending
               on the organization tier.
 
-          webhook_configurations: The outbound webhook configurations
+          webhook_configurations: Outbound webhook endpoints to notify on job status changes
 
           extra_headers: Send extra headers
 

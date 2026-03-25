@@ -44,15 +44,15 @@ class TestClassify:
                 ],
                 "mode": "FAST",
                 "parsing_configuration": {
-                    "lang": "lang",
-                    "max_pages": 1,
-                    "target_pages": "target_pages",
+                    "lang": "en",
+                    "max_pages": 10,
+                    "target_pages": "1,3,5-7",
                 },
             },
-            configuration_id="configuration_id",
-            file_id="file_id",
-            parse_job_id="parse_job_id",
-            transaction_id="transaction_id",
+            configuration_id="cfg-11111111-2222-3333-4444-555555555555",
+            file_id="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            parse_job_id="pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            transaction_id="tx-unique-idempotency-key",
         )
         assert_matches_type(ClassifyCreateResponse, classify, path=["response"])
 
@@ -201,15 +201,15 @@ class TestAsyncClassify:
                 ],
                 "mode": "FAST",
                 "parsing_configuration": {
-                    "lang": "lang",
-                    "max_pages": 1,
-                    "target_pages": "target_pages",
+                    "lang": "en",
+                    "max_pages": 10,
+                    "target_pages": "1,3,5-7",
                 },
             },
-            configuration_id="configuration_id",
-            file_id="file_id",
-            parse_job_id="parse_job_id",
-            transaction_id="transaction_id",
+            configuration_id="cfg-11111111-2222-3333-4444-555555555555",
+            file_id="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            parse_job_id="pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            transaction_id="tx-unique-idempotency-key",
         )
         assert_matches_type(ClassifyCreateResponse, classify, path=["response"])
 

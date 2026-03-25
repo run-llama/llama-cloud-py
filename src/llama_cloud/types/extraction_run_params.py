@@ -32,7 +32,7 @@ class ExtractionRunParams(TypedDict, total=False):
     """The text content to extract from"""
 
     webhook_configurations: Optional[Iterable[WebhookConfigurationParam]]
-    """The outbound webhook configurations"""
+    """Outbound webhook endpoints to notify on job status changes"""
 
 
 class File(TypedDict, total=False):

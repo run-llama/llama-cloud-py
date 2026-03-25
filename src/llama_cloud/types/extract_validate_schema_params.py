@@ -10,4 +10,4 @@ __all__ = ["ExtractValidateSchemaParams"]
 
 class ExtractValidateSchemaParams(TypedDict, total=False):
     data_schema: Required[Dict[str, Union[Dict[str, object], Iterable[object], str, float, bool, None]]]
-    """JSON schema to validate"""
+    """JSON Schema to validate for use with extract jobs"""

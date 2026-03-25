@@ -2,13 +2,26 @@
 
 from __future__ import annotations
 
-from typing import Optional
-from typing_extensions import TypedDict
+from typing import Union, Optional
+from datetime import datetime
+from typing_extensions import Literal, Annotated, TypedDict
+
+from ..._types import SequenceNotStr
+from ..._utils import PropertyInfo
 
 __all__ = ["SplitListParams"]
 
 
 class SplitListParams(TypedDict, total=False):
+    created_at_on_or_after: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
+    """Include jobs created at or after this timestamp (inclusive)"""
+
+    created_at_on_or_before: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
+    """Include jobs created at or before this timestamp (inclusive)"""
+
+    job_ids: Optional[SequenceNotStr[str]]
+    """Filter by specific job IDs"""
+
     organization_id: Optional[str]
 
     page_size: Optional[int]
@@ -16,3 +29,6 @@ class SplitListParams(TypedDict, total=False):
     page_token: Optional[str]
 
     project_id: Optional[str]
+
+    status: Optional[Literal["pending", "processing", "completed", "failed", "cancelled"]]
+    """Filter by job status (pending, processing, completed, failed, cancelled)"""

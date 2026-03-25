@@ -117,7 +117,7 @@ class ExtractionResource(SyncAPIResource):
 
           text: The text content to extract from
 
-          webhook_configurations: The outbound webhook configurations
+          webhook_configurations: Outbound webhook endpoints to notify on job status changes
 
           extra_headers: Send extra headers
 
@@ -224,7 +224,7 @@ class AsyncExtractionResource(AsyncAPIResource):
 
           text: The text content to extract from
 
-          webhook_configurations: The outbound webhook configurations
+          webhook_configurations: Outbound webhook endpoints to notify on job status changes
 
           extra_headers: Send extra headers
 

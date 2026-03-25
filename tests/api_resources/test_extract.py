@@ -27,7 +27,7 @@ class TestExtract:
     @parametrize
     def test_method_create(self, client: LlamaCloud) -> None:
         extract = client.extract.create(
-            document_input_value="document_input_value",
+            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         )
         assert_matches_type(ExtractV2Job, extract, path=["response"])
 
@@ -35,32 +35,30 @@ class TestExtract:
     @parametrize
     def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
         extract = client.extract.create(
-            document_input_value="document_input_value",
+            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            config={
-                "extract_options": {
-                    "data_schema": {"foo": {"foo": "bar"}},
-                    "cite_sources": True,
-                    "confidence_scores": True,
-                    "extract_version": "extract_version",
-                    "extraction_target": "per_doc",
-                    "lang": "lang",
-                    "max_pages": 1,
-                    "system_prompt": "system_prompt",
-                    "target_pages": "target_pages",
-                    "tier": "cost_effective",
-                },
-                "parse_config_id": "parse_config_id",
-                "parse_tier": "parse_tier",
+            configuration={
+                "data_schema": {"foo": {"foo": "bar"}},
+                "cite_sources": True,
+                "confidence_scores": True,
+                "extract_version": "latest",
+                "extraction_target": "per_doc",
+                "lang": "en",
+                "max_pages": 10,
+                "parse_config_id": "cfg-11111111-2222-3333-4444-555555555555",
+                "parse_tier": "fast",
+                "system_prompt": "Extract all monetary values in USD. If a currency is not specified, assume USD.",
+                "target_pages": "1,3,5-7",
+                "tier": "cost_effective",
             },
-            configuration_id="configuration_id",
+            configuration_id="cfg-11111111-2222-3333-4444-555555555555",
             webhook_configurations=[
                 {
-                    "webhook_events": ["extract.pending"],
-                    "webhook_headers": {"foo": "string"},
-                    "webhook_output_format": "webhook_output_format",
-                    "webhook_url": "webhook_url",
+                    "webhook_events": ["parse.success", "parse.error"],
+                    "webhook_headers": {"Authorization": "Bearer sk-..."},
+                    "webhook_output_format": "json",
+                    "webhook_url": "https://example.com/webhooks/llamacloud",
                 }
             ],
         )
@@ -70,7 +68,7 @@ class TestExtract:
     @parametrize
     def test_raw_response_create(self, client: LlamaCloud) -> None:
         response = client.extract.with_raw_response.create(
-            document_input_value="document_input_value",
+            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         )
 
         assert response.is_closed is True
@@ -82,7 +80,7 @@ class TestExtract:
     @parametrize
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
         with client.extract.with_streaming_response.create(
-            document_input_value="document_input_value",
+            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -107,6 +105,7 @@ class TestExtract:
             created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
             document_input_type="document_input_type",
             document_input_value="document_input_value",
+            job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=0,
             page_token="page_token",
@@ -202,9 +201,9 @@ class TestExtract:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             data_schema={"foo": {"foo": "bar"}},
-            file_id="file_id",
-            name="name",
-            prompt="prompt",
+            file_id="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            name="invoice_extraction",
+            prompt="Extract vendor name, invoice number, line items, and total amount",
         )
         assert_matches_type(ExtractGenerateSchemaResponse, extract, path=["response"])
 
@@ -327,7 +326,7 @@ class TestAsyncExtract:
     @parametrize
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
         extract = await async_client.extract.create(
-            document_input_value="document_input_value",
+            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         )
         assert_matches_type(ExtractV2Job, extract, path=["response"])
 
@@ -335,32 +334,30 @@ class TestAsyncExtract:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         extract = await async_client.extract.create(
-            document_input_value="document_input_value",
+            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            config={
-                "extract_options": {
-                    "data_schema": {"foo": {"foo": "bar"}},
-                    "cite_sources": True,
-                    "confidence_scores": True,
-                    "extract_version": "extract_version",
-                    "extraction_target": "per_doc",
-                    "lang": "lang",
-                    "max_pages": 1,
-                    "system_prompt": "system_prompt",
-                    "target_pages": "target_pages",
-                    "tier": "cost_effective",
-                },
-                "parse_config_id": "parse_config_id",
-                "parse_tier": "parse_tier",
+            configuration={
+                "data_schema": {"foo": {"foo": "bar"}},
+                "cite_sources": True,
+                "confidence_scores": True,
+                "extract_version": "latest",
+                "extraction_target": "per_doc",
+                "lang": "en",
+                "max_pages": 10,
+                "parse_config_id": "cfg-11111111-2222-3333-4444-555555555555",
+                "parse_tier": "fast",
+                "system_prompt": "Extract all monetary values in USD. If a currency is not specified, assume USD.",
+                "target_pages": "1,3,5-7",
+                "tier": "cost_effective",
             },
-            configuration_id="configuration_id",
+            configuration_id="cfg-11111111-2222-3333-4444-555555555555",
             webhook_configurations=[
                 {
-                    "webhook_events": ["extract.pending"],
-                    "webhook_headers": {"foo": "string"},
-                    "webhook_output_format": "webhook_output_format",
-                    "webhook_url": "webhook_url",
+                    "webhook_events": ["parse.success", "parse.error"],
+                    "webhook_headers": {"Authorization": "Bearer sk-..."},
+                    "webhook_output_format": "json",
+                    "webhook_url": "https://example.com/webhooks/llamacloud",
                 }
             ],
         )
@@ -370,7 +367,7 @@ class TestAsyncExtract:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.extract.with_raw_response.create(
-            document_input_value="document_input_value",
+            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         )
 
         assert response.is_closed is True
@@ -382,7 +379,7 @@ class TestAsyncExtract:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.extract.with_streaming_response.create(
-            document_input_value="document_input_value",
+            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -407,6 +404,7 @@ class TestAsyncExtract:
             created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
             document_input_type="document_input_type",
             document_input_value="document_input_value",
+            job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=0,
             page_token="page_token",
@@ -502,9 +500,9 @@ class TestAsyncExtract:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             data_schema={"foo": {"foo": "bar"}},
-            file_id="file_id",
-            name="name",
-            prompt="prompt",
+            file_id="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            name="invoice_extraction",
+            prompt="Extract vendor name, invoice number, line items, and total amount",
         )
         assert_matches_type(ExtractGenerateSchemaResponse, extract, path=["response"])
 

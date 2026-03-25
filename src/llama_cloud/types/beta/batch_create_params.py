@@ -23,20 +23,16 @@ __all__ = [
 
 class BatchCreateParams(TypedDict, total=False):
     job_config: Required[JobConfig]
-    """Job configuration for batch processing.
-
-    Can be BatchParseJobRecordCreate or ClassifyJob.
-    """
+    """Job configuration — either a parse or classify config"""
 
     organization_id: Optional[str]
 
     project_id: Optional[str]
 
     continue_as_new_threshold: Optional[int]
-    """Maximum number of files to process before calling continue-as-new.
+    """Maximum files to process per execution cycle in directory mode.
 
-    If None, continue-as-new is called after every batch. (only used in directory
-    mode)
+    Defaults to page_size.
     """
 
     directory_id: Optional[str]
@@ -49,10 +45,7 @@ class BatchCreateParams(TypedDict, total=False):
     """
 
     page_size: int
-    """
-    Number of files to fetch per batch from the directory (only used in directory
-    mode)
-    """
+    """Number of files to process per batch when using directory mode"""
 
     temporal_namespace: Annotated[str, PropertyInfo(alias="temporal-namespace")]
 
@@ -333,7 +326,7 @@ class JobConfigBatchParseJobRecordCreateParameters(TypedDict, total=False):
     version: Optional[str]
 
     webhook_configurations: Optional[Iterable[WebhookConfigurationParam]]
-    """The outbound webhook configurations"""
+    """Outbound webhook endpoints to notify on job status changes"""
 
     webhook_url: Optional[str]
 

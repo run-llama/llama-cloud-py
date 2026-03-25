@@ -16,13 +16,13 @@ class Job(BaseModel):
     """Unique identifier for the batch job"""
 
     job_type: Literal["parse", "extract", "classify"]
-    """Type of processing operation"""
+    """Type of processing operation (parse or classify)"""
 
     project_id: str
     """Project this job belongs to"""
 
     status: Literal["pending", "running", "dispatched", "completed", "failed", "cancelled"]
-    """Current status of the job"""
+    """Current job status"""
 
     total_items: int
     """Total number of items in the job"""
@@ -60,7 +60,7 @@ class Job(BaseModel):
     """Update datetime"""
 
     workflow_id: Optional[str] = None
-    """Temporal workflow ID for this batch job"""
+    """Async job tracking ID"""
 
 
 class BatchGetStatusResponse(BaseModel):

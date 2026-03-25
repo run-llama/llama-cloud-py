@@ -79,26 +79,27 @@ class BatchResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchCreateResponse:
         """
-        Create a new batch processing job for a directory.
+        Create a batch processing job.
 
-        Processes all files in the specified directory according to the job
-        configuration. The job runs asynchronously and you can monitor progress using
-        the job status endpoint.
+        Processes files from a directory or a specific list of item IDs. Supports batch
+        parsing and classification operations.
+
+        Provide either `directory_id` to process all files in a directory, or `item_ids`
+        for specific items. The job runs asynchronously — poll `GET /batch/{job_id}` for
+        progress.
 
         Args:
-          job_config: Job configuration for batch processing. Can be BatchParseJobRecordCreate or
-              ClassifyJob.
+          job_config: Job configuration — either a parse or classify config
 
-          continue_as_new_threshold: Maximum number of files to process before calling continue-as-new. If None,
-              continue-as-new is called after every batch. (only used in directory mode)
+          continue_as_new_threshold: Maximum files to process per execution cycle in directory mode. Defaults to
+              page_size.
 
           directory_id: ID of the directory containing files to process
 
           item_ids: List of specific item IDs to process. Either this or directory_id must be
               provided.
 
-          page_size: Number of files to fetch per batch from the directory (only used in directory
-              mode)
+          page_size: Number of files to process per batch when using directory mode
 
           extra_headers: Send extra headers
 
@@ -155,11 +156,10 @@ class BatchResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPaginatedBatchItems[BatchListResponse]:
         """
-        List all batch processing jobs for a project with optional filtering.
+        List batch processing jobs with optional filtering.
 
-        Returns a paginated list of batch jobs with filters for directory, job type, and
-        status. Useful for viewing job history, monitoring progress, and finding
-        specific jobs.
+        Filter by `directory_id`, `job_type`, or `status`. Results are paginated with
+        configurable `limit` and `offset`.
 
         Args:
           directory_id: Filter by directory ID
@@ -222,8 +222,8 @@ class BatchResource(SyncAPIResource):
         """
         Cancel a running batch processing job.
 
-        Stops processing and marks all pending items as cancelled. Items currently being
-        processed may complete depending on their state.
+        Stops processing and marks pending items as cancelled. Items currently being
+        processed may still complete.
 
         Args:
           reason: Optional reason for cancelling the job
@@ -274,7 +274,8 @@ class BatchResource(SyncAPIResource):
         """
         Get detailed status of a batch processing job.
 
-        Returns current progress, file counts, and estimated completion time.
+        Returns current progress percentage, file counts (total, processed, failed,
+        skipped), and timestamps.
 
         Args:
           extra_headers: Send extra headers
@@ -349,26 +350,27 @@ class AsyncBatchResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchCreateResponse:
         """
-        Create a new batch processing job for a directory.
+        Create a batch processing job.
 
-        Processes all files in the specified directory according to the job
-        configuration. The job runs asynchronously and you can monitor progress using
-        the job status endpoint.
+        Processes files from a directory or a specific list of item IDs. Supports batch
+        parsing and classification operations.
+
+        Provide either `directory_id` to process all files in a directory, or `item_ids`
+        for specific items. The job runs asynchronously — poll `GET /batch/{job_id}` for
+        progress.
 
         Args:
-          job_config: Job configuration for batch processing. Can be BatchParseJobRecordCreate or
-              ClassifyJob.
+          job_config: Job configuration — either a parse or classify config
 
-          continue_as_new_threshold: Maximum number of files to process before calling continue-as-new. If None,
-              continue-as-new is called after every batch. (only used in directory mode)
+          continue_as_new_threshold: Maximum files to process per execution cycle in directory mode. Defaults to
+              page_size.
 
           directory_id: ID of the directory containing files to process
 
           item_ids: List of specific item IDs to process. Either this or directory_id must be
               provided.
 
-          page_size: Number of files to fetch per batch from the directory (only used in directory
-              mode)
+          page_size: Number of files to process per batch when using directory mode
 
           extra_headers: Send extra headers
 
@@ -425,11 +427,10 @@ class AsyncBatchResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[BatchListResponse, AsyncPaginatedBatchItems[BatchListResponse]]:
         """
-        List all batch processing jobs for a project with optional filtering.
+        List batch processing jobs with optional filtering.
 
-        Returns a paginated list of batch jobs with filters for directory, job type, and
-        status. Useful for viewing job history, monitoring progress, and finding
-        specific jobs.
+        Filter by `directory_id`, `job_type`, or `status`. Results are paginated with
+        configurable `limit` and `offset`.
 
         Args:
           directory_id: Filter by directory ID
@@ -492,8 +493,8 @@ class AsyncBatchResource(AsyncAPIResource):
         """
         Cancel a running batch processing job.
 
-        Stops processing and marks all pending items as cancelled. Items currently being
-        processed may complete depending on their state.
+        Stops processing and marks pending items as cancelled. Items currently being
+        processed may still complete.
 
         Args:
           reason: Optional reason for cancelling the job
@@ -544,7 +545,8 @@ class AsyncBatchResource(AsyncAPIResource):
         """
         Get detailed status of a batch processing job.
 
-        Returns current progress, file counts, and estimated completion time.
+        Returns current progress percentage, file counts (total, processed, failed,
+        skipped), and timestamps.
 
         Args:
           extra_headers: Send extra headers

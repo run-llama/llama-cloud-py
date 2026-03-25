@@ -9,7 +9,7 @@ __all__ = ["WebhookConfiguration"]
 
 
 class WebhookConfiguration(BaseModel):
-    """Allows the user to configure webhook options for notifications and callbacks."""
+    """Configuration for a single outbound webhook endpoint."""
 
     webhook_events: Optional[
         List[
@@ -34,16 +34,16 @@ class WebhookConfiguration(BaseModel):
             ]
         ]
     ] = None
-    """List of event names to subscribe to"""
+    """Events to subscribe to (e.g.
 
-    webhook_headers: Optional[Dict[str, str]] = None
-    """Custom HTTP headers to include with webhook requests."""
-
-    webhook_output_format: Optional[str] = None
-    """The output format to use for the webhook.
-
-    Defaults to string if none supplied. Currently supported values: string, json
+    'parse.success', 'extract.error'). If null, all events are delivered.
     """
 
+    webhook_headers: Optional[Dict[str, str]] = None
+    """Custom HTTP headers sent with each webhook request (e.g. auth tokens)"""
+
+    webhook_output_format: Optional[str] = None
+    """Response format sent to the webhook: 'string' (default) or 'json'"""
+
     webhook_url: Optional[str] = None
-    """The URL to send webhook notifications to."""
+    """URL to receive webhook POST notifications"""

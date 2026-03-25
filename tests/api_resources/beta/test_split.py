@@ -9,6 +9,7 @@ import pytest
 
 from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
+from llama_cloud._utils import parse_datetime
 from llama_cloud.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 from llama_cloud.types.beta import (
     SplitGetResponse,
@@ -98,10 +99,14 @@ class TestSplit:
     @parametrize
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         split = client.beta.split.list(
+            created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
+            created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
+            job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=0,
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            status="pending",
         )
         assert_matches_type(SyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
@@ -261,10 +266,14 @@ class TestAsyncSplit:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         split = await async_client.beta.split.list(
+            created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
+            created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
+            job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=0,
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            status="pending",
         )
         assert_matches_type(AsyncPaginatedCursor[SplitListResponse], split, path=["response"])
 

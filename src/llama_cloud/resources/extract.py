@@ -63,7 +63,7 @@ class ExtractResource(SyncAPIResource):
         document_input_value: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        config: Optional[ExtractConfigurationParam] | Omit = omit,
+        configuration: Optional[ExtractConfigurationParam] | Omit = omit,
         configuration_id: Optional[str] | Omit = omit,
         webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -74,18 +74,34 @@ class ExtractResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ExtractV2Job:
         """
-        Create a new extraction job.
+        Create an extraction job.
 
-        Provide exactly one of configuration_id (saved configuration) or inline config.
+        Extracts structured data from a document using either a saved configuration or
+        an inline JSON Schema.
+
+        ## Input
+
+        Provide exactly one of:
+
+        - `configuration_id` — reference a saved extraction config
+        - `configuration` — inline configuration with a `data_schema`
+
+        ## Document input
+
+        Set `document_input_value` to a file ID (`dfl-...`) or a completed parse job ID
+        (`pjb-...`).
+
+        The job runs asynchronously. Poll `GET /extract/{job_id}` or register a webhook
+        to monitor completion.
 
         Args:
           document_input_value: File ID or Parse Job ID to extract from
 
-          config: Extraction configuration combining parse and extract settings.
+          configuration: Extract configuration combining parse and extract settings.
 
-          configuration_id: Saved extract configuration ID (mutually exclusive with config)
+          configuration_id: Saved extract configuration ID (mutually exclusive with configuration)
 
-          webhook_configurations: The outbound webhook configurations
+          webhook_configurations: Outbound webhook endpoints to notify on job status changes
 
           extra_headers: Send extra headers
 
@@ -100,7 +116,7 @@ class ExtractResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "document_input_value": document_input_value,
-                    "config": config,
+                    "configuration": configuration,
                     "configuration_id": configuration_id,
                     "webhook_configurations": webhook_configurations,
                 },
@@ -130,6 +146,7 @@ class ExtractResource(SyncAPIResource):
         created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
         document_input_type: Optional[str] | Omit = omit,
         document_input_value: Optional[str] | Omit = omit,
+        job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
@@ -145,6 +162,9 @@ class ExtractResource(SyncAPIResource):
         """
         List extraction jobs with optional filtering and pagination.
 
+        Filter by `configuration_id`, `status`, `document_input_value`, or creation date
+        range. Results are returned newest-first.
+
         Args:
           configuration_id: Filter by configuration ID
 
@@ -155,6 +175,8 @@ class ExtractResource(SyncAPIResource):
           document_input_type: Filter by document input type (file_id or parse_job_id)
 
           document_input_value: Filter by document input value
+
+          job_ids: Filter by specific job IDs
 
           page_size: Number of items per page
 
@@ -185,6 +207,7 @@ class ExtractResource(SyncAPIResource):
                         "created_at_on_or_before": created_at_on_or_before,
                         "document_input_type": document_input_type,
                         "document_input_value": document_input_value,
+                        "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,
                         "page_token": page_token,
@@ -211,7 +234,7 @@ class ExtractResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
-        Delete an extraction job.
+        Delete an extraction job and its results.
 
         Args:
           extra_headers: Send extra headers
@@ -323,6 +346,10 @@ class ExtractResource(SyncAPIResource):
         """
         Get a single extraction job by ID.
 
+        Returns the job status, configuration, and results when complete. Use
+        `expand=extract_metadata` to include usage metrics and per-field metadata
+        (citations, confidence scores).
+
         Args:
           expand: Additional fields to include: extract_metadata
 
@@ -370,7 +397,7 @@ class ExtractResource(SyncAPIResource):
         Validate a JSON schema for extraction.
 
         Args:
-          data_schema: JSON schema to validate
+          data_schema: JSON Schema to validate for use with extract jobs
 
           extra_headers: Send extra headers
 
@@ -418,7 +445,7 @@ class AsyncExtractResource(AsyncAPIResource):
         document_input_value: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        config: Optional[ExtractConfigurationParam] | Omit = omit,
+        configuration: Optional[ExtractConfigurationParam] | Omit = omit,
         configuration_id: Optional[str] | Omit = omit,
         webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -429,18 +456,34 @@ class AsyncExtractResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ExtractV2Job:
         """
-        Create a new extraction job.
+        Create an extraction job.
 
-        Provide exactly one of configuration_id (saved configuration) or inline config.
+        Extracts structured data from a document using either a saved configuration or
+        an inline JSON Schema.
+
+        ## Input
+
+        Provide exactly one of:
+
+        - `configuration_id` — reference a saved extraction config
+        - `configuration` — inline configuration with a `data_schema`
+
+        ## Document input
+
+        Set `document_input_value` to a file ID (`dfl-...`) or a completed parse job ID
+        (`pjb-...`).
+
+        The job runs asynchronously. Poll `GET /extract/{job_id}` or register a webhook
+        to monitor completion.
 
         Args:
           document_input_value: File ID or Parse Job ID to extract from
 
-          config: Extraction configuration combining parse and extract settings.
+          configuration: Extract configuration combining parse and extract settings.
 
-          configuration_id: Saved extract configuration ID (mutually exclusive with config)
+          configuration_id: Saved extract configuration ID (mutually exclusive with configuration)
 
-          webhook_configurations: The outbound webhook configurations
+          webhook_configurations: Outbound webhook endpoints to notify on job status changes
 
           extra_headers: Send extra headers
 
@@ -455,7 +498,7 @@ class AsyncExtractResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "document_input_value": document_input_value,
-                    "config": config,
+                    "configuration": configuration,
                     "configuration_id": configuration_id,
                     "webhook_configurations": webhook_configurations,
                 },
@@ -485,6 +528,7 @@ class AsyncExtractResource(AsyncAPIResource):
         created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
         document_input_type: Optional[str] | Omit = omit,
         document_input_value: Optional[str] | Omit = omit,
+        job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
@@ -500,6 +544,9 @@ class AsyncExtractResource(AsyncAPIResource):
         """
         List extraction jobs with optional filtering and pagination.
 
+        Filter by `configuration_id`, `status`, `document_input_value`, or creation date
+        range. Results are returned newest-first.
+
         Args:
           configuration_id: Filter by configuration ID
 
@@ -510,6 +557,8 @@ class AsyncExtractResource(AsyncAPIResource):
           document_input_type: Filter by document input type (file_id or parse_job_id)
 
           document_input_value: Filter by document input value
+
+          job_ids: Filter by specific job IDs
 
           page_size: Number of items per page
 
@@ -540,6 +589,7 @@ class AsyncExtractResource(AsyncAPIResource):
                         "created_at_on_or_before": created_at_on_or_before,
                         "document_input_type": document_input_type,
                         "document_input_value": document_input_value,
+                        "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,
                         "page_token": page_token,
@@ -566,7 +616,7 @@ class AsyncExtractResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
-        Delete an extraction job.
+        Delete an extraction job and its results.
 
         Args:
           extra_headers: Send extra headers
@@ -678,6 +728,10 @@ class AsyncExtractResource(AsyncAPIResource):
         """
         Get a single extraction job by ID.
 
+        Returns the job status, configuration, and results when complete. Use
+        `expand=extract_metadata` to include usage metrics and per-field metadata
+        (citations, confidence scores).
+
         Args:
           expand: Additional fields to include: extract_metadata
 
@@ -725,7 +779,7 @@ class AsyncExtractResource(AsyncAPIResource):
         Validate a JSON schema for extraction.
 
         Args:
-          data_schema: JSON schema to validate
+          data_schema: JSON Schema to validate for use with extract jobs
 
           extra_headers: Send extra headers
 

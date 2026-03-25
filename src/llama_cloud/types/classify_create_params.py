@@ -16,7 +16,7 @@ class ClassifyCreateParams(TypedDict, total=False):
     project_id: Optional[str]
 
     configuration: Optional[ClassifyConfigurationParam]
-    """Configuration for classification."""
+    """Configuration for a classify job."""
 
     configuration_id: Optional[str]
     """Product configuration ID for reusable presets"""

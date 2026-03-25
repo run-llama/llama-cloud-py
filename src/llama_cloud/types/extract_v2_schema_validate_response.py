@@ -11,4 +11,4 @@ class ExtractV2SchemaValidateResponse(BaseModel):
     """Response schema for schema validation."""
 
     data_schema: Dict[str, Union[Dict[str, object], List[object], str, float, bool, None]]
-    """Validated JSON schema"""
+    """Validated JSON Schema, ready for use in extract jobs"""
