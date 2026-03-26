@@ -27,7 +27,6 @@ class TestSplit:
     @parametrize
     def test_method_create(self, client: LlamaCloud) -> None:
         split = client.beta.split.create(
-            categories=[{"name": "x"}],
             document_input={
                 "type": "type",
                 "value": "value",
@@ -39,19 +38,22 @@ class TestSplit:
     @parametrize
     def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
         split = client.beta.split.create(
-            categories=[
-                {
-                    "name": "x",
-                    "description": "x",
-                }
-            ],
             document_input={
                 "type": "type",
                 "value": "value",
             },
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            splitting_strategy={"allow_uncategorized": "include"},
+            configuration={
+                "categories": [
+                    {
+                        "name": "x",
+                        "description": "x",
+                    }
+                ],
+                "splitting_strategy": {"allow_uncategorized": "include"},
+            },
+            configuration_id="configuration_id",
         )
         assert_matches_type(SplitCreateResponse, split, path=["response"])
 
@@ -59,7 +61,6 @@ class TestSplit:
     @parametrize
     def test_raw_response_create(self, client: LlamaCloud) -> None:
         response = client.beta.split.with_raw_response.create(
-            categories=[{"name": "x"}],
             document_input={
                 "type": "type",
                 "value": "value",
@@ -75,7 +76,6 @@ class TestSplit:
     @parametrize
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
         with client.beta.split.with_streaming_response.create(
-            categories=[{"name": "x"}],
             document_input={
                 "type": "type",
                 "value": "value",
@@ -194,7 +194,6 @@ class TestAsyncSplit:
     @parametrize
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
         split = await async_client.beta.split.create(
-            categories=[{"name": "x"}],
             document_input={
                 "type": "type",
                 "value": "value",
@@ -206,19 +205,22 @@ class TestAsyncSplit:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         split = await async_client.beta.split.create(
-            categories=[
-                {
-                    "name": "x",
-                    "description": "x",
-                }
-            ],
             document_input={
                 "type": "type",
                 "value": "value",
             },
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            splitting_strategy={"allow_uncategorized": "include"},
+            configuration={
+                "categories": [
+                    {
+                        "name": "x",
+                        "description": "x",
+                    }
+                ],
+                "splitting_strategy": {"allow_uncategorized": "include"},
+            },
+            configuration_id="configuration_id",
         )
         assert_matches_type(SplitCreateResponse, split, path=["response"])
 
@@ -226,7 +228,6 @@ class TestAsyncSplit:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.split.with_raw_response.create(
-            categories=[{"name": "x"}],
             document_input={
                 "type": "type",
                 "value": "value",
@@ -242,7 +243,6 @@ class TestAsyncSplit:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.split.with_streaming_response.create(
-            categories=[{"name": "x"}],
             document_input={
                 "type": "type",
                 "value": "value",

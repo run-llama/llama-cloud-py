@@ -35,6 +35,9 @@ class SplitGetResponse(BaseModel):
     user_id: str
     """User ID who created this job."""
 
+    configuration_id: Optional[str] = None
+    """Split configuration ID used for this job."""
+
     created_at: Optional[datetime] = None
     """Creation datetime"""
 

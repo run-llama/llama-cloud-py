@@ -59,6 +59,9 @@ class Job(BaseModel):
     name: Optional[str] = None
     """Optional display name for this parse job"""
 
+    tier: Optional[str] = None
+    """Parsing tier used for this job"""
+
     updated_at: Optional[datetime] = None
     """Update datetime"""
 
