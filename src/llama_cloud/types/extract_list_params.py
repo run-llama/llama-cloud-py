@@ -28,6 +28,9 @@ class ExtractListParams(TypedDict, total=False):
     document_input_value: Optional[str]
     """Filter by document input value"""
 
+    expand: SequenceNotStr[str]
+    """Additional fields to include: configuration, extract_metadata"""
+
     job_ids: Optional[SequenceNotStr[str]]
     """Filter by specific job IDs"""
 

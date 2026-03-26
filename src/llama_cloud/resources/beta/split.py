@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Union, Iterable, Optional
+from typing import Union, Optional
 from datetime import datetime
 from typing_extensions import Literal
 
@@ -23,7 +23,6 @@ from ...types.beta import split_get_params, split_list_params, split_create_para
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.beta.split_get_response import SplitGetResponse
 from ...types.beta.split_list_response import SplitListResponse
-from ...types.beta.split_category_param import SplitCategoryParam
 from ...types.beta.split_create_response import SplitCreateResponse
 from ...types.beta.split_document_input_param import SplitDocumentInputParam
 
@@ -53,11 +52,11 @@ class SplitResource(SyncAPIResource):
     def create(
         self,
         *,
-        categories: Iterable[SplitCategoryParam],
         document_input: SplitDocumentInputParam,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        splitting_strategy: split_create_params.SplittingStrategy | Omit = omit,
+        configuration: Optional[split_create_params.Configuration] | Omit = omit,
+        configuration_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -71,11 +70,11 @@ class SplitResource(SyncAPIResource):
         production use and is subject to change at any time.
 
         Args:
-          categories: Categories to split documents into.
-
           document_input: Document to be split.
 
-          splitting_strategy: Strategy for splitting documents.
+          configuration: Split configuration with categories and splitting strategy.
+
+          configuration_id: Saved split configuration ID.
 
           extra_headers: Send extra headers
 
@@ -89,9 +88,9 @@ class SplitResource(SyncAPIResource):
             "/api/v1/beta/split/jobs",
             body=maybe_transform(
                 {
-                    "categories": categories,
                     "document_input": document_input,
-                    "splitting_strategy": splitting_strategy,
+                    "configuration": configuration,
+                    "configuration_id": configuration_id,
                 },
                 split_create_params.SplitCreateParams,
             ),
@@ -248,11 +247,11 @@ class AsyncSplitResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        categories: Iterable[SplitCategoryParam],
         document_input: SplitDocumentInputParam,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        splitting_strategy: split_create_params.SplittingStrategy | Omit = omit,
+        configuration: Optional[split_create_params.Configuration] | Omit = omit,
+        configuration_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -266,11 +265,11 @@ class AsyncSplitResource(AsyncAPIResource):
         production use and is subject to change at any time.
 
         Args:
-          categories: Categories to split documents into.
-
           document_input: Document to be split.
 
-          splitting_strategy: Strategy for splitting documents.
+          configuration: Split configuration with categories and splitting strategy.
+
+          configuration_id: Saved split configuration ID.
 
           extra_headers: Send extra headers
 
@@ -284,9 +283,9 @@ class AsyncSplitResource(AsyncAPIResource):
             "/api/v1/beta/split/jobs",
             body=await async_maybe_transform(
                 {
-                    "categories": categories,
                     "document_input": document_input,
-                    "splitting_strategy": splitting_strategy,
+                    "configuration": configuration,
+                    "configuration_id": configuration_id,
                 },
                 split_create_params.SplitCreateParams,
             ),

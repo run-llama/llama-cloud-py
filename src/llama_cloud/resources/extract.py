@@ -146,6 +146,7 @@ class ExtractResource(SyncAPIResource):
         created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
         document_input_type: Optional[str] | Omit = omit,
         document_input_value: Optional[str] | Omit = omit,
+        expand: SequenceNotStr[str] | Omit = omit,
         job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
@@ -163,7 +164,9 @@ class ExtractResource(SyncAPIResource):
         List extraction jobs with optional filtering and pagination.
 
         Filter by `configuration_id`, `status`, `document_input_value`, or creation date
-        range. Results are returned newest-first.
+        range. Results are returned newest-first. Use `expand=configuration` to include
+        the full configuration used, and `expand=extract_metadata` for usage metrics and
+        per-field metadata.
 
         Args:
           configuration_id: Filter by configuration ID
@@ -175,6 +178,8 @@ class ExtractResource(SyncAPIResource):
           document_input_type: Filter by document input type (file_id or parse_job_id)
 
           document_input_value: Filter by document input value
+
+          expand: Additional fields to include: configuration, extract_metadata
 
           job_ids: Filter by specific job IDs
 
@@ -207,6 +212,7 @@ class ExtractResource(SyncAPIResource):
                         "created_at_on_or_before": created_at_on_or_before,
                         "document_input_type": document_input_type,
                         "document_input_value": document_input_value,
+                        "expand": expand,
                         "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,
@@ -346,12 +352,12 @@ class ExtractResource(SyncAPIResource):
         """
         Get a single extraction job by ID.
 
-        Returns the job status, configuration, and results when complete. Use
-        `expand=extract_metadata` to include usage metrics and per-field metadata
-        (citations, confidence scores).
+        Returns the job status and results when complete. Use `expand=configuration` to
+        include the full configuration used, and `expand=extract_metadata` for usage
+        metrics and per-field metadata.
 
         Args:
-          expand: Additional fields to include: extract_metadata
+          expand: Additional fields to include: configuration, extract_metadata
 
           extra_headers: Send extra headers
 
@@ -528,6 +534,7 @@ class AsyncExtractResource(AsyncAPIResource):
         created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
         document_input_type: Optional[str] | Omit = omit,
         document_input_value: Optional[str] | Omit = omit,
+        expand: SequenceNotStr[str] | Omit = omit,
         job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
@@ -545,7 +552,9 @@ class AsyncExtractResource(AsyncAPIResource):
         List extraction jobs with optional filtering and pagination.
 
         Filter by `configuration_id`, `status`, `document_input_value`, or creation date
-        range. Results are returned newest-first.
+        range. Results are returned newest-first. Use `expand=configuration` to include
+        the full configuration used, and `expand=extract_metadata` for usage metrics and
+        per-field metadata.
 
         Args:
           configuration_id: Filter by configuration ID
@@ -557,6 +566,8 @@ class AsyncExtractResource(AsyncAPIResource):
           document_input_type: Filter by document input type (file_id or parse_job_id)
 
           document_input_value: Filter by document input value
+
+          expand: Additional fields to include: configuration, extract_metadata
 
           job_ids: Filter by specific job IDs
 
@@ -589,6 +600,7 @@ class AsyncExtractResource(AsyncAPIResource):
                         "created_at_on_or_before": created_at_on_or_before,
                         "document_input_type": document_input_type,
                         "document_input_value": document_input_value,
+                        "expand": expand,
                         "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,
@@ -728,12 +740,12 @@ class AsyncExtractResource(AsyncAPIResource):
         """
         Get a single extraction job by ID.
 
-        Returns the job status, configuration, and results when complete. Use
-        `expand=extract_metadata` to include usage metrics and per-field metadata
-        (citations, confidence scores).
+        Returns the job status and results when complete. Use `expand=configuration` to
+        include the full configuration used, and `expand=extract_metadata` for usage
+        metrics and per-field metadata.
 
         Args:
-          expand: Additional fields to include: extract_metadata
+          expand: Additional fields to include: configuration, extract_metadata
 
           extra_headers: Send extra headers
 

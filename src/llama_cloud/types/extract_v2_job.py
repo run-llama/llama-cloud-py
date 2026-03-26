@@ -22,9 +22,6 @@ class ExtractV2Job(BaseModel):
     document_input_value: str
     """File ID or parse job ID that was extracted"""
 
-    parameters: ExtractConfiguration
-    """Full configuration used for this job (extract options, parse config)"""
-
     project_id: str
     """Project this job belongs to"""
 
@@ -40,6 +37,9 @@ class ExtractV2Job(BaseModel):
 
     updated_at: datetime
     """Last update timestamp"""
+
+    configuration: Optional[ExtractConfiguration] = None
+    """Extract configuration combining parse and extract settings."""
 
     configuration_id: Optional[str] = None
     """Saved extract configuration ID used for this job, if any"""
