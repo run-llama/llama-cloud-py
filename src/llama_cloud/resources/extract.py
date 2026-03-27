@@ -171,8 +171,8 @@ class ExtractResource(SyncAPIResource):
 
         Filter by `configuration_id`, `status`, `document_input_value`, or creation date
         range. Results are returned newest-first. Use `expand=configuration` to include
-        the full configuration used, and `expand=extract_metadata` for usage metrics and
-        per-field metadata.
+        the full configuration used, and `expand=extract_metadata` for per-field
+        metadata.
 
         Args:
           configuration_id: Filter by configuration ID
@@ -359,8 +359,8 @@ class ExtractResource(SyncAPIResource):
         Get a single extraction job by ID.
 
         Returns the job status and results when complete. Use `expand=configuration` to
-        include the full configuration used, and `expand=extract_metadata` for usage
-        metrics and per-field metadata.
+        include the full configuration used, and `expand=extract_metadata` for per-field
+        metadata.
 
         Args:
           expand: Additional fields to include: configuration, extract_metadata
@@ -764,8 +764,8 @@ class AsyncExtractResource(AsyncAPIResource):
 
         Filter by `configuration_id`, `status`, `document_input_value`, or creation date
         range. Results are returned newest-first. Use `expand=configuration` to include
-        the full configuration used, and `expand=extract_metadata` for usage metrics and
-        per-field metadata.
+        the full configuration used, and `expand=extract_metadata` for per-field
+        metadata.
 
         Args:
           configuration_id: Filter by configuration ID
@@ -952,8 +952,8 @@ class AsyncExtractResource(AsyncAPIResource):
         Get a single extraction job by ID.
 
         Returns the job status and results when complete. Use `expand=configuration` to
-        include the full configuration used, and `expand=extract_metadata` for usage
-        metrics and per-field metadata.
+        include the full configuration used, and `expand=extract_metadata` for per-field
+        metadata.
 
         Args:
           expand: Additional fields to include: configuration, extract_metadata

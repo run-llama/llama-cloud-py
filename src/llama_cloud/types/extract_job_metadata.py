@@ -3,7 +3,6 @@
 from typing import Optional
 
 from .._models import BaseModel
-from .extract_job_usage import ExtractJobUsage
 from .extracted_field_metadata import ExtractedFieldMetadata
 
 __all__ = ["ExtractJobMetadata"]
@@ -20,6 +19,3 @@ class ExtractJobMetadata(BaseModel):
 
     parse_tier: Optional[str] = None
     """Parse tier used for parsing the document"""
-
-    usage: Optional[ExtractJobUsage] = None
-    """Extraction usage metrics."""
