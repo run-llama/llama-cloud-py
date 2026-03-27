@@ -11,13 +11,13 @@ from ..parsing_mode import ParsingMode
 from ..fail_page_mode import FailPageMode
 from ..parsing_languages import ParsingLanguages
 from ..classifier.classify_job_param import ClassifyJobParam
-from ..extraction.webhook_configuration_param import WebhookConfigurationParam
 
 __all__ = [
     "BatchCreateParams",
     "JobConfig",
     "JobConfigBatchParseJobRecordCreate",
     "JobConfigBatchParseJobRecordCreateParameters",
+    "JobConfigBatchParseJobRecordCreateParametersWebhookConfiguration",
 ]
 
 
@@ -48,6 +48,47 @@ class BatchCreateParams(TypedDict, total=False):
     """Number of files to process per batch when using directory mode"""
 
     temporal_namespace: Annotated[str, PropertyInfo(alias="temporal-namespace")]
+
+
+class JobConfigBatchParseJobRecordCreateParametersWebhookConfiguration(TypedDict, total=False):
+    """Configuration for a single outbound webhook endpoint."""
+
+    webhook_events: Optional[
+        List[
+            Literal[
+                "extract.pending",
+                "extract.success",
+                "extract.error",
+                "extract.partial_success",
+                "extract.cancelled",
+                "parse.pending",
+                "parse.running",
+                "parse.success",
+                "parse.error",
+                "parse.partial_success",
+                "parse.cancelled",
+                "classify.pending",
+                "classify.success",
+                "classify.error",
+                "classify.partial_success",
+                "classify.cancelled",
+                "unmapped_event",
+            ]
+        ]
+    ]
+    """Events to subscribe to (e.g.
+
+    'parse.success', 'extract.error'). If null, all events are delivered.
+    """
+
+    webhook_headers: Optional[Dict[str, str]]
+    """Custom HTTP headers sent with each webhook request (e.g. auth tokens)"""
+
+    webhook_output_format: Optional[str]
+    """Response format sent to the webhook: 'string' (default) or 'json'"""
+
+    webhook_url: Optional[str]
+    """URL to receive webhook POST notifications"""
 
 
 class JobConfigBatchParseJobRecordCreateParameters(TypedDict, total=False):
@@ -325,7 +366,7 @@ class JobConfigBatchParseJobRecordCreateParameters(TypedDict, total=False):
 
     version: Optional[str]
 
-    webhook_configurations: Optional[Iterable[WebhookConfigurationParam]]
+    webhook_configurations: Optional[Iterable[JobConfigBatchParseJobRecordCreateParametersWebhookConfiguration]]
     """Outbound webhook endpoints to notify on job status changes"""
 
     webhook_url: Optional[str]
