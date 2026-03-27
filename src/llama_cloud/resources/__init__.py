@@ -72,14 +72,6 @@ from .data_sinks import (
     DataSinksResourceWithStreamingResponse,
     AsyncDataSinksResourceWithStreamingResponse,
 )
-from .extraction import (
-    ExtractionResource,
-    AsyncExtractionResource,
-    ExtractionResourceWithRawResponse,
-    AsyncExtractionResourceWithRawResponse,
-    ExtractionResourceWithStreamingResponse,
-    AsyncExtractionResourceWithStreamingResponse,
-)
 from .retrievers import (
     RetrieversResource,
     AsyncRetrieversResource,
@@ -116,12 +108,6 @@ __all__ = [
     "AsyncExtractResourceWithRawResponse",
     "ExtractResourceWithStreamingResponse",
     "AsyncExtractResourceWithStreamingResponse",
-    "ExtractionResource",
-    "AsyncExtractionResource",
-    "ExtractionResourceWithRawResponse",
-    "AsyncExtractionResourceWithRawResponse",
-    "ExtractionResourceWithStreamingResponse",
-    "AsyncExtractionResourceWithStreamingResponse",
     "ClassifierResource",
     "AsyncClassifierResource",
     "ClassifierResourceWithRawResponse",

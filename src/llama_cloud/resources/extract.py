@@ -32,7 +32,6 @@ from ..types.extract_v2_job import ExtractV2Job
 from ..types.extract_configuration_param import ExtractConfigurationParam
 from ..types.extract_generate_schema_response import ExtractGenerateSchemaResponse
 from ..types.extract_v2_schema_validate_response import ExtractV2SchemaValidateResponse
-from ..types.extraction.webhook_configuration_param import WebhookConfigurationParam
 
 __all__ = ["ExtractResource", "AsyncExtractResource"]
 
@@ -65,7 +64,7 @@ class ExtractResource(SyncAPIResource):
         project_id: Optional[str] | Omit = omit,
         configuration: Optional[ExtractConfigurationParam] | Omit = omit,
         configuration_id: Optional[str] | Omit = omit,
-        webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
+        webhook_configurations: Optional[Iterable[extract_create_params.WebhookConfiguration]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -453,7 +452,7 @@ class AsyncExtractResource(AsyncAPIResource):
         project_id: Optional[str] | Omit = omit,
         configuration: Optional[ExtractConfigurationParam] | Omit = omit,
         configuration_id: Optional[str] | Omit = omit,
-        webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
+        webhook_configurations: Optional[Iterable[extract_create_params.WebhookConfiguration]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,

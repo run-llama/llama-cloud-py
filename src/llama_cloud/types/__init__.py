@@ -98,7 +98,6 @@ from .data_sink_list_params import DataSinkListParams as DataSinkListParams
 from .extract_configuration import ExtractConfiguration as ExtractConfiguration
 from .extract_create_params import ExtractCreateParams as ExtractCreateParams
 from .extract_delete_params import ExtractDeleteParams as ExtractDeleteParams
-from .extraction_run_params import ExtractionRunParams as ExtractionRunParams
 from .parsing_create_params import ParsingCreateParams as ParsingCreateParams
 from .parsing_list_response import ParsingListResponse as ParsingListResponse
 from .project_list_response import ProjectListResponse as ProjectListResponse
