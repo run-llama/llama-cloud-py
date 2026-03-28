@@ -1,5 +1,49 @@
 # Changelog
 
+## 2.0.0 (2026-03-28)
+
+Full Changelog: [v1.6.0...v2.0.0](https://github.com/run-llama/llama-cloud-py/compare/v1.6.0...v2.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* remove extraction v1 resource, extract v2 metadata restructure
+
+### Features
+
+* add run() and wait_for_completion() convenience methods to extract resource ([e491e0e](https://github.com/run-llama/llama-cloud-py/commit/e491e0e3a2b04c9185b6ef0b2c3e9f59c2759be0))
+* **api:** api update ([bd38c9d](https://github.com/run-llama/llama-cloud-py/commit/bd38c9d3ecd6660122d8f57b97214856507d38d6))
+* **api:** api update ([6bb5ad6](https://github.com/run-llama/llama-cloud-py/commit/6bb5ad6f9affbaa8699dc743dcc08b4e58a2acc8))
+* **api:** api update ([50db89d](https://github.com/run-llama/llama-cloud-py/commit/50db89da14d8c9145926642d5dd90b8b0303b88d))
+* **api:** api update ([0778957](https://github.com/run-llama/llama-cloud-py/commit/077895773ff4e642708dc77d9232e02265f83a4e))
+* **api:** api update ([11b99e9](https://github.com/run-llama/llama-cloud-py/commit/11b99e96c19891052e652c40a21749e8f5291701))
+* **api:** api update ([7630e8f](https://github.com/run-llama/llama-cloud-py/commit/7630e8f00a765eefa993cd90aa0b9d2bf7172f9a))
+* **api:** api update ([b0cd8ae](https://github.com/run-llama/llama-cloud-py/commit/b0cd8aec4e28ee607c31acf2e5ebea8c0b833b4b))
+* **api:** api update ([c67b4d7](https://github.com/run-llama/llama-cloud-py/commit/c67b4d714c8b4019fda6749135fe52061d3f1414))
+* **api:** api update ([00fbe28](https://github.com/run-llama/llama-cloud-py/commit/00fbe284d2f10866f7d9aa17858e5c2eddfa0bed))
+* **api:** api update ([c8a2a3c](https://github.com/run-llama/llama-cloud-py/commit/c8a2a3cb25915a920d9dab1ec3aa5d7f6c152f32))
+* **api:** api update ([a9ad222](https://github.com/run-llama/llama-cloud-py/commit/a9ad22276492e5e84c6ed8f361ed66fa9c0ca38d))
+* **api:** api update ([56e6a2c](https://github.com/run-llama/llama-cloud-py/commit/56e6a2c9d500e66f3fe160deacc93a395637bf4a))
+* **api:** manual updates ([952154c](https://github.com/run-llama/llama-cloud-py/commit/952154c93bf1a7a6917c9417f8b0f240cc5a992c))
+* **internal:** implement indices array format for query and form serialization ([65757d5](https://github.com/run-llama/llama-cloud-py/commit/65757d5917a857c8d9fc8d0be8a03583f63b4bb9))
+* remove extraction v1 resource, extract v2 metadata restructure ([379de20](https://github.com/run-llama/llama-cloud-py/commit/379de20160a2b3ac462829fdb20afda445c55d8d))
+
+
+### Bug Fixes
+
+* **deps:** bump minimum typing-extensions version ([75fe56d](https://github.com/run-llama/llama-cloud-py/commit/75fe56d34f5dcd23a180f3aa52bbccfca4412866))
+* **pydantic:** do not pass `by_alias` unless set ([3f72991](https://github.com/run-llama/llama-cloud-py/commit/3f7299119d6d4f50e661eded3a986444c74117ab))
+* sanitize endpoint path params ([1e60a1b](https://github.com/run-llama/llama-cloud-py/commit/1e60a1bdcfee2fd8478f384e4b107f08cc0f8eb3))
+* sort imports in extract.py ([ac8ce5e](https://github.com/run-llama/llama-cloud-py/commit/ac8ce5eb0fe74b24d021491b626aa050411a153b))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([c0b8113](https://github.com/run-llama/llama-cloud-py/commit/c0b81135abd66c5681db1599ca9db4ad6e340ee0))
+* **ci:** skip uploading artifacts on stainless-internal branches ([e18445d](https://github.com/run-llama/llama-cloud-py/commit/e18445da2c05ba4b1e0e135a2446266e69a584bf))
+* **internal:** tweak CI branches ([35d72e9](https://github.com/run-llama/llama-cloud-py/commit/35d72e973c03dc643ca0024baffa79e43d789f9b))
+* **internal:** update gitignore ([01210a2](https://github.com/run-llama/llama-cloud-py/commit/01210a2d96802057b35009fb26c3f4f53e3aaefa))
+* update placeholder string ([a87a6a8](https://github.com/run-llama/llama-cloud-py/commit/a87a6a8915b4e911f6976954e3eaa60aae7fde4e))
+
 ## 1.6.0 (2026-03-05)
 
 Full Changelog: [v1.5.0...v1.6.0](https://github.com/run-llama/llama-cloud-py/compare/v1.5.0...v1.6.0)
