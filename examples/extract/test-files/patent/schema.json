@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "patent_number": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "filing_date": {
+      "type": "string"
+    },
+    "grant_date": {
+      "type": "string"
+    },
+    "inventors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "assignee": {
+      "type": "string"
+    },
+    "application_number": {
+      "type": "string"
+    },
+    "abstract": {
+      "type": "string"
+    },
+    "num_claims": {
+      "type": "number"
+    },
+    "num_drawing_sheets": {
+      "type": "number"
+    },
+    "classification_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "references_cited": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "primary_examiner": {
+      "type": "string"
+    },
+    "attorney_or_firm": {
+      "type": "string"
+    },
+    "independent_claims": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
