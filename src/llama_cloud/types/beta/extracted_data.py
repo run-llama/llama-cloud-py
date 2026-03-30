@@ -27,6 +27,7 @@ Example Usage:
 from __future__ import annotations
 
 from typing import (
+    TYPE_CHECKING,
     Any,
     Dict,
     List,
@@ -44,7 +45,17 @@ from typing import (
 from pydantic import Field, BaseModel, ValidationError
 
 from ..._compat import PYDANTIC_V1, ConfigDict, GenericModel, model_parse, get_model_fields
-from ..extraction import ExtractRun
+
+try:
+    from ..extraction import ExtractRun
+except ImportError:
+    # V1 extraction types were removed in 2.0. Define a protocol-compatible
+    # placeholder so from_extraction_result still works with any object that
+    # has the expected attributes (e.g. the V1 ExtractRun).
+    if TYPE_CHECKING:
+        from ..extraction import ExtractRun  # type: ignore[assignment]
+    else:
+        ExtractRun = None  # type: ignore[assignment,misc]
 
 if PYDANTIC_V1:
     from pydantic import root_validator  # pyright: ignore[reportDeprecated]
@@ -348,7 +359,7 @@ class ExtractedData(GenericModel, Generic[ExtractedT]):
     @classmethod
     def from_extraction_result(
         cls,
-        result: ExtractRun,
+        result: Any,
         schema: Type[ExtractedT],
         file_hash: Optional[str] = None,
         file_name: Optional[str] = None,

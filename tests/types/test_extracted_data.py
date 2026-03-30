@@ -11,7 +11,17 @@ from pydantic import Field, BaseModel
 
 from llama_cloud._compat import model_json, model_parse
 from llama_cloud.types.file import File
-from llama_cloud.types.extraction import ExtractRun
+
+try:
+    from llama_cloud.types.extraction import ExtractRun
+
+    HAS_EXTRACT_RUN = True
+except ImportError:
+    ExtractRun = None  # type: ignore[assignment,misc]
+    HAS_EXTRACT_RUN = False
+
+requires_extract_run = pytest.mark.skipif(not HAS_EXTRACT_RUN, reason="V1 extraction types not available")
+
 from llama_cloud.types.beta.extracted_data import (
     BoundingBox,
     ExtractedData,
@@ -312,6 +322,7 @@ def create_extract_run(
     )
 
 
+@requires_extract_run
 def test_extracted_data_from_extraction_result_success():
     """Test ExtractedData.from_extraction_result with valid data."""
     extract_run = create_extract_run(
@@ -342,6 +353,7 @@ def test_extracted_data_from_extraction_result_success():
     assert extracted.overall_confidence == pytest.approx(expected_confidence)
 
 
+@requires_extract_run
 def test_extracted_data_from_extraction_result_with_file_params():
     """Test ExtractedData.from_extraction_result with explicit file parameters."""
     extract_run = create_extract_run(
@@ -364,6 +376,7 @@ def test_extracted_data_from_extraction_result_with_file_params():
     assert extracted.metadata["source"] == "api_test"
 
 
+@requires_extract_run
 def test_extracted_data_from_extraction_result_invalid_data():
     """Test ExtractedData.from_extraction_result with invalid data raises custom exception."""
     extract_run = create_extract_run(
@@ -401,6 +414,7 @@ class Capacitor(BaseModel):
     dimensions: Optional[Dimensions] = None
 
 
+@requires_extract_run
 def test_full_parse_nested_dimensions():
     """Test parsing real extraction result with nested dimensions."""
     with open(Path(__file__).parent.parent / "data" / "capacitor.json") as f:
@@ -432,6 +446,7 @@ def test_full_parse_nested_dimensions():
     assert parsed.field_metadata == expected
 
 
+@requires_extract_run
 def test_parses_field_metadata_with_error_field():
     """Test that error field in metadata is captured correctly."""
     extract_run = create_extract_run(
