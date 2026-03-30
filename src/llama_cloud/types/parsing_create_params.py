@@ -304,7 +304,7 @@ class OutputOptionsMarkdownTables(TypedDict, total=False):
     markdown_table_multiline_separator: Optional[str]
     """Separator string for multiline cell content in markdown tables.
 
-    Example: ' ' to preserve line breaks, ' ' to join with spaces
+    Example: '&lt;br&gt;' to preserve line breaks, ' ' to join with spaces
     """
 
     merge_continued_tables: Optional[bool]
@@ -314,7 +314,7 @@ class OutputOptionsMarkdownTables(TypedDict, total=False):
     """
 
     output_tables_as_markdown: Optional[bool]
-    """Output tables as markdown pipe tables instead of HTML <table> tags.
+    """Output tables as markdown pipe tables instead of HTML &lt;table&gt; tags.
 
     Markdown tables are simpler but cannot represent complex structures like merged
     cells

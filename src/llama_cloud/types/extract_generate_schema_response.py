@@ -307,7 +307,7 @@ class ParametersParseV2ParametersOutputOptionsMarkdownTables(BaseModel):
     markdown_table_multiline_separator: Optional[str] = None
     """Separator string for multiline cell content in markdown tables.
 
-    Example: ' ' to preserve line breaks, ' ' to join with spaces
+    Example: '&lt;br&gt;' to preserve line breaks, ' ' to join with spaces
     """
 
     merge_continued_tables: Optional[bool] = None
@@ -317,7 +317,7 @@ class ParametersParseV2ParametersOutputOptionsMarkdownTables(BaseModel):
     """
 
     output_tables_as_markdown: Optional[bool] = None
-    """Output tables as markdown pipe tables instead of HTML <table> tags.
+    """Output tables as markdown pipe tables instead of HTML &lt;table&gt; tags.
 
     Markdown tables are simpler but cannot represent complex structures like merged
     cells
