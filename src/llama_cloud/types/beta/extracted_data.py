@@ -16,7 +16,7 @@ Example Usage:
 
 
     # Parse extraction result into typed data
-    extracted = ExtractedData.from_extraction_result(extract_run, Person, status="pending_review")
+    extracted = ExtractedData.from_extraction_result(result, Person, status="pending_review")
 
     # Access typed data and metadata
     print(extracted.data.name)  # Type-safe access
@@ -44,7 +44,6 @@ from typing import (
 from pydantic import Field, BaseModel, ValidationError
 
 from ..._compat import PYDANTIC_V1, ConfigDict, GenericModel, model_parse, get_model_fields
-from ..extraction import ExtractRun
 
 if PYDANTIC_V1:
     from pydantic import root_validator  # pyright: ignore[reportDeprecated]
@@ -348,7 +347,7 @@ class ExtractedData(GenericModel, Generic[ExtractedT]):
     @classmethod
     def from_extraction_result(
         cls,
-        result: ExtractRun,
+        result: Any,
         schema: Type[ExtractedT],
         file_hash: Optional[str] = None,
         file_name: Optional[str] = None,
@@ -357,10 +356,14 @@ class ExtractedData(GenericModel, Generic[ExtractedT]):
         metadata: Optional[Dict[str, Any]] = None,
     ) -> ExtractedData[ExtractedT]:
         """
-        Create an ExtractedData instance from an ExtractRun API response.
+        Create an ExtractedData instance from an extraction API response.
+
+        Works with both V1 ExtractRun and V2 ExtractV2Job result objects.
+        The result object should have `file`, `job_id`, `data`, and
+        `extraction_metadata` attributes.
 
         Args:
-            result: The ExtractRun response from the extraction API
+            result: The extraction result from the API (ExtractRun or ExtractV2Job)
             schema: Pydantic model class to validate the extracted data
             file_hash: Optional content hash for de-duplication
             file_name: Override the file name from the result

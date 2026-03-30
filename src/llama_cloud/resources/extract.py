@@ -18,6 +18,12 @@ from ..types import (
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
+from .._polling import (
+    DEFAULT_TIMEOUT,
+    BackoffStrategy,
+    poll_until_complete,
+    poll_until_complete_async,
+)
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
     to_raw_response_wrapper,
@@ -59,11 +65,10 @@ class ExtractResource(SyncAPIResource):
     def create(
         self,
         *,
-        type: Literal["url", "file_id", "parse_job_id"],
-        value: str,
+        document_input_value: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        config: Optional[ExtractConfigurationParam] | Omit = omit,
+        configuration: Optional[ExtractConfigurationParam] | Omit = omit,
         configuration_id: Optional[str] | Omit = omit,
         webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -76,16 +81,14 @@ class ExtractResource(SyncAPIResource):
         """
         Create a new extraction job.
 
-        Provide exactly one of configuration_id (saved configuration) or inline config.
+        Provide exactly one of configuration_id (saved configuration) or inline configuration.
 
         Args:
-          type: Type of document input.
+          document_input_value: Document identifier (URL, file ID, or parse job ID).
 
-          value: Document identifier (URL, file ID, or parse job ID).
+          configuration: Extraction configuration combining parse and extract settings.
 
-          config: Extraction configuration combining parse and extract settings.
-
-          configuration_id: Saved extract configuration ID (mutually exclusive with config)
+          configuration_id: Saved extract configuration ID (mutually exclusive with configuration)
 
           webhook_configurations: The outbound webhook configurations
 
@@ -101,9 +104,8 @@ class ExtractResource(SyncAPIResource):
             "/api/v2/extract",
             body=maybe_transform(
                 {
-                    "type": type,
-                    "value": value,
-                    "config": config,
+                    "document_input_value": document_input_value,
+                    "configuration": configuration,
                     "configuration_id": configuration_id,
                     "webhook_configurations": webhook_configurations,
                 },
@@ -382,6 +384,212 @@ class ExtractResource(SyncAPIResource):
             cast_to=ExtractV2SchemaValidateResponse,
         )
 
+    def run(
+        self,
+        *,
+        document_input_value: str,
+        configuration: Optional[ExtractConfigurationParam] | Omit = omit,
+        configuration_id: Optional[str] | Omit = omit,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
+        # Polling parameters
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        timeout: float = DEFAULT_TIMEOUT,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+    ) -> ExtractV2Job:
+        """
+        Create an extraction job and wait for it to complete.
+
+        This is a convenience method that combines create() and wait_for_completion()
+        into a single call. The returned ExtractV2Job includes the extract_result
+        once the job reaches a terminal state.
+
+        Args:
+            document_input_value: Document identifier (URL, file ID, or parse job ID).
+
+            configuration: Extraction configuration combining parse and extract settings.
+
+            configuration_id: Saved extract configuration ID (mutually exclusive with configuration)
+
+            organization_id: The organization ID
+
+            project_id: The project ID
+
+            webhook_configurations: The outbound webhook configurations
+
+            polling_interval: Initial polling interval in seconds (default: 1.0)
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0)
+
+            timeout: Maximum time to wait in seconds (default: 7200.0)
+
+            backoff: Backoff strategy for polling intervals. Options:
+                - "constant": Keep the same polling interval
+                - "linear": Increase interval by 1 second each poll (default)
+                - "exponential": Double the interval each poll
+
+            verbose: Print progress indicators every 10 polls (default: False)
+
+            extra_headers: Send extra headers
+
+            extra_query: Add additional query parameters to the request
+
+            extra_body: Add additional JSON properties to the request
+
+        Returns:
+            The completed ExtractV2Job with extract_result populated
+
+        Raises:
+            PollingTimeoutError: If the job doesn't complete within the timeout period
+
+            PollingError: If the job fails or is cancelled
+
+        Example:
+            ```python
+            from llama_cloud import LlamaCloud
+
+            client = LlamaCloud(api_key="...")
+
+            # Create and wait for extraction to complete
+            job = client.extract.run(
+                document_input_value="file_abc123",
+                configuration={"extract_options": {"schema": {...}}},
+                verbose=True,
+            )
+
+            # Result is ready
+            print(job.extract_result)
+            ```
+        """
+        job = self.create(
+            document_input_value=document_input_value,
+            configuration=configuration,
+            configuration_id=configuration_id,
+            organization_id=organization_id,
+            project_id=project_id,
+            webhook_configurations=webhook_configurations,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+        )
+
+        return self.wait_for_completion(
+            job.id,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=timeout,
+            backoff=backoff,
+            verbose=verbose,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+        )
+
+    def wait_for_completion(
+        self,
+        job_id: str,
+        *,
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        timeout: float = DEFAULT_TIMEOUT,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+    ) -> ExtractV2Job:
+        """
+        Wait for a V2 extraction job to complete by polling until it reaches a terminal state.
+
+        Args:
+            job_id: The ID of the extraction job to wait for
+
+            polling_interval: Initial polling interval in seconds (default: 1.0)
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0)
+
+            timeout: Maximum time to wait in seconds (default: 7200.0)
+
+            backoff: Backoff strategy for polling intervals. Options:
+                - "constant": Keep the same polling interval
+                - "linear": Increase interval by 1 second each poll (default)
+                - "exponential": Double the interval each poll
+
+            verbose: Print progress indicators every 10 polls (default: False)
+
+            extra_headers: Send extra headers
+
+            extra_query: Add additional query parameters to the request
+
+            extra_body: Add additional JSON properties to the request
+
+        Returns:
+            The completed ExtractV2Job
+
+        Raises:
+            PollingTimeoutError: If the job doesn't complete within the timeout period
+
+            PollingError: If the job fails or is cancelled
+
+        Example:
+            ```python
+            from llama_cloud import LlamaCloud
+
+            client = LlamaCloud(api_key="...")
+
+            # Create a job
+            job = client.extract.create(document_input_value="file_abc123", configuration={...})
+
+            # Wait for it to complete
+            completed = client.extract.wait_for_completion(job.id, verbose=True)
+            print(completed.extract_result)
+            ```
+        """
+        if not job_id:
+            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+
+        def get_status() -> ExtractV2Job:
+            return self.get(
+                job_id,
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+            )
+
+        def is_complete(job: ExtractV2Job) -> bool:
+            return job.status == "COMPLETED"
+
+        def is_error(job: ExtractV2Job) -> bool:
+            return job.status in ("FAILED", "CANCELLED")
+
+        def get_error_message(job: ExtractV2Job) -> str:
+            error_parts = [f"Job {job_id} failed with status: {job.status}"]
+            if job.error_message:
+                error_parts.append(f"Error: {job.error_message}")
+            return " | ".join(error_parts)
+
+        return poll_until_complete(
+            get_status_fn=get_status,
+            is_complete_fn=is_complete,
+            is_error_fn=is_error,
+            get_error_message_fn=get_error_message,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=timeout,
+            backoff=backoff,
+            verbose=verbose,
+        )
+
 
 class AsyncExtractResource(AsyncAPIResource):
     @cached_property
@@ -406,11 +614,10 @@ class AsyncExtractResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        type: Literal["url", "file_id", "parse_job_id"],
-        value: str,
+        document_input_value: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        config: Optional[ExtractConfigurationParam] | Omit = omit,
+        configuration: Optional[ExtractConfigurationParam] | Omit = omit,
         configuration_id: Optional[str] | Omit = omit,
         webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -423,16 +630,14 @@ class AsyncExtractResource(AsyncAPIResource):
         """
         Create a new extraction job.
 
-        Provide exactly one of configuration_id (saved configuration) or inline config.
+        Provide exactly one of configuration_id (saved configuration) or inline configuration.
 
         Args:
-          type: Type of document input.
+          document_input_value: Document identifier (URL, file ID, or parse job ID).
 
-          value: Document identifier (URL, file ID, or parse job ID).
+          configuration: Extraction configuration combining parse and extract settings.
 
-          config: Extraction configuration combining parse and extract settings.
-
-          configuration_id: Saved extract configuration ID (mutually exclusive with config)
+          configuration_id: Saved extract configuration ID (mutually exclusive with configuration)
 
           webhook_configurations: The outbound webhook configurations
 
@@ -448,9 +653,8 @@ class AsyncExtractResource(AsyncAPIResource):
             "/api/v2/extract",
             body=await async_maybe_transform(
                 {
-                    "type": type,
-                    "value": value,
-                    "config": config,
+                    "document_input_value": document_input_value,
+                    "configuration": configuration,
                     "configuration_id": configuration_id,
                     "webhook_configurations": webhook_configurations,
                 },
@@ -727,6 +931,212 @@ class AsyncExtractResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ExtractV2SchemaValidateResponse,
+        )
+
+    async def run(
+        self,
+        *,
+        document_input_value: str,
+        configuration: Optional[ExtractConfigurationParam] | Omit = omit,
+        configuration_id: Optional[str] | Omit = omit,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
+        # Polling parameters
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        timeout: float = DEFAULT_TIMEOUT,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+    ) -> ExtractV2Job:
+        """
+        Create an extraction job and wait for it to complete.
+
+        This is a convenience method that combines create() and wait_for_completion()
+        into a single call. The returned ExtractV2Job includes the extract_result
+        once the job reaches a terminal state.
+
+        Args:
+            document_input_value: Document identifier (URL, file ID, or parse job ID).
+
+            configuration: Extraction configuration combining parse and extract settings.
+
+            configuration_id: Saved extract configuration ID (mutually exclusive with configuration)
+
+            organization_id: The organization ID
+
+            project_id: The project ID
+
+            webhook_configurations: The outbound webhook configurations
+
+            polling_interval: Initial polling interval in seconds (default: 1.0)
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0)
+
+            timeout: Maximum time to wait in seconds (default: 7200.0)
+
+            backoff: Backoff strategy for polling intervals. Options:
+                - "constant": Keep the same polling interval
+                - "linear": Increase interval by 1 second each poll (default)
+                - "exponential": Double the interval each poll
+
+            verbose: Print progress indicators every 10 polls (default: False)
+
+            extra_headers: Send extra headers
+
+            extra_query: Add additional query parameters to the request
+
+            extra_body: Add additional JSON properties to the request
+
+        Returns:
+            The completed ExtractV2Job with extract_result populated
+
+        Raises:
+            PollingTimeoutError: If the job doesn't complete within the timeout period
+
+            PollingError: If the job fails or is cancelled
+
+        Example:
+            ```python
+            from llama_cloud import AsyncLlamaCloud
+
+            client = AsyncLlamaCloud(api_key="...")
+
+            # Create and wait for extraction to complete
+            job = await client.extract.run(
+                document_input_value="file_abc123",
+                configuration={"extract_options": {"schema": {...}}},
+                verbose=True,
+            )
+
+            # Result is ready
+            print(job.extract_result)
+            ```
+        """
+        job = await self.create(
+            document_input_value=document_input_value,
+            configuration=configuration,
+            configuration_id=configuration_id,
+            organization_id=organization_id,
+            project_id=project_id,
+            webhook_configurations=webhook_configurations,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+        )
+
+        return await self.wait_for_completion(
+            job.id,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=timeout,
+            backoff=backoff,
+            verbose=verbose,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+        )
+
+    async def wait_for_completion(
+        self,
+        job_id: str,
+        *,
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        timeout: float = DEFAULT_TIMEOUT,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+    ) -> ExtractV2Job:
+        """
+        Wait for a V2 extraction job to complete by polling until it reaches a terminal state.
+
+        Args:
+            job_id: The ID of the extraction job to wait for
+
+            polling_interval: Initial polling interval in seconds (default: 1.0)
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0)
+
+            timeout: Maximum time to wait in seconds (default: 7200.0)
+
+            backoff: Backoff strategy for polling intervals. Options:
+                - "constant": Keep the same polling interval
+                - "linear": Increase interval by 1 second each poll (default)
+                - "exponential": Double the interval each poll
+
+            verbose: Print progress indicators every 10 polls (default: False)
+
+            extra_headers: Send extra headers
+
+            extra_query: Add additional query parameters to the request
+
+            extra_body: Add additional JSON properties to the request
+
+        Returns:
+            The completed ExtractV2Job
+
+        Raises:
+            PollingTimeoutError: If the job doesn't complete within the timeout period
+
+            PollingError: If the job fails or is cancelled
+
+        Example:
+            ```python
+            from llama_cloud import AsyncLlamaCloud
+
+            client = AsyncLlamaCloud(api_key="...")
+
+            # Create a job
+            job = await client.extract.create(document_input_value="file_abc123", configuration={...})
+
+            # Wait for it to complete
+            completed = await client.extract.wait_for_completion(job.id, verbose=True)
+            print(completed.extract_result)
+            ```
+        """
+        if not job_id:
+            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+
+        async def get_status() -> ExtractV2Job:
+            return await self.get(
+                job_id,
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+            )
+
+        def is_complete(job: ExtractV2Job) -> bool:
+            return job.status == "COMPLETED"
+
+        def is_error(job: ExtractV2Job) -> bool:
+            return job.status in ("FAILED", "CANCELLED")
+
+        def get_error_message(job: ExtractV2Job) -> str:
+            error_parts = [f"Job {job_id} failed with status: {job.status}"]
+            if job.error_message:
+                error_parts.append(f"Error: {job.error_message}")
+            return " | ".join(error_parts)
+
+        return await poll_until_complete_async(
+            get_status_fn=get_status,
+            is_complete_fn=is_complete,
+            is_error_fn=is_error,
+            get_error_message_fn=get_error_message,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=timeout,
+            backoff=backoff,
+            verbose=verbose,
         )
 
 
