@@ -1,8 +1,8 @@
 # pyright: reportCallIssue=false, reportUnknownMemberType=false, reportUnknownVariableType=false, reportUnknownArgumentType=false
 """Tests for ExtractedData types and helper functions."""
 
-from datetime import datetime, timezone
 from typing import Any, Dict, Optional
+from datetime import datetime, timezone
 
 import pytest
 from pydantic import BaseModel
