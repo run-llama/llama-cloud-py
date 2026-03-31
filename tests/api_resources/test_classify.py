@@ -88,7 +88,7 @@ class TestClassify:
     @parametrize
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         classify = client.classify.list(
-            configuration_id="configuration_id",
+            configuration_id="cfg-11111111-2222-3333-4444-555555555555",
             created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
             created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
             job_ids=["string", "string"],
@@ -245,7 +245,7 @@ class TestAsyncClassify:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         classify = await async_client.classify.list(
-            configuration_id="configuration_id",
+            configuration_id="cfg-11111111-2222-3333-4444-555555555555",
             created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
             created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
             job_ids=["string", "string"],

@@ -84,7 +84,7 @@ class ClassifyResource(SyncAPIResource):
         Args:
           configuration: Configuration for a classify job.
 
-          configuration_id: Product configuration ID for reusable presets
+          configuration_id: Saved configuration ID
 
           file_id: File ID to classify
 
@@ -156,9 +156,9 @@ class ClassifyResource(SyncAPIResource):
         Args:
           configuration_id: Filter by configuration ID
 
-          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+          created_at_on_or_after: Include items created at or after this timestamp (inclusive)
 
-          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+          created_at_on_or_before: Include items created at or before this timestamp (inclusive)
 
           job_ids: Filter by specific job IDs
 
@@ -306,7 +306,7 @@ class AsyncClassifyResource(AsyncAPIResource):
         Args:
           configuration: Configuration for a classify job.
 
-          configuration_id: Product configuration ID for reusable presets
+          configuration_id: Saved configuration ID
 
           file_id: File ID to classify
 
@@ -378,9 +378,9 @@ class AsyncClassifyResource(AsyncAPIResource):
         Args:
           configuration_id: Filter by configuration ID
 
-          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+          created_at_on_or_after: Include items created at or after this timestamp (inclusive)
 
-          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+          created_at_on_or_before: Include items created at or before this timestamp (inclusive)
 
           job_ids: Filter by specific job IDs
 
