@@ -529,13 +529,12 @@ class ExtractResource(SyncAPIResource):
     def run(
         self,
         *,
-        type: Literal["url", "file_id", "parse_job_id"],
-        value: str,
+        document_input_value: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        config: Optional[ExtractConfigurationParam] | Omit = omit,
+        configuration: Optional[ExtractConfigurationParam] | Omit = omit,
         configuration_id: Optional[str] | Omit = omit,
-        webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
+        webhook_configurations: Optional[Iterable[extract_create_params.WebhookConfiguration]] | Omit = omit,
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
@@ -554,64 +553,39 @@ class ExtractResource(SyncAPIResource):
         into a single call for the most common end-to-end workflow.
 
         Args:
-            type: Type of document input.
+            document_input_value: File ID or parse job ID to extract from.
 
-            value: Document identifier (URL, file ID, or parse job ID).
+            configuration: Inline extraction configuration with schema and options.
 
-            config: Extraction configuration combining parse and extract settings.
+            configuration_id: Saved extract configuration ID (mutually exclusive with configuration).
 
-            configuration_id: Saved extract configuration ID (mutually exclusive with config)
+            webhook_configurations: The outbound webhook configurations.
 
-            webhook_configurations: The outbound webhook configurations
+            polling_interval: Initial polling interval in seconds (default: 1.0).
 
-            polling_interval: Initial polling interval in seconds (default: 1.0)
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0).
 
-            max_interval: Maximum polling interval for backoff in seconds (default: 5.0)
+            polling_timeout: Maximum time to wait in seconds (default: 2 hours).
 
-            polling_timeout: Maximum time to wait in seconds (default: 2 hours)
+            backoff: Backoff strategy: "constant", "linear" (default), or "exponential".
 
-            backoff: Backoff strategy: "constant", "linear" (default), or "exponential"
-
-            verbose: Print progress indicators every 10 polls (default: False)
-
-            extra_headers: Send extra headers
-
-            extra_query: Add additional query parameters to the request
-
-            extra_body: Add additional JSON properties to the request
-
-            timeout: Override the client-level default timeout for this request, in seconds
-
-        Returns:
-            The completed extraction job with extract_result populated
-
-        Raises:
-            PollingTimeoutError: If the job doesn't complete within the timeout period
-
-            PollingError: If the job fails or is cancelled
+            verbose: Print progress indicators every 10 polls (default: False).
 
         Example:
             ```python
-            from llama_cloud import LlamaCloud
-
-            client = LlamaCloud(api_key="...")
-
-            # One-shot: create, wait, and get result
             result = client.extract.run(
-                type="file_id",
-                value="file-abc123",
-                config={"extract_options": {"data_schema": {...}}},
+                document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                configuration={"data_schema": {...}, "extraction_target": "per_doc"},
                 verbose=True,
             )
             print(result.extract_result)
             ```
         """
         job = self.create(
-            type=type,
-            value=value,
+            document_input_value=document_input_value,
             organization_id=organization_id,
             project_id=project_id,
-            config=config,
+            configuration=configuration,
             configuration_id=configuration_id,
             webhook_configurations=webhook_configurations,
             extra_headers=extra_headers,
@@ -1122,13 +1096,12 @@ class AsyncExtractResource(AsyncAPIResource):
     async def run(
         self,
         *,
-        type: Literal["url", "file_id", "parse_job_id"],
-        value: str,
+        document_input_value: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        config: Optional[ExtractConfigurationParam] | Omit = omit,
+        configuration: Optional[ExtractConfigurationParam] | Omit = omit,
         configuration_id: Optional[str] | Omit = omit,
-        webhook_configurations: Optional[Iterable[WebhookConfigurationParam]] | Omit = omit,
+        webhook_configurations: Optional[Iterable[extract_create_params.WebhookConfiguration]] | Omit = omit,
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
@@ -1147,63 +1120,39 @@ class AsyncExtractResource(AsyncAPIResource):
         into a single call for the most common end-to-end workflow.
 
         Args:
-            type: Type of document input.
+            document_input_value: File ID or parse job ID to extract from.
 
-            value: Document identifier (URL, file ID, or parse job ID).
+            configuration: Inline extraction configuration with schema and options.
 
-            config: Extraction configuration combining parse and extract settings.
+            configuration_id: Saved extract configuration ID (mutually exclusive with configuration).
 
-            configuration_id: Saved extract configuration ID (mutually exclusive with config)
+            webhook_configurations: The outbound webhook configurations.
 
-            webhook_configurations: The outbound webhook configurations
+            polling_interval: Initial polling interval in seconds (default: 1.0).
 
-            polling_interval: Initial polling interval in seconds (default: 1.0)
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0).
 
-            max_interval: Maximum polling interval for backoff in seconds (default: 5.0)
+            polling_timeout: Maximum time to wait in seconds (default: 2 hours).
 
-            polling_timeout: Maximum time to wait in seconds (default: 2 hours)
+            backoff: Backoff strategy: "constant", "linear" (default), or "exponential".
 
-            backoff: Backoff strategy: "constant", "linear" (default), or "exponential"
-
-            verbose: Print progress indicators every 10 polls (default: False)
-
-            extra_headers: Send extra headers
-
-            extra_query: Add additional query parameters to the request
-
-            extra_body: Add additional JSON properties to the request
-
-            timeout: Override the client-level default timeout for this request, in seconds
-
-        Returns:
-            The completed extraction job with extract_result populated
-
-        Raises:
-            PollingTimeoutError: If the job doesn't complete within the timeout period
-
-            PollingError: If the job fails or is cancelled
+            verbose: Print progress indicators every 10 polls (default: False).
 
         Example:
             ```python
-            from llama_cloud import AsyncLlamaCloud
-
-            client = AsyncLlamaCloud(api_key="...")
-
             result = await client.extract.run(
-                type="file_id",
-                value="file-abc123",
-                config={"extract_options": {"data_schema": {...}}},
+                document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                configuration={"data_schema": {...}, "extraction_target": "per_doc"},
                 verbose=True,
             )
             print(result.extract_result)
             ```
         """
         job = await self.create(
-            type=type,
-            value=value,
+            document_input_value=document_input_value,
             organization_id=organization_id,
             project_id=project_id,
-            config=config,
+            configuration=configuration,
             configuration_id=configuration_id,
             webhook_configurations=webhook_configurations,
             extra_headers=extra_headers,
