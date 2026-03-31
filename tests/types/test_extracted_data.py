@@ -1,11 +1,14 @@
 # pyright: reportCallIssue=false, reportUnknownMemberType=false, reportUnknownVariableType=false, reportUnknownArgumentType=false
 """Tests for ExtractedData types and helper functions."""
 
+from datetime import datetime, timezone
 from typing import Any, Dict, Optional
 
 import pytest
-from pydantic import Field, BaseModel
+from pydantic import BaseModel
 
+from llama_cloud._compat import model_parse
+from llama_cloud.types.extract_v2_job import ExtractV2Job
 from llama_cloud.types.beta.extracted_data import (
     BoundingBox,
     ExtractedData,
@@ -343,15 +346,6 @@ def test_parse_extracted_field_metadata_with_bounding_boxes():
     result2 = parse_extracted_field_metadata(result)
     assert result2 == result
 
-
-# =============================================================================
-# V2 ExtractV2Job: from_extract_job tests
-# =============================================================================
-
-from datetime import datetime, timezone
-
-from llama_cloud._compat import model_parse
-from llama_cloud.types.extract_v2_job import ExtractV2Job
 
 _NOW = datetime.now(timezone.utc).isoformat()
 

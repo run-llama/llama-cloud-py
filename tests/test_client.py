@@ -1041,7 +1041,7 @@ class TestAsyncLlamaCloud:
         # options that have a default are overridden correctly
         copied = async_client.copy(max_retries=7)
         assert copied.max_retries == 7
-        assert async_client.max_retries == 2
+        assert async_client.max_retries == 5
 
         copied2 = copied.copy(max_retries=6)
         assert copied2.max_retries == 6
