@@ -392,7 +392,10 @@ def test_from_extract_job_success():
     )
 
     extracted: ExtractedData[Person] = ExtractedData.from_extract_job(
-        job, Person, file_hash="abc123", status="accepted",
+        job,
+        Person,
+        file_hash="abc123",
+        status="accepted",
     )
 
     assert isinstance(extracted.data, Person)
@@ -415,7 +418,8 @@ def test_from_extract_job_with_overrides():
     job = _make_v2_job(document_input_value="dfl-original")
 
     extracted: ExtractedData[Person] = ExtractedData.from_extract_job(
-        job, Person,
+        job,
+        Person,
         file_id="custom-file-id",
         file_name="custom-name.pdf",
         file_hash="custom-hash",

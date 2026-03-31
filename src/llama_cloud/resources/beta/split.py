@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Union, Optional
+from typing import Union, Iterable, Optional
 from datetime import datetime
 from typing_extensions import Literal
 
@@ -29,6 +29,7 @@ from ...types.beta import split_get_params, split_list_params, split_create_para
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.beta.split_get_response import SplitGetResponse
 from ...types.beta.split_list_response import SplitListResponse
+from ...types.beta.split_category_param import SplitCategoryParam
 from ...types.beta.split_create_response import SplitCreateResponse
 from ...types.beta.split_document_input_param import SplitDocumentInputParam
 
@@ -236,7 +237,7 @@ class SplitResource(SyncAPIResource):
         document_input: SplitDocumentInputParam,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        splitting_strategy: split_create_params.SplittingStrategy | Omit = omit,
+        splitting_strategy: split_create_params.ConfigurationSplittingStrategy | Omit = omit,
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
@@ -317,13 +318,15 @@ class SplitResource(SyncAPIResource):
                 print(f"Category: {segment.category}, Pages: {segment.pages}")
             ```
         """
-        # Create the job
+        # Create the job with categories wrapped in configuration
+        config: dict[str, object] = {"categories": list(categories)}
+        if splitting_strategy is not omit:
+            config["splitting_strategy"] = splitting_strategy
         job = self.create(
-            categories=categories,
             document_input=document_input,
             organization_id=organization_id,
             project_id=project_id,
-            splitting_strategy=splitting_strategy,
+            configuration=config,  # type: ignore[arg-type]
             extra_headers=extra_headers,
             extra_query=extra_query,
             extra_body=extra_body,
@@ -664,7 +667,7 @@ class AsyncSplitResource(AsyncAPIResource):
         document_input: SplitDocumentInputParam,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        splitting_strategy: split_create_params.SplittingStrategy | Omit = omit,
+        splitting_strategy: split_create_params.ConfigurationSplittingStrategy | Omit = omit,
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
@@ -745,13 +748,15 @@ class AsyncSplitResource(AsyncAPIResource):
                 print(f"Category: {segment.category}, Pages: {segment.pages}")
             ```
         """
-        # Create the job
+        # Create the job with categories wrapped in configuration
+        config: dict[str, object] = {"categories": list(categories)}
+        if splitting_strategy is not omit:
+            config["splitting_strategy"] = splitting_strategy
         job = await self.create(
-            categories=categories,
             document_input=document_input,
             organization_id=organization_id,
             project_id=project_id,
-            splitting_strategy=splitting_strategy,
+            configuration=config,  # type: ignore[arg-type]
             extra_headers=extra_headers,
             extra_query=extra_query,
             extra_body=extra_body,

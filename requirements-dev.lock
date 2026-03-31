@@ -15,8 +15,11 @@ aiohappyeyeballs==2.6.1
 aiohttp==3.13.3
     # via httpx-aiohttp
     # via llama-cloud
+    # via llama-index-core
 aiosignal==1.4.0
     # via aiohttp
+aiosqlite==0.22.1
+    # via llama-index-core
 annotated-types==0.7.0
     # via pydantic
 anyio==4.12.1
@@ -31,18 +34,39 @@ attrs==25.4.0
     # via nox
 backports-asyncio-runner==1.2.0
     # via pytest-asyncio
+banks==2.4.1
+    # via llama-index-core
 certifi==2026.1.4
     # via httpcore
     # via httpx
+    # via requests
+charset-normalizer==3.4.6
+    # via requests
+click==8.1.8
+    # via nltk
+colorama==0.4.6
+    # via griffe
 colorlog==6.10.1
     # via nox
+dataclasses-json==0.6.7
+    # via llama-index-core
 dependency-groups==1.3.1
     # via nox
+deprecated==1.3.1
+    # via banks
+    # via llama-index-core
+    # via llama-index-instrumentation
 dirty-equals==0.11
+dirtyjson==1.0.8
+    # via llama-index-core
 distlib==0.4.0
     # via virtualenv
 distro==1.9.0
     # via llama-cloud
+eval-type-backport==0.2.2
+    # via banks
+    # via llama-index-core
+    # via llama-index-workflows
 exceptiongroup==1.3.1
     # via anyio
     # via pytest
@@ -50,9 +74,18 @@ execnet==2.1.2
     # via pytest-xdist
 filelock==3.19.1
     # via virtualenv
+filetype==1.2.0
+    # via banks
+    # via llama-index-core
 frozenlist==1.8.0
     # via aiohttp
     # via aiosignal
+fsspec==2025.10.0
+    # via llama-index-core
+greenlet==3.2.5
+    # via sqlalchemy
+griffe==1.14.0
+    # via banks
 h11==0.16.0
     # via httpcore
 httpcore==1.0.9
@@ -60,6 +93,7 @@ httpcore==1.0.9
 httpx==0.28.1
     # via httpx-aiohttp
     # via llama-cloud
+    # via llama-index-core
     # via respx
 httpx-aiohttp==0.1.12
     # via llama-cloud
@@ -68,12 +102,26 @@ humanize==4.13.0
 idna==3.11
     # via anyio
     # via httpx
+    # via requests
     # via yarl
 importlib-metadata==8.7.1
 iniconfig==2.1.0
     # via pytest
+jinja2==3.1.6
+    # via banks
+joblib==1.5.3
+    # via nltk
+llama-index-core==0.14.16
+llama-index-instrumentation==0.4.3
+    # via llama-index-workflows
+llama-index-workflows==2.16.1
+    # via llama-index-core
 markdown-it-py==3.0.0
     # via rich
+markupsafe==3.0.3
+    # via jinja2
+marshmallow==3.26.2
+    # via dataclasses-json
 mdurl==0.1.2
     # via markdown-it-py
 multidict==6.7.0
@@ -82,16 +130,30 @@ multidict==6.7.0
 mypy==1.17.0
 mypy-extensions==1.1.0
     # via mypy
+    # via typing-inspect
+nest-asyncio==1.6.0
+    # via llama-index-core
+networkx==3.2.1
+    # via llama-index-core
+nltk==3.9.2
+    # via llama-index-core
 nodeenv==1.10.0
     # via pyright
 nox==2025.11.12
+numpy==2.0.2
+    # via llama-index-core
 packaging==25.0
     # via dependency-groups
+    # via marshmallow
     # via nox
     # via pytest
 pathspec==1.0.3
     # via mypy
+pillow==11.3.0
+    # via llama-index-core
 platformdirs==4.4.0
+    # via banks
+    # via llama-index-core
     # via virtualenv
 pluggy==1.6.0
     # via pytest
@@ -99,7 +161,11 @@ propcache==0.4.1
     # via aiohttp
     # via yarl
 pydantic==2.12.5
+    # via banks
     # via llama-cloud
+    # via llama-index-core
+    # via llama-index-instrumentation
+    # via llama-index-workflows
 pydantic-core==2.41.5
     # via pydantic
 pygments==2.19.2
@@ -113,36 +179,69 @@ pytest-asyncio==1.2.0
 pytest-xdist==3.8.0
 python-dateutil==2.9.0.post0
     # via time-machine
+pyyaml==6.0.3
+    # via llama-index-core
+regex==2026.1.15
+    # via nltk
+    # via tiktoken
+requests==2.32.5
+    # via llama-index-core
+    # via tiktoken
 respx==0.22.0
 rich==14.2.0
 ruff==0.14.13
+setuptools==82.0.1
+    # via llama-index-core
 six==1.17.0
     # via python-dateutil
 sniffio==1.3.1
     # via llama-cloud
+sqlalchemy==2.0.48
+    # via llama-index-core
+tenacity==9.1.2
+    # via llama-index-core
+tiktoken==0.12.0
+    # via llama-index-core
 time-machine==2.19.0
+tinytag==2.2.1
+    # via llama-index-core
 tomli==2.4.0
     # via dependency-groups
     # via mypy
     # via nox
     # via pytest
+tqdm==4.67.3
+    # via llama-index-core
+    # via nltk
 typing-extensions==4.15.0
     # via aiosignal
     # via anyio
     # via exceptiongroup
     # via llama-cloud
+    # via llama-index-core
+    # via llama-index-workflows
     # via multidict
     # via mypy
     # via pydantic
     # via pydantic-core
     # via pyright
     # via pytest-asyncio
+    # via sqlalchemy
+    # via typing-inspect
     # via typing-inspection
     # via virtualenv
+typing-inspect==0.9.0
+    # via dataclasses-json
+    # via llama-index-core
 typing-inspection==0.4.2
     # via pydantic
+urllib3==2.6.3
+    # via requests
 virtualenv==20.36.1
     # via nox
+wrapt==2.1.2
+    # via deprecated
+    # via llama-index-core
 yarl==1.22.0
     # via aiohttp
 zipp==3.23.0
