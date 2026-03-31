@@ -9,7 +9,7 @@ from typing_extensions import Literal
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -76,7 +76,7 @@ class FilesResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._put(
-            f"/api/v1/pipelines/{pipeline_id}/files",
+            path_template("/api/v1/pipelines/{pipeline_id}/files", pipeline_id=pipeline_id),
             body=maybe_transform(body, Iterable[file_create_params.Body]),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -117,7 +117,7 @@ class FilesResource(SyncAPIResource):
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return self._put(
-            f"/api/v1/pipelines/{pipeline_id}/files/{file_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}/files/{file_id}", pipeline_id=pipeline_id, file_id=file_id),
             body=maybe_transform({"custom_metadata": custom_metadata}, file_update_params.FileUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -161,7 +161,7 @@ class FilesResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._get_api_list(
-            f"/api/v1/pipelines/{pipeline_id}/files2",
+            path_template("/api/v1/pipelines/{pipeline_id}/files2", pipeline_id=pipeline_id),
             page=SyncPaginatedPipelineFiles[PipelineFile],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -214,7 +214,7 @@ class FilesResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/api/v1/pipelines/{pipeline_id}/files/{file_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}/files/{file_id}", pipeline_id=pipeline_id, file_id=file_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -250,7 +250,9 @@ class FilesResource(SyncAPIResource):
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/files/{file_id}/status",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/files/{file_id}/status", pipeline_id=pipeline_id, file_id=file_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -285,7 +287,7 @@ class FilesResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/files/status-counts",
+            path_template("/api/v1/pipelines/{pipeline_id}/files/status-counts", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -350,7 +352,7 @@ class AsyncFilesResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._put(
-            f"/api/v1/pipelines/{pipeline_id}/files",
+            path_template("/api/v1/pipelines/{pipeline_id}/files", pipeline_id=pipeline_id),
             body=await async_maybe_transform(body, Iterable[file_create_params.Body]),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -391,7 +393,7 @@ class AsyncFilesResource(AsyncAPIResource):
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return await self._put(
-            f"/api/v1/pipelines/{pipeline_id}/files/{file_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}/files/{file_id}", pipeline_id=pipeline_id, file_id=file_id),
             body=await async_maybe_transform({"custom_metadata": custom_metadata}, file_update_params.FileUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -435,7 +437,7 @@ class AsyncFilesResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._get_api_list(
-            f"/api/v1/pipelines/{pipeline_id}/files2",
+            path_template("/api/v1/pipelines/{pipeline_id}/files2", pipeline_id=pipeline_id),
             page=AsyncPaginatedPipelineFiles[PipelineFile],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -488,7 +490,7 @@ class AsyncFilesResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/api/v1/pipelines/{pipeline_id}/files/{file_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}/files/{file_id}", pipeline_id=pipeline_id, file_id=file_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -524,7 +526,9 @@ class AsyncFilesResource(AsyncAPIResource):
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/files/{file_id}/status",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/files/{file_id}/status", pipeline_id=pipeline_id, file_id=file_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -559,7 +563,7 @@ class AsyncFilesResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/files/status-counts",
+            path_template("/api/v1/pipelines/{pipeline_id}/files/status-counts", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

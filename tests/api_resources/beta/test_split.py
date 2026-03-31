@@ -9,6 +9,7 @@ import pytest
 
 from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
+from llama_cloud._utils import parse_datetime
 from llama_cloud.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 from llama_cloud.types.beta import (
     SplitGetResponse,
@@ -26,7 +27,6 @@ class TestSplit:
     @parametrize
     def test_method_create(self, client: LlamaCloud) -> None:
         split = client.beta.split.create(
-            categories=[{"name": "x"}],
             document_input={
                 "type": "type",
                 "value": "value",
@@ -38,19 +38,22 @@ class TestSplit:
     @parametrize
     def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
         split = client.beta.split.create(
-            categories=[
-                {
-                    "name": "x",
-                    "description": "x",
-                }
-            ],
             document_input={
                 "type": "type",
                 "value": "value",
             },
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            splitting_strategy={"allow_uncategorized": "include"},
+            configuration={
+                "categories": [
+                    {
+                        "name": "x",
+                        "description": "x",
+                    }
+                ],
+                "splitting_strategy": {"allow_uncategorized": "include"},
+            },
+            configuration_id="configuration_id",
         )
         assert_matches_type(SplitCreateResponse, split, path=["response"])
 
@@ -58,7 +61,6 @@ class TestSplit:
     @parametrize
     def test_raw_response_create(self, client: LlamaCloud) -> None:
         response = client.beta.split.with_raw_response.create(
-            categories=[{"name": "x"}],
             document_input={
                 "type": "type",
                 "value": "value",
@@ -74,7 +76,6 @@ class TestSplit:
     @parametrize
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
         with client.beta.split.with_streaming_response.create(
-            categories=[{"name": "x"}],
             document_input={
                 "type": "type",
                 "value": "value",
@@ -98,10 +99,14 @@ class TestSplit:
     @parametrize
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         split = client.beta.split.list(
+            created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
+            created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
+            job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=0,
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            status="pending",
         )
         assert_matches_type(SyncPaginatedCursor[SplitListResponse], split, path=["response"])
 
@@ -189,7 +194,6 @@ class TestAsyncSplit:
     @parametrize
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
         split = await async_client.beta.split.create(
-            categories=[{"name": "x"}],
             document_input={
                 "type": "type",
                 "value": "value",
@@ -201,19 +205,22 @@ class TestAsyncSplit:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         split = await async_client.beta.split.create(
-            categories=[
-                {
-                    "name": "x",
-                    "description": "x",
-                }
-            ],
             document_input={
                 "type": "type",
                 "value": "value",
             },
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            splitting_strategy={"allow_uncategorized": "include"},
+            configuration={
+                "categories": [
+                    {
+                        "name": "x",
+                        "description": "x",
+                    }
+                ],
+                "splitting_strategy": {"allow_uncategorized": "include"},
+            },
+            configuration_id="configuration_id",
         )
         assert_matches_type(SplitCreateResponse, split, path=["response"])
 
@@ -221,7 +228,6 @@ class TestAsyncSplit:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.split.with_raw_response.create(
-            categories=[{"name": "x"}],
             document_input={
                 "type": "type",
                 "value": "value",
@@ -237,7 +243,6 @@ class TestAsyncSplit:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.split.with_streaming_response.create(
-            categories=[{"name": "x"}],
             document_input={
                 "type": "type",
                 "value": "value",
@@ -261,10 +266,14 @@ class TestAsyncSplit:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         split = await async_client.beta.split.list(
+            created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
+            created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
+            job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=0,
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            status="pending",
         )
         assert_matches_type(AsyncPaginatedCursor[SplitListResponse], split, path=["response"])
 

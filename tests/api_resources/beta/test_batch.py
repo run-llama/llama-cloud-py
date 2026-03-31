@@ -164,10 +164,10 @@ class TestBatch:
                     "version": "version",
                     "webhook_configurations": [
                         {
-                            "webhook_events": ["extract.pending"],
-                            "webhook_headers": {"foo": "string"},
-                            "webhook_output_format": "webhook_output_format",
-                            "webhook_url": "webhook_url",
+                            "webhook_events": ["parse.success", "parse.error"],
+                            "webhook_headers": {"Authorization": "Bearer sk-..."},
+                            "webhook_output_format": "json",
+                            "webhook_url": "https://example.com/webhooks/llamacloud",
                         }
                     ],
                     "webhook_url": "webhook_url",
@@ -182,8 +182,8 @@ class TestBatch:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             continue_as_new_threshold=0,
-            directory_id="directory_id",
-            item_ids=["string"],
+            directory_id="dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            item_ids=["dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "dfl-11111111-2222-3333-4444-555555555555"],
             page_size=1,
             temporal_namespace="temporal-namespace",
         )
@@ -510,10 +510,10 @@ class TestAsyncBatch:
                     "version": "version",
                     "webhook_configurations": [
                         {
-                            "webhook_events": ["extract.pending"],
-                            "webhook_headers": {"foo": "string"},
-                            "webhook_output_format": "webhook_output_format",
-                            "webhook_url": "webhook_url",
+                            "webhook_events": ["parse.success", "parse.error"],
+                            "webhook_headers": {"Authorization": "Bearer sk-..."},
+                            "webhook_output_format": "json",
+                            "webhook_url": "https://example.com/webhooks/llamacloud",
                         }
                     ],
                     "webhook_url": "webhook_url",
@@ -528,8 +528,8 @@ class TestAsyncBatch:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             continue_as_new_threshold=0,
-            directory_id="directory_id",
-            item_ids=["string"],
+            directory_id="dir-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            item_ids=["dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "dfl-11111111-2222-3333-4444-555555555555"],
             page_size=1,
             temporal_namespace="temporal-namespace",
         )

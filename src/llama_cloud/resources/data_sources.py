@@ -9,7 +9,7 @@ import httpx
 
 from ..types import data_source_list_params, data_source_create_params, data_source_update_params
 from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from .._utils import maybe_transform, async_maybe_transform
+from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -168,7 +168,7 @@ class DataSourcesResource(SyncAPIResource):
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return self._put(
-            f"/api/v1/data-sources/{data_source_id}",
+            path_template("/api/v1/data-sources/{data_source_id}", data_source_id=data_source_id),
             body=maybe_transform(
                 {
                     "source_type": source_type,
@@ -255,7 +255,7 @@ class DataSourcesResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/api/v1/data-sources/{data_source_id}",
+            path_template("/api/v1/data-sources/{data_source_id}", data_source_id=data_source_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -288,7 +288,7 @@ class DataSourcesResource(SyncAPIResource):
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return self._get(
-            f"/api/v1/data-sources/{data_source_id}",
+            path_template("/api/v1/data-sources/{data_source_id}", data_source_id=data_source_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -439,7 +439,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return await self._put(
-            f"/api/v1/data-sources/{data_source_id}",
+            path_template("/api/v1/data-sources/{data_source_id}", data_source_id=data_source_id),
             body=await async_maybe_transform(
                 {
                     "source_type": source_type,
@@ -526,7 +526,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/api/v1/data-sources/{data_source_id}",
+            path_template("/api/v1/data-sources/{data_source_id}", data_source_id=data_source_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -559,7 +559,7 @@ class AsyncDataSourcesResource(AsyncAPIResource):
         if not data_source_id:
             raise ValueError(f"Expected a non-empty value for `data_source_id` but received {data_source_id!r}")
         return await self._get(
-            f"/api/v1/data-sources/{data_source_id}",
+            path_template("/api/v1/data-sources/{data_source_id}", data_source_id=data_source_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

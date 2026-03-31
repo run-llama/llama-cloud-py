@@ -15,7 +15,7 @@ from .files import (
     AsyncFilesResourceWithStreamingResponse,
 )
 from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ...._utils import maybe_transform, async_maybe_transform
+from ...._utils import path_template, maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
 from ...._response import (
@@ -161,7 +161,7 @@ class DirectoriesResource(SyncAPIResource):
         if not directory_id:
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
         return self._patch(
-            f"/api/v1/beta/directories/{directory_id}",
+            path_template("/api/v1/beta/directories/{directory_id}", directory_id=directory_id),
             body=maybe_transform(
                 {
                     "description": description,
@@ -267,7 +267,7 @@ class DirectoriesResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/api/v1/beta/directories/{directory_id}",
+            path_template("/api/v1/beta/directories/{directory_id}", directory_id=directory_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -312,7 +312,7 @@ class DirectoriesResource(SyncAPIResource):
         if not directory_id:
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
         return self._get(
-            f"/api/v1/beta/directories/{directory_id}",
+            path_template("/api/v1/beta/directories/{directory_id}", directory_id=directory_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -450,7 +450,7 @@ class AsyncDirectoriesResource(AsyncAPIResource):
         if not directory_id:
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
         return await self._patch(
-            f"/api/v1/beta/directories/{directory_id}",
+            path_template("/api/v1/beta/directories/{directory_id}", directory_id=directory_id),
             body=await async_maybe_transform(
                 {
                     "description": description,
@@ -556,7 +556,7 @@ class AsyncDirectoriesResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/api/v1/beta/directories/{directory_id}",
+            path_template("/api/v1/beta/directories/{directory_id}", directory_id=directory_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -601,7 +601,7 @@ class AsyncDirectoriesResource(AsyncAPIResource):
         if not directory_id:
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
         return await self._get(
-            f"/api/v1/beta/directories/{directory_id}",
+            path_template("/api/v1/beta/directories/{directory_id}", directory_id=directory_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

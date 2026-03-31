@@ -339,7 +339,7 @@ class TestFiles:
     def test_method_upload(self, client: LlamaCloud) -> None:
         file = client.beta.directories.files.upload(
             directory_id="directory_id",
-            upload_file=b"raw file contents",
+            upload_file=b"Example data",
         )
         assert_matches_type(FileUploadResponse, file, path=["response"])
 
@@ -348,7 +348,7 @@ class TestFiles:
     def test_method_upload_with_all_params(self, client: LlamaCloud) -> None:
         file = client.beta.directories.files.upload(
             directory_id="directory_id",
-            upload_file=b"raw file contents",
+            upload_file=b"Example data",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             display_name="display_name",
@@ -362,7 +362,7 @@ class TestFiles:
     def test_raw_response_upload(self, client: LlamaCloud) -> None:
         response = client.beta.directories.files.with_raw_response.upload(
             directory_id="directory_id",
-            upload_file=b"raw file contents",
+            upload_file=b"Example data",
         )
 
         assert response.is_closed is True
@@ -375,7 +375,7 @@ class TestFiles:
     def test_streaming_response_upload(self, client: LlamaCloud) -> None:
         with client.beta.directories.files.with_streaming_response.upload(
             directory_id="directory_id",
-            upload_file=b"raw file contents",
+            upload_file=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -391,7 +391,7 @@ class TestFiles:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
             client.beta.directories.files.with_raw_response.upload(
                 directory_id="",
-                upload_file=b"raw file contents",
+                upload_file=b"Example data",
             )
 
 
@@ -715,7 +715,7 @@ class TestAsyncFiles:
     async def test_method_upload(self, async_client: AsyncLlamaCloud) -> None:
         file = await async_client.beta.directories.files.upload(
             directory_id="directory_id",
-            upload_file=b"raw file contents",
+            upload_file=b"Example data",
         )
         assert_matches_type(FileUploadResponse, file, path=["response"])
 
@@ -724,7 +724,7 @@ class TestAsyncFiles:
     async def test_method_upload_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         file = await async_client.beta.directories.files.upload(
             directory_id="directory_id",
-            upload_file=b"raw file contents",
+            upload_file=b"Example data",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             display_name="display_name",
@@ -738,7 +738,7 @@ class TestAsyncFiles:
     async def test_raw_response_upload(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.beta.directories.files.with_raw_response.upload(
             directory_id="directory_id",
-            upload_file=b"raw file contents",
+            upload_file=b"Example data",
         )
 
         assert response.is_closed is True
@@ -751,7 +751,7 @@ class TestAsyncFiles:
     async def test_streaming_response_upload(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.beta.directories.files.with_streaming_response.upload(
             directory_id="directory_id",
-            upload_file=b"raw file contents",
+            upload_file=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -767,5 +767,5 @@ class TestAsyncFiles:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `directory_id` but received ''"):
             await async_client.beta.directories.files.with_raw_response.upload(
                 directory_id="",
-                upload_file=b"raw file contents",
+                upload_file=b"Example data",
             )

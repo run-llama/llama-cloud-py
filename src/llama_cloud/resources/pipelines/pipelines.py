@@ -41,7 +41,7 @@ from ...types import (
     pipeline_get_status_params,
 )
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from .metadata import (
     MetadataResource,
     AsyncMetadataResource,
@@ -161,7 +161,10 @@ class PipelinesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Create a new pipeline for a project.
+        Create a new managed ingestion pipeline.
+
+        A pipeline connects data sources to a vector store for RAG. After creation, call
+        `POST /pipelines/{id}/sync` to start ingesting documents.
 
         Args:
           data_sink: Schema for creating a data sink.
@@ -268,7 +271,11 @@ class PipelinesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PipelineRetrieveResponse:
         """
-        Get retrieval results for a managed pipeline and a query
+        Run a retrieval query against a managed pipeline.
+
+        Searches the pipeline's vector store using the provided query and retrieval
+        parameters. Supports dense, sparse, and hybrid search modes with configurable
+        top-k and reranking.
 
         Args:
           query: The query to retrieve against.
@@ -313,7 +320,7 @@ class PipelinesResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._post(
-            f"/api/v1/pipelines/{pipeline_id}/retrieve",
+            path_template("/api/v1/pipelines/{pipeline_id}/retrieve", pipeline_id=pipeline_id),
             body=maybe_transform(
                 {
                     "query": query,
@@ -374,7 +381,7 @@ class PipelinesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Update an existing pipeline for a project.
+        Update an existing pipeline's configuration.
 
         Args:
           data_sink: Schema for creating a data sink.
@@ -415,7 +422,7 @@ class PipelinesResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._put(
-            f"/api/v1/pipelines/{pipeline_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}", pipeline_id=pipeline_id),
             body=maybe_transform(
                 {
                     "data_sink": data_sink,
@@ -455,7 +462,7 @@ class PipelinesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PipelineListResponse:
         """
-        Search for pipelines by various parameters.
+        Search for pipelines by name, type, or project.
 
         Args:
           pipeline_type: Enum for representing the type of a pipeline
@@ -501,7 +508,10 @@ class PipelinesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Delete a pipeline by ID.
+        Delete a pipeline and all associated resources.
+
+        Removes pipeline files, data sources, and vector store data. This operation is
+        irreversible.
 
         Args:
           extra_headers: Send extra headers
@@ -516,7 +526,7 @@ class PipelinesResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/api/v1/pipelines/{pipeline_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -535,7 +545,7 @@ class PipelinesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Get a pipeline by ID for a given project.
+        Get a pipeline by ID.
 
         Args:
           extra_headers: Send extra headers
@@ -549,7 +559,7 @@ class PipelinesResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._get(
-            f"/api/v1/pipelines/{pipeline_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -569,7 +579,10 @@ class PipelinesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ManagedIngestionStatusResponse:
         """
-        Get the status of a pipeline by ID.
+        Get the ingestion status of a managed pipeline.
+
+        Returns document counts, sync progress, and the last effective timestamp. Only
+        available for managed pipelines.
 
         Args:
           extra_headers: Send extra headers
@@ -583,7 +596,7 @@ class PipelinesResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/status",
+            path_template("/api/v1/pipelines/{pipeline_id}/status", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -621,10 +634,11 @@ class PipelinesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
-        """Upsert a pipeline for a project.
+        """
+        Upsert a pipeline.
 
-        Updates if a pipeline with the same name and
-        project_id already exists. Otherwise, creates a new pipeline.
+        Updates the pipeline if one with the same name and project already exists,
+        otherwise creates a new one.
 
         Args:
           data_sink: Schema for creating a data sink.
@@ -770,7 +784,10 @@ class AsyncPipelinesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Create a new pipeline for a project.
+        Create a new managed ingestion pipeline.
+
+        A pipeline connects data sources to a vector store for RAG. After creation, call
+        `POST /pipelines/{id}/sync` to start ingesting documents.
 
         Args:
           data_sink: Schema for creating a data sink.
@@ -877,7 +894,11 @@ class AsyncPipelinesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PipelineRetrieveResponse:
         """
-        Get retrieval results for a managed pipeline and a query
+        Run a retrieval query against a managed pipeline.
+
+        Searches the pipeline's vector store using the provided query and retrieval
+        parameters. Supports dense, sparse, and hybrid search modes with configurable
+        top-k and reranking.
 
         Args:
           query: The query to retrieve against.
@@ -922,7 +943,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._post(
-            f"/api/v1/pipelines/{pipeline_id}/retrieve",
+            path_template("/api/v1/pipelines/{pipeline_id}/retrieve", pipeline_id=pipeline_id),
             body=await async_maybe_transform(
                 {
                     "query": query,
@@ -983,7 +1004,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Update an existing pipeline for a project.
+        Update an existing pipeline's configuration.
 
         Args:
           data_sink: Schema for creating a data sink.
@@ -1024,7 +1045,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._put(
-            f"/api/v1/pipelines/{pipeline_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}", pipeline_id=pipeline_id),
             body=await async_maybe_transform(
                 {
                     "data_sink": data_sink,
@@ -1064,7 +1085,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PipelineListResponse:
         """
-        Search for pipelines by various parameters.
+        Search for pipelines by name, type, or project.
 
         Args:
           pipeline_type: Enum for representing the type of a pipeline
@@ -1110,7 +1131,10 @@ class AsyncPipelinesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Delete a pipeline by ID.
+        Delete a pipeline and all associated resources.
+
+        Removes pipeline files, data sources, and vector store data. This operation is
+        irreversible.
 
         Args:
           extra_headers: Send extra headers
@@ -1125,7 +1149,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/api/v1/pipelines/{pipeline_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -1144,7 +1168,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Get a pipeline by ID for a given project.
+        Get a pipeline by ID.
 
         Args:
           extra_headers: Send extra headers
@@ -1158,7 +1182,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}",
+            path_template("/api/v1/pipelines/{pipeline_id}", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -1178,7 +1202,10 @@ class AsyncPipelinesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ManagedIngestionStatusResponse:
         """
-        Get the status of a pipeline by ID.
+        Get the ingestion status of a managed pipeline.
+
+        Returns document counts, sync progress, and the last effective timestamp. Only
+        available for managed pipelines.
 
         Args:
           extra_headers: Send extra headers
@@ -1192,7 +1219,7 @@ class AsyncPipelinesResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/status",
+            path_template("/api/v1/pipelines/{pipeline_id}/status", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -1230,10 +1257,11 @@ class AsyncPipelinesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
-        """Upsert a pipeline for a project.
+        """
+        Upsert a pipeline.
 
-        Updates if a pipeline with the same name and
-        project_id already exists. Otherwise, creates a new pipeline.
+        Updates the pipeline if one with the same name and project already exists,
+        otherwise creates a new one.
 
         Args:
           data_sink: Schema for creating a data sink.

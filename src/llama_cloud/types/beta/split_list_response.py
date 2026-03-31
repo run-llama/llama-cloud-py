@@ -29,11 +29,14 @@ class SplitListResponse(BaseModel):
     status: str
     """Current status of the job.
 
-    Valid values are: pending, processing, completed, failed.
+    Valid values are: pending, processing, completed, failed, cancelled.
     """
 
     user_id: str
     """User ID who created this job."""
+
+    configuration_id: Optional[str] = None
+    """Split configuration ID used for this job."""
 
     created_at: Optional[datetime] = None
     """Creation datetime"""

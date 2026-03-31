@@ -12,8 +12,6 @@ __all__ = [
     "AsyncPaginatedPipelineFiles",
     "SyncPaginatedBatchItems",
     "AsyncPaginatedBatchItems",
-    "SyncPaginatedExtractRuns",
-    "AsyncPaginatedExtractRuns",
     "SyncPaginatedCloudDocuments",
     "AsyncPaginatedCloudDocuments",
     "SyncPaginatedQuotaConfigurations",
@@ -207,68 +205,6 @@ class AsyncPaginatedBatchItems(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
 
         if current_count < total_size:
             return PageInfo(params={"offset": current_count})
-
-        return None
-
-
-class SyncPaginatedExtractRuns(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
-    items: List[_T]
-    total: Optional[int] = None
-    skip: Optional[int] = None
-
-    @override
-    def _get_page_items(self) -> List[_T]:
-        items = self.items
-        if not items:
-            return []
-        return items
-
-    @override
-    def next_page_info(self) -> Optional[PageInfo]:
-        skip = self.skip
-        if skip is None:
-            return None  # type: ignore[unreachable]
-
-        length = len(self._get_page_items())
-        current_count = skip + length
-
-        total = self.total
-        if total is None:
-            return None
-
-        if current_count < total:
-            return PageInfo(params={"skip": current_count})
-
-        return None
-
-
-class AsyncPaginatedExtractRuns(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
-    items: List[_T]
-    total: Optional[int] = None
-    skip: Optional[int] = None
-
-    @override
-    def _get_page_items(self) -> List[_T]:
-        items = self.items
-        if not items:
-            return []
-        return items
-
-    @override
-    def next_page_info(self) -> Optional[PageInfo]:
-        skip = self.skip
-        if skip is None:
-            return None  # type: ignore[unreachable]
-
-        length = len(self._get_page_items())
-        current_count = skip + length
-
-        total = self.total
-        if total is None:
-            return None
-
-        if current_count < total:
-            return PageInfo(params={"skip": current_count})
 
         return None
 

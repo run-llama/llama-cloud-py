@@ -14,6 +14,7 @@ from llama_cloud.types import (
     ParsingListResponse,
     ParsingCreateResponse,
 )
+from llama_cloud._utils import parse_datetime
 from llama_cloud.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -140,10 +141,10 @@ class TestParsing:
                                 "preserve_very_small_text": True,
                             },
                             "specialized_chart_parsing": "agentic_plus",
-                            "tier": "fast",
-                            "version": "2025-12-11",
+                            "tier": "agentic",
+                            "version": "latest",
                         },
-                        "filename_match_glob": "filename_match_glob",
+                        "filename_match_glob": "*.txt",
                         "filename_match_glob_list": ["string"],
                         "filename_regexp": "filename_regexp",
                         "filename_regexp_mode": "filename_regexp_mode",
@@ -239,6 +240,9 @@ class TestParsing:
     @parametrize
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         parsing = client.parsing.list(
+            created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
+            created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
+            job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=0,
             page_token="page_token",
@@ -447,10 +451,10 @@ class TestAsyncParsing:
                                 "preserve_very_small_text": True,
                             },
                             "specialized_chart_parsing": "agentic_plus",
-                            "tier": "fast",
-                            "version": "2025-12-11",
+                            "tier": "agentic",
+                            "version": "latest",
                         },
-                        "filename_match_glob": "filename_match_glob",
+                        "filename_match_glob": "*.txt",
                         "filename_match_glob_list": ["string"],
                         "filename_regexp": "filename_regexp",
                         "filename_regexp_mode": "filename_regexp_mode",
@@ -546,6 +550,9 @@ class TestAsyncParsing:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         parsing = await async_client.parsing.list(
+            created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
+            created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
+            job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=0,
             page_token="page_token",

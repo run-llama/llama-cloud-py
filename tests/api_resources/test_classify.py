@@ -14,6 +14,7 @@ from llama_cloud.types import (
     ClassifyListResponse,
     ClassifyCreateResponse,
 )
+from llama_cloud._utils import parse_datetime
 from llama_cloud.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -42,11 +43,16 @@ class TestClassify:
                     }
                 ],
                 "mode": "FAST",
+                "parsing_configuration": {
+                    "lang": "en",
+                    "max_pages": 10,
+                    "target_pages": "1,3,5-7",
+                },
             },
-            configuration_id="configuration_id",
-            file_id="file_id",
-            parse_job_id="parse_job_id",
-            transaction_id="transaction_id",
+            configuration_id="cfg-11111111-2222-3333-4444-555555555555",
+            file_id="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            parse_job_id="pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            transaction_id="tx-unique-idempotency-key",
         )
         assert_matches_type(ClassifyCreateResponse, classify, path=["response"])
 
@@ -83,6 +89,8 @@ class TestClassify:
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         classify = client.classify.list(
             configuration_id="configuration_id",
+            created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
+            created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
             job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=1,
@@ -192,11 +200,16 @@ class TestAsyncClassify:
                     }
                 ],
                 "mode": "FAST",
+                "parsing_configuration": {
+                    "lang": "en",
+                    "max_pages": 10,
+                    "target_pages": "1,3,5-7",
+                },
             },
-            configuration_id="configuration_id",
-            file_id="file_id",
-            parse_job_id="parse_job_id",
-            transaction_id="transaction_id",
+            configuration_id="cfg-11111111-2222-3333-4444-555555555555",
+            file_id="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            parse_job_id="pjb-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            transaction_id="tx-unique-idempotency-key",
         )
         assert_matches_type(ClassifyCreateResponse, classify, path=["response"])
 
@@ -233,6 +246,8 @@ class TestAsyncClassify:
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         classify = await async_client.classify.list(
             configuration_id="configuration_id",
+            created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
+            created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
             job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=1,

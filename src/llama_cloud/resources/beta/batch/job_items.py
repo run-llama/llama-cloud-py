@@ -8,7 +8,7 @@ from typing_extensions import Literal
 import httpx
 
 from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ...._utils import maybe_transform, async_maybe_transform
+from ...._utils import path_template, maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
 from ...._response import (
@@ -65,9 +65,8 @@ class JobItemsResource(SyncAPIResource):
         """
         List items in a batch job with optional status filtering.
 
-        Useful for finding failed items, viewing completed items, or debugging issues.
-        Results are paginated for performance with configurable limit and offset
-        parameters.
+        Useful for finding failed items, viewing completed items, or debugging
+        processing issues.
 
         Args:
           limit: Maximum number of items to return
@@ -87,7 +86,7 @@ class JobItemsResource(SyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return self._get_api_list(
-            f"/api/v1/beta/batch-processing/{job_id}/items",
+            path_template("/api/v1/beta/batch-processing/{job_id}/items", job_id=job_id),
             page=SyncPaginatedBatchItems[JobItemListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -123,12 +122,11 @@ class JobItemsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> JobItemGetProcessingResultsResponse:
         """
-        Get all processing results for a specific item (lineage query).
+        Get all processing results for a specific item.
 
-        Shows complete processing history including what operations have been performed,
-        with what parameters, and where outputs are stored. Useful for understanding
-        what processing has already been done to avoid redundant work. Optionally filter
-        by job type to see only specific processing operations.
+        Returns the complete processing history for an item including what operations
+        were performed, parameters used, and where outputs are stored. Optionally filter
+        by `job_type`.
 
         Args:
           job_type: Filter results by job type
@@ -144,7 +142,7 @@ class JobItemsResource(SyncAPIResource):
         if not item_id:
             raise ValueError(f"Expected a non-empty value for `item_id` but received {item_id!r}")
         return self._get(
-            f"/api/v1/beta/batch-processing/items/{item_id}/processing-results",
+            path_template("/api/v1/beta/batch-processing/items/{item_id}/processing-results", item_id=item_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -202,9 +200,8 @@ class AsyncJobItemsResource(AsyncAPIResource):
         """
         List items in a batch job with optional status filtering.
 
-        Useful for finding failed items, viewing completed items, or debugging issues.
-        Results are paginated for performance with configurable limit and offset
-        parameters.
+        Useful for finding failed items, viewing completed items, or debugging
+        processing issues.
 
         Args:
           limit: Maximum number of items to return
@@ -224,7 +221,7 @@ class AsyncJobItemsResource(AsyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return self._get_api_list(
-            f"/api/v1/beta/batch-processing/{job_id}/items",
+            path_template("/api/v1/beta/batch-processing/{job_id}/items", job_id=job_id),
             page=AsyncPaginatedBatchItems[JobItemListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -260,12 +257,11 @@ class AsyncJobItemsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> JobItemGetProcessingResultsResponse:
         """
-        Get all processing results for a specific item (lineage query).
+        Get all processing results for a specific item.
 
-        Shows complete processing history including what operations have been performed,
-        with what parameters, and where outputs are stored. Useful for understanding
-        what processing has already been done to avoid redundant work. Optionally filter
-        by job type to see only specific processing operations.
+        Returns the complete processing history for an item including what operations
+        were performed, parameters used, and where outputs are stored. Optionally filter
+        by `job_type`.
 
         Args:
           job_type: Filter results by job type
@@ -281,7 +277,7 @@ class AsyncJobItemsResource(AsyncAPIResource):
         if not item_id:
             raise ValueError(f"Expected a non-empty value for `item_id` but received {item_id!r}")
         return await self._get(
-            f"/api/v1/beta/batch-processing/items/{item_id}/processing-results",
+            path_template("/api/v1/beta/batch-processing/items/{item_id}/processing-results", item_id=item_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

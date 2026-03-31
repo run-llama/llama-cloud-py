@@ -8,7 +8,7 @@ from typing_extensions import Literal
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -77,7 +77,7 @@ class DocumentsResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._post(
-            f"/api/v1/pipelines/{pipeline_id}/documents",
+            path_template("/api/v1/pipelines/{pipeline_id}/documents", pipeline_id=pipeline_id),
             body=maybe_transform(body, Iterable[CloudDocumentCreateParam]),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -117,7 +117,7 @@ class DocumentsResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._get_api_list(
-            f"/api/v1/pipelines/{pipeline_id}/documents/paginated",
+            path_template("/api/v1/pipelines/{pipeline_id}/documents/paginated", pipeline_id=pipeline_id),
             page=SyncPaginatedCloudDocuments[CloudDocument],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -173,7 +173,11 @@ class DocumentsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/documents/{document_id}",
+                pipeline_id=pipeline_id,
+                document_id=document_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -209,7 +213,11 @@ class DocumentsResource(SyncAPIResource):
         if not document_id:
             raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
         return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/documents/{document_id}",
+                pipeline_id=pipeline_id,
+                document_id=document_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -245,7 +253,11 @@ class DocumentsResource(SyncAPIResource):
         if not document_id:
             raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
         return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}/chunks",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/documents/{document_id}/chunks",
+                pipeline_id=pipeline_id,
+                document_id=document_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -281,7 +293,11 @@ class DocumentsResource(SyncAPIResource):
         if not document_id:
             raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
         return self._get(
-            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}/status",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/documents/{document_id}/status",
+                pipeline_id=pipeline_id,
+                document_id=document_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -317,7 +333,11 @@ class DocumentsResource(SyncAPIResource):
         if not document_id:
             raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
         return self._post(
-            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}/sync",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/documents/{document_id}/sync",
+                pipeline_id=pipeline_id,
+                document_id=document_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -351,7 +371,7 @@ class DocumentsResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._put(
-            f"/api/v1/pipelines/{pipeline_id}/documents",
+            path_template("/api/v1/pipelines/{pipeline_id}/documents", pipeline_id=pipeline_id),
             body=maybe_transform(body, Iterable[CloudDocumentCreateParam]),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -407,7 +427,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._post(
-            f"/api/v1/pipelines/{pipeline_id}/documents",
+            path_template("/api/v1/pipelines/{pipeline_id}/documents", pipeline_id=pipeline_id),
             body=await async_maybe_transform(body, Iterable[CloudDocumentCreateParam]),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -447,7 +467,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._get_api_list(
-            f"/api/v1/pipelines/{pipeline_id}/documents/paginated",
+            path_template("/api/v1/pipelines/{pipeline_id}/documents/paginated", pipeline_id=pipeline_id),
             page=AsyncPaginatedCloudDocuments[CloudDocument],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -503,7 +523,11 @@ class AsyncDocumentsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/documents/{document_id}",
+                pipeline_id=pipeline_id,
+                document_id=document_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -539,7 +563,11 @@ class AsyncDocumentsResource(AsyncAPIResource):
         if not document_id:
             raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
         return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/documents/{document_id}",
+                pipeline_id=pipeline_id,
+                document_id=document_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -575,7 +603,11 @@ class AsyncDocumentsResource(AsyncAPIResource):
         if not document_id:
             raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
         return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}/chunks",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/documents/{document_id}/chunks",
+                pipeline_id=pipeline_id,
+                document_id=document_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -611,7 +643,11 @@ class AsyncDocumentsResource(AsyncAPIResource):
         if not document_id:
             raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
         return await self._get(
-            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}/status",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/documents/{document_id}/status",
+                pipeline_id=pipeline_id,
+                document_id=document_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -647,7 +683,11 @@ class AsyncDocumentsResource(AsyncAPIResource):
         if not document_id:
             raise ValueError(f"Expected a non-empty value for `document_id` but received {document_id!r}")
         return await self._post(
-            f"/api/v1/pipelines/{pipeline_id}/documents/{document_id}/sync",
+            path_template(
+                "/api/v1/pipelines/{pipeline_id}/documents/{document_id}/sync",
+                pipeline_id=pipeline_id,
+                document_id=document_id,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -681,7 +721,7 @@ class AsyncDocumentsResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._put(
-            f"/api/v1/pipelines/{pipeline_id}/documents",
+            path_template("/api/v1/pipelines/{pipeline_id}/documents", pipeline_id=pipeline_id),
             body=await async_maybe_transform(body, Iterable[CloudDocumentCreateParam]),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout

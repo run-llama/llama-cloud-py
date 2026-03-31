@@ -10,27 +10,28 @@ __all__ = ["ParsingListResponse"]
 
 
 class ParsingListResponse(BaseModel):
-    """Response schema for a parse job."""
+    """A parse job."""
 
     id: str
-    """Unique identifier for the parse job"""
+    """Unique parse job identifier"""
 
     project_id: str
     """Project this job belongs to"""
 
     status: Literal["PENDING", "RUNNING", "COMPLETED", "FAILED", "CANCELLED"]
-    """
-    Current status of the job (e.g., pending, running, completed, failed, cancelled)
-    """
+    """Current job status: PENDING, RUNNING, COMPLETED, FAILED, or CANCELLED"""
 
     created_at: Optional[datetime] = None
     """Creation datetime"""
 
     error_message: Optional[str] = None
-    """Error message if job failed"""
+    """Error details when status is FAILED"""
 
     name: Optional[str] = None
-    """User friendly name"""
+    """Optional display name for this parse job"""
+
+    tier: Optional[str] = None
+    """Parsing tier used for this job"""
 
     updated_at: Optional[datetime] = None
     """Update datetime"""

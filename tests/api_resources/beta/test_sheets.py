@@ -10,6 +10,7 @@ import pytest
 from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
 from llama_cloud.types import PresignedURL
+from llama_cloud._utils import parse_datetime
 from llama_cloud.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 from llama_cloud.types.beta import (
     SheetsJob,
@@ -85,11 +86,15 @@ class TestSheets:
     @parametrize
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         sheet = client.beta.sheets.list(
+            created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
+            created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
             include_results=True,
+            job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=0,
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            status="PENDING",
         )
         assert_matches_type(SyncPaginatedCursor[SheetsJob], sheet, path=["response"])
 
@@ -360,11 +365,15 @@ class TestAsyncSheets:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         sheet = await async_client.beta.sheets.list(
+            created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
+            created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
             include_results=True,
+            job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=0,
             page_token="page_token",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            status="PENDING",
         )
         assert_matches_type(AsyncPaginatedCursor[SheetsJob], sheet, path=["response"])
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 import httpx
 
 from ..._types import Body, Query, Headers, NotGiven, not_given
+from ..._utils import path_template
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -51,8 +52,10 @@ class SyncResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Run ingestion for the pipeline by incrementally updating the data-sink with
-        upstream changes from data-sources & files.
+        Trigger an incremental sync for a managed pipeline.
+
+        Processes new and updated documents from data sources and files, then updates
+        the index for retrieval.
 
         Args:
           extra_headers: Send extra headers
@@ -66,7 +69,7 @@ class SyncResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._post(
-            f"/api/v1/pipelines/{pipeline_id}/sync",
+            path_template("/api/v1/pipelines/{pipeline_id}/sync", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -85,7 +88,7 @@ class SyncResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Cancel Pipeline Sync
+        Cancel all running sync jobs for a pipeline.
 
         Args:
           extra_headers: Send extra headers
@@ -99,7 +102,7 @@ class SyncResource(SyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return self._post(
-            f"/api/v1/pipelines/{pipeline_id}/sync/cancel",
+            path_template("/api/v1/pipelines/{pipeline_id}/sync/cancel", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -139,8 +142,10 @@ class AsyncSyncResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Run ingestion for the pipeline by incrementally updating the data-sink with
-        upstream changes from data-sources & files.
+        Trigger an incremental sync for a managed pipeline.
+
+        Processes new and updated documents from data sources and files, then updates
+        the index for retrieval.
 
         Args:
           extra_headers: Send extra headers
@@ -154,7 +159,7 @@ class AsyncSyncResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._post(
-            f"/api/v1/pipelines/{pipeline_id}/sync",
+            path_template("/api/v1/pipelines/{pipeline_id}/sync", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -173,7 +178,7 @@ class AsyncSyncResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Pipeline:
         """
-        Cancel Pipeline Sync
+        Cancel all running sync jobs for a pipeline.
 
         Args:
           extra_headers: Send extra headers
@@ -187,7 +192,7 @@ class AsyncSyncResource(AsyncAPIResource):
         if not pipeline_id:
             raise ValueError(f"Expected a non-empty value for `pipeline_id` but received {pipeline_id!r}")
         return await self._post(
-            f"/api/v1/pipelines/{pipeline_id}/sync/cancel",
+            path_template("/api/v1/pipelines/{pipeline_id}/sync/cancel", pipeline_id=pipeline_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

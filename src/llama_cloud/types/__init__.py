@@ -58,6 +58,7 @@ from .message_role import MessageRole as MessageRole
 from .parsing_mode import ParsingMode as ParsingMode
 from .pipeline_type import PipelineType as PipelineType
 from .presigned_url import PresignedURL as PresignedURL
+from .extract_v2_job import ExtractV2Job as ExtractV2Job
 from .fail_page_mode import FailPageMode as FailPageMode
 from .retrieval_mode import RetrievalMode as RetrievalMode
 from .classify_result import ClassifyResult as ClassifyResult
@@ -68,8 +69,10 @@ from .gemini_embedding import GeminiEmbedding as GeminiEmbedding
 from .metadata_filters import MetadataFilters as MetadataFilters
 from .openai_embedding import OpenAIEmbedding as OpenAIEmbedding
 from .bedrock_embedding import BedrockEmbedding as BedrockEmbedding
+from .extract_job_usage import ExtractJobUsage as ExtractJobUsage
 from .file_query_params import FileQueryParams as FileQueryParams
 from .parsing_languages import ParsingLanguages as ParsingLanguages
+from .extract_get_params import ExtractGetParams as ExtractGetParams
 from .file_create_params import FileCreateParams as FileCreateParams
 from .file_delete_params import FileDeleteParams as FileDeleteParams
 from .file_list_response import FileListResponse as FileListResponse
@@ -77,11 +80,13 @@ from .parsing_get_params import ParsingGetParams as ParsingGetParams
 from .project_get_params import ProjectGetParams as ProjectGetParams
 from .retriever_pipeline import RetrieverPipeline as RetrieverPipeline
 from .classify_get_params import ClassifyGetParams as ClassifyGetParams
+from .extract_list_params import ExtractListParams as ExtractListParams
 from .file_query_response import FileQueryResponse as FileQueryResponse
 from .parsing_list_params import ParsingListParams as ParsingListParams
 from .project_list_params import ProjectListParams as ProjectListParams
 from .sparse_model_config import SparseModelConfig as SparseModelConfig
 from .classify_list_params import ClassifyListParams as ClassifyListParams
+from .extract_job_metadata import ExtractJobMetadata as ExtractJobMetadata
 from .file_create_response import FileCreateResponse as FileCreateResponse
 from .parsing_get_response import ParsingGetResponse as ParsingGetResponse
 from .pipeline_list_params import PipelineListParams as PipelineListParams
@@ -90,7 +95,9 @@ from .retriever_get_params import RetrieverGetParams as RetrieverGetParams
 from .auto_transform_config import AutoTransformConfig as AutoTransformConfig
 from .classify_get_response import ClassifyGetResponse as ClassifyGetResponse
 from .data_sink_list_params import DataSinkListParams as DataSinkListParams
-from .extraction_run_params import ExtractionRunParams as ExtractionRunParams
+from .extract_configuration import ExtractConfiguration as ExtractConfiguration
+from .extract_create_params import ExtractCreateParams as ExtractCreateParams
+from .extract_delete_params import ExtractDeleteParams as ExtractDeleteParams
 from .parsing_create_params import ParsingCreateParams as ParsingCreateParams
 from .parsing_list_response import ParsingListResponse as ParsingListResponse
 from .project_list_response import ProjectListResponse as ProjectListResponse
@@ -128,6 +135,7 @@ from .retriever_upsert_params import RetrieverUpsertParams as RetrieverUpsertPar
 from .bedrock_embedding_config import BedrockEmbeddingConfig as BedrockEmbeddingConfig
 from .classify_create_response import ClassifyCreateResponse as ClassifyCreateResponse
 from .composite_retrieval_mode import CompositeRetrievalMode as CompositeRetrievalMode
+from .extracted_field_metadata import ExtractedFieldMetadata as ExtractedFieldMetadata
 from .pipeline_metadata_config import PipelineMetadataConfig as PipelineMetadataConfig
 from .pipeline_retrieve_params import PipelineRetrieveParams as PipelineRetrieveParams
 from .retriever_pipeline_param import RetrieverPipelineParam as RetrieverPipelineParam
@@ -141,6 +149,7 @@ from .pipeline_get_status_params import PipelineGetStatusParams as PipelineGetSt
 from .pipeline_retrieve_response import PipelineRetrieveResponse as PipelineRetrieveResponse
 from .vertex_ai_embedding_config import VertexAIEmbeddingConfig as VertexAIEmbeddingConfig
 from .auto_transform_config_param import AutoTransformConfigParam as AutoTransformConfigParam
+from .extract_configuration_param import ExtractConfigurationParam as ExtractConfigurationParam
 from .page_figure_node_with_score import PageFigureNodeWithScore as PageFigureNodeWithScore
 from .vertex_text_embedding_param import VertexTextEmbeddingParam as VertexTextEmbeddingParam
 from .azure_openai_embedding_param import AzureOpenAIEmbeddingParam as AzureOpenAIEmbeddingParam
@@ -149,17 +158,22 @@ from .llama_parse_parameters_param import LlamaParseParametersParam as LlamaPars
 from .parsing_upload_file_response import ParsingUploadFileResponse as ParsingUploadFileResponse
 from .azure_openai_embedding_config import AzureOpenAIEmbeddingConfig as AzureOpenAIEmbeddingConfig
 from .cohere_embedding_config_param import CohereEmbeddingConfigParam as CohereEmbeddingConfigParam
+from .extract_v2_job_query_response import ExtractV2JobQueryResponse as ExtractV2JobQueryResponse
 from .gemini_embedding_config_param import GeminiEmbeddingConfigParam as GeminiEmbeddingConfigParam
 from .openai_embedding_config_param import OpenAIEmbeddingConfigParam as OpenAIEmbeddingConfigParam
 from .preset_retrieval_params_param import PresetRetrievalParamsParam as PresetRetrievalParamsParam
 from .advanced_mode_transform_config import AdvancedModeTransformConfig as AdvancedModeTransformConfig
 from .bedrock_embedding_config_param import BedrockEmbeddingConfigParam as BedrockEmbeddingConfigParam
+from .extract_generate_schema_params import ExtractGenerateSchemaParams as ExtractGenerateSchemaParams
+from .extract_validate_schema_params import ExtractValidateSchemaParams as ExtractValidateSchemaParams
 from .pipeline_metadata_config_param import PipelineMetadataConfigParam as PipelineMetadataConfigParam
 from .page_screenshot_node_with_score import PageScreenshotNodeWithScore as PageScreenshotNodeWithScore
+from .extract_generate_schema_response import ExtractGenerateSchemaResponse as ExtractGenerateSchemaResponse
 from .vertex_ai_embedding_config_param import VertexAIEmbeddingConfigParam as VertexAIEmbeddingConfigParam
 from .managed_ingestion_status_response import ManagedIngestionStatusResponse as ManagedIngestionStatusResponse
 from .azure_openai_embedding_config_param import AzureOpenAIEmbeddingConfigParam as AzureOpenAIEmbeddingConfigParam
 from .data_source_reader_version_metadata import DataSourceReaderVersionMetadata as DataSourceReaderVersionMetadata
+from .extract_v2_schema_validate_response import ExtractV2SchemaValidateResponse as ExtractV2SchemaValidateResponse
 from .advanced_mode_transform_config_param import AdvancedModeTransformConfigParam as AdvancedModeTransformConfigParam
 from .hugging_face_inference_api_embedding import HuggingFaceInferenceAPIEmbedding as HuggingFaceInferenceAPIEmbedding
 from .llama_parse_supported_file_extensions import (
