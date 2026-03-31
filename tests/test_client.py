@@ -144,7 +144,7 @@ class TestLlamaCloud:
         # options that have a default are overridden correctly
         copied = client.copy(max_retries=7)
         assert copied.max_retries == 7
-        assert client.max_retries == 2
+        assert client.max_retries == 5
 
         copied2 = copied.copy(max_retries=6)
         assert copied2.max_retries == 6
