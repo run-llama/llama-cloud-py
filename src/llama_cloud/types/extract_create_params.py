@@ -22,7 +22,7 @@ class ExtractCreateParams(TypedDict, total=False):
     """Extract configuration combining parse and extract settings."""
 
     configuration_id: Optional[str]
-    """Saved extract configuration ID (mutually exclusive with configuration)"""
+    """Saved configuration ID"""
 
     webhook_configurations: Optional[Iterable[WebhookConfiguration]]
     """Outbound webhook endpoints to notify on job status changes"""

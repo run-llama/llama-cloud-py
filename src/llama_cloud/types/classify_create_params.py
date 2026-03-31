@@ -19,7 +19,7 @@ class ClassifyCreateParams(TypedDict, total=False):
     """Configuration for a classify job."""
 
     configuration_id: Optional[str]
-    """Product configuration ID for reusable presets"""
+    """Saved configuration ID"""
 
     file_id: Optional[str]
     """File ID to classify"""

@@ -98,7 +98,7 @@ class ExtractResource(SyncAPIResource):
 
           configuration: Extract configuration combining parse and extract settings.
 
-          configuration_id: Saved extract configuration ID (mutually exclusive with configuration)
+          configuration_id: Saved configuration ID
 
           webhook_configurations: Outbound webhook endpoints to notify on job status changes
 
@@ -170,9 +170,9 @@ class ExtractResource(SyncAPIResource):
         Args:
           configuration_id: Filter by configuration ID
 
-          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+          created_at_on_or_after: Include items created at or after this timestamp (inclusive)
 
-          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+          created_at_on_or_before: Include items created at or before this timestamp (inclusive)
 
           document_input_type: Filter by document input type (file_id or parse_job_id)
 
@@ -486,7 +486,7 @@ class AsyncExtractResource(AsyncAPIResource):
 
           configuration: Extract configuration combining parse and extract settings.
 
-          configuration_id: Saved extract configuration ID (mutually exclusive with configuration)
+          configuration_id: Saved configuration ID
 
           webhook_configurations: Outbound webhook endpoints to notify on job status changes
 
@@ -558,9 +558,9 @@ class AsyncExtractResource(AsyncAPIResource):
         Args:
           configuration_id: Filter by configuration ID
 
-          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+          created_at_on_or_after: Include items created at or after this timestamp (inclusive)
 
-          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+          created_at_on_or_before: Include items created at or before this timestamp (inclusive)
 
           document_input_type: Filter by document input type (file_id or parse_job_id)
 

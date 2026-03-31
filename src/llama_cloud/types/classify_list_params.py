@@ -17,10 +17,10 @@ class ClassifyListParams(TypedDict, total=False):
     """Filter by configuration ID"""
 
     created_at_on_or_after: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
-    """Include jobs created at or after this timestamp (inclusive)"""
+    """Include items created at or after this timestamp (inclusive)"""
 
     created_at_on_or_before: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
-    """Include jobs created at or before this timestamp (inclusive)"""
+    """Include items created at or before this timestamp (inclusive)"""
 
     job_ids: Optional[SequenceNotStr[str]]
     """Filter by specific job IDs"""

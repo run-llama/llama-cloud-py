@@ -100,7 +100,7 @@ class TestExtract:
     @parametrize
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
         extract = client.extract.list(
-            configuration_id="configuration_id",
+            configuration_id="cfg-11111111-2222-3333-4444-555555555555",
             created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
             created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
             document_input_type="document_input_type",
@@ -400,7 +400,7 @@ class TestAsyncExtract:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         extract = await async_client.extract.list(
-            configuration_id="configuration_id",
+            configuration_id="cfg-11111111-2222-3333-4444-555555555555",
             created_at_on_or_after=parse_datetime("2019-12-27T18:11:19.117Z"),
             created_at_on_or_before=parse_datetime("2019-12-27T18:11:19.117Z"),
             document_input_type="document_input_type",

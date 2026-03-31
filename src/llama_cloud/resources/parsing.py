@@ -87,6 +87,8 @@ class ParsingResource(SyncAPIResource):
                 "2026-03-25",
                 "2026-03-26",
                 "2026-03-27",
+                "2026-03-30",
+                "2026-03-31",
                 "latest",
             ],
             str,
@@ -253,9 +255,9 @@ class ParsingResource(SyncAPIResource):
         `page_token` from the response to fetch subsequent pages.
 
         Args:
-          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+          created_at_on_or_after: Include items created at or after this timestamp (inclusive)
 
-          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+          created_at_on_or_before: Include items created at or before this timestamp (inclusive)
 
           job_ids: Filter by specific job IDs
 
@@ -424,6 +426,8 @@ class AsyncParsingResource(AsyncAPIResource):
                 "2026-03-25",
                 "2026-03-26",
                 "2026-03-27",
+                "2026-03-30",
+                "2026-03-31",
                 "latest",
             ],
             str,
@@ -590,9 +594,9 @@ class AsyncParsingResource(AsyncAPIResource):
         `page_token` from the response to fetch subsequent pages.
 
         Args:
-          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+          created_at_on_or_after: Include items created at or after this timestamp (inclusive)
 
-          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+          created_at_on_or_before: Include items created at or before this timestamp (inclusive)
 
           job_ids: Filter by specific job IDs
 
