@@ -22,14 +22,16 @@ async def split_document() -> None:
     # Create the split job with only 'essay' category defined
     # Research papers will be grouped as 'uncategorized'
     job = await client.beta.split.create(
-        categories=[
-            {
-                "name": "essay",
-                "description": "A philosophical or reflective piece of writing that presents personal viewpoints",
-            },
-        ],
         document_input={"type": "file_id", "value": file_id},
-        splitting_strategy={"allow_uncategorized": "include"},
+        configuration={
+            "categories": [
+                {
+                    "name": "essay",
+                    "description": "A philosophical or reflective piece of writing that presents personal viewpoints",
+                },
+            ],
+            "splitting_strategy": {"allow_uncategorized": "include"},
+        },
     )
 
     print(f"Created split job: {job.id}")

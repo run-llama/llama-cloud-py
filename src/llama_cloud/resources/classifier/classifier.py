@@ -119,7 +119,7 @@ class ClassifierResource(SyncAPIResource):
             ```
         """
         # Create the job
-        job = self.jobs.create(
+        job = self.jobs.create(  # pyright: ignore[reportDeprecated]
             file_ids=file_ids,
             rules=rules,
             mode=mode,
@@ -147,7 +147,7 @@ class ClassifierResource(SyncAPIResource):
         )
 
         # Get and return the results
-        return self.jobs.get_results(
+        return self.jobs.get_results(  # pyright: ignore[reportDeprecated]
             job.id,
             organization_id=organization_id,
             project_id=project_id,
@@ -234,7 +234,7 @@ class ClassifierResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `classify_job_id` but received {classify_job_id!r}")
 
         def get_status() -> ClassifyJob:
-            return self.jobs.get(
+            return self.jobs.get(  # pyright: ignore[reportDeprecated]
                 classify_job_id,
                 organization_id=organization_id,
                 project_id=project_id,
@@ -404,7 +404,7 @@ class AsyncClassifierResource(AsyncAPIResource):
             ```
         """
         # Create the job
-        job = await self.jobs.create(
+        job = await self.jobs.create(  # pyright: ignore[reportDeprecated]
             file_ids=file_ids,
             rules=rules,
             mode=mode,
@@ -432,7 +432,7 @@ class AsyncClassifierResource(AsyncAPIResource):
         )
 
         # Get and return the results
-        return await self.jobs.get_results(
+        return await self.jobs.get_results(  # pyright: ignore[reportDeprecated]
             job.id,
             organization_id=organization_id,
             project_id=project_id,
@@ -519,7 +519,7 @@ class AsyncClassifierResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `classify_job_id` but received {classify_job_id!r}")
 
         async def get_status() -> ClassifyJob:
-            return await self.jobs.get(
+            return await self.jobs.get(  # pyright: ignore[reportDeprecated]
                 classify_job_id,
                 organization_id=organization_id,
                 project_id=project_id,
