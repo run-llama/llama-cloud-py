@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Union, Optional
+from typing import Union, Iterable, Optional
 from datetime import datetime
 from typing_extensions import Literal
 
@@ -29,6 +29,7 @@ from ...types.beta import split_get_params, split_list_params, split_create_para
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.beta.split_get_response import SplitGetResponse
 from ...types.beta.split_list_response import SplitListResponse
+from ...types.beta.split_category_param import SplitCategoryParam
 from ...types.beta.split_create_response import SplitCreateResponse
 from ...types.beta.split_document_input_param import SplitDocumentInputParam
 
