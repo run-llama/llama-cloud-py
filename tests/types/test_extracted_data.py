@@ -342,3 +342,150 @@ def test_parse_extracted_field_metadata_with_bounding_boxes():
     # Verify round-trip serialization
     result2 = parse_extracted_field_metadata(result)
     assert result2 == result
+
+
+# =============================================================================
+# V2 ExtractV2Job: from_extract_job tests
+# =============================================================================
+
+from datetime import datetime, timezone
+
+from llama_cloud._compat import model_parse
+from llama_cloud.types.extract_v2_job import ExtractV2Job
+
+_NOW = datetime.now(timezone.utc).isoformat()
+
+
+def _make_v2_job(
+    extract_result: Optional[Dict[str, Any]] = None,
+    document_metadata: Optional[Dict[str, Any]] = None,
+    document_input_value: str = "dfl-test-file-id",
+    job_id: str = "ext-test-job-id",
+) -> ExtractV2Job:
+    """Build a minimal V2 ExtractV2Job for testing."""
+    if extract_result is None:
+        extract_result = {"name": "John Doe", "age": 30}
+
+    extract_metadata: Optional[Dict[str, Any]] = None
+    if document_metadata is not None:
+        extract_metadata = {"field_metadata": {"document_metadata": document_metadata}}
+
+    return model_parse(
+        ExtractV2Job,
+        {
+            "id": job_id,
+            "project_id": "prj-test",
+            "document_input_value": document_input_value,
+            "status": "COMPLETED",
+            "created_at": _NOW,
+            "updated_at": _NOW,
+            "extract_result": extract_result,
+            "extract_metadata": extract_metadata,
+        },
+    )
+
+
+def test_from_extract_job_success():
+    """Test from_extract_job with valid V2 job."""
+    job = _make_v2_job(
+        extract_result={"name": "John Doe", "age": 30, "email": "john@example.com"},
+        document_metadata={
+            "name": {"confidence": 0.95, "citation": [{"page": 1, "matching_text": "John Doe"}]},
+            "age": {"confidence": 0.87},
+            "email": {"confidence": 0.92, "citation": [{"page": 1, "matching_text": "john@example.com"}]},
+        },
+        document_input_value="dfl-file-456",
+    )
+
+    extracted: ExtractedData[Person] = ExtractedData.from_extract_job(
+        job, Person, file_hash="abc123", status="accepted",
+    )
+
+    assert isinstance(extracted.data, Person)
+    assert extracted.data.name == "John Doe"
+    assert extracted.data.age == 30
+    assert extracted.status == "accepted"
+    assert extracted.file_id == "dfl-file-456"
+    assert extracted.file_hash == "abc123"
+
+    assert isinstance(extracted.field_metadata["name"], ExtractedFieldMetadata)
+    assert extracted.field_metadata["name"].confidence == 0.95
+    assert extracted.field_metadata["name"].citation == [FieldCitation(page=1, matching_text="John Doe")]
+
+    expected_confidence = (0.95 + 0.87 + 0.92) / 3
+    assert extracted.overall_confidence == pytest.approx(expected_confidence)
+
+
+def test_from_extract_job_with_overrides():
+    """Test from_extract_job with explicit file_id and file_name overrides."""
+    job = _make_v2_job(document_input_value="dfl-original")
+
+    extracted: ExtractedData[Person] = ExtractedData.from_extract_job(
+        job, Person,
+        file_id="custom-file-id",
+        file_name="custom-name.pdf",
+        file_hash="custom-hash",
+        metadata={"source": "api_test"},
+    )
+
+    assert extracted.file_id == "custom-file-id"
+    assert extracted.file_name == "custom-name.pdf"
+    assert extracted.file_hash == "custom-hash"
+    assert extracted.metadata is not None
+    assert extracted.metadata["source"] == "api_test"
+    assert extracted.metadata["job_id"] == "ext-test-job-id"
+
+
+def test_from_extract_job_invalid_data():
+    """Test from_extract_job with data that doesn't match schema."""
+    job = _make_v2_job(
+        extract_result={"missing_name": "value", "age": "not_a_number"},
+        document_metadata={"name": {"confidence": 0.9}},
+        document_input_value="dfl-error-file",
+    )
+
+    with pytest.raises(InvalidExtractionData) as exc_info:
+        ExtractedData.from_extract_job(job, Person, metadata={"test": "metadata"})
+
+    invalid_data = exc_info.value.invalid_item
+    assert isinstance(invalid_data, ExtractedData)
+    assert invalid_data.status == "error"
+    assert invalid_data.data == {"missing_name": "value", "age": "not_a_number"}
+    assert invalid_data.file_id == "dfl-error-file"
+    assert invalid_data.metadata is not None
+    assert "extraction_error" in invalid_data.metadata
+    assert "test" in invalid_data.metadata
+
+
+def test_from_extract_job_no_metadata():
+    """Test from_extract_job when extract_metadata is None."""
+    job = _make_v2_job(extract_result={"name": "Jane", "age": 25})
+
+    extracted = ExtractedData.from_extract_job(job, Person)
+
+    assert extracted.data.name == "Jane"
+    assert extracted.field_metadata == {}
+    assert extracted.overall_confidence is None
+
+
+def test_from_extract_job_with_error_field():
+    """Test that error field in metadata is captured correctly."""
+    job = _make_v2_job(
+        extract_result={"name": "John Smith", "age": 30},
+        document_metadata={
+            "name": {"confidence": 0.95, "citation": [{"page": 1, "matching_text": "John Smith"}]},
+            "error": "This is an error",
+        },
+    )
+
+    extracted = ExtractedData.from_extract_job(job, Person)
+
+    assert extracted.field_metadata == {
+        "name": ExtractedFieldMetadata(
+            confidence=0.95,
+            citation=[FieldCitation(page=1, matching_text="John Smith")],
+        ),
+    }
+    assert extracted.metadata is not None
+    assert extracted.metadata.get("field_errors") == "This is an error"
+    assert extracted.metadata.get("job_id") == "ext-test-job-id"
