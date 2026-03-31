@@ -1,3 +1,4 @@
+# pyright: reportUnknownMemberType=false, reportUnknownVariableType=false, reportUnknownArgumentType=false
 import asyncio
 
 from llama_cloud import AsyncLlamaCloud

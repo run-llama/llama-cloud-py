@@ -29,7 +29,7 @@ async def main() -> None:
     # Create job with citations and confidence enabled
     job = await client.extract.create(
         document_input_value=file_obj.id,
-        configuration={
+        configuration={  # type: ignore[arg-type]
             "tier": "agentic",
             "data_schema": schema,
             "extraction_target": "per_doc",
@@ -58,9 +58,9 @@ async def main() -> None:
         doc_meta = detailed.extract_metadata.field_metadata.document_metadata
         if doc_meta:
             print("\nPer-field citations:")
-            for field_name, meta in doc_meta.items():
+            for field_name, meta in doc_meta.items():  # pyright: ignore[reportUnknownVariableType]
                 if isinstance(meta, dict):
-                    citations = meta.get("citation", [])
+                    citations: list[dict[str, object]] = meta.get("citation", [])  # type: ignore[assignment]
                     confidence = meta.get("confidence")
                     if citations:
                         c = citations[0]
