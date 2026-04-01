@@ -41,7 +41,7 @@ class ExtractV2Job(BaseModel):
     created_at: datetime
     """Creation timestamp"""
 
-    document_input_value: str
+    file_input: str
     """File ID or parse job ID that was extracted"""
 
     project_id: str

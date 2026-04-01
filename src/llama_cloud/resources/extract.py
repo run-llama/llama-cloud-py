@@ -65,7 +65,7 @@ class ExtractResource(SyncAPIResource):
     def create(
         self,
         *,
-        document_input_value: str,
+        file_input: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         configuration: Optional[ExtractConfigurationParam] | Omit = omit,
@@ -93,14 +93,14 @@ class ExtractResource(SyncAPIResource):
 
         ## Document input
 
-        Set `document_input_value` to a file ID (`dfl-...`) or a completed parse job ID
+        Set `file_input` to a file ID (`dfl-...`) or a completed parse job ID
         (`pjb-...`).
 
         The job runs asynchronously. Poll `GET /extract/{job_id}` or register a webhook
         to monitor completion.
 
         Args:
-          document_input_value: File ID or Parse Job ID to extract from
+          file_input: File ID or parse job ID to extract from
 
           configuration: Extract configuration combining parse and extract settings.
 
@@ -120,7 +120,7 @@ class ExtractResource(SyncAPIResource):
             "/api/v2/extract",
             body=maybe_transform(
                 {
-                    "document_input_value": document_input_value,
+                    "file_input": file_input,
                     "configuration": configuration,
                     "configuration_id": configuration_id,
                     "webhook_configurations": webhook_configurations,
@@ -152,6 +152,7 @@ class ExtractResource(SyncAPIResource):
         document_input_type: Optional[str] | Omit = omit,
         document_input_value: Optional[str] | Omit = omit,
         expand: SequenceNotStr[str] | Omit = omit,
+        file_input: Optional[str] | Omit = omit,
         job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
@@ -168,10 +169,9 @@ class ExtractResource(SyncAPIResource):
         """
         List extraction jobs with optional filtering and pagination.
 
-        Filter by `configuration_id`, `status`, `document_input_value`, or creation date
-        range. Results are returned newest-first. Use `expand=configuration` to include
-        the full configuration used, and `expand=extract_metadata` for per-field
-        metadata.
+        Filter by `configuration_id`, `status`, `file_input`, or creation date range.
+        Results are returned newest-first. Use `expand=configuration` to include the
+        full configuration used, and `expand=extract_metadata` for per-field metadata.
 
         Args:
           configuration_id: Filter by configuration ID
@@ -182,9 +182,11 @@ class ExtractResource(SyncAPIResource):
 
           document_input_type: Filter by document input type (file_id or parse_job_id)
 
-          document_input_value: Filter by document input value
+          document_input_value: Deprecated: use file_input instead
 
           expand: Additional fields to include: configuration, extract_metadata
+
+          file_input: Filter by file input value
 
           job_ids: Filter by specific job IDs
 
@@ -218,6 +220,7 @@ class ExtractResource(SyncAPIResource):
                         "document_input_type": document_input_type,
                         "document_input_value": document_input_value,
                         "expand": expand,
+                        "file_input": file_input,
                         "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,
@@ -632,7 +635,7 @@ class AsyncExtractResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        document_input_value: str,
+        file_input: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         configuration: Optional[ExtractConfigurationParam] | Omit = omit,
@@ -660,14 +663,14 @@ class AsyncExtractResource(AsyncAPIResource):
 
         ## Document input
 
-        Set `document_input_value` to a file ID (`dfl-...`) or a completed parse job ID
+        Set `file_input` to a file ID (`dfl-...`) or a completed parse job ID
         (`pjb-...`).
 
         The job runs asynchronously. Poll `GET /extract/{job_id}` or register a webhook
         to monitor completion.
 
         Args:
-          document_input_value: File ID or Parse Job ID to extract from
+          file_input: File ID or parse job ID to extract from
 
           configuration: Extract configuration combining parse and extract settings.
 
@@ -687,7 +690,7 @@ class AsyncExtractResource(AsyncAPIResource):
             "/api/v2/extract",
             body=await async_maybe_transform(
                 {
-                    "document_input_value": document_input_value,
+                    "file_input": file_input,
                     "configuration": configuration,
                     "configuration_id": configuration_id,
                     "webhook_configurations": webhook_configurations,
@@ -719,6 +722,7 @@ class AsyncExtractResource(AsyncAPIResource):
         document_input_type: Optional[str] | Omit = omit,
         document_input_value: Optional[str] | Omit = omit,
         expand: SequenceNotStr[str] | Omit = omit,
+        file_input: Optional[str] | Omit = omit,
         job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
@@ -735,10 +739,9 @@ class AsyncExtractResource(AsyncAPIResource):
         """
         List extraction jobs with optional filtering and pagination.
 
-        Filter by `configuration_id`, `status`, `document_input_value`, or creation date
-        range. Results are returned newest-first. Use `expand=configuration` to include
-        the full configuration used, and `expand=extract_metadata` for per-field
-        metadata.
+        Filter by `configuration_id`, `status`, `file_input`, or creation date range.
+        Results are returned newest-first. Use `expand=configuration` to include the
+        full configuration used, and `expand=extract_metadata` for per-field metadata.
 
         Args:
           configuration_id: Filter by configuration ID
@@ -749,9 +752,11 @@ class AsyncExtractResource(AsyncAPIResource):
 
           document_input_type: Filter by document input type (file_id or parse_job_id)
 
-          document_input_value: Filter by document input value
+          document_input_value: Deprecated: use file_input instead
 
           expand: Additional fields to include: configuration, extract_metadata
+
+          file_input: Filter by file input value
 
           job_ids: Filter by specific job IDs
 
@@ -785,6 +790,7 @@ class AsyncExtractResource(AsyncAPIResource):
                         "document_input_type": document_input_type,
                         "document_input_value": document_input_value,
                         "expand": expand,
+                        "file_input": file_input,
                         "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,

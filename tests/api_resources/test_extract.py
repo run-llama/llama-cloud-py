@@ -27,7 +27,7 @@ class TestExtract:
     @parametrize
     def test_method_create(self, client: LlamaCloud) -> None:
         extract = client.extract.create(
-            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         )
         assert_matches_type(ExtractV2Job, extract, path=["response"])
 
@@ -35,7 +35,7 @@ class TestExtract:
     @parametrize
     def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
         extract = client.extract.create(
-            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             configuration={
@@ -68,7 +68,7 @@ class TestExtract:
     @parametrize
     def test_raw_response_create(self, client: LlamaCloud) -> None:
         response = client.extract.with_raw_response.create(
-            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         )
 
         assert response.is_closed is True
@@ -80,7 +80,7 @@ class TestExtract:
     @parametrize
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
         with client.extract.with_streaming_response.create(
-            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -106,6 +106,7 @@ class TestExtract:
             document_input_type="document_input_type",
             document_input_value="document_input_value",
             expand=["string"],
+            file_input="file_input",
             job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=0,
@@ -327,7 +328,7 @@ class TestAsyncExtract:
     @parametrize
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
         extract = await async_client.extract.create(
-            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         )
         assert_matches_type(ExtractV2Job, extract, path=["response"])
 
@@ -335,7 +336,7 @@ class TestAsyncExtract:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         extract = await async_client.extract.create(
-            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             configuration={
@@ -368,7 +369,7 @@ class TestAsyncExtract:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.extract.with_raw_response.create(
-            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         )
 
         assert response.is_closed is True
@@ -380,7 +381,7 @@ class TestAsyncExtract:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.extract.with_streaming_response.create(
-            document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -406,6 +407,7 @@ class TestAsyncExtract:
             document_input_type="document_input_type",
             document_input_value="document_input_value",
             expand=["string"],
+            file_input="file_input",
             job_ids=["string", "string"],
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_size=0,
