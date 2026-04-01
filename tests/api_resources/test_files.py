@@ -29,7 +29,7 @@ class TestFiles:
     @parametrize
     def test_method_create(self, client: LlamaCloud) -> None:
         file = client.files.create(
-            file=b"raw file contents",
+            file=b"Example data",
             purpose="purpose",
         )
         assert_matches_type(FileCreateResponse, file, path=["response"])
@@ -38,7 +38,7 @@ class TestFiles:
     @parametrize
     def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
         file = client.files.create(
-            file=b"raw file contents",
+            file=b"Example data",
             purpose="purpose",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -50,7 +50,7 @@ class TestFiles:
     @parametrize
     def test_raw_response_create(self, client: LlamaCloud) -> None:
         response = client.files.with_raw_response.create(
-            file=b"raw file contents",
+            file=b"Example data",
             purpose="purpose",
         )
 
@@ -63,7 +63,7 @@ class TestFiles:
     @parametrize
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
         with client.files.with_streaming_response.create(
-            file=b"raw file contents",
+            file=b"Example data",
             purpose="purpose",
         ) as response:
             assert not response.is_closed
@@ -286,7 +286,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
         file = await async_client.files.create(
-            file=b"raw file contents",
+            file=b"Example data",
             purpose="purpose",
         )
         assert_matches_type(FileCreateResponse, file, path=["response"])
@@ -295,7 +295,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
         file = await async_client.files.create(
-            file=b"raw file contents",
+            file=b"Example data",
             purpose="purpose",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -307,7 +307,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.files.with_raw_response.create(
-            file=b"raw file contents",
+            file=b"Example data",
             purpose="purpose",
         )
 
@@ -320,7 +320,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.files.with_streaming_response.create(
-            file=b"raw file contents",
+            file=b"Example data",
             purpose="purpose",
         ) as response:
             assert not response.is_closed

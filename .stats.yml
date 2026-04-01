@@ -1,4 +1,4 @@
-configured_endpoints: 124
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/llamaindex-Georgehe4%2Fllamacloud-prod-7a943cc2bba293e04165f3271db0f712d63cbf8f3449c9505965dc400edd43d3.yml
-openapi_spec_hash: 9307fd762688f3866c40b0aab34690f9
-config_hash: c5cce65a5fbc6d07b3870eead119722e
+configured_endpoints: 113
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/llamaindex-Georgehe4%2Fllamacloud-prod-d615739803213822022bce7ab7c34b05d3f3b3a86de583cfcc6c7870eb69d543.yml
+openapi_spec_hash: 6f1a730e7533136d4c1130defc36340c
+config_hash: 2b3e23211915397ef80d62e54640c7fa

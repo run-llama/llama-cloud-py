@@ -83,79 +83,34 @@ Methods:
 - <code title="get /api/v2/parse">client.parsing.<a href="./src/llama_cloud/resources/parsing.py">list</a>(\*\*<a href="src/llama_cloud/types/parsing_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_list_response.py">SyncPaginatedCursor[ParsingListResponse]</a></code>
 - <code title="get /api/v2/parse/{job_id}">client.parsing.<a href="./src/llama_cloud/resources/parsing.py">get</a>(job_id, \*\*<a href="src/llama_cloud/types/parsing_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/parsing_get_response.py">ParsingGetResponse</a></code>
 
-# Extraction
-
-Methods:
-
-- <code title="post /api/v1/extraction/run">client.extraction.<a href="./src/llama_cloud/resources/extraction/extraction.py">run</a>(\*\*<a href="src/llama_cloud/types/extraction_run_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_job.py">ExtractJob</a></code>
-
-## Jobs
+# Extract
 
 Types:
 
 ```python
-from llama_cloud.types.extraction import (
-    ExtractJob,
-    WebhookConfiguration,
-    JobListResponse,
-    JobGetResultResponse,
+from llama_cloud.types import (
+    ExtractConfiguration,
+    ExtractJobMetadata,
+    ExtractJobUsage,
+    ExtractV2Job,
+    ExtractV2JobCreate,
+    ExtractV2JobQueryResponse,
+    ExtractV2SchemaGenerateRequest,
+    ExtractV2SchemaValidateRequest,
+    ExtractV2SchemaValidateResponse,
+    ExtractedFieldMetadata,
+    ExtractGenerateSchemaResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /api/v1/extraction/jobs">client.extraction.jobs.<a href="./src/llama_cloud/resources/extraction/jobs.py">create</a>(\*\*<a href="src/llama_cloud/types/extraction/job_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_job.py">ExtractJob</a></code>
-- <code title="get /api/v1/extraction/jobs">client.extraction.jobs.<a href="./src/llama_cloud/resources/extraction/jobs.py">list</a>(\*\*<a href="src/llama_cloud/types/extraction/job_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/job_list_response.py">JobListResponse</a></code>
-- <code title="post /api/v1/extraction/jobs/file">client.extraction.jobs.<a href="./src/llama_cloud/resources/extraction/jobs.py">file</a>(\*\*<a href="src/llama_cloud/types/extraction/job_file_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_job.py">ExtractJob</a></code>
-- <code title="get /api/v1/extraction/jobs/{job_id}">client.extraction.jobs.<a href="./src/llama_cloud/resources/extraction/jobs.py">get</a>(job_id) -> <a href="./src/llama_cloud/types/extraction/extract_job.py">ExtractJob</a></code>
-- <code title="get /api/v1/extraction/jobs/{job_id}/result">client.extraction.jobs.<a href="./src/llama_cloud/resources/extraction/jobs.py">get_result</a>(job_id, \*\*<a href="src/llama_cloud/types/extraction/job_get_result_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/job_get_result_response.py">JobGetResultResponse</a></code>
-
-## Runs
-
-Types:
-
-```python
-from llama_cloud.types.extraction import ExtractConfig, ExtractRun
-```
-
-Methods:
-
-- <code title="get /api/v1/extraction/runs">client.extraction.runs.<a href="./src/llama_cloud/resources/extraction/runs.py">list</a>(\*\*<a href="src/llama_cloud/types/extraction/run_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_run.py">SyncPaginatedExtractRuns[ExtractRun]</a></code>
-- <code title="delete /api/v1/extraction/runs/{run_id}">client.extraction.runs.<a href="./src/llama_cloud/resources/extraction/runs.py">delete</a>(run_id, \*\*<a href="src/llama_cloud/types/extraction/run_delete_params.py">params</a>) -> object</code>
-- <code title="get /api/v1/extraction/runs/{run_id}">client.extraction.runs.<a href="./src/llama_cloud/resources/extraction/runs.py">get</a>(run_id, \*\*<a href="src/llama_cloud/types/extraction/run_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_run.py">ExtractRun</a></code>
-- <code title="get /api/v1/extraction/runs/by-job/{job_id}">client.extraction.runs.<a href="./src/llama_cloud/resources/extraction/runs.py">get_by_job</a>(job_id, \*\*<a href="src/llama_cloud/types/extraction/run_get_by_job_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_run.py">ExtractRun</a></code>
-
-## ExtractionAgents
-
-Types:
-
-```python
-from llama_cloud.types.extraction import ExtractAgent, ExtractionAgentListResponse
-```
-
-Methods:
-
-- <code title="post /api/v1/extraction/extraction-agents">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">create</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agent_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
-- <code title="put /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">update</a>(extraction_agent_id, \*\*<a href="src/llama_cloud/types/extraction/extraction_agent_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
-- <code title="get /api/v1/extraction/extraction-agents">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">list</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agent_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extraction_agent_list_response.py">ExtractionAgentListResponse</a></code>
-- <code title="delete /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">delete</a>(extraction_agent_id) -> object</code>
-- <code title="get /api/v1/extraction/extraction-agents/{extraction_agent_id}">client.extraction.extraction_agents.<a href="./src/llama_cloud/resources/extraction/extraction_agents/extraction_agents.py">get</a>(extraction_agent_id) -> <a href="./src/llama_cloud/types/extraction/extract_agent.py">ExtractAgent</a></code>
-
-### Schema
-
-Types:
-
-```python
-from llama_cloud.types.extraction.extraction_agents import (
-    SchemaGenerateSchemaResponse,
-    SchemaValidateSchemaResponse,
-)
-```
-
-Methods:
-
-- <code title="post /api/v1/extraction/extraction-agents/schema/generate">client.extraction.extraction_agents.schema.<a href="./src/llama_cloud/resources/extraction/extraction_agents/schema.py">generate_schema</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agents/schema_generate_schema_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extraction_agents/schema_generate_schema_response.py">SchemaGenerateSchemaResponse</a></code>
-- <code title="post /api/v1/extraction/extraction-agents/schema/validation">client.extraction.extraction_agents.schema.<a href="./src/llama_cloud/resources/extraction/extraction_agents/schema.py">validate_schema</a>(\*\*<a href="src/llama_cloud/types/extraction/extraction_agents/schema_validate_schema_params.py">params</a>) -> <a href="./src/llama_cloud/types/extraction/extraction_agents/schema_validate_schema_response.py">SchemaValidateSchemaResponse</a></code>
+- <code title="post /api/v2/extract">client.extract.<a href="./src/llama_cloud/resources/extract.py">create</a>(\*\*<a href="src/llama_cloud/types/extract_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/extract_v2_job.py">ExtractV2Job</a></code>
+- <code title="get /api/v2/extract">client.extract.<a href="./src/llama_cloud/resources/extract.py">list</a>(\*\*<a href="src/llama_cloud/types/extract_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/extract_v2_job.py">SyncPaginatedCursor[ExtractV2Job]</a></code>
+- <code title="delete /api/v2/extract/{job_id}">client.extract.<a href="./src/llama_cloud/resources/extract.py">delete</a>(job_id, \*\*<a href="src/llama_cloud/types/extract_delete_params.py">params</a>) -> object</code>
+- <code title="post /api/v2/extract/schema/generate">client.extract.<a href="./src/llama_cloud/resources/extract.py">generate_schema</a>(\*\*<a href="src/llama_cloud/types/extract_generate_schema_params.py">params</a>) -> <a href="./src/llama_cloud/types/extract_generate_schema_response.py">ExtractGenerateSchemaResponse</a></code>
+- <code title="get /api/v2/extract/{job_id}">client.extract.<a href="./src/llama_cloud/resources/extract.py">get</a>(job_id, \*\*<a href="src/llama_cloud/types/extract_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/extract_v2_job.py">ExtractV2Job</a></code>
+- <code title="post /api/v2/extract/schema/validation">client.extract.<a href="./src/llama_cloud/resources/extract.py">validate_schema</a>(\*\*<a href="src/llama_cloud/types/extract_validate_schema_params.py">params</a>) -> <a href="./src/llama_cloud/types/extract_v2_schema_validate_response.py">ExtractV2SchemaValidateResponse</a></code>
 
 # Classifier
 

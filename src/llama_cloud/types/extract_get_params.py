@@ -5,10 +5,15 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import TypedDict
 
-__all__ = ["RunDeleteParams"]
+from .._types import SequenceNotStr
+
+__all__ = ["ExtractGetParams"]
 
 
-class RunDeleteParams(TypedDict, total=False):
+class ExtractGetParams(TypedDict, total=False):
+    expand: SequenceNotStr[str]
+    """Additional fields to include: configuration, extract_metadata"""
+
     organization_id: Optional[str]
 
     project_id: Optional[str]

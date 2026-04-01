@@ -9,7 +9,7 @@ import httpx
 
 from ..types import file_get_params, file_list_params, file_query_params, file_create_params, file_delete_params
 from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, FileTypes, SequenceNotStr, omit, not_given
-from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
+from .._utils import extract_files, path_template, maybe_transform, deepcopy_minimal, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -66,11 +66,18 @@ class FilesResource(SyncAPIResource):
         """
         Upload a file using multipart/form-data.
 
+        Set `purpose` to indicate how the file will be used: `user_data`, `parse`,
+        `extract`, `classify`, `split`, `sheet`, or `agent_app`.
+
+        Returns the created file metadata including its ID for use in subsequent parse,
+        extract, or classify operations.
+
         Args:
           file: The file to upload
 
           purpose: The intended purpose of the file. Valid values: 'user_data', 'parse', 'extract',
-              'split', 'classify', 'sheet', 'agent_app'
+              'split', 'classify', 'sheet', 'agent_app'. This determines the storage and
+              retention policy for the file.
 
           external_file_id: The ID of the file in the external system
 
@@ -135,8 +142,8 @@ class FilesResource(SyncAPIResource):
         """
         List files with optional filtering and pagination.
 
-        This endpoint retrieves files for the specified project with support for
-        filtering by various criteria and cursor-based pagination.
+        Filter by `file_name`, `file_ids`, or `external_file_id`. Supports cursor-based
+        pagination and custom ordering.
 
         Args:
           external_file_id: Filter by external file ID.
@@ -200,12 +207,7 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Delete a single file from the project.
-
-        Args: file_id: The ID of the file to delete project: Validated project from
-        dependency db: Database session
-
-        Returns: None (204 No Content on success)
+        Delete a file from the project.
 
         Args:
           extra_headers: Send extra headers
@@ -220,7 +222,7 @@ class FilesResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/api/v1/beta/files/{file_id}",
+            path_template("/api/v1/beta/files/{file_id}", file_id=file_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -252,7 +254,7 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PresignedURL:
         """
-        Returns a presigned url to read the file content.
+        Get a presigned URL to download the file content.
 
         Args:
           extra_headers: Send extra headers
@@ -266,7 +268,7 @@ class FilesResource(SyncAPIResource):
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return self._get(
-            f"/api/v1/beta/files/{file_id}/content",
+            path_template("/api/v1/beta/files/{file_id}/content", file_id=file_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -398,11 +400,18 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         Upload a file using multipart/form-data.
 
+        Set `purpose` to indicate how the file will be used: `user_data`, `parse`,
+        `extract`, `classify`, `split`, `sheet`, or `agent_app`.
+
+        Returns the created file metadata including its ID for use in subsequent parse,
+        extract, or classify operations.
+
         Args:
           file: The file to upload
 
           purpose: The intended purpose of the file. Valid values: 'user_data', 'parse', 'extract',
-              'split', 'classify', 'sheet', 'agent_app'
+              'split', 'classify', 'sheet', 'agent_app'. This determines the storage and
+              retention policy for the file.
 
           external_file_id: The ID of the file in the external system
 
@@ -467,8 +476,8 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         List files with optional filtering and pagination.
 
-        This endpoint retrieves files for the specified project with support for
-        filtering by various criteria and cursor-based pagination.
+        Filter by `file_name`, `file_ids`, or `external_file_id`. Supports cursor-based
+        pagination and custom ordering.
 
         Args:
           external_file_id: Filter by external file ID.
@@ -532,12 +541,7 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
-        Delete a single file from the project.
-
-        Args: file_id: The ID of the file to delete project: Validated project from
-        dependency db: Database session
-
-        Returns: None (204 No Content on success)
+        Delete a file from the project.
 
         Args:
           extra_headers: Send extra headers
@@ -552,7 +556,7 @@ class AsyncFilesResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/api/v1/beta/files/{file_id}",
+            path_template("/api/v1/beta/files/{file_id}", file_id=file_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -584,7 +588,7 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PresignedURL:
         """
-        Returns a presigned url to read the file content.
+        Get a presigned URL to download the file content.
 
         Args:
           extra_headers: Send extra headers
@@ -598,7 +602,7 @@ class AsyncFilesResource(AsyncAPIResource):
         if not file_id:
             raise ValueError(f"Expected a non-empty value for `file_id` but received {file_id!r}")
         return await self._get(
-            f"/api/v1/beta/files/{file_id}/content",
+            path_template("/api/v1/beta/files/{file_id}/content", file_id=file_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

@@ -15,8 +15,8 @@ Example Usage:
         age: int
 
 
-    # Parse extraction result into typed data
-    extracted = ExtractedData.from_extraction_result(extract_run, Person, status="pending_review")
+    # Parse V2 extraction job into typed data
+    extracted = ExtractedData.from_extract_job(job, Person, status="pending_review")
 
     # Access typed data and metadata
     print(extracted.data.name)  # Type-safe access
@@ -44,7 +44,7 @@ from typing import (
 from pydantic import Field, BaseModel, ValidationError
 
 from ..._compat import PYDANTIC_V1, ConfigDict, GenericModel, model_parse, get_model_fields
-from ..extraction import ExtractRun
+from ..extract_v2_job import ExtractV2Job
 
 if PYDANTIC_V1:
     from pydantic import root_validator  # pyright: ignore[reportDeprecated]
@@ -346,9 +346,9 @@ class ExtractedData(GenericModel, Generic[ExtractedT]):
         )
 
     @classmethod
-    def from_extraction_result(
+    def from_extract_job(
         cls,
-        result: ExtractRun,
+        job: ExtractV2Job,
         schema: Type[ExtractedT],
         file_hash: Optional[str] = None,
         file_name: Optional[str] = None,
@@ -357,14 +357,15 @@ class ExtractedData(GenericModel, Generic[ExtractedT]):
         metadata: Optional[Dict[str, Any]] = None,
     ) -> ExtractedData[ExtractedT]:
         """
-        Create an ExtractedData instance from an ExtractRun API response.
+        Create an ExtractedData instance from a completed V2 ExtractV2Job.
 
         Args:
-            result: The ExtractRun response from the extraction API
+            job: A completed ``ExtractV2Job`` from ``client.extract.run()`` or
+                ``client.extract.get(job_id, expand=["extract_metadata"])``
             schema: Pydantic model class to validate the extracted data
             file_hash: Optional content hash for de-duplication
-            file_name: Override the file name from the result
-            file_id: Override the file ID from the result
+            file_name: Override the file name
+            file_id: Override the file ID (defaults to job.document_input_value)
             status: Initial workflow status (default: "pending_review")
             metadata: Additional application-specific metadata
 
@@ -376,16 +377,18 @@ class ExtractedData(GenericModel, Generic[ExtractedT]):
                 The exception contains an ExtractedData[Dict] with status="error"
                 and the validation error in metadata.
         """
-        resolved_file_id = file_id or (result.file.id if result.file else None)
-        resolved_file_name = file_name or (result.file.name if result.file else None)
-        job_id = result.job_id
+        resolved_file_id = file_id or job.document_input_value
+        resolved_file_name = file_name
+        job_id = job.id
 
-        # Extract field_metadata from extraction_metadata, ensuring it's a dict
+        # V2: extract_metadata.field_metadata.document_metadata
         job_field_metadata: Dict[str, Any] = {}
-        if result.extraction_metadata:
-            raw_field_metadata = result.extraction_metadata.get("field_metadata")
-            if isinstance(raw_field_metadata, dict):
-                job_field_metadata = cast(Dict[str, Any], raw_field_metadata)
+        if job.extract_metadata is not None:
+            field_meta = job.extract_metadata.field_metadata
+            if field_meta is not None:
+                doc_meta = field_meta.document_metadata
+                if isinstance(doc_meta, dict):
+                    job_field_metadata = cast(Dict[str, Any], doc_meta)
 
         errors: Optional[str] = None
         raw_errors = job_field_metadata.get("error")
@@ -398,8 +401,7 @@ class ExtractedData(GenericModel, Generic[ExtractedT]):
             field_metadata = {}
 
         try:
-            # schema is expected to be a Pydantic model class
-            data: ExtractedT = model_parse(schema, result.data)  # type: ignore[union-attr, attr-defined, assignment, type-var]
+            data: ExtractedT = model_parse(schema, job.extract_result)  # type: ignore[assignment, type-var]
             return cls.create(
                 data=data,  # pyright: ignore[reportUnknownArgumentType]
                 status=status,
@@ -415,8 +417,8 @@ class ExtractedData(GenericModel, Generic[ExtractedT]):
             )
         except ValidationError as e:
             raw_data: Dict[str, Any] = {}
-            if isinstance(result.data, dict):
-                raw_data = cast(Dict[str, Any], result.data)
+            if isinstance(job.extract_result, dict):
+                raw_data = cast(Dict[str, Any], job.extract_result)
             invalid_item: ExtractedData[Dict[str, Any]] = ExtractedData[Dict[str, Any]].create(
                 data=raw_data,
                 status="error",

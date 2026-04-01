@@ -22,7 +22,7 @@ class TestMetadata:
     def test_method_create(self, client: LlamaCloud) -> None:
         metadata = client.pipelines.metadata.create(
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            upload_file=b"raw file contents",
+            upload_file=b"Example data",
         )
         assert_matches_type(MetadataCreateResponse, metadata, path=["response"])
 
@@ -31,7 +31,7 @@ class TestMetadata:
     def test_raw_response_create(self, client: LlamaCloud) -> None:
         response = client.pipelines.metadata.with_raw_response.create(
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            upload_file=b"raw file contents",
+            upload_file=b"Example data",
         )
 
         assert response.is_closed is True
@@ -44,7 +44,7 @@ class TestMetadata:
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
         with client.pipelines.metadata.with_streaming_response.create(
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            upload_file=b"raw file contents",
+            upload_file=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -60,7 +60,7 @@ class TestMetadata:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
             client.pipelines.metadata.with_raw_response.create(
                 pipeline_id="",
-                upload_file=b"raw file contents",
+                upload_file=b"Example data",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
@@ -116,7 +116,7 @@ class TestAsyncMetadata:
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
         metadata = await async_client.pipelines.metadata.create(
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            upload_file=b"raw file contents",
+            upload_file=b"Example data",
         )
         assert_matches_type(MetadataCreateResponse, metadata, path=["response"])
 
@@ -125,7 +125,7 @@ class TestAsyncMetadata:
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.pipelines.metadata.with_raw_response.create(
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            upload_file=b"raw file contents",
+            upload_file=b"Example data",
         )
 
         assert response.is_closed is True
@@ -138,7 +138,7 @@ class TestAsyncMetadata:
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.pipelines.metadata.with_streaming_response.create(
             pipeline_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            upload_file=b"raw file contents",
+            upload_file=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -154,7 +154,7 @@ class TestAsyncMetadata:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `pipeline_id` but received ''"):
             await async_client.pipelines.metadata.with_raw_response.create(
                 pipeline_id="",
-                upload_file=b"raw file contents",
+                upload_file=b"Example data",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")

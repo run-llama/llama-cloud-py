@@ -2,14 +2,15 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Union, Optional
+from datetime import datetime
 from typing_extensions import Literal
 
 import httpx
 
 from ..types import classify_get_params, classify_list_params, classify_create_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from .._utils import maybe_transform, async_maybe_transform
+from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -65,11 +66,23 @@ class ClassifyResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ClassifyCreateResponse:
-        """
-        Create a classify job.
+        """Create a classify job.
+
+        Classifies a document against a set of rules.
+
+        Provide either `file_id` or
+        `parse_job_id` as the document input, and either inline `configuration` with
+        rules or a `configuration_id` referencing a saved preset.
+
+        Each rule has a `type` (the label to assign) and a `description` (natural
+        language criteria). The classifier returns the best matching rule with a
+        confidence score.
+
+        The job runs asynchronously. Poll `GET /classify/{job_id}` to check status and
+        retrieve results.
 
         Args:
-          configuration: Configuration for classification.
+          configuration: Configuration for a classify job.
 
           configuration_id: Product configuration ID for reusable presets
 
@@ -119,6 +132,8 @@ class ClassifyResource(SyncAPIResource):
         self,
         *,
         configuration_id: Optional[str] | Omit = omit,
+        created_at_on_or_after: Union[str, datetime, None] | Omit = omit,
+        created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
         job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
@@ -133,10 +148,17 @@ class ClassifyResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPaginatedCursor[ClassifyListResponse]:
         """
-        List classify jobs.
+        List classify jobs with optional filtering and pagination.
+
+        Filter by `status`, `configuration_id`, specific `job_ids`, or creation date
+        range.
 
         Args:
           configuration_id: Filter by configuration ID
+
+          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+
+          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
 
           job_ids: Filter by specific job IDs
 
@@ -165,6 +187,8 @@ class ClassifyResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "configuration_id": configuration_id,
+                        "created_at_on_or_after": created_at_on_or_after,
+                        "created_at_on_or_before": created_at_on_or_before,
                         "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,
@@ -192,7 +216,10 @@ class ClassifyResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ClassifyGetResponse:
         """
-        Retrieve classify job by ID.
+        Get a classify job by ID.
+
+        Returns the job status, configuration, and classify result when complete. The
+        result includes the matched document type, confidence score, and reasoning.
 
         Args:
           extra_headers: Send extra headers
@@ -206,7 +233,7 @@ class ClassifyResource(SyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return self._get(
-            f"/api/v2/classify/{job_id}",
+            path_template("/api/v2/classify/{job_id}", job_id=job_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -261,11 +288,23 @@ class AsyncClassifyResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ClassifyCreateResponse:
-        """
-        Create a classify job.
+        """Create a classify job.
+
+        Classifies a document against a set of rules.
+
+        Provide either `file_id` or
+        `parse_job_id` as the document input, and either inline `configuration` with
+        rules or a `configuration_id` referencing a saved preset.
+
+        Each rule has a `type` (the label to assign) and a `description` (natural
+        language criteria). The classifier returns the best matching rule with a
+        confidence score.
+
+        The job runs asynchronously. Poll `GET /classify/{job_id}` to check status and
+        retrieve results.
 
         Args:
-          configuration: Configuration for classification.
+          configuration: Configuration for a classify job.
 
           configuration_id: Product configuration ID for reusable presets
 
@@ -315,6 +354,8 @@ class AsyncClassifyResource(AsyncAPIResource):
         self,
         *,
         configuration_id: Optional[str] | Omit = omit,
+        created_at_on_or_after: Union[str, datetime, None] | Omit = omit,
+        created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
         job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
@@ -329,10 +370,17 @@ class AsyncClassifyResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[ClassifyListResponse, AsyncPaginatedCursor[ClassifyListResponse]]:
         """
-        List classify jobs.
+        List classify jobs with optional filtering and pagination.
+
+        Filter by `status`, `configuration_id`, specific `job_ids`, or creation date
+        range.
 
         Args:
           configuration_id: Filter by configuration ID
+
+          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+
+          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
 
           job_ids: Filter by specific job IDs
 
@@ -361,6 +409,8 @@ class AsyncClassifyResource(AsyncAPIResource):
                 query=maybe_transform(
                     {
                         "configuration_id": configuration_id,
+                        "created_at_on_or_after": created_at_on_or_after,
+                        "created_at_on_or_before": created_at_on_or_before,
                         "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,
@@ -388,7 +438,10 @@ class AsyncClassifyResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ClassifyGetResponse:
         """
-        Retrieve classify job by ID.
+        Get a classify job by ID.
+
+        Returns the job status, configuration, and classify result when complete. The
+        result includes the matched document type, confidence score, and reasoning.
 
         Args:
           extra_headers: Send extra headers
@@ -402,7 +455,7 @@ class AsyncClassifyResource(AsyncAPIResource):
         if not job_id:
             raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
         return await self._get(
-            f"/api/v2/classify/{job_id}",
+            path_template("/api/v2/classify/{job_id}", job_id=job_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

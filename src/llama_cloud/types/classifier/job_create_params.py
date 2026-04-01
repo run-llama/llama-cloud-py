@@ -34,11 +34,26 @@ class JobCreateParams(TypedDict, total=False):
 
 
 class WebhookConfiguration(TypedDict, total=False):
+    """Webhook configuration for receiving parsing job notifications.
+
+    Webhooks are called when specified events occur during job processing.
+    Configure multiple webhook configurations to send to different endpoints.
+    """
+
     webhook_events: Optional[SequenceNotStr[str]]
-    """List of events that trigger webhook notifications"""
+    """Events that trigger this webhook.
+
+    Options: 'parse.success' (job completed), 'parse.failure' (job failed),
+    'parse.partial' (some pages failed). If not specified, webhook fires for all
+    events
+    """
 
     webhook_headers: Optional[Dict[str, object]]
-    """Custom headers to include in webhook requests"""
+    """Custom HTTP headers to include in webhook requests.
+
+    Use for authentication tokens or custom routing. Example: {'Authorization':
+    'Bearer xyz'}
+    """
 
     webhook_url: Optional[str]
-    """Webhook URL for receiving parsing notifications"""
+    """HTTPS URL to receive webhook POST requests. Must be publicly accessible"""

@@ -2,16 +2,56 @@
 
 from __future__ import annotations
 
-from typing import List, Iterable, Optional
+from typing import Dict, List, Iterable, Optional
 from typing_extensions import Literal, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 from .parsing_mode import ParsingMode
 from .fail_page_mode import FailPageMode
 from .parsing_languages import ParsingLanguages
-from .extraction.webhook_configuration_param import WebhookConfigurationParam
 
-__all__ = ["LlamaParseParametersParam"]
+__all__ = ["LlamaParseParametersParam", "WebhookConfiguration"]
+
+
+class WebhookConfiguration(TypedDict, total=False):
+    """Configuration for a single outbound webhook endpoint."""
+
+    webhook_events: Optional[
+        List[
+            Literal[
+                "extract.pending",
+                "extract.success",
+                "extract.error",
+                "extract.partial_success",
+                "extract.cancelled",
+                "parse.pending",
+                "parse.running",
+                "parse.success",
+                "parse.error",
+                "parse.partial_success",
+                "parse.cancelled",
+                "classify.pending",
+                "classify.success",
+                "classify.error",
+                "classify.partial_success",
+                "classify.cancelled",
+                "unmapped_event",
+            ]
+        ]
+    ]
+    """Events to subscribe to (e.g.
+
+    'parse.success', 'extract.error'). If null, all events are delivered.
+    """
+
+    webhook_headers: Optional[Dict[str, str]]
+    """Custom HTTP headers sent with each webhook request (e.g. auth tokens)"""
+
+    webhook_output_format: Optional[str]
+    """Response format sent to the webhook: 'string' (default) or 'json'"""
+
+    webhook_url: Optional[str]
+    """URL to receive webhook POST notifications"""
 
 
 class LlamaParseParametersParam(TypedDict, total=False):
@@ -259,7 +299,7 @@ class LlamaParseParametersParam(TypedDict, total=False):
 
     version: Optional[str]
 
-    webhook_configurations: Optional[Iterable[WebhookConfigurationParam]]
-    """The outbound webhook configurations"""
+    webhook_configurations: Optional[Iterable[WebhookConfiguration]]
+    """Outbound webhook endpoints to notify on job status changes"""
 
     webhook_url: Optional[str]

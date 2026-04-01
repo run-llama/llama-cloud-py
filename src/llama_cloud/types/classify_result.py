@@ -11,10 +11,10 @@ class ClassifyResult(BaseModel):
     """Result of classifying a document."""
 
     confidence: float
-    """Confidence score (0.0-1.0)"""
+    """Confidence score between 0.0 and 1.0"""
 
     reasoning: str
-    """Explanation of classification decision"""
+    """Why the document matched (or didn't match) the returned rule"""
 
     type: Optional[str] = None
-    """Document type that matches, or None"""
+    """Matched rule type, or null if no rule matched"""

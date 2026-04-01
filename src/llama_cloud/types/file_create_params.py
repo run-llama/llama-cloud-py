@@ -18,7 +18,7 @@ class FileCreateParams(TypedDict, total=False):
     """The intended purpose of the file.
 
     Valid values: 'user_data', 'parse', 'extract', 'split', 'classify', 'sheet',
-    'agent_app'
+    'agent_app'. This determines the storage and retention policy for the file.
     """
 
     organization_id: Optional[str]

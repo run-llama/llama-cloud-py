@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import asyncio
 
-from pydantic import BaseModel, Field
+from pydantic import Field, BaseModel
 
 from llama_cloud import AsyncLlamaCloud
 

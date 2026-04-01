@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Iterable, Optional
+from typing import Union, Iterable, Optional
+from datetime import datetime
+from typing_extensions import Literal
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._polling import (
     DEFAULT_TIMEOUT,
@@ -57,11 +59,11 @@ class SplitResource(SyncAPIResource):
     def create(
         self,
         *,
-        categories: Iterable[SplitCategoryParam],
         document_input: SplitDocumentInputParam,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        splitting_strategy: split_create_params.SplittingStrategy | Omit = omit,
+        configuration: Optional[split_create_params.Configuration] | Omit = omit,
+        configuration_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -75,11 +77,11 @@ class SplitResource(SyncAPIResource):
         production use and is subject to change at any time.
 
         Args:
-          categories: Categories to split documents into.
-
           document_input: Document to be split.
 
-          splitting_strategy: Strategy for splitting documents.
+          configuration: Split configuration with categories and splitting strategy.
+
+          configuration_id: Saved split configuration ID.
 
           extra_headers: Send extra headers
 
@@ -93,9 +95,9 @@ class SplitResource(SyncAPIResource):
             "/api/v1/beta/split/jobs",
             body=maybe_transform(
                 {
-                    "categories": categories,
                     "document_input": document_input,
-                    "splitting_strategy": splitting_strategy,
+                    "configuration": configuration,
+                    "configuration_id": configuration_id,
                 },
                 split_create_params.SplitCreateParams,
             ),
@@ -118,10 +120,14 @@ class SplitResource(SyncAPIResource):
     def list(
         self,
         *,
+        created_at_on_or_after: Union[str, datetime, None] | Omit = omit,
+        created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
+        job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
+        status: Optional[Literal["pending", "processing", "completed", "failed", "cancelled"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -135,6 +141,14 @@ class SplitResource(SyncAPIResource):
         production use and is subject to change at any time.
 
         Args:
+          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+
+          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+
+          job_ids: Filter by specific job IDs
+
+          status: Filter by job status (pending, processing, completed, failed, cancelled)
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -153,10 +167,14 @@ class SplitResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "created_at_on_or_after": created_at_on_or_after,
+                        "created_at_on_or_before": created_at_on_or_before,
+                        "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,
                         "page_token": page_token,
                         "project_id": project_id,
+                        "status": status,
                     },
                     split_list_params.SplitListParams,
                 ),
@@ -195,7 +213,7 @@ class SplitResource(SyncAPIResource):
         if not split_job_id:
             raise ValueError(f"Expected a non-empty value for `split_job_id` but received {split_job_id!r}")
         return self._get(
-            f"/api/v1/beta/split/jobs/{split_job_id}",
+            path_template("/api/v1/beta/split/jobs/{split_job_id}", split_job_id=split_job_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -219,7 +237,7 @@ class SplitResource(SyncAPIResource):
         document_input: SplitDocumentInputParam,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        splitting_strategy: split_create_params.SplittingStrategy | Omit = omit,
+        splitting_strategy: split_create_params.ConfigurationSplittingStrategy | Omit = omit,
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
@@ -300,13 +318,15 @@ class SplitResource(SyncAPIResource):
                 print(f"Category: {segment.category}, Pages: {segment.pages}")
             ```
         """
-        # Create the job
+        # Create the job with categories wrapped in configuration
+        config: dict[str, object] = {"categories": list(categories)}
+        if splitting_strategy is not omit:
+            config["splitting_strategy"] = splitting_strategy
         job = self.create(
-            categories=categories,
             document_input=document_input,
             organization_id=organization_id,
             project_id=project_id,
-            splitting_strategy=splitting_strategy,
+            configuration=config,  # type: ignore[arg-type]
             extra_headers=extra_headers,
             extra_query=extra_query,
             extra_body=extra_body,
@@ -469,11 +489,11 @@ class AsyncSplitResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        categories: Iterable[SplitCategoryParam],
         document_input: SplitDocumentInputParam,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        splitting_strategy: split_create_params.SplittingStrategy | Omit = omit,
+        configuration: Optional[split_create_params.Configuration] | Omit = omit,
+        configuration_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -487,11 +507,11 @@ class AsyncSplitResource(AsyncAPIResource):
         production use and is subject to change at any time.
 
         Args:
-          categories: Categories to split documents into.
-
           document_input: Document to be split.
 
-          splitting_strategy: Strategy for splitting documents.
+          configuration: Split configuration with categories and splitting strategy.
+
+          configuration_id: Saved split configuration ID.
 
           extra_headers: Send extra headers
 
@@ -505,9 +525,9 @@ class AsyncSplitResource(AsyncAPIResource):
             "/api/v1/beta/split/jobs",
             body=await async_maybe_transform(
                 {
-                    "categories": categories,
                     "document_input": document_input,
-                    "splitting_strategy": splitting_strategy,
+                    "configuration": configuration,
+                    "configuration_id": configuration_id,
                 },
                 split_create_params.SplitCreateParams,
             ),
@@ -530,10 +550,14 @@ class AsyncSplitResource(AsyncAPIResource):
     def list(
         self,
         *,
+        created_at_on_or_after: Union[str, datetime, None] | Omit = omit,
+        created_at_on_or_before: Union[str, datetime, None] | Omit = omit,
+        job_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
+        status: Optional[Literal["pending", "processing", "completed", "failed", "cancelled"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -547,6 +571,14 @@ class AsyncSplitResource(AsyncAPIResource):
         production use and is subject to change at any time.
 
         Args:
+          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+
+          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+
+          job_ids: Filter by specific job IDs
+
+          status: Filter by job status (pending, processing, completed, failed, cancelled)
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -565,10 +597,14 @@ class AsyncSplitResource(AsyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "created_at_on_or_after": created_at_on_or_after,
+                        "created_at_on_or_before": created_at_on_or_before,
+                        "job_ids": job_ids,
                         "organization_id": organization_id,
                         "page_size": page_size,
                         "page_token": page_token,
                         "project_id": project_id,
+                        "status": status,
                     },
                     split_list_params.SplitListParams,
                 ),
@@ -607,7 +643,7 @@ class AsyncSplitResource(AsyncAPIResource):
         if not split_job_id:
             raise ValueError(f"Expected a non-empty value for `split_job_id` but received {split_job_id!r}")
         return await self._get(
-            f"/api/v1/beta/split/jobs/{split_job_id}",
+            path_template("/api/v1/beta/split/jobs/{split_job_id}", split_job_id=split_job_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -631,7 +667,7 @@ class AsyncSplitResource(AsyncAPIResource):
         document_input: SplitDocumentInputParam,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
-        splitting_strategy: split_create_params.SplittingStrategy | Omit = omit,
+        splitting_strategy: split_create_params.ConfigurationSplittingStrategy | Omit = omit,
         # Polling parameters
         polling_interval: float = 1.0,
         max_interval: float = 5.0,
@@ -712,13 +748,15 @@ class AsyncSplitResource(AsyncAPIResource):
                 print(f"Category: {segment.category}, Pages: {segment.pages}")
             ```
         """
-        # Create the job
+        # Create the job with categories wrapped in configuration
+        config: dict[str, object] = {"categories": list(categories)}
+        if splitting_strategy is not omit:
+            config["splitting_strategy"] = splitting_strategy
         job = await self.create(
-            categories=categories,
             document_input=document_input,
             organization_id=organization_id,
             project_id=project_id,
-            splitting_strategy=splitting_strategy,
+            configuration=config,  # type: ignore[arg-type]
             extra_headers=extra_headers,
             extra_query=extra_query,
             extra_body=extra_body,

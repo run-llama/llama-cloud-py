@@ -34,17 +34,18 @@ if TYPE_CHECKING:
     from .resources import (
         beta,
         files,
+        extract,
         parsing,
         classify,
         projects,
         pipelines,
         classifier,
         data_sinks,
-        extraction,
         retrievers,
         data_sources,
     )
     from .resources.files import FilesResource, AsyncFilesResource
+    from .resources.extract import ExtractResource, AsyncExtractResource
     from .resources.parsing import ParsingResource, AsyncParsingResource
     from .resources.classify import ClassifyResource, AsyncClassifyResource
     from .resources.projects import ProjectsResource, AsyncProjectsResource
@@ -53,7 +54,6 @@ if TYPE_CHECKING:
     from .resources.data_sources import DataSourcesResource, AsyncDataSourcesResource
     from .resources.pipelines.pipelines import PipelinesResource, AsyncPipelinesResource
     from .resources.classifier.classifier import ClassifierResource, AsyncClassifierResource
-    from .resources.extraction.extraction import ExtractionResource, AsyncExtractionResource
     from .resources.retrievers.retrievers import RetrieversResource, AsyncRetrieversResource
 
 __all__ = [
@@ -136,10 +136,10 @@ class LlamaCloud(SyncAPIClient):
         return ParsingResource(self)
 
     @cached_property
-    def extraction(self) -> ExtractionResource:
-        from .resources.extraction import ExtractionResource
+    def extract(self) -> ExtractResource:
+        from .resources.extract import ExtractResource
 
-        return ExtractionResource(self)
+        return ExtractResource(self)
 
     @cached_property
     def classifier(self) -> ClassifierResource:
@@ -370,10 +370,10 @@ class AsyncLlamaCloud(AsyncAPIClient):
         return AsyncParsingResource(self)
 
     @cached_property
-    def extraction(self) -> AsyncExtractionResource:
-        from .resources.extraction import AsyncExtractionResource
+    def extract(self) -> AsyncExtractResource:
+        from .resources.extract import AsyncExtractResource
 
-        return AsyncExtractionResource(self)
+        return AsyncExtractResource(self)
 
     @cached_property
     def classifier(self) -> AsyncClassifierResource:
@@ -555,10 +555,10 @@ class LlamaCloudWithRawResponse:
         return ParsingResourceWithRawResponse(self._client.parsing)
 
     @cached_property
-    def extraction(self) -> extraction.ExtractionResourceWithRawResponse:
-        from .resources.extraction import ExtractionResourceWithRawResponse
+    def extract(self) -> extract.ExtractResourceWithRawResponse:
+        from .resources.extract import ExtractResourceWithRawResponse
 
-        return ExtractionResourceWithRawResponse(self._client.extraction)
+        return ExtractResourceWithRawResponse(self._client.extract)
 
     @cached_property
     def classifier(self) -> classifier.ClassifierResourceWithRawResponse:
@@ -628,10 +628,10 @@ class AsyncLlamaCloudWithRawResponse:
         return AsyncParsingResourceWithRawResponse(self._client.parsing)
 
     @cached_property
-    def extraction(self) -> extraction.AsyncExtractionResourceWithRawResponse:
-        from .resources.extraction import AsyncExtractionResourceWithRawResponse
+    def extract(self) -> extract.AsyncExtractResourceWithRawResponse:
+        from .resources.extract import AsyncExtractResourceWithRawResponse
 
-        return AsyncExtractionResourceWithRawResponse(self._client.extraction)
+        return AsyncExtractResourceWithRawResponse(self._client.extract)
 
     @cached_property
     def classifier(self) -> classifier.AsyncClassifierResourceWithRawResponse:
@@ -701,10 +701,10 @@ class LlamaCloudWithStreamedResponse:
         return ParsingResourceWithStreamingResponse(self._client.parsing)
 
     @cached_property
-    def extraction(self) -> extraction.ExtractionResourceWithStreamingResponse:
-        from .resources.extraction import ExtractionResourceWithStreamingResponse
+    def extract(self) -> extract.ExtractResourceWithStreamingResponse:
+        from .resources.extract import ExtractResourceWithStreamingResponse
 
-        return ExtractionResourceWithStreamingResponse(self._client.extraction)
+        return ExtractResourceWithStreamingResponse(self._client.extract)
 
     @cached_property
     def classifier(self) -> classifier.ClassifierResourceWithStreamingResponse:
@@ -774,10 +774,10 @@ class AsyncLlamaCloudWithStreamedResponse:
         return AsyncParsingResourceWithStreamingResponse(self._client.parsing)
 
     @cached_property
-    def extraction(self) -> extraction.AsyncExtractionResourceWithStreamingResponse:
-        from .resources.extraction import AsyncExtractionResourceWithStreamingResponse
+    def extract(self) -> extract.AsyncExtractResourceWithStreamingResponse:
+        from .resources.extract import AsyncExtractResourceWithStreamingResponse
 
-        return AsyncExtractionResourceWithStreamingResponse(self._client.extraction)
+        return AsyncExtractResourceWithStreamingResponse(self._client.extract)
 
     @cached_property
     def classifier(self) -> classifier.AsyncClassifierResourceWithStreamingResponse:

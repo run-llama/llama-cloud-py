@@ -16,6 +16,14 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
+from .extract import (
+    ExtractResource,
+    AsyncExtractResource,
+    ExtractResourceWithRawResponse,
+    AsyncExtractResourceWithRawResponse,
+    ExtractResourceWithStreamingResponse,
+    AsyncExtractResourceWithStreamingResponse,
+)
 from .parsing import (
     ParsingResource,
     AsyncParsingResource,
@@ -64,14 +72,6 @@ from .data_sinks import (
     DataSinksResourceWithStreamingResponse,
     AsyncDataSinksResourceWithStreamingResponse,
 )
-from .extraction import (
-    ExtractionResource,
-    AsyncExtractionResource,
-    ExtractionResourceWithRawResponse,
-    AsyncExtractionResourceWithRawResponse,
-    ExtractionResourceWithStreamingResponse,
-    AsyncExtractionResourceWithStreamingResponse,
-)
 from .retrievers import (
     RetrieversResource,
     AsyncRetrieversResource,
@@ -102,12 +102,12 @@ __all__ = [
     "AsyncParsingResourceWithRawResponse",
     "ParsingResourceWithStreamingResponse",
     "AsyncParsingResourceWithStreamingResponse",
-    "ExtractionResource",
-    "AsyncExtractionResource",
-    "ExtractionResourceWithRawResponse",
-    "AsyncExtractionResourceWithRawResponse",
-    "ExtractionResourceWithStreamingResponse",
-    "AsyncExtractionResourceWithStreamingResponse",
+    "ExtractResource",
+    "AsyncExtractResource",
+    "ExtractResourceWithRawResponse",
+    "AsyncExtractResourceWithRawResponse",
+    "ExtractResourceWithStreamingResponse",
+    "AsyncExtractResourceWithStreamingResponse",
     "ClassifierResource",
     "AsyncClassifierResource",
     "ClassifierResourceWithRawResponse",
