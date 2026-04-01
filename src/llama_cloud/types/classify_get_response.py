@@ -23,7 +23,7 @@ class ClassifyGetResponse(BaseModel):
     document_input_type: Literal["url", "file_id", "parse_job_id"]
     """Whether the input was a file or parse job (FILE or PARSE_JOB)"""
 
-    document_input_value: str
+    file_input: str
     """ID of the input file or parse job"""
 
     project_id: str

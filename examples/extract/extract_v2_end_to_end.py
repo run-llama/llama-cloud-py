@@ -25,7 +25,7 @@ async def main() -> None:
     )
 
     # Create an extraction job with a Pydantic-derived schema
-    job = await client.extract.create(
+    job = await client.extract.run(
         file_input=file_obj.id,
         configuration={
             "tier": "cost_effective",

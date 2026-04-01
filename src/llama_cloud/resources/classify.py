@@ -57,6 +57,7 @@ class ClassifyResource(SyncAPIResource):
         configuration: Optional[ClassifyConfigurationParam] | Omit = omit,
         configuration_id: Optional[str] | Omit = omit,
         file_id: Optional[str] | Omit = omit,
+        file_input: Optional[str] | Omit = omit,
         parse_job_id: Optional[str] | Omit = omit,
         transaction_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -70,9 +71,9 @@ class ClassifyResource(SyncAPIResource):
 
         Classifies a document against a set of rules.
 
-        Provide either `file_id` or
-        `parse_job_id` as the document input, and either inline `configuration` with
-        rules or a `configuration_id` referencing a saved preset.
+        Set `file_input` to a file ID
+        (`dfl-...`) or parse job ID (`pjb-...`), and provide either inline
+        `configuration` with rules or a `configuration_id` referencing a saved preset.
 
         Each rule has a `type` (the label to assign) and a `description` (natural
         language criteria). The classifier returns the best matching rule with a
@@ -84,11 +85,13 @@ class ClassifyResource(SyncAPIResource):
         Args:
           configuration: Configuration for a classify job.
 
-          configuration_id: Product configuration ID for reusable presets
+          configuration_id: Saved configuration ID
 
-          file_id: File ID to classify
+          file_id: Deprecated: use file_input instead
 
-          parse_job_id: Parse job ID to classify
+          file_input: File ID or parse job ID to classify
+
+          parse_job_id: Deprecated: use file_input instead
 
           transaction_id: Idempotency key scoped to the project
 
@@ -107,6 +110,7 @@ class ClassifyResource(SyncAPIResource):
                     "configuration": configuration,
                     "configuration_id": configuration_id,
                     "file_id": file_id,
+                    "file_input": file_input,
                     "parse_job_id": parse_job_id,
                     "transaction_id": transaction_id,
                 },
@@ -156,9 +160,9 @@ class ClassifyResource(SyncAPIResource):
         Args:
           configuration_id: Filter by configuration ID
 
-          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+          created_at_on_or_after: Include items created at or after this timestamp (inclusive)
 
-          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+          created_at_on_or_before: Include items created at or before this timestamp (inclusive)
 
           job_ids: Filter by specific job IDs
 
@@ -279,6 +283,7 @@ class AsyncClassifyResource(AsyncAPIResource):
         configuration: Optional[ClassifyConfigurationParam] | Omit = omit,
         configuration_id: Optional[str] | Omit = omit,
         file_id: Optional[str] | Omit = omit,
+        file_input: Optional[str] | Omit = omit,
         parse_job_id: Optional[str] | Omit = omit,
         transaction_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -292,9 +297,9 @@ class AsyncClassifyResource(AsyncAPIResource):
 
         Classifies a document against a set of rules.
 
-        Provide either `file_id` or
-        `parse_job_id` as the document input, and either inline `configuration` with
-        rules or a `configuration_id` referencing a saved preset.
+        Set `file_input` to a file ID
+        (`dfl-...`) or parse job ID (`pjb-...`), and provide either inline
+        `configuration` with rules or a `configuration_id` referencing a saved preset.
 
         Each rule has a `type` (the label to assign) and a `description` (natural
         language criteria). The classifier returns the best matching rule with a
@@ -306,11 +311,13 @@ class AsyncClassifyResource(AsyncAPIResource):
         Args:
           configuration: Configuration for a classify job.
 
-          configuration_id: Product configuration ID for reusable presets
+          configuration_id: Saved configuration ID
 
-          file_id: File ID to classify
+          file_id: Deprecated: use file_input instead
 
-          parse_job_id: Parse job ID to classify
+          file_input: File ID or parse job ID to classify
+
+          parse_job_id: Deprecated: use file_input instead
 
           transaction_id: Idempotency key scoped to the project
 
@@ -329,6 +336,7 @@ class AsyncClassifyResource(AsyncAPIResource):
                     "configuration": configuration,
                     "configuration_id": configuration_id,
                     "file_id": file_id,
+                    "file_input": file_input,
                     "parse_job_id": parse_job_id,
                     "transaction_id": transaction_id,
                 },
@@ -378,9 +386,9 @@ class AsyncClassifyResource(AsyncAPIResource):
         Args:
           configuration_id: Filter by configuration ID
 
-          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+          created_at_on_or_after: Include items created at or after this timestamp (inclusive)
 
-          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+          created_at_on_or_before: Include items created at or before this timestamp (inclusive)
 
           job_ids: Filter by specific job IDs
 

@@ -377,7 +377,7 @@ class ExtractedData(GenericModel, Generic[ExtractedT]):
                 The exception contains an ExtractedData[Dict] with status="error"
                 and the validation error in metadata.
         """
-        resolved_file_id = file_id or job.document_input_value
+        resolved_file_id = file_id or job.file_input
         resolved_file_name = file_name
         job_id = job.id
 
