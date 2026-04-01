@@ -11,8 +11,8 @@ __all__ = ["ExtractCreateParams", "WebhookConfiguration"]
 
 
 class ExtractCreateParams(TypedDict, total=False):
-    document_input_value: Required[str]
-    """File ID or Parse Job ID to extract from"""
+    file_input: Required[str]
+    """File ID or parse job ID to extract from"""
 
     organization_id: Optional[str]
 
@@ -22,7 +22,7 @@ class ExtractCreateParams(TypedDict, total=False):
     """Extract configuration combining parse and extract settings."""
 
     configuration_id: Optional[str]
-    """Saved extract configuration ID (mutually exclusive with configuration)"""
+    """Saved configuration ID"""
 
     webhook_configurations: Optional[Iterable[WebhookConfiguration]]
     """Outbound webhook endpoints to notify on job status changes"""

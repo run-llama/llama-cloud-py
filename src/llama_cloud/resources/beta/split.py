@@ -141,9 +141,9 @@ class SplitResource(SyncAPIResource):
         production use and is subject to change at any time.
 
         Args:
-          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+          created_at_on_or_after: Include items created at or after this timestamp (inclusive)
 
-          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+          created_at_on_or_before: Include items created at or before this timestamp (inclusive)
 
           job_ids: Filter by specific job IDs
 
@@ -571,9 +571,9 @@ class AsyncSplitResource(AsyncAPIResource):
         production use and is subject to change at any time.
 
         Args:
-          created_at_on_or_after: Include jobs created at or after this timestamp (inclusive)
+          created_at_on_or_after: Include items created at or after this timestamp (inclusive)
 
-          created_at_on_or_before: Include jobs created at or before this timestamp (inclusive)
+          created_at_on_or_before: Include items created at or before this timestamp (inclusive)
 
           job_ids: Filter by specific job IDs
 

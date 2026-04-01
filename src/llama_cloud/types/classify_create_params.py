@@ -19,13 +19,16 @@ class ClassifyCreateParams(TypedDict, total=False):
     """Configuration for a classify job."""
 
     configuration_id: Optional[str]
-    """Product configuration ID for reusable presets"""
+    """Saved configuration ID"""
 
     file_id: Optional[str]
-    """File ID to classify"""
+    """Deprecated: use file_input instead"""
+
+    file_input: Optional[str]
+    """File ID or parse job ID to classify"""
 
     parse_job_id: Optional[str]
-    """Parse job ID to classify"""
+    """Deprecated: use file_input instead"""
 
     transaction_id: Optional[str]
     """Idempotency key scoped to the project"""

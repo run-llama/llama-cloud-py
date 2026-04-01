@@ -17,19 +17,22 @@ class ExtractListParams(TypedDict, total=False):
     """Filter by configuration ID"""
 
     created_at_on_or_after: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
-    """Include jobs created at or after this timestamp (inclusive)"""
+    """Include items created at or after this timestamp (inclusive)"""
 
     created_at_on_or_before: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
-    """Include jobs created at or before this timestamp (inclusive)"""
+    """Include items created at or before this timestamp (inclusive)"""
 
     document_input_type: Optional[str]
     """Filter by document input type (file_id or parse_job_id)"""
 
     document_input_value: Optional[str]
-    """Filter by document input value"""
+    """Deprecated: use file_input instead"""
 
     expand: SequenceNotStr[str]
     """Additional fields to include: configuration, extract_metadata"""
+
+    file_input: Optional[str]
+    """Filter by file input value"""
 
     job_ids: Optional[SequenceNotStr[str]]
     """Filter by specific job IDs"""

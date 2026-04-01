@@ -25,8 +25,8 @@ async def main() -> None:
     )
 
     # Create an extraction job with a Pydantic-derived schema
-    job = await client.extract.create(
-        document_input_value=file_obj.id,
+    job = await client.extract.run(
+        file_input=file_obj.id,
         configuration={
             "tier": "cost_effective",
             "data_schema": InvoiceSchema.model_json_schema(),
