@@ -26,10 +26,13 @@ class ExtractListParams(TypedDict, total=False):
     """Filter by document input type (file_id or parse_job_id)"""
 
     document_input_value: Optional[str]
-    """Filter by document input value"""
+    """Deprecated: use file_input instead"""
 
     expand: SequenceNotStr[str]
     """Additional fields to include: configuration, extract_metadata"""
+
+    file_input: Optional[str]
+    """Filter by file input value"""
 
     job_ids: Optional[SequenceNotStr[str]]
     """Filter by specific job IDs"""
