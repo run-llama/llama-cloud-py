@@ -532,7 +532,7 @@ class ExtractResource(SyncAPIResource):
     def run(
         self,
         *,
-        document_input_value: str,
+        file_input: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         configuration: Optional[ExtractConfigurationParam] | Omit = omit,
@@ -556,7 +556,7 @@ class ExtractResource(SyncAPIResource):
         into a single call for the most common end-to-end workflow.
 
         Args:
-            document_input_value: File ID or parse job ID to extract from.
+            file_input: File ID or parse job ID to extract from.
 
             configuration: Inline extraction configuration with schema and options.
 
@@ -577,7 +577,7 @@ class ExtractResource(SyncAPIResource):
         Example:
             ```python
             result = client.extract.run(
-                document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
                 configuration={"data_schema": {...}, "extraction_target": "per_doc"},
                 verbose=True,
             )
@@ -585,7 +585,7 @@ class ExtractResource(SyncAPIResource):
             ```
         """
         job = self.create(
-            document_input_value=document_input_value,
+            file_input=file_input,
             organization_id=organization_id,
             project_id=project_id,
             configuration=configuration,
@@ -1102,7 +1102,7 @@ class AsyncExtractResource(AsyncAPIResource):
     async def run(
         self,
         *,
-        document_input_value: str,
+        file_input: str,
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         configuration: Optional[ExtractConfigurationParam] | Omit = omit,
@@ -1126,7 +1126,7 @@ class AsyncExtractResource(AsyncAPIResource):
         into a single call for the most common end-to-end workflow.
 
         Args:
-            document_input_value: File ID or parse job ID to extract from.
+            file_input: File ID or parse job ID to extract from.
 
             configuration: Inline extraction configuration with schema and options.
 
@@ -1147,7 +1147,7 @@ class AsyncExtractResource(AsyncAPIResource):
         Example:
             ```python
             result = await client.extract.run(
-                document_input_value="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
                 configuration={"data_schema": {...}, "extraction_target": "per_doc"},
                 verbose=True,
             )
@@ -1155,7 +1155,7 @@ class AsyncExtractResource(AsyncAPIResource):
             ```
         """
         job = await self.create(
-            document_input_value=document_input_value,
+            file_input=file_input,
             organization_id=organization_id,
             project_id=project_id,
             configuration=configuration,
