@@ -353,7 +353,7 @@ _NOW = datetime.now(timezone.utc).isoformat()
 def _make_v2_job(
     extract_result: Optional[Dict[str, Any]] = None,
     document_metadata: Optional[Dict[str, Any]] = None,
-    document_input_value: str = "dfl-test-file-id",
+    file_input: str = "dfl-test-file-id",
     job_id: str = "ext-test-job-id",
 ) -> ExtractV2Job:
     """Build a minimal V2 ExtractV2Job for testing."""
@@ -369,7 +369,7 @@ def _make_v2_job(
         {
             "id": job_id,
             "project_id": "prj-test",
-            "document_input_value": document_input_value,
+            "file_input": file_input,
             "status": "COMPLETED",
             "created_at": _NOW,
             "updated_at": _NOW,
@@ -388,7 +388,7 @@ def test_from_extract_job_success():
             "age": {"confidence": 0.87},
             "email": {"confidence": 0.92, "citation": [{"page": 1, "matching_text": "john@example.com"}]},
         },
-        document_input_value="dfl-file-456",
+        file_input="dfl-file-456",
     )
 
     extracted: ExtractedData[Person] = ExtractedData.from_extract_job(
@@ -415,7 +415,7 @@ def test_from_extract_job_success():
 
 def test_from_extract_job_with_overrides():
     """Test from_extract_job with explicit file_id and file_name overrides."""
-    job = _make_v2_job(document_input_value="dfl-original")
+    job = _make_v2_job(file_input="dfl-original")
 
     extracted: ExtractedData[Person] = ExtractedData.from_extract_job(
         job,
@@ -439,7 +439,7 @@ def test_from_extract_job_invalid_data():
     job = _make_v2_job(
         extract_result={"missing_name": "value", "age": "not_a_number"},
         document_metadata={"name": {"confidence": 0.9}},
-        document_input_value="dfl-error-file",
+        file_input="dfl-error-file",
     )
 
     with pytest.raises(InvalidExtractionData) as exc_info:
