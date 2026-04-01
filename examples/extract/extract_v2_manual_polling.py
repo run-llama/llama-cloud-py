@@ -28,7 +28,7 @@ async def main() -> None:
 
     # Create job with citations and confidence enabled
     job = await client.extract.create(
-        document_input_value=file_obj.id,
+        file_input=file_obj.id,
         configuration={
             "tier": "agentic",
             "data_schema": schema,
