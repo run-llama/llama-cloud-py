@@ -365,7 +365,7 @@ class ExtractedData(GenericModel, Generic[ExtractedT]):
             schema: Pydantic model class to validate the extracted data
             file_hash: Optional content hash for de-duplication
             file_name: Override the file name
-            file_id: Override the file ID (defaults to job.document_input_value)
+            file_id: Override the file ID (defaults to job.file_input)
             status: Initial workflow status (default: "pending_review")
             metadata: Additional application-specific metadata
 
@@ -377,7 +377,7 @@ class ExtractedData(GenericModel, Generic[ExtractedT]):
                 The exception contains an ExtractedData[Dict] with status="error"
                 and the validation error in metadata.
         """
-        resolved_file_id = file_id or job.document_input_value
+        resolved_file_id = file_id or job.file_input
         resolved_file_name = file_name
         job_id = job.id
 
