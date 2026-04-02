@@ -11,11 +11,11 @@ from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
 from llama_cloud.types import (
     ExtractV2Job,
-    ExtractGenerateSchemaResponse,
     ExtractV2SchemaValidateResponse,
 )
 from llama_cloud._utils import parse_datetime
 from llama_cloud.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
+from llama_cloud.types.beta import ConfigurationCreate
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -194,7 +194,7 @@ class TestExtract:
     @parametrize
     def test_method_generate_schema(self, client: LlamaCloud) -> None:
         extract = client.extract.generate_schema()
-        assert_matches_type(ExtractGenerateSchemaResponse, extract, path=["response"])
+        assert_matches_type(ConfigurationCreate, extract, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -207,7 +207,7 @@ class TestExtract:
             name="invoice_extraction",
             prompt="Extract vendor name, invoice number, line items, and total amount",
         )
-        assert_matches_type(ExtractGenerateSchemaResponse, extract, path=["response"])
+        assert_matches_type(ConfigurationCreate, extract, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -217,7 +217,7 @@ class TestExtract:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         extract = response.parse()
-        assert_matches_type(ExtractGenerateSchemaResponse, extract, path=["response"])
+        assert_matches_type(ConfigurationCreate, extract, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -227,7 +227,7 @@ class TestExtract:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             extract = response.parse()
-            assert_matches_type(ExtractGenerateSchemaResponse, extract, path=["response"])
+            assert_matches_type(ConfigurationCreate, extract, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -495,7 +495,7 @@ class TestAsyncExtract:
     @parametrize
     async def test_method_generate_schema(self, async_client: AsyncLlamaCloud) -> None:
         extract = await async_client.extract.generate_schema()
-        assert_matches_type(ExtractGenerateSchemaResponse, extract, path=["response"])
+        assert_matches_type(ConfigurationCreate, extract, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -508,7 +508,7 @@ class TestAsyncExtract:
             name="invoice_extraction",
             prompt="Extract vendor name, invoice number, line items, and total amount",
         )
-        assert_matches_type(ExtractGenerateSchemaResponse, extract, path=["response"])
+        assert_matches_type(ConfigurationCreate, extract, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -518,7 +518,7 @@ class TestAsyncExtract:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         extract = await response.parse()
-        assert_matches_type(ExtractGenerateSchemaResponse, extract, path=["response"])
+        assert_matches_type(ConfigurationCreate, extract, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -528,7 +528,7 @@ class TestAsyncExtract:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             extract = await response.parse()
-            assert_matches_type(ExtractGenerateSchemaResponse, extract, path=["response"])
+            assert_matches_type(ConfigurationCreate, extract, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
