@@ -48,14 +48,6 @@ from .directories import (
     DirectoriesResourceWithStreamingResponse,
     AsyncDirectoriesResourceWithStreamingResponse,
 )
-from .configurations import (
-    ConfigurationsResource,
-    AsyncConfigurationsResource,
-    ConfigurationsResourceWithRawResponse,
-    AsyncConfigurationsResourceWithRawResponse,
-    ConfigurationsResourceWithStreamingResponse,
-    AsyncConfigurationsResourceWithStreamingResponse,
-)
 from .parse_configurations import (
     ParseConfigurationsResource,
     AsyncParseConfigurationsResource,
@@ -78,12 +70,6 @@ __all__ = [
     "AsyncParseConfigurationsResourceWithRawResponse",
     "ParseConfigurationsResourceWithStreamingResponse",
     "AsyncParseConfigurationsResourceWithStreamingResponse",
-    "ConfigurationsResource",
-    "AsyncConfigurationsResource",
-    "ConfigurationsResourceWithRawResponse",
-    "AsyncConfigurationsResourceWithRawResponse",
-    "ConfigurationsResourceWithStreamingResponse",
-    "AsyncConfigurationsResourceWithStreamingResponse",
     "SheetsResource",
     "AsyncSheetsResource",
     "SheetsResourceWithRawResponse",

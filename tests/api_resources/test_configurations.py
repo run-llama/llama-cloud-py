@@ -9,10 +9,10 @@ import pytest
 
 from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
-from llama_cloud.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
-from llama_cloud.types.beta import (
+from llama_cloud.types import (
     ConfigurationResponse,
 )
+from llama_cloud.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -23,7 +23,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create(self, client: LlamaCloud) -> None:
-        configuration = client.beta.configurations.create(
+        configuration = client.configurations.create(
             name="x",
             parameters={
                 "categories": [{"name": "x"}],
@@ -35,7 +35,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
-        configuration = client.beta.configurations.create(
+        configuration = client.configurations.create(
             name="x",
             parameters={
                 "categories": [
@@ -55,7 +55,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: LlamaCloud) -> None:
-        response = client.beta.configurations.with_raw_response.create(
+        response = client.configurations.with_raw_response.create(
             name="x",
             parameters={
                 "categories": [{"name": "x"}],
@@ -71,7 +71,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: LlamaCloud) -> None:
-        with client.beta.configurations.with_streaming_response.create(
+        with client.configurations.with_streaming_response.create(
             name="x",
             parameters={
                 "categories": [{"name": "x"}],
@@ -89,7 +89,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: LlamaCloud) -> None:
-        configuration = client.beta.configurations.retrieve(
+        configuration = client.configurations.retrieve(
             config_id="config_id",
         )
         assert_matches_type(ConfigurationResponse, configuration, path=["response"])
@@ -97,7 +97,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve_with_all_params(self, client: LlamaCloud) -> None:
-        configuration = client.beta.configurations.retrieve(
+        configuration = client.configurations.retrieve(
             config_id="config_id",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -107,7 +107,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: LlamaCloud) -> None:
-        response = client.beta.configurations.with_raw_response.retrieve(
+        response = client.configurations.with_raw_response.retrieve(
             config_id="config_id",
         )
 
@@ -119,7 +119,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: LlamaCloud) -> None:
-        with client.beta.configurations.with_streaming_response.retrieve(
+        with client.configurations.with_streaming_response.retrieve(
             config_id="config_id",
         ) as response:
             assert not response.is_closed
@@ -134,14 +134,14 @@ class TestConfigurations:
     @parametrize
     def test_path_params_retrieve(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_id` but received ''"):
-            client.beta.configurations.with_raw_response.retrieve(
+            client.configurations.with_raw_response.retrieve(
                 config_id="",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update(self, client: LlamaCloud) -> None:
-        configuration = client.beta.configurations.update(
+        configuration = client.configurations.update(
             config_id="config_id",
         )
         assert_matches_type(ConfigurationResponse, configuration, path=["response"])
@@ -149,7 +149,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: LlamaCloud) -> None:
-        configuration = client.beta.configurations.update(
+        configuration = client.configurations.update(
             config_id="config_id",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -170,7 +170,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: LlamaCloud) -> None:
-        response = client.beta.configurations.with_raw_response.update(
+        response = client.configurations.with_raw_response.update(
             config_id="config_id",
         )
 
@@ -182,7 +182,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: LlamaCloud) -> None:
-        with client.beta.configurations.with_streaming_response.update(
+        with client.configurations.with_streaming_response.update(
             config_id="config_id",
         ) as response:
             assert not response.is_closed
@@ -197,20 +197,20 @@ class TestConfigurations:
     @parametrize
     def test_path_params_update(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_id` but received ''"):
-            client.beta.configurations.with_raw_response.update(
+            client.configurations.with_raw_response.update(
                 config_id="",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: LlamaCloud) -> None:
-        configuration = client.beta.configurations.list()
+        configuration = client.configurations.list()
         assert_matches_type(SyncPaginatedCursor[ConfigurationResponse], configuration, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: LlamaCloud) -> None:
-        configuration = client.beta.configurations.list(
+        configuration = client.configurations.list(
             latest_only=True,
             name="name",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -224,7 +224,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: LlamaCloud) -> None:
-        response = client.beta.configurations.with_raw_response.list()
+        response = client.configurations.with_raw_response.list()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -234,7 +234,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: LlamaCloud) -> None:
-        with client.beta.configurations.with_streaming_response.list() as response:
+        with client.configurations.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -246,7 +246,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_delete(self, client: LlamaCloud) -> None:
-        configuration = client.beta.configurations.delete(
+        configuration = client.configurations.delete(
             config_id="config_id",
         )
         assert configuration is None
@@ -254,7 +254,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_delete_with_all_params(self, client: LlamaCloud) -> None:
-        configuration = client.beta.configurations.delete(
+        configuration = client.configurations.delete(
             config_id="config_id",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -264,7 +264,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: LlamaCloud) -> None:
-        response = client.beta.configurations.with_raw_response.delete(
+        response = client.configurations.with_raw_response.delete(
             config_id="config_id",
         )
 
@@ -276,7 +276,7 @@ class TestConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: LlamaCloud) -> None:
-        with client.beta.configurations.with_streaming_response.delete(
+        with client.configurations.with_streaming_response.delete(
             config_id="config_id",
         ) as response:
             assert not response.is_closed
@@ -291,7 +291,7 @@ class TestConfigurations:
     @parametrize
     def test_path_params_delete(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_id` but received ''"):
-            client.beta.configurations.with_raw_response.delete(
+            client.configurations.with_raw_response.delete(
                 config_id="",
             )
 
@@ -304,7 +304,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
-        configuration = await async_client.beta.configurations.create(
+        configuration = await async_client.configurations.create(
             name="x",
             parameters={
                 "categories": [{"name": "x"}],
@@ -316,7 +316,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        configuration = await async_client.beta.configurations.create(
+        configuration = await async_client.configurations.create(
             name="x",
             parameters={
                 "categories": [
@@ -336,7 +336,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.beta.configurations.with_raw_response.create(
+        response = await async_client.configurations.with_raw_response.create(
             name="x",
             parameters={
                 "categories": [{"name": "x"}],
@@ -352,7 +352,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.beta.configurations.with_streaming_response.create(
+        async with async_client.configurations.with_streaming_response.create(
             name="x",
             parameters={
                 "categories": [{"name": "x"}],
@@ -370,7 +370,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        configuration = await async_client.beta.configurations.retrieve(
+        configuration = await async_client.configurations.retrieve(
             config_id="config_id",
         )
         assert_matches_type(ConfigurationResponse, configuration, path=["response"])
@@ -378,7 +378,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        configuration = await async_client.beta.configurations.retrieve(
+        configuration = await async_client.configurations.retrieve(
             config_id="config_id",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -388,7 +388,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.beta.configurations.with_raw_response.retrieve(
+        response = await async_client.configurations.with_raw_response.retrieve(
             config_id="config_id",
         )
 
@@ -400,7 +400,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.beta.configurations.with_streaming_response.retrieve(
+        async with async_client.configurations.with_streaming_response.retrieve(
             config_id="config_id",
         ) as response:
             assert not response.is_closed
@@ -415,14 +415,14 @@ class TestAsyncConfigurations:
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_id` but received ''"):
-            await async_client.beta.configurations.with_raw_response.retrieve(
+            await async_client.configurations.with_raw_response.retrieve(
                 config_id="",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncLlamaCloud) -> None:
-        configuration = await async_client.beta.configurations.update(
+        configuration = await async_client.configurations.update(
             config_id="config_id",
         )
         assert_matches_type(ConfigurationResponse, configuration, path=["response"])
@@ -430,7 +430,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        configuration = await async_client.beta.configurations.update(
+        configuration = await async_client.configurations.update(
             config_id="config_id",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -451,7 +451,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.beta.configurations.with_raw_response.update(
+        response = await async_client.configurations.with_raw_response.update(
             config_id="config_id",
         )
 
@@ -463,7 +463,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.beta.configurations.with_streaming_response.update(
+        async with async_client.configurations.with_streaming_response.update(
             config_id="config_id",
         ) as response:
             assert not response.is_closed
@@ -478,20 +478,20 @@ class TestAsyncConfigurations:
     @parametrize
     async def test_path_params_update(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_id` but received ''"):
-            await async_client.beta.configurations.with_raw_response.update(
+            await async_client.configurations.with_raw_response.update(
                 config_id="",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloud) -> None:
-        configuration = await async_client.beta.configurations.list()
+        configuration = await async_client.configurations.list()
         assert_matches_type(AsyncPaginatedCursor[ConfigurationResponse], configuration, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        configuration = await async_client.beta.configurations.list(
+        configuration = await async_client.configurations.list(
             latest_only=True,
             name="name",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -505,7 +505,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.beta.configurations.with_raw_response.list()
+        response = await async_client.configurations.with_raw_response.list()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -515,7 +515,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.beta.configurations.with_streaming_response.list() as response:
+        async with async_client.configurations.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -527,7 +527,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncLlamaCloud) -> None:
-        configuration = await async_client.beta.configurations.delete(
+        configuration = await async_client.configurations.delete(
             config_id="config_id",
         )
         assert configuration is None
@@ -535,7 +535,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_delete_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        configuration = await async_client.beta.configurations.delete(
+        configuration = await async_client.configurations.delete(
             config_id="config_id",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -545,7 +545,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.beta.configurations.with_raw_response.delete(
+        response = await async_client.configurations.with_raw_response.delete(
             config_id="config_id",
         )
 
@@ -557,7 +557,7 @@ class TestAsyncConfigurations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.beta.configurations.with_streaming_response.delete(
+        async with async_client.configurations.with_streaming_response.delete(
             config_id="config_id",
         ) as response:
             assert not response.is_closed
@@ -572,6 +572,6 @@ class TestAsyncConfigurations:
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_id` but received ''"):
-            await async_client.beta.configurations.with_raw_response.delete(
+            await async_client.configurations.with_raw_response.delete(
                 config_id="",
             )

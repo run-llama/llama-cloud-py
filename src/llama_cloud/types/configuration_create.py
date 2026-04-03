@@ -3,8 +3,8 @@
 from typing import Union
 from typing_extensions import Annotated, TypeAlias
 
-from ..._utils import PropertyInfo
-from ..._models import BaseModel
+from .._utils import PropertyInfo
+from .._models import BaseModel
 from .untyped_parameters import UntypedParameters
 from .parse_v2_parameters import ParseV2Parameters
 from .split_v1_parameters import SplitV1Parameters
