@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.2.0 (2026-04-03)
+
+Full Changelog: [v2.1.0...v2.2.0](https://github.com/run-llama/llama-cloud-py/compare/v2.1.0...v2.2.0)
+
+### Features
+
+* **api:** Add product configurations under beta namespace ([e72b9dc](https://github.com/run-llama/llama-cloud-py/commit/e72b9dc79919794f1f5859b4b64147c158531951))
+* **api:** iterate on configurations api namespace ([b46151d](https://github.com/run-llama/llama-cloud-py/commit/b46151d0b602c63003e2c52d47b8e61a53b9cef0))
+
+
+### Bug Fixes
+
+* pin cookbook test file URLs to main merge commit hash ([#77](https://github.com/run-llama/llama-cloud-py/issues/77)) ([12c70b4](https://github.com/run-llama/llama-cloud-py/commit/12c70b4a43e6a978898bb849f96b506ddc76f540))
+
+
+### Documentation
+
+* **extract-v2:** complete walkthrough cookbook ([#61](https://github.com/run-llama/llama-cloud-py/issues/61)) ([e45ac66](https://github.com/run-llama/llama-cloud-py/commit/e45ac66f69f2ae11f51e66d24183459f49822a74))
+
 ## 2.1.0 (2026-04-01)
 
 Full Changelog: [v2.0.0...v2.1.0](https://github.com/run-llama/llama-cloud-py/compare/v2.0.0...v2.1.0)
