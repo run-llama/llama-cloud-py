@@ -6,8 +6,7 @@ Full Changelog: [v2.1.0...v2.2.0](https://github.com/run-llama/llama-cloud-py/co
 
 ### Features
 
-* **api:** Add product configurations under beta namespace ([e72b9dc](https://github.com/run-llama/llama-cloud-py/commit/e72b9dc79919794f1f5859b4b64147c158531951))
-* **api:** iterate on configurations api namespace ([b46151d](https://github.com/run-llama/llama-cloud-py/commit/b46151d0b602c63003e2c52d47b8e61a53b9cef0))
+* **api:** Add product configurations ([e72b9dc](https://github.com/run-llama/llama-cloud-py/commit/e72b9dc79919794f1f5859b4b64147c158531951))
 
 
 ### Bug Fixes
