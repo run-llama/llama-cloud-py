@@ -88,6 +88,14 @@ from .data_sources import (
     DataSourcesResourceWithStreamingResponse,
     AsyncDataSourcesResourceWithStreamingResponse,
 )
+from .configurations import (
+    ConfigurationsResource,
+    AsyncConfigurationsResource,
+    ConfigurationsResourceWithRawResponse,
+    AsyncConfigurationsResourceWithRawResponse,
+    ConfigurationsResourceWithStreamingResponse,
+    AsyncConfigurationsResourceWithStreamingResponse,
+)
 
 __all__ = [
     "FilesResource",
@@ -120,6 +128,12 @@ __all__ = [
     "AsyncClassifyResourceWithRawResponse",
     "ClassifyResourceWithStreamingResponse",
     "AsyncClassifyResourceWithStreamingResponse",
+    "ConfigurationsResource",
+    "AsyncConfigurationsResource",
+    "ConfigurationsResourceWithRawResponse",
+    "AsyncConfigurationsResourceWithRawResponse",
+    "ConfigurationsResourceWithStreamingResponse",
+    "AsyncConfigurationsResourceWithStreamingResponse",
     "ProjectsResource",
     "AsyncProjectsResource",
     "ProjectsResourceWithRawResponse",

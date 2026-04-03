@@ -35,8 +35,8 @@ from .._response import (
 from ..pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.extract_v2_job import ExtractV2Job
+from ..types.configuration_create import ConfigurationCreate
 from ..types.extract_configuration_param import ExtractConfigurationParam
-from ..types.extract_generate_schema_response import ExtractGenerateSchemaResponse
 from ..types.extract_v2_schema_validate_response import ExtractV2SchemaValidateResponse
 
 __all__ = ["ExtractResource", "AsyncExtractResource"]
@@ -295,7 +295,7 @@ class ExtractResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractGenerateSchemaResponse:
+    ) -> ConfigurationCreate:
         """
         Generate a JSON schema and return a product configuration request.
 
@@ -340,7 +340,7 @@ class ExtractResource(SyncAPIResource):
                     extract_generate_schema_params.ExtractGenerateSchemaParams,
                 ),
             ),
-            cast_to=ExtractGenerateSchemaResponse,
+            cast_to=ConfigurationCreate,
         )
 
     def get(
@@ -865,7 +865,7 @@ class AsyncExtractResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExtractGenerateSchemaResponse:
+    ) -> ConfigurationCreate:
         """
         Generate a JSON schema and return a product configuration request.
 
@@ -910,7 +910,7 @@ class AsyncExtractResource(AsyncAPIResource):
                     extract_generate_schema_params.ExtractGenerateSchemaParams,
                 ),
             ),
-            cast_to=ExtractGenerateSchemaResponse,
+            cast_to=ConfigurationCreate,
         )
 
     async def get(

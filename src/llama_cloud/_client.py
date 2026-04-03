@@ -43,6 +43,7 @@ if TYPE_CHECKING:
         data_sinks,
         retrievers,
         data_sources,
+        configurations,
     )
     from .resources.files import FilesResource, AsyncFilesResource
     from .resources.extract import ExtractResource, AsyncExtractResource
@@ -52,6 +53,7 @@ if TYPE_CHECKING:
     from .resources.beta.beta import BetaResource, AsyncBetaResource
     from .resources.data_sinks import DataSinksResource, AsyncDataSinksResource
     from .resources.data_sources import DataSourcesResource, AsyncDataSourcesResource
+    from .resources.configurations import ConfigurationsResource, AsyncConfigurationsResource
     from .resources.pipelines.pipelines import PipelinesResource, AsyncPipelinesResource
     from .resources.classifier.classifier import ClassifierResource, AsyncClassifierResource
     from .resources.retrievers.retrievers import RetrieversResource, AsyncRetrieversResource
@@ -152,6 +154,12 @@ class LlamaCloud(SyncAPIClient):
         from .resources.classify import ClassifyResource
 
         return ClassifyResource(self)
+
+    @cached_property
+    def configurations(self) -> ConfigurationsResource:
+        from .resources.configurations import ConfigurationsResource
+
+        return ConfigurationsResource(self)
 
     @cached_property
     def projects(self) -> ProjectsResource:
@@ -388,6 +396,12 @@ class AsyncLlamaCloud(AsyncAPIClient):
         return AsyncClassifyResource(self)
 
     @cached_property
+    def configurations(self) -> AsyncConfigurationsResource:
+        from .resources.configurations import AsyncConfigurationsResource
+
+        return AsyncConfigurationsResource(self)
+
+    @cached_property
     def projects(self) -> AsyncProjectsResource:
         from .resources.projects import AsyncProjectsResource
 
@@ -573,6 +587,12 @@ class LlamaCloudWithRawResponse:
         return ClassifyResourceWithRawResponse(self._client.classify)
 
     @cached_property
+    def configurations(self) -> configurations.ConfigurationsResourceWithRawResponse:
+        from .resources.configurations import ConfigurationsResourceWithRawResponse
+
+        return ConfigurationsResourceWithRawResponse(self._client.configurations)
+
+    @cached_property
     def projects(self) -> projects.ProjectsResourceWithRawResponse:
         from .resources.projects import ProjectsResourceWithRawResponse
 
@@ -644,6 +664,12 @@ class AsyncLlamaCloudWithRawResponse:
         from .resources.classify import AsyncClassifyResourceWithRawResponse
 
         return AsyncClassifyResourceWithRawResponse(self._client.classify)
+
+    @cached_property
+    def configurations(self) -> configurations.AsyncConfigurationsResourceWithRawResponse:
+        from .resources.configurations import AsyncConfigurationsResourceWithRawResponse
+
+        return AsyncConfigurationsResourceWithRawResponse(self._client.configurations)
 
     @cached_property
     def projects(self) -> projects.AsyncProjectsResourceWithRawResponse:
@@ -719,6 +745,12 @@ class LlamaCloudWithStreamedResponse:
         return ClassifyResourceWithStreamingResponse(self._client.classify)
 
     @cached_property
+    def configurations(self) -> configurations.ConfigurationsResourceWithStreamingResponse:
+        from .resources.configurations import ConfigurationsResourceWithStreamingResponse
+
+        return ConfigurationsResourceWithStreamingResponse(self._client.configurations)
+
+    @cached_property
     def projects(self) -> projects.ProjectsResourceWithStreamingResponse:
         from .resources.projects import ProjectsResourceWithStreamingResponse
 
@@ -790,6 +822,12 @@ class AsyncLlamaCloudWithStreamedResponse:
         from .resources.classify import AsyncClassifyResourceWithStreamingResponse
 
         return AsyncClassifyResourceWithStreamingResponse(self._client.classify)
+
+    @cached_property
+    def configurations(self) -> configurations.AsyncConfigurationsResourceWithStreamingResponse:
+        from .resources.configurations import AsyncConfigurationsResourceWithStreamingResponse
+
+        return AsyncConfigurationsResourceWithStreamingResponse(self._client.configurations)
 
     @cached_property
     def projects(self) -> projects.AsyncProjectsResourceWithStreamingResponse:

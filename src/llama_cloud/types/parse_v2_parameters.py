@@ -1,178 +1,43 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import TYPE_CHECKING, Dict, List, Union, Optional
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing import Dict, List, Union, Optional
+from typing_extensions import Literal
 
-from pydantic import Field as FieldInfo
-
-from .._utils import PropertyInfo
 from .._models import BaseModel
 from .parsing_languages import ParsingLanguages
-from .beta.split_category import SplitCategory
 
 __all__ = [
-    "ExtractGenerateSchemaResponse",
-    "Parameters",
-    "ParametersSplitV1Parameters",
-    "ParametersSplitV1ParametersSplittingStrategy",
-    "ParametersExtractV2Parameters",
-    "ParametersClassifyV2Parameters",
-    "ParametersClassifyV2ParametersRule",
-    "ParametersClassifyV2ParametersParsingConfiguration",
-    "ParametersParseV2Parameters",
-    "ParametersParseV2ParametersAgenticOptions",
-    "ParametersParseV2ParametersCropBox",
-    "ParametersParseV2ParametersInputOptions",
-    "ParametersParseV2ParametersInputOptionsHTML",
-    "ParametersParseV2ParametersInputOptionsPresentation",
-    "ParametersParseV2ParametersInputOptionsSpreadsheet",
-    "ParametersParseV2ParametersOutputOptions",
-    "ParametersParseV2ParametersOutputOptionsMarkdown",
-    "ParametersParseV2ParametersOutputOptionsMarkdownTables",
-    "ParametersParseV2ParametersOutputOptionsSpatialText",
-    "ParametersParseV2ParametersOutputOptionsTablesAsSpreadsheet",
-    "ParametersParseV2ParametersPageRanges",
-    "ParametersParseV2ParametersProcessingControl",
-    "ParametersParseV2ParametersProcessingControlJobFailureConditions",
-    "ParametersParseV2ParametersProcessingControlTimeouts",
-    "ParametersParseV2ParametersProcessingOptions",
-    "ParametersParseV2ParametersProcessingOptionsAutoModeConfiguration",
-    "ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingConf",
-    "ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingConfCropBox",
-    "ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingConfIgnore",
-    "ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingConfPresentation",
-    "ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingConfSpatialText",
-    "ParametersParseV2ParametersProcessingOptionsCostOptimizer",
-    "ParametersParseV2ParametersProcessingOptionsIgnore",
-    "ParametersParseV2ParametersProcessingOptionsOcrParameters",
-    "ParametersParseV2ParametersWebhookConfiguration",
-    "ParametersUntypedParameters",
+    "ParseV2Parameters",
+    "AgenticOptions",
+    "CropBox",
+    "InputOptions",
+    "InputOptionsHTML",
+    "InputOptionsPresentation",
+    "InputOptionsSpreadsheet",
+    "OutputOptions",
+    "OutputOptionsMarkdown",
+    "OutputOptionsMarkdownTables",
+    "OutputOptionsSpatialText",
+    "OutputOptionsTablesAsSpreadsheet",
+    "PageRanges",
+    "ProcessingControl",
+    "ProcessingControlJobFailureConditions",
+    "ProcessingControlTimeouts",
+    "ProcessingOptions",
+    "ProcessingOptionsAutoModeConfiguration",
+    "ProcessingOptionsAutoModeConfigurationParsingConf",
+    "ProcessingOptionsAutoModeConfigurationParsingConfCropBox",
+    "ProcessingOptionsAutoModeConfigurationParsingConfIgnore",
+    "ProcessingOptionsAutoModeConfigurationParsingConfPresentation",
+    "ProcessingOptionsAutoModeConfigurationParsingConfSpatialText",
+    "ProcessingOptionsCostOptimizer",
+    "ProcessingOptionsIgnore",
+    "ProcessingOptionsOcrParameters",
+    "WebhookConfiguration",
 ]
 
 
-class ParametersSplitV1ParametersSplittingStrategy(BaseModel):
-    """Strategy for splitting documents."""
-
-    allow_uncategorized: Optional[Literal["include", "forbid", "omit"]] = None
-    """Controls handling of pages that don't match any category.
-
-    'include': pages can be grouped as 'uncategorized' and included in results.
-    'forbid': all pages must be assigned to a defined category. 'omit': pages can be
-    classified as 'uncategorized' but are excluded from results.
-    """
-
-
-class ParametersSplitV1Parameters(BaseModel):
-    """Typed parameters for a *split v1* product configuration."""
-
-    categories: List[SplitCategory]
-    """Categories to split documents into."""
-
-    product_type: Literal["split_v1"]
-    """Product type."""
-
-    splitting_strategy: Optional[ParametersSplitV1ParametersSplittingStrategy] = None
-    """Strategy for splitting documents."""
-
-
-class ParametersExtractV2Parameters(BaseModel):
-    """Typed parameters for an *extract v2* product configuration."""
-
-    data_schema: Dict[str, Union[Dict[str, object], List[object], str, float, bool, None]]
-    """JSON Schema defining the fields to extract.
-
-    Validate with the /schema/validate endpoint first.
-    """
-
-    product_type: Literal["extract_v2"]
-    """Product type."""
-
-    cite_sources: Optional[bool] = None
-    """Include citations in results"""
-
-    confidence_scores: Optional[bool] = None
-    """Include confidence scores in results"""
-
-    extract_version: Optional[str] = None
-    """Extract algorithm version. Use 'latest' or a date string."""
-
-    extraction_target: Optional[Literal["per_doc", "per_page", "per_table_row"]] = None
-    """
-    Granularity of extraction: per_doc returns one object per document, per_page
-    returns one object per page, per_table_row returns one object per table row
-    """
-
-    lang: Optional[str] = None
-    """ISO 639-1 language code for the document"""
-
-    max_pages: Optional[int] = None
-    """Maximum number of pages to process. Omit for no limit."""
-
-    parse_config_id: Optional[str] = None
-    """
-    Saved parse configuration ID to control how the document is parsed before
-    extraction
-    """
-
-    parse_tier: Optional[str] = None
-    """Parse tier to use before extraction (fast, cost_effective, or agentic)"""
-
-    system_prompt: Optional[str] = None
-    """Custom system prompt to guide extraction behavior"""
-
-    target_pages: Optional[str] = None
-    """Comma-separated page numbers or ranges to process (1-based).
-
-    Omit to process all pages.
-    """
-
-    tier: Optional[Literal["cost_effective", "agentic"]] = None
-    """Extract tier: cost_effective (5 credits/page) or agentic (15 credits/page)"""
-
-
-class ParametersClassifyV2ParametersRule(BaseModel):
-    """A rule for classifying documents."""
-
-    description: str
-    """Natural language criteria for matching this rule"""
-
-    type: str
-    """Document type to assign when rule matches"""
-
-
-class ParametersClassifyV2ParametersParsingConfiguration(BaseModel):
-    """Parsing configuration for classify jobs."""
-
-    lang: Optional[str] = None
-    """ISO 639-1 language code for the document"""
-
-    max_pages: Optional[int] = None
-    """Maximum number of pages to process. Omit for no limit."""
-
-    target_pages: Optional[str] = None
-    """Comma-separated page numbers or ranges to process (1-based).
-
-    Omit to process all pages.
-    """
-
-
-class ParametersClassifyV2Parameters(BaseModel):
-    """Typed parameters for a *classify v2* product configuration."""
-
-    product_type: Literal["classify_v2"]
-    """Product type."""
-
-    rules: List[ParametersClassifyV2ParametersRule]
-    """Classify rules to evaluate against the document (at least one required)"""
-
-    mode: Optional[Literal["FAST"]] = None
-    """Classify execution mode"""
-
-    parsing_configuration: Optional[ParametersClassifyV2ParametersParsingConfiguration] = None
-    """Parsing configuration for classify jobs."""
-
-
-class ParametersParseV2ParametersAgenticOptions(BaseModel):
+class AgenticOptions(BaseModel):
     """Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
 
     These options customize how the AI processes and interprets document content.
@@ -188,7 +53,7 @@ class ParametersParseV2ParametersAgenticOptions(BaseModel):
     """
 
 
-class ParametersParseV2ParametersCropBox(BaseModel):
+class CropBox(BaseModel):
     """Crop boundaries to process only a portion of each page.
 
     Values are ratios 0-1 from page edges
@@ -219,7 +84,7 @@ class ParametersParseV2ParametersCropBox(BaseModel):
     """
 
 
-class ParametersParseV2ParametersInputOptionsHTML(BaseModel):
+class InputOptionsHTML(BaseModel):
     """HTML/web page parsing options (applies to .html, .htm files)"""
 
     make_all_elements_visible: Optional[bool] = None
@@ -238,7 +103,7 @@ class ParametersParseV2ParametersInputOptionsHTML(BaseModel):
     """Remove navigation elements (nav bars, sidebars, menus) to focus on main content"""
 
 
-class ParametersParseV2ParametersInputOptionsPresentation(BaseModel):
+class InputOptionsPresentation(BaseModel):
     """Presentation parsing options (applies to .pptx, .ppt, .odp, .key files)"""
 
     out_of_bounds_content: Optional[bool] = None
@@ -256,7 +121,7 @@ class ParametersParseV2ParametersInputOptionsPresentation(BaseModel):
     """
 
 
-class ParametersParseV2ParametersInputOptionsSpreadsheet(BaseModel):
+class InputOptionsSpreadsheet(BaseModel):
     """Spreadsheet parsing options (applies to .xlsx, .xls, .csv, .ods files)"""
 
     detect_sub_tables_in_sheets: Optional[bool] = None
@@ -279,26 +144,26 @@ class ParametersParseV2ParametersInputOptionsSpreadsheet(BaseModel):
     """
 
 
-class ParametersParseV2ParametersInputOptions(BaseModel):
+class InputOptions(BaseModel):
     """Format-specific options (HTML, PDF, spreadsheet, presentation).
 
     Applied based on detected input file type
     """
 
-    html: Optional[ParametersParseV2ParametersInputOptionsHTML] = None
+    html: Optional[InputOptionsHTML] = None
     """HTML/web page parsing options (applies to .html, .htm files)"""
 
     pdf: Optional[object] = None
     """PDF-specific parsing options (applies to .pdf files)"""
 
-    presentation: Optional[ParametersParseV2ParametersInputOptionsPresentation] = None
+    presentation: Optional[InputOptionsPresentation] = None
     """Presentation parsing options (applies to .pptx, .ppt, .odp, .key files)"""
 
-    spreadsheet: Optional[ParametersParseV2ParametersInputOptionsSpreadsheet] = None
+    spreadsheet: Optional[InputOptionsSpreadsheet] = None
     """Spreadsheet parsing options (applies to .xlsx, .xls, .csv, .ods files)"""
 
 
-class ParametersParseV2ParametersOutputOptionsMarkdownTables(BaseModel):
+class OutputOptionsMarkdownTables(BaseModel):
     """Table formatting options including markdown vs HTML format and merging behavior"""
 
     compact_markdown_tables: Optional[bool] = None
@@ -324,7 +189,7 @@ class ParametersParseV2ParametersOutputOptionsMarkdownTables(BaseModel):
     """
 
 
-class ParametersParseV2ParametersOutputOptionsMarkdown(BaseModel):
+class OutputOptionsMarkdown(BaseModel):
     """Markdown formatting options including table styles and link annotations"""
 
     annotate_links: Optional[bool] = None
@@ -339,11 +204,11 @@ class ParametersParseV2ParametersOutputOptionsMarkdown(BaseModel):
     as separate files. Useful for self-contained markdown output
     """
 
-    tables: Optional[ParametersParseV2ParametersOutputOptionsMarkdownTables] = None
+    tables: Optional[OutputOptionsMarkdownTables] = None
     """Table formatting options including markdown vs HTML format and merging behavior"""
 
 
-class ParametersParseV2ParametersOutputOptionsSpatialText(BaseModel):
+class OutputOptionsSpatialText(BaseModel):
     """Spatial text output options for preserving document layout structure"""
 
     do_not_unroll_columns: Optional[bool] = None
@@ -366,7 +231,7 @@ class ParametersParseV2ParametersOutputOptionsSpatialText(BaseModel):
     """
 
 
-class ParametersParseV2ParametersOutputOptionsTablesAsSpreadsheet(BaseModel):
+class OutputOptionsTablesAsSpreadsheet(BaseModel):
     """Options for exporting tables as XLSX spreadsheets"""
 
     enable: Optional[bool] = None
@@ -379,7 +244,7 @@ class ParametersParseV2ParametersOutputOptionsTablesAsSpreadsheet(BaseModel):
     """
 
 
-class ParametersParseV2ParametersOutputOptions(BaseModel):
+class OutputOptions(BaseModel):
     """Output formatting options for markdown, text, and extracted images"""
 
     extract_printed_page_number: Optional[bool] = None
@@ -396,17 +261,17 @@ class ParametersParseV2ParametersOutputOptions(BaseModel):
     detection like figures and diagrams). Empty list saves no images
     """
 
-    markdown: Optional[ParametersParseV2ParametersOutputOptionsMarkdown] = None
+    markdown: Optional[OutputOptionsMarkdown] = None
     """Markdown formatting options including table styles and link annotations"""
 
-    spatial_text: Optional[ParametersParseV2ParametersOutputOptionsSpatialText] = None
+    spatial_text: Optional[OutputOptionsSpatialText] = None
     """Spatial text output options for preserving document layout structure"""
 
-    tables_as_spreadsheet: Optional[ParametersParseV2ParametersOutputOptionsTablesAsSpreadsheet] = None
+    tables_as_spreadsheet: Optional[OutputOptionsTablesAsSpreadsheet] = None
     """Options for exporting tables as XLSX spreadsheets"""
 
 
-class ParametersParseV2ParametersPageRanges(BaseModel):
+class PageRanges(BaseModel):
     """Page selection: limit total pages or specify exact pages to process"""
 
     max_pages: Optional[int] = None
@@ -425,7 +290,7 @@ class ParametersParseV2ParametersPageRanges(BaseModel):
     """
 
 
-class ParametersParseV2ParametersProcessingControlJobFailureConditions(BaseModel):
+class ProcessingControlJobFailureConditions(BaseModel):
     """
     Quality thresholds that determine when a job should fail vs complete with partial results
     """
@@ -462,7 +327,7 @@ class ParametersParseV2ParametersProcessingControlJobFailureConditions(BaseModel
     """
 
 
-class ParametersParseV2ParametersProcessingControlTimeouts(BaseModel):
+class ProcessingControlTimeouts(BaseModel):
     """Timeout settings for job execution. Increase for large or complex documents"""
 
     base_in_seconds: Optional[int] = None
@@ -478,20 +343,20 @@ class ParametersParseV2ParametersProcessingControlTimeouts(BaseModel):
     """
 
 
-class ParametersParseV2ParametersProcessingControl(BaseModel):
+class ProcessingControl(BaseModel):
     """Job execution controls including timeouts and failure thresholds"""
 
-    job_failure_conditions: Optional[ParametersParseV2ParametersProcessingControlJobFailureConditions] = None
+    job_failure_conditions: Optional[ProcessingControlJobFailureConditions] = None
     """
     Quality thresholds that determine when a job should fail vs complete with
     partial results
     """
 
-    timeouts: Optional[ParametersParseV2ParametersProcessingControlTimeouts] = None
+    timeouts: Optional[ProcessingControlTimeouts] = None
     """Timeout settings for job execution. Increase for large or complex documents"""
 
 
-class ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingConfCropBox(BaseModel):
+class ProcessingOptionsAutoModeConfigurationParsingConfCropBox(BaseModel):
     """Crop box options for auto mode parsing configuration."""
 
     bottom: Optional[float] = None
@@ -507,7 +372,7 @@ class ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingCo
     """Top boundary of crop box as ratio (0-1)"""
 
 
-class ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingConfIgnore(BaseModel):
+class ProcessingOptionsAutoModeConfigurationParsingConfIgnore(BaseModel):
     """Ignore options for auto mode parsing configuration."""
 
     ignore_diagonal_text: Optional[bool] = None
@@ -517,7 +382,7 @@ class ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingCo
     """Whether to ignore hidden text in the document"""
 
 
-class ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingConfPresentation(BaseModel):
+class ProcessingOptionsAutoModeConfigurationParsingConfPresentation(BaseModel):
     """Presentation-specific options for auto mode parsing configuration."""
 
     out_of_bounds_content: Optional[bool] = None
@@ -527,7 +392,7 @@ class ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingCo
     """Skip extraction of embedded data for charts in presentation slides"""
 
 
-class ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingConfSpatialText(BaseModel):
+class ProcessingOptionsAutoModeConfigurationParsingConfSpatialText(BaseModel):
     """Spatial text options for auto mode parsing configuration."""
 
     do_not_unroll_columns: Optional[bool] = None
@@ -540,7 +405,7 @@ class ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingCo
     """Include very small text in spatial output"""
 
 
-class ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingConf(BaseModel):
+class ProcessingOptionsAutoModeConfigurationParsingConf(BaseModel):
     """Parsing configuration to apply when trigger conditions are met"""
 
     adaptive_long_table: Optional[bool] = None
@@ -549,7 +414,7 @@ class ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingCo
     aggressive_table_extraction: Optional[bool] = None
     """Whether to use aggressive table extraction"""
 
-    crop_box: Optional[ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingConfCropBox] = None
+    crop_box: Optional[ProcessingOptionsAutoModeConfigurationParsingConfCropBox] = None
     """Crop box options for auto mode parsing configuration."""
 
     custom_prompt: Optional[str] = None
@@ -561,7 +426,7 @@ class ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingCo
     high_res_ocr: Optional[bool] = None
     """Whether to use high resolution OCR"""
 
-    ignore: Optional[ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingConfIgnore] = None
+    ignore: Optional[ProcessingOptionsAutoModeConfigurationParsingConfIgnore] = None
     """Ignore options for auto mode parsing configuration."""
 
     language: Optional[str] = None
@@ -570,14 +435,10 @@ class ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingCo
     outlined_table_extraction: Optional[bool] = None
     """Whether to use outlined table extraction"""
 
-    presentation: Optional[ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingConfPresentation] = (
-        None
-    )
+    presentation: Optional[ProcessingOptionsAutoModeConfigurationParsingConfPresentation] = None
     """Presentation-specific options for auto mode parsing configuration."""
 
-    spatial_text: Optional[ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingConfSpatialText] = (
-        None
-    )
+    spatial_text: Optional[ProcessingOptionsAutoModeConfigurationParsingConfSpatialText] = None
     """Spatial text options for auto mode parsing configuration."""
 
     specialized_chart_parsing: Optional[Literal["agentic_plus", "agentic", "efficient"]] = None
@@ -631,7 +492,7 @@ class ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingCo
     """Tier version when overriding tier. Required when tier is specified"""
 
 
-class ParametersParseV2ParametersProcessingOptionsAutoModeConfiguration(BaseModel):
+class ProcessingOptionsAutoModeConfiguration(BaseModel):
     """A single auto mode rule with trigger conditions and parsing configuration.
 
     Auto mode allows conditional parsing where different configurations are applied
@@ -639,7 +500,7 @@ class ParametersParseV2ParametersProcessingOptionsAutoModeConfiguration(BaseMode
     parsing_conf overrides default settings for that page.
     """
 
-    parsing_conf: ParametersParseV2ParametersProcessingOptionsAutoModeConfigurationParsingConf
+    parsing_conf: ProcessingOptionsAutoModeConfigurationParsingConf
     """Parsing configuration to apply when trigger conditions are met"""
 
     filename_match_glob: Optional[str] = None
@@ -751,7 +612,7 @@ class ParametersParseV2ParametersProcessingOptionsAutoModeConfiguration(BaseMode
     """
 
 
-class ParametersParseV2ParametersProcessingOptionsCostOptimizer(BaseModel):
+class ProcessingOptionsCostOptimizer(BaseModel):
     """Cost optimizer configuration for reducing parsing costs on simpler pages.
 
     When enabled, the parser analyzes each page and routes simpler pages to faster,
@@ -768,7 +629,7 @@ class ParametersParseV2ParametersProcessingOptionsCostOptimizer(BaseModel):
     """
 
 
-class ParametersParseV2ParametersProcessingOptionsIgnore(BaseModel):
+class ProcessingOptionsIgnore(BaseModel):
     """Options for ignoring specific text types (diagonal, hidden, text in images)"""
 
     ignore_diagonal_text: Optional[bool] = None
@@ -792,7 +653,7 @@ class ParametersParseV2ParametersProcessingOptionsIgnore(BaseModel):
     """
 
 
-class ParametersParseV2ParametersProcessingOptionsOcrParameters(BaseModel):
+class ProcessingOptionsOcrParameters(BaseModel):
     """OCR configuration including language detection settings"""
 
     languages: Optional[List[ParsingLanguages]] = None
@@ -804,7 +665,7 @@ class ParametersParseV2ParametersProcessingOptionsOcrParameters(BaseModel):
     """
 
 
-class ParametersParseV2ParametersProcessingOptions(BaseModel):
+class ProcessingOptions(BaseModel):
     """Document processing options including OCR, table extraction, and chart parsing"""
 
     aggressive_table_extraction: Optional[bool] = None
@@ -813,14 +674,14 @@ class ParametersParseV2ParametersProcessingOptions(BaseModel):
     borders. Useful for documents with borderless or complex tables
     """
 
-    auto_mode_configuration: Optional[List[ParametersParseV2ParametersProcessingOptionsAutoModeConfiguration]] = None
+    auto_mode_configuration: Optional[List[ProcessingOptionsAutoModeConfiguration]] = None
     """
     Conditional processing rules that apply different parsing options based on page
     content, document structure, or filename patterns. Each entry defines trigger
     conditions and the parsing configuration to apply when triggered
     """
 
-    cost_optimizer: Optional[ParametersParseV2ParametersProcessingOptionsCostOptimizer] = None
+    cost_optimizer: Optional[ProcessingOptionsCostOptimizer] = None
     """Cost optimizer configuration for reducing parsing costs on simpler pages.
 
     When enabled, the parser analyzes each page and routes simpler pages to faster,
@@ -834,10 +695,10 @@ class ParametersParseV2ParametersProcessingOptions(BaseModel):
     long table handling. Use when heuristics produce incorrect results
     """
 
-    ignore: Optional[ParametersParseV2ParametersProcessingOptionsIgnore] = None
+    ignore: Optional[ProcessingOptionsIgnore] = None
     """Options for ignoring specific text types (diagonal, hidden, text in images)"""
 
-    ocr_parameters: Optional[ParametersParseV2ParametersProcessingOptionsOcrParameters] = None
+    ocr_parameters: Optional[ProcessingOptionsOcrParameters] = None
     """OCR configuration including language detection settings"""
 
     specialized_chart_parsing: Optional[Literal["agentic_plus", "agentic", "efficient"]] = None
@@ -849,7 +710,7 @@ class ParametersParseV2ParametersProcessingOptions(BaseModel):
     """
 
 
-class ParametersParseV2ParametersWebhookConfiguration(BaseModel):
+class WebhookConfiguration(BaseModel):
     """Webhook configuration for receiving parsing job notifications.
 
     Webhooks are called when specified events occur during job processing.
@@ -875,7 +736,7 @@ class ParametersParseV2ParametersWebhookConfiguration(BaseModel):
     """HTTPS URL to receive webhook POST requests. Must be publicly accessible"""
 
 
-class ParametersParseV2Parameters(BaseModel):
+class ParseV2Parameters(BaseModel):
     """Configuration for LlamaParse v2 document parsing.
 
     Includes tier selection, processing options, output formatting,
@@ -940,7 +801,7 @@ class ParametersParseV2Parameters(BaseModel):
     (e.g., '1.0', '2.0') for reproducible results
     """
 
-    agentic_options: Optional[ParametersParseV2ParametersAgenticOptions] = None
+    agentic_options: Optional[AgenticOptions] = None
     """Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
 
     These options customize how the AI processes and interprets document content.
@@ -953,7 +814,7 @@ class ParametersParseV2Parameters(BaseModel):
     Used for analytics and debugging. Example: 'my-app-v2'
     """
 
-    crop_box: Optional[ParametersParseV2ParametersCropBox] = None
+    crop_box: Optional[CropBox] = None
     """Crop boundaries to process only a portion of each page.
 
     Values are ratios 0-1 from page edges
@@ -974,70 +835,26 @@ class ParametersParseV2Parameters(BaseModel):
     but reserved for future expansion.
     """
 
-    input_options: Optional[ParametersParseV2ParametersInputOptions] = None
+    input_options: Optional[InputOptions] = None
     """Format-specific options (HTML, PDF, spreadsheet, presentation).
 
     Applied based on detected input file type
     """
 
-    output_options: Optional[ParametersParseV2ParametersOutputOptions] = None
+    output_options: Optional[OutputOptions] = None
     """Output formatting options for markdown, text, and extracted images"""
 
-    page_ranges: Optional[ParametersParseV2ParametersPageRanges] = None
+    page_ranges: Optional[PageRanges] = None
     """Page selection: limit total pages or specify exact pages to process"""
 
-    processing_control: Optional[ParametersParseV2ParametersProcessingControl] = None
+    processing_control: Optional[ProcessingControl] = None
     """Job execution controls including timeouts and failure thresholds"""
 
-    processing_options: Optional[ParametersParseV2ParametersProcessingOptions] = None
+    processing_options: Optional[ProcessingOptions] = None
     """Document processing options including OCR, table extraction, and chart parsing"""
 
-    webhook_configurations: Optional[List[ParametersParseV2ParametersWebhookConfiguration]] = None
+    webhook_configurations: Optional[List[WebhookConfiguration]] = None
     """Webhook endpoints for job status notifications.
 
     Multiple webhooks can be configured for different events or services
     """
-
-
-class ParametersUntypedParameters(BaseModel):
-    """Catch-all for configurations without a dedicated typed schema.
-
-    Accepts arbitrary JSON fields alongside ``product_type``.
-    """
-
-    product_type: Literal["unknown"]
-    """Product type."""
-
-    if TYPE_CHECKING:
-        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
-        # value to this field, so for compatibility we avoid doing it at runtime.
-        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
-
-        # Stub to indicate that arbitrary properties are accepted.
-        # To access properties that are not valid identifiers you can use `getattr`, e.g.
-        # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object: ...
-    else:
-        __pydantic_extra__: Dict[str, object]
-
-
-Parameters: TypeAlias = Annotated[
-    Union[
-        ParametersSplitV1Parameters,
-        ParametersExtractV2Parameters,
-        ParametersClassifyV2Parameters,
-        ParametersParseV2Parameters,
-        ParametersUntypedParameters,
-    ],
-    PropertyInfo(discriminator="product_type"),
-]
-
-
-class ExtractGenerateSchemaResponse(BaseModel):
-    """Request body for creating a product configuration."""
-
-    name: str
-    """Human-readable name for this configuration."""
-
-    parameters: Parameters
-    """Product-specific configuration parameters."""

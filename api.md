@@ -99,7 +99,6 @@ from llama_cloud.types import (
     ExtractV2SchemaValidateRequest,
     ExtractV2SchemaValidateResponse,
     ExtractedFieldMetadata,
-    ExtractGenerateSchemaResponse,
 )
 ```
 
@@ -108,7 +107,7 @@ Methods:
 - <code title="post /api/v2/extract">client.extract.<a href="./src/llama_cloud/resources/extract.py">create</a>(\*\*<a href="src/llama_cloud/types/extract_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/extract_v2_job.py">ExtractV2Job</a></code>
 - <code title="get /api/v2/extract">client.extract.<a href="./src/llama_cloud/resources/extract.py">list</a>(\*\*<a href="src/llama_cloud/types/extract_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/extract_v2_job.py">SyncPaginatedCursor[ExtractV2Job]</a></code>
 - <code title="delete /api/v2/extract/{job_id}">client.extract.<a href="./src/llama_cloud/resources/extract.py">delete</a>(job_id, \*\*<a href="src/llama_cloud/types/extract_delete_params.py">params</a>) -> object</code>
-- <code title="post /api/v2/extract/schema/generate">client.extract.<a href="./src/llama_cloud/resources/extract.py">generate_schema</a>(\*\*<a href="src/llama_cloud/types/extract_generate_schema_params.py">params</a>) -> <a href="./src/llama_cloud/types/extract_generate_schema_response.py">ExtractGenerateSchemaResponse</a></code>
+- <code title="post /api/v2/extract/schema/generate">client.extract.<a href="./src/llama_cloud/resources/extract.py">generate_schema</a>(\*\*<a href="src/llama_cloud/types/extract_generate_schema_params.py">params</a>) -> <a href="./src/llama_cloud/types/configuration_create.py">ConfigurationCreate</a></code>
 - <code title="get /api/v2/extract/{job_id}">client.extract.<a href="./src/llama_cloud/resources/extract.py">get</a>(job_id, \*\*<a href="src/llama_cloud/types/extract_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/extract_v2_job.py">ExtractV2Job</a></code>
 - <code title="post /api/v2/extract/schema/validation">client.extract.<a href="./src/llama_cloud/resources/extract.py">validate_schema</a>(\*\*<a href="src/llama_cloud/types/extract_validate_schema_params.py">params</a>) -> <a href="./src/llama_cloud/types/extract_v2_schema_validate_response.py">ExtractV2SchemaValidateResponse</a></code>
 
@@ -154,6 +153,30 @@ Methods:
 - <code title="post /api/v2/classify">client.classify.<a href="./src/llama_cloud/resources/classify.py">create</a>(\*\*<a href="src/llama_cloud/types/classify_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/classify_create_response.py">ClassifyCreateResponse</a></code>
 - <code title="get /api/v2/classify">client.classify.<a href="./src/llama_cloud/resources/classify.py">list</a>(\*\*<a href="src/llama_cloud/types/classify_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/classify_list_response.py">SyncPaginatedCursor[ClassifyListResponse]</a></code>
 - <code title="get /api/v2/classify/{job_id}">client.classify.<a href="./src/llama_cloud/resources/classify.py">get</a>(job_id, \*\*<a href="src/llama_cloud/types/classify_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/classify_get_response.py">ClassifyGetResponse</a></code>
+
+# Configurations
+
+Types:
+
+```python
+from llama_cloud.types import (
+    ClassifyV2Parameters,
+    ConfigurationCreate,
+    ConfigurationResponse,
+    ExtractV2Parameters,
+    ParseV2Parameters,
+    SplitV1Parameters,
+    UntypedParameters,
+)
+```
+
+Methods:
+
+- <code title="post /api/v1/beta/configurations">client.configurations.<a href="./src/llama_cloud/resources/configurations.py">create</a>(\*\*<a href="src/llama_cloud/types/configuration_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/configuration_response.py">ConfigurationResponse</a></code>
+- <code title="get /api/v1/beta/configurations/{config_id}">client.configurations.<a href="./src/llama_cloud/resources/configurations.py">retrieve</a>(config_id, \*\*<a href="src/llama_cloud/types/configuration_retrieve_params.py">params</a>) -> <a href="./src/llama_cloud/types/configuration_response.py">ConfigurationResponse</a></code>
+- <code title="put /api/v1/beta/configurations/{config_id}">client.configurations.<a href="./src/llama_cloud/resources/configurations.py">update</a>(config_id, \*\*<a href="src/llama_cloud/types/configuration_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/configuration_response.py">ConfigurationResponse</a></code>
+- <code title="get /api/v1/beta/configurations">client.configurations.<a href="./src/llama_cloud/resources/configurations.py">list</a>(\*\*<a href="src/llama_cloud/types/configuration_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/configuration_response.py">SyncPaginatedCursor[ConfigurationResponse]</a></code>
+- <code title="delete /api/v1/beta/configurations/{config_id}">client.configurations.<a href="./src/llama_cloud/resources/configurations.py">delete</a>(config_id, \*\*<a href="src/llama_cloud/types/configuration_delete_params.py">params</a>) -> None</code>
 
 # Projects
 
