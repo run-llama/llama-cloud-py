@@ -11,11 +11,11 @@ from llama_cloud import LlamaCloud, AsyncLlamaCloud
 from tests.utils import assert_matches_type
 from llama_cloud.types import (
     ExtractV2Job,
+    ConfigurationCreate,
     ExtractV2SchemaValidateResponse,
 )
 from llama_cloud._utils import parse_datetime
 from llama_cloud.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
-from llama_cloud.types.beta import ConfigurationCreate
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 

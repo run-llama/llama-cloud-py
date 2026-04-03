@@ -7,26 +7,26 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ..._utils import path_template, maybe_transform, async_maybe_transform
-from ..._compat import cached_property
-from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
-    to_raw_response_wrapper,
-    to_streamed_response_wrapper,
-    async_to_raw_response_wrapper,
-    async_to_streamed_response_wrapper,
-)
-from ...pagination import SyncPaginatedCursor, AsyncPaginatedCursor
-from ...types.beta import (
+from ..types import (
     configuration_list_params,
     configuration_create_params,
     configuration_delete_params,
     configuration_update_params,
     configuration_retrieve_params,
 )
-from ..._base_client import AsyncPaginator, make_request_options
-from ...types.beta.configuration_response import ConfigurationResponse
+from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
+from .._utils import path_template, maybe_transform, async_maybe_transform
+from .._compat import cached_property
+from .._resource import SyncAPIResource, AsyncAPIResource
+from .._response import (
+    to_raw_response_wrapper,
+    to_streamed_response_wrapper,
+    async_to_raw_response_wrapper,
+    async_to_streamed_response_wrapper,
+)
+from ..pagination import SyncPaginatedCursor, AsyncPaginatedCursor
+from .._base_client import AsyncPaginator, make_request_options
+from ..types.configuration_response import ConfigurationResponse
 
 __all__ = ["ConfigurationsResource", "AsyncConfigurationsResource"]
 

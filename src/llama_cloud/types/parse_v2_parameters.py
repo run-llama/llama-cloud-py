@@ -3,8 +3,8 @@
 from typing import Dict, List, Union, Optional
 from typing_extensions import Literal
 
-from ..._models import BaseModel
-from ..parsing_languages import ParsingLanguages
+from .._models import BaseModel
+from .parsing_languages import ParsingLanguages
 
 __all__ = [
     "ParseV2Parameters",

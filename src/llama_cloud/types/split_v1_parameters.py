@@ -1,19 +1,18 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from __future__ import annotations
+from typing import List, Optional
+from typing_extensions import Literal
 
-from typing import Iterable
-from typing_extensions import Literal, Required, TypedDict
+from .._models import BaseModel
+from .beta.split_category import SplitCategory
 
-from .split_category_param import SplitCategoryParam
-
-__all__ = ["SplitV1ParametersParam", "SplittingStrategy"]
+__all__ = ["SplitV1Parameters", "SplittingStrategy"]
 
 
-class SplittingStrategy(TypedDict, total=False):
+class SplittingStrategy(BaseModel):
     """Strategy for splitting documents."""
 
-    allow_uncategorized: Literal["include", "forbid", "omit"]
+    allow_uncategorized: Optional[Literal["include", "forbid", "omit"]] = None
     """Controls handling of pages that don't match any category.
 
     'include': pages can be grouped as 'uncategorized' and included in results.
@@ -22,14 +21,14 @@ class SplittingStrategy(TypedDict, total=False):
     """
 
 
-class SplitV1ParametersParam(TypedDict, total=False):
+class SplitV1Parameters(BaseModel):
     """Typed parameters for a *split v1* product configuration."""
 
-    categories: Required[Iterable[SplitCategoryParam]]
+    categories: List[SplitCategory]
     """Categories to split documents into."""
 
-    product_type: Required[Literal["split_v1"]]
+    product_type: Literal["split_v1"]
     """Product type."""
 
-    splitting_strategy: SplittingStrategy
+    splitting_strategy: Optional[SplittingStrategy] = None
     """Strategy for splitting documents."""

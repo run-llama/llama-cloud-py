@@ -35,7 +35,7 @@ from .._response import (
 from ..pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.extract_v2_job import ExtractV2Job
-from ..types.beta.configuration_create import ConfigurationCreate
+from ..types.configuration_create import ConfigurationCreate
 from ..types.extract_configuration_param import ExtractConfigurationParam
 from ..types.extract_v2_schema_validate_response import ExtractV2SchemaValidateResponse
 
