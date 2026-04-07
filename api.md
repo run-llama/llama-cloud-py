@@ -438,26 +438,6 @@ Methods:
 - <code title="get /api/v1/beta/agent-data/{item_id}">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">get</a>(item_id, \*\*<a href="src/llama_cloud/types/beta/agent_data_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data.py">AgentData</a></code>
 - <code title="post /api/v1/beta/agent-data/:search">client.beta.agent_data.<a href="./src/llama_cloud/resources/beta/agent_data.py">search</a>(\*\*<a href="src/llama_cloud/types/beta/agent_data_search_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/agent_data.py">SyncPaginatedCursorPost[AgentData]</a></code>
 
-## ParseConfigurations
-
-Types:
-
-```python
-from llama_cloud.types.beta import (
-    ParseConfiguration,
-    ParseConfigurationCreate,
-    ParseConfigurationQueryResponse,
-)
-```
-
-Methods:
-
-- <code title="post /api/v1/beta/parse-configurations">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">create</a>(\*\*<a href="src/llama_cloud/types/beta/parse_configuration_create_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration.py">ParseConfiguration</a></code>
-- <code title="put /api/v1/beta/parse-configurations/{config_id}">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">update</a>(config_id, \*\*<a href="src/llama_cloud/types/beta/parse_configuration_update_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration.py">ParseConfiguration</a></code>
-- <code title="get /api/v1/beta/parse-configurations">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">list</a>(\*\*<a href="src/llama_cloud/types/beta/parse_configuration_list_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration.py">SyncPaginatedCursor[ParseConfiguration]</a></code>
-- <code title="delete /api/v1/beta/parse-configurations/{config_id}">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">delete</a>(config_id, \*\*<a href="src/llama_cloud/types/beta/parse_configuration_delete_params.py">params</a>) -> None</code>
-- <code title="get /api/v1/beta/parse-configurations/{config_id}">client.beta.parse_configurations.<a href="./src/llama_cloud/resources/beta/parse_configurations.py">get</a>(config_id, \*\*<a href="src/llama_cloud/types/beta/parse_configuration_get_params.py">params</a>) -> <a href="./src/llama_cloud/types/beta/parse_configuration.py">ParseConfiguration</a></code>
-
 ## Sheets
 
 Types:
