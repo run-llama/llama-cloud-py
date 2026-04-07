@@ -6,7 +6,7 @@ Full Changelog: [v2.2.0...v2.3.0](https://github.com/run-llama/llama-cloud-py/co
 
 ### Features
 
-* **api:** manual updates ([ef96778](https://github.com/run-llama/llama-cloud-py/commit/ef9677851bec9ffb3d1cfedd431efd881b3ef7f9))
+* **api:** remove parse configurations, superseded by generic configurations from 2.2.0 ([ef96778](https://github.com/run-llama/llama-cloud-py/commit/ef9677851bec9ffb3d1cfedd431efd881b3ef7f9))
 
 
 ### Bug Fixes
