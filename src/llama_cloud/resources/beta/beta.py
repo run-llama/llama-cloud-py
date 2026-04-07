@@ -36,14 +36,6 @@ from .batch.batch import (
     BatchResourceWithStreamingResponse,
     AsyncBatchResourceWithStreamingResponse,
 )
-from .parse_configurations import (
-    ParseConfigurationsResource,
-    AsyncParseConfigurationsResource,
-    ParseConfigurationsResourceWithRawResponse,
-    AsyncParseConfigurationsResourceWithRawResponse,
-    ParseConfigurationsResourceWithStreamingResponse,
-    AsyncParseConfigurationsResourceWithStreamingResponse,
-)
 from .directories.directories import (
     DirectoriesResource,
     AsyncDirectoriesResource,
@@ -60,10 +52,6 @@ class BetaResource(SyncAPIResource):
     @cached_property
     def agent_data(self) -> AgentDataResource:
         return AgentDataResource(self._client)
-
-    @cached_property
-    def parse_configurations(self) -> ParseConfigurationsResource:
-        return ParseConfigurationsResource(self._client)
 
     @cached_property
     def sheets(self) -> SheetsResource:
@@ -105,10 +93,6 @@ class AsyncBetaResource(AsyncAPIResource):
     @cached_property
     def agent_data(self) -> AsyncAgentDataResource:
         return AsyncAgentDataResource(self._client)
-
-    @cached_property
-    def parse_configurations(self) -> AsyncParseConfigurationsResource:
-        return AsyncParseConfigurationsResource(self._client)
 
     @cached_property
     def sheets(self) -> AsyncSheetsResource:
@@ -155,10 +139,6 @@ class BetaResourceWithRawResponse:
         return AgentDataResourceWithRawResponse(self._beta.agent_data)
 
     @cached_property
-    def parse_configurations(self) -> ParseConfigurationsResourceWithRawResponse:
-        return ParseConfigurationsResourceWithRawResponse(self._beta.parse_configurations)
-
-    @cached_property
     def sheets(self) -> SheetsResourceWithRawResponse:
         return SheetsResourceWithRawResponse(self._beta.sheets)
 
@@ -182,10 +162,6 @@ class AsyncBetaResourceWithRawResponse:
     @cached_property
     def agent_data(self) -> AsyncAgentDataResourceWithRawResponse:
         return AsyncAgentDataResourceWithRawResponse(self._beta.agent_data)
-
-    @cached_property
-    def parse_configurations(self) -> AsyncParseConfigurationsResourceWithRawResponse:
-        return AsyncParseConfigurationsResourceWithRawResponse(self._beta.parse_configurations)
 
     @cached_property
     def sheets(self) -> AsyncSheetsResourceWithRawResponse:
@@ -213,10 +189,6 @@ class BetaResourceWithStreamingResponse:
         return AgentDataResourceWithStreamingResponse(self._beta.agent_data)
 
     @cached_property
-    def parse_configurations(self) -> ParseConfigurationsResourceWithStreamingResponse:
-        return ParseConfigurationsResourceWithStreamingResponse(self._beta.parse_configurations)
-
-    @cached_property
     def sheets(self) -> SheetsResourceWithStreamingResponse:
         return SheetsResourceWithStreamingResponse(self._beta.sheets)
 
@@ -240,10 +212,6 @@ class AsyncBetaResourceWithStreamingResponse:
     @cached_property
     def agent_data(self) -> AsyncAgentDataResourceWithStreamingResponse:
         return AsyncAgentDataResourceWithStreamingResponse(self._beta.agent_data)
-
-    @cached_property
-    def parse_configurations(self) -> AsyncParseConfigurationsResourceWithStreamingResponse:
-        return AsyncParseConfigurationsResourceWithStreamingResponse(self._beta.parse_configurations)
 
     @cached_property
     def sheets(self) -> AsyncSheetsResourceWithStreamingResponse:
