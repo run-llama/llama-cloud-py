@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.3.0 (2026-04-07)
+
+Full Changelog: [v2.2.0...v2.3.0](https://github.com/run-llama/llama-cloud-py/compare/v2.2.0...v2.3.0)
+
+### Features
+
+* **api:** manual updates ([ef96778](https://github.com/run-llama/llama-cloud-py/commit/ef9677851bec9ffb3d1cfedd431efd881b3ef7f9))
+
+
+### Bug Fixes
+
+* **client:** preserve hardcoded query params when merging with user params ([53c3d0a](https://github.com/run-llama/llama-cloud-py/commit/53c3d0aa13ccb9b3d6aa7b18c1943b52802c1aaa))
+* use agentic parse for citation bounding box demo ([#78](https://github.com/run-llama/llama-cloud-py/issues/78)) ([4f0c201](https://github.com/run-llama/llama-cloud-py/commit/4f0c201b2f91e9d765d061a9450c6fce519585f2))
+
 ## 2.2.0 (2026-04-03)
 
 Full Changelog: [v2.1.0...v2.2.0](https://github.com/run-llama/llama-cloud-py/compare/v2.1.0...v2.2.0)
