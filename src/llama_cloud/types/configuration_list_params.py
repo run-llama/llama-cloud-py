@@ -23,7 +23,9 @@ class ConfigurationListParams(TypedDict, total=False):
     page_token: Optional[str]
     """Pagination token."""
 
-    product_type: Optional[List[Literal["split_v1", "extract_v2", "classify_v2", "parse_v2", "unknown"]]]
+    product_type: Optional[
+        List[Literal["split_v1", "extract_v2", "classify_v2", "parse_v2", "spreadsheet_v1", "unknown"]]
+    ]
     """Filter by one or more product types. Repeat the parameter for multiple values."""
 
     project_id: Optional[str]

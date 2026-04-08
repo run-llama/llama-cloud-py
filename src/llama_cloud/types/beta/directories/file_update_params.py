@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Dict, Union, Optional
 from typing_extensions import Required, Annotated, TypedDict
 
 from ...._utils import PropertyInfo
@@ -22,6 +22,9 @@ class FileUpdateParams(TypedDict, total=False):
 
     display_name: Optional[str]
     """Updated display name."""
+
+    metadata: Optional[Dict[str, Union[str, float, bool, None]]]
+    """User-defined metadata key-value pairs. Replaces the user metadata layer."""
 
     unique_id: Optional[str]
     """Updated unique identifier."""

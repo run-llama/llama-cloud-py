@@ -149,6 +149,8 @@ class TestRetrievers:
                     },
                 }
             ],
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="name",
         )
         assert_matches_type(Retriever, retriever, path=["response"])
@@ -250,7 +252,17 @@ class TestRetrievers:
     @parametrize
     def test_method_delete(self, client: LlamaCloud) -> None:
         retriever = client.retrievers.delete(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert retriever is None
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_delete_with_all_params(self, client: LlamaCloud) -> None:
+        retriever = client.retrievers.delete(
+            retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert retriever is None
 
@@ -258,7 +270,7 @@ class TestRetrievers:
     @parametrize
     def test_raw_response_delete(self, client: LlamaCloud) -> None:
         response = client.retrievers.with_raw_response.delete(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
@@ -270,7 +282,7 @@ class TestRetrievers:
     @parametrize
     def test_streaming_response_delete(self, client: LlamaCloud) -> None:
         with client.retrievers.with_streaming_response.delete(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -285,7 +297,7 @@ class TestRetrievers:
     def test_path_params_delete(self, client: LlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `retriever_id` but received ''"):
             client.retrievers.with_raw_response.delete(
-                "",
+                retriever_id="",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
@@ -632,6 +644,8 @@ class TestAsyncRetrievers:
                     },
                 }
             ],
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="name",
         )
         assert_matches_type(Retriever, retriever, path=["response"])
@@ -733,7 +747,17 @@ class TestAsyncRetrievers:
     @parametrize
     async def test_method_delete(self, async_client: AsyncLlamaCloud) -> None:
         retriever = await async_client.retrievers.delete(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert retriever is None
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_delete_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        retriever = await async_client.retrievers.delete(
+            retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert retriever is None
 
@@ -741,7 +765,7 @@ class TestAsyncRetrievers:
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.retrievers.with_raw_response.delete(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
@@ -753,7 +777,7 @@ class TestAsyncRetrievers:
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.retrievers.with_streaming_response.delete(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            retriever_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -768,7 +792,7 @@ class TestAsyncRetrievers:
     async def test_path_params_delete(self, async_client: AsyncLlamaCloud) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `retriever_id` but received ''"):
             await async_client.retrievers.with_raw_response.delete(
-                "",
+                retriever_id="",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")

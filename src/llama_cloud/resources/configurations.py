@@ -220,7 +220,9 @@ class ConfigurationsResource(SyncAPIResource):
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
-        product_type: Optional[List[Literal["split_v1", "extract_v2", "classify_v2", "parse_v2", "unknown"]]]
+        product_type: Optional[
+            List[Literal["split_v1", "extract_v2", "classify_v2", "parse_v2", "spreadsheet_v1", "unknown"]]
+        ]
         | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -512,7 +514,9 @@ class AsyncConfigurationsResource(AsyncAPIResource):
         organization_id: Optional[str] | Omit = omit,
         page_size: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
-        product_type: Optional[List[Literal["split_v1", "extract_v2", "classify_v2", "parse_v2", "unknown"]]]
+        product_type: Optional[
+            List[Literal["split_v1", "extract_v2", "classify_v2", "parse_v2", "spreadsheet_v1", "unknown"]]
+        ]
         | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
