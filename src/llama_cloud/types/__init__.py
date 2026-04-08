@@ -135,6 +135,7 @@ from .openai_embedding_config import OpenAIEmbeddingConfig as OpenAIEmbeddingCon
 from .parsing_create_response import ParsingCreateResponse as ParsingCreateResponse
 from .preset_retrieval_params import PresetRetrievalParams as PresetRetrievalParams
 from .retriever_create_params import RetrieverCreateParams as RetrieverCreateParams
+from .retriever_delete_params import RetrieverDeleteParams as RetrieverDeleteParams
 from .retriever_list_response import RetrieverListResponse as RetrieverListResponse
 from .retriever_search_params import RetrieverSearchParams as RetrieverSearchParams
 from .retriever_update_params import RetrieverUpdateParams as RetrieverUpdateParams

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Dict, Union, Optional
 from typing_extensions import Required, TypedDict
 
 __all__ = ["FileAddParams"]
@@ -18,6 +18,9 @@ class FileAddParams(TypedDict, total=False):
 
     display_name: Optional[str]
     """Display name for the file. If not provided, will use the file's name."""
+
+    metadata: Optional[Dict[str, Union[str, float, bool, None]]]
+    """User-defined metadata key-value pairs to associate with the file."""
 
     unique_id: Optional[str]
     """Unique identifier for the file in the directory.

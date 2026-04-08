@@ -64,10 +64,8 @@ class SplitResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SplitCreateResponse:
-        """Create a document split job.
-
-        Experimental: This endpoint is not yet ready for
-        production use and is subject to change at any time.
+        """
+        Create a document split job.
 
         Args:
           document_input: Document to be split.
@@ -128,10 +126,8 @@ class SplitResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPaginatedCursor[SplitListResponse]:
-        """List document split jobs.
-
-        Experimental: This endpoint is not yet ready for
-        production use and is subject to change at any time.
+        """
+        List document split jobs.
 
         Args:
           created_at_on_or_after: Include items created at or after this timestamp (inclusive)
@@ -190,9 +186,6 @@ class SplitResource(SyncAPIResource):
     ) -> SplitGetResponse:
         """
         Get a document split job.
-
-        Experimental: This endpoint is not yet ready for production use and is subject
-        to change at any time.
 
         Args:
           extra_headers: Send extra headers
@@ -259,10 +252,8 @@ class AsyncSplitResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SplitCreateResponse:
-        """Create a document split job.
-
-        Experimental: This endpoint is not yet ready for
-        production use and is subject to change at any time.
+        """
+        Create a document split job.
 
         Args:
           document_input: Document to be split.
@@ -323,10 +314,8 @@ class AsyncSplitResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[SplitListResponse, AsyncPaginatedCursor[SplitListResponse]]:
-        """List document split jobs.
-
-        Experimental: This endpoint is not yet ready for
-        production use and is subject to change at any time.
+        """
+        List document split jobs.
 
         Args:
           created_at_on_or_after: Include items created at or after this timestamp (inclusive)
@@ -385,9 +374,6 @@ class AsyncSplitResource(AsyncAPIResource):
     ) -> SplitGetResponse:
         """
         Get a document split job.
-
-        Experimental: This endpoint is not yet ready for production use and is subject
-        to change at any time.
 
         Args:
           extra_headers: Send extra headers

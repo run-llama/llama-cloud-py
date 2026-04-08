@@ -43,6 +43,7 @@ class TestFiles:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             body_directory_id="directory_id",
             display_name="display_name",
+            metadata={"foo": "string"},
             unique_id="x",
         )
         assert_matches_type(FileUpdateResponse, file, path=["response"])
@@ -230,6 +231,7 @@ class TestFiles:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             display_name="display_name",
+            metadata={"foo": "string"},
             unique_id="unique_id",
         )
         assert_matches_type(FileAddResponse, file, path=["response"])
@@ -419,6 +421,7 @@ class TestAsyncFiles:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             body_directory_id="directory_id",
             display_name="display_name",
+            metadata={"foo": "string"},
             unique_id="x",
         )
         assert_matches_type(FileUpdateResponse, file, path=["response"])
@@ -606,6 +609,7 @@ class TestAsyncFiles:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             display_name="display_name",
+            metadata={"foo": "string"},
             unique_id="unique_id",
         )
         assert_matches_type(FileAddResponse, file, path=["response"])

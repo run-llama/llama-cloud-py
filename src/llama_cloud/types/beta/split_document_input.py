@@ -6,7 +6,7 @@ __all__ = ["SplitDocumentInput"]
 
 
 class SplitDocumentInput(BaseModel):
-    """Document input specification."""
+    """Document input specification for beta API."""
 
     type: str
     """Type of document input. Valid values are: file_id"""
