@@ -39,7 +39,14 @@ class TestExtract:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             configuration={
-                "data_schema": {"foo": {"foo": "bar"}},
+                "data_schema": {
+                    "properties": {
+                        "vendor_name": "bar",
+                        "total_amount": "bar",
+                    },
+                    "required": ["vendor_name", "total_amount"],
+                    "type": "object",
+                },
                 "cite_sources": True,
                 "confidence_scores": True,
                 "extract_version": "latest",
@@ -204,7 +211,7 @@ class TestExtract:
             data_schema={"foo": {"foo": "bar"}},
             file_id="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
             name="invoice_extraction",
-            prompt="Extract vendor name, invoice number, line items, and total amount",
+            prompt="Extract vendor name, invoice number, date, line items with descriptions and amounts, and total amount from invoices.",
         )
         assert_matches_type(ConfigurationCreate, extract, path=["response"])
 
@@ -287,7 +294,16 @@ class TestExtract:
     @parametrize
     def test_method_validate_schema(self, client: LlamaCloud) -> None:
         extract = client.extract.validate_schema(
-            data_schema={"foo": {"foo": "bar"}},
+            data_schema={
+                "properties": {
+                    "vendor_name": "bar",
+                    "invoice_number": "bar",
+                    "total_amount": "bar",
+                    "line_items": "bar",
+                },
+                "required": ["vendor_name", "invoice_number", "total_amount"],
+                "type": "object",
+            },
         )
         assert_matches_type(ExtractV2SchemaValidateResponse, extract, path=["response"])
 
@@ -295,7 +311,16 @@ class TestExtract:
     @parametrize
     def test_raw_response_validate_schema(self, client: LlamaCloud) -> None:
         response = client.extract.with_raw_response.validate_schema(
-            data_schema={"foo": {"foo": "bar"}},
+            data_schema={
+                "properties": {
+                    "vendor_name": "bar",
+                    "invoice_number": "bar",
+                    "total_amount": "bar",
+                    "line_items": "bar",
+                },
+                "required": ["vendor_name", "invoice_number", "total_amount"],
+                "type": "object",
+            },
         )
 
         assert response.is_closed is True
@@ -307,7 +332,16 @@ class TestExtract:
     @parametrize
     def test_streaming_response_validate_schema(self, client: LlamaCloud) -> None:
         with client.extract.with_streaming_response.validate_schema(
-            data_schema={"foo": {"foo": "bar"}},
+            data_schema={
+                "properties": {
+                    "vendor_name": "bar",
+                    "invoice_number": "bar",
+                    "total_amount": "bar",
+                    "line_items": "bar",
+                },
+                "required": ["vendor_name", "invoice_number", "total_amount"],
+                "type": "object",
+            },
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -339,7 +373,14 @@ class TestAsyncExtract:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             configuration={
-                "data_schema": {"foo": {"foo": "bar"}},
+                "data_schema": {
+                    "properties": {
+                        "vendor_name": "bar",
+                        "total_amount": "bar",
+                    },
+                    "required": ["vendor_name", "total_amount"],
+                    "type": "object",
+                },
                 "cite_sources": True,
                 "confidence_scores": True,
                 "extract_version": "latest",
@@ -504,7 +545,7 @@ class TestAsyncExtract:
             data_schema={"foo": {"foo": "bar"}},
             file_id="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
             name="invoice_extraction",
-            prompt="Extract vendor name, invoice number, line items, and total amount",
+            prompt="Extract vendor name, invoice number, date, line items with descriptions and amounts, and total amount from invoices.",
         )
         assert_matches_type(ConfigurationCreate, extract, path=["response"])
 
@@ -587,7 +628,16 @@ class TestAsyncExtract:
     @parametrize
     async def test_method_validate_schema(self, async_client: AsyncLlamaCloud) -> None:
         extract = await async_client.extract.validate_schema(
-            data_schema={"foo": {"foo": "bar"}},
+            data_schema={
+                "properties": {
+                    "vendor_name": "bar",
+                    "invoice_number": "bar",
+                    "total_amount": "bar",
+                    "line_items": "bar",
+                },
+                "required": ["vendor_name", "invoice_number", "total_amount"],
+                "type": "object",
+            },
         )
         assert_matches_type(ExtractV2SchemaValidateResponse, extract, path=["response"])
 
@@ -595,7 +645,16 @@ class TestAsyncExtract:
     @parametrize
     async def test_raw_response_validate_schema(self, async_client: AsyncLlamaCloud) -> None:
         response = await async_client.extract.with_raw_response.validate_schema(
-            data_schema={"foo": {"foo": "bar"}},
+            data_schema={
+                "properties": {
+                    "vendor_name": "bar",
+                    "invoice_number": "bar",
+                    "total_amount": "bar",
+                    "line_items": "bar",
+                },
+                "required": ["vendor_name", "invoice_number", "total_amount"],
+                "type": "object",
+            },
         )
 
         assert response.is_closed is True
@@ -607,7 +666,16 @@ class TestAsyncExtract:
     @parametrize
     async def test_streaming_response_validate_schema(self, async_client: AsyncLlamaCloud) -> None:
         async with async_client.extract.with_streaming_response.validate_schema(
-            data_schema={"foo": {"foo": "bar"}},
+            data_schema={
+                "properties": {
+                    "vendor_name": "bar",
+                    "invoice_number": "bar",
+                    "total_amount": "bar",
+                    "line_items": "bar",
+                },
+                "required": ["vendor_name", "invoice_number", "total_amount"],
+                "type": "object",
+            },
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
