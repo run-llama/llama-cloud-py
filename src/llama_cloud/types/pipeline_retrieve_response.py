@@ -19,11 +19,7 @@ class RetrievalNode(BaseModel):
     """
 
     node: TextNode
-    """Provided for backward compatibility.
-
-    Note: we keep the field with the typo "seperator" to maintain backward
-    compatibility for serialized objects.
-    """
+    """Provided for backward compatibility."""
 
     class_name: Optional[str] = None
 

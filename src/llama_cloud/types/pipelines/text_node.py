@@ -38,11 +38,7 @@ Relationships: TypeAlias = Union[RelationshipsRelatedNodeInfo, List[Relationship
 
 
 class TextNode(BaseModel):
-    """Provided for backward compatibility.
-
-    Note: we keep the field with the typo "seperator" to maintain backward compatibility for
-    serialized objects.
-    """
+    """Provided for backward compatibility."""
 
     class_name: Optional[str] = None
 
