@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.4.0 (2026-04-16)
+
+Full Changelog: [v2.3.0...v2.4.0](https://github.com/run-llama/llama-cloud-py/compare/v2.3.0...v2.4.0)
+
+### Features
+
+* **api:** api update ([9ae910d](https://github.com/run-llama/llama-cloud-py/commit/9ae910d188ce74a3c34d3b0ca646f826dd571d8b))
+* **api:** api update ([2ef67a1](https://github.com/run-llama/llama-cloud-py/commit/2ef67a11dba6bf311d8653a1ba9a48014178163a))
+* **api:** api update ([fc7d45d](https://github.com/run-llama/llama-cloud-py/commit/fc7d45d5792e53c34b0606c5016b63fbf7b5dfe3))
+* **classify:** add wait_for_completion and run() helpers ([#82](https://github.com/run-llama/llama-cloud-py/issues/82)) ([2e0feda](https://github.com/run-llama/llama-cloud-py/commit/2e0fedad3407ad270bc7fd2532bad2cb79cbd127))
+
+
+### Bug Fixes
+
+* ensure file data are only sent as 1 parameter ([7e8e651](https://github.com/run-llama/llama-cloud-py/commit/7e8e6519cb12b6cb2a0a896996563f63ce7614ea))
+
+
+### Documentation
+
+* update examples ([55dce5f](https://github.com/run-llama/llama-cloud-py/commit/55dce5f39923174d07b0ce87cc5633bfaa9a9333))
+
 ## 2.3.0 (2026-04-07)
 
 Full Changelog: [v2.2.0...v2.3.0](https://github.com/run-llama/llama-cloud-py/compare/v2.2.0...v2.3.0)
