@@ -30,7 +30,7 @@ class _StubSequence:
         self._jobs = list(jobs)
         self.calls = 0
 
-    def __call__(self, *_args, **_kwargs) -> ClassifyGetResponse:
+    def __call__(self, *_args: object, **_kwargs: object) -> ClassifyGetResponse:
         self.calls += 1
         if self._jobs:
             return self._jobs.pop(0) if len(self._jobs) > 1 else self._jobs[0]
@@ -42,7 +42,7 @@ class _AsyncStubSequence:
         self._jobs = list(jobs)
         self.calls = 0
 
-    async def __call__(self, *_args, **_kwargs) -> ClassifyGetResponse:
+    async def __call__(self, *_args: object, **_kwargs: object) -> ClassifyGetResponse:
         self.calls += 1
         if self._jobs:
             return self._jobs.pop(0) if len(self._jobs) > 1 else self._jobs[0]
