@@ -107,7 +107,7 @@ class ImagesContentMetadataImage(BaseModel):
     """Presigned URL to download the image"""
 
     size_bytes: Optional[int] = None
-    """Size of the image file in bytes"""
+    """Deprecated: always returns None. Will be removed in a future release."""
 
 
 class ImagesContentMetadata(BaseModel):
@@ -241,7 +241,7 @@ class ResultContentMetadata(BaseModel):
     """Metadata about a specific result type stored in S3."""
 
     size_bytes: int
-    """Size of the result file in S3 (bytes)"""
+    """Size of the result file in bytes"""
 
     exists: Optional[bool] = None
     """Whether the result file exists in S3"""

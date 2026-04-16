@@ -12,6 +12,12 @@ from ..types import classify_get_params, classify_list_params, classify_create_p
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
+from .._polling import (
+    DEFAULT_TIMEOUT,
+    BackoffStrategy,
+    poll_until_complete,
+    poll_until_complete_async,
+)
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
     to_raw_response_wrapper,
@@ -254,6 +260,189 @@ class ClassifyResource(SyncAPIResource):
             cast_to=ClassifyGetResponse,
         )
 
+    def wait_for_completion(
+        self,
+        job_id: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        timeout: float = DEFAULT_TIMEOUT,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+    ) -> ClassifyGetResponse:
+        """
+        Wait for a classify job to complete by polling until it reaches a terminal state.
+
+        Args:
+            job_id: The ID of the classify job to wait for
+
+            organization_id: Optional organization ID
+
+            project_id: Optional project ID
+
+            polling_interval: Initial polling interval in seconds (default: 1.0)
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0)
+
+            timeout: Maximum time to wait in seconds (default: 2 hours)
+
+            backoff: Backoff strategy: "constant", "linear" (default), or "exponential"
+
+            verbose: Print progress indicators every 10 polls (default: False)
+
+            extra_headers: Send extra headers
+
+            extra_query: Add additional query parameters to the request
+
+            extra_body: Add additional JSON properties to the request
+
+        Returns:
+            The completed classify job
+
+        Raises:
+            PollingTimeoutError: If the job doesn't complete within the timeout period
+
+            PollingError: If the job fails
+
+        Example:
+            ```python
+            from llama_cloud import LlamaCloud
+
+            client = LlamaCloud(api_key="...")
+
+            job = client.classify.create(file_input="file-abc123", configuration_id="cfg-...")
+            completed_job = client.classify.wait_for_completion(job.id, verbose=True)
+            print(completed_job.result)
+            ```
+        """
+        if not job_id:
+            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+
+        def get_status() -> ClassifyGetResponse:
+            return self.get(
+                job_id,
+                organization_id=organization_id,
+                project_id=project_id,
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+            )
+
+        def is_complete(job: ClassifyGetResponse) -> bool:
+            return job.status == "COMPLETED"
+
+        def is_error(job: ClassifyGetResponse) -> bool:
+            return job.status == "FAILED"
+
+        def get_error_message(job: ClassifyGetResponse) -> str:
+            error_parts = [f"Job {job_id} failed with status: {job.status}"]
+            if job.error_message:
+                error_parts.append(f"Error: {job.error_message}")
+            return " | ".join(error_parts)
+
+        return poll_until_complete(
+            get_status_fn=get_status,
+            is_complete_fn=is_complete,
+            is_error_fn=is_error,
+            get_error_message_fn=get_error_message,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=timeout,
+            backoff=backoff,
+            verbose=verbose,
+        )
+
+    def run(
+        self,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        configuration: Optional[ClassifyConfigurationParam] | Omit = omit,
+        configuration_id: Optional[str] | Omit = omit,
+        file_id: Optional[str] | Omit = omit,
+        file_input: Optional[str] | Omit = omit,
+        parse_job_id: Optional[str] | Omit = omit,
+        transaction_id: Optional[str] | Omit = omit,
+        # Polling parameters
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        polling_timeout: float = DEFAULT_TIMEOUT,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ClassifyGetResponse:
+        """
+        Create a classify job, wait for it to complete, and return the result.
+
+        This is a convenience method that combines create() and wait_for_completion()
+        into a single call for the most common end-to-end workflow.
+
+        Args:
+            configuration: Inline classify configuration with rules.
+
+            configuration_id: Saved classify configuration ID (mutually exclusive with configuration).
+
+            file_input: File ID (`dfl-...`) or parse job ID (`pjb-...`) to classify.
+
+            transaction_id: Idempotency key scoped to the project.
+
+            polling_interval: Initial polling interval in seconds (default: 1.0).
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0).
+
+            polling_timeout: Maximum time to wait in seconds (default: 2 hours).
+
+            backoff: Backoff strategy: "constant", "linear" (default), or "exponential".
+
+            verbose: Print progress indicators every 10 polls (default: False).
+
+        Example:
+            ```python
+            result = client.classify.run(
+                file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                configuration={"rules": [{"type": "invoice", "description": "..."}]},
+                verbose=True,
+            )
+            print(result.result)
+            ```
+        """
+        job = self.create(
+            organization_id=organization_id,
+            project_id=project_id,
+            configuration=configuration,
+            configuration_id=configuration_id,
+            file_id=file_id,
+            file_input=file_input,
+            parse_job_id=parse_job_id,
+            transaction_id=transaction_id,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+            timeout=timeout,
+        )
+
+        return self.wait_for_completion(
+            job.id,
+            organization_id=organization_id,
+            project_id=project_id,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=polling_timeout,
+            backoff=backoff,
+            verbose=verbose,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+        )
+
 
 class AsyncClassifyResource(AsyncAPIResource):
     @cached_property
@@ -478,6 +667,189 @@ class AsyncClassifyResource(AsyncAPIResource):
                 ),
             ),
             cast_to=ClassifyGetResponse,
+        )
+
+    async def wait_for_completion(
+        self,
+        job_id: str,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        timeout: float = DEFAULT_TIMEOUT,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+    ) -> ClassifyGetResponse:
+        """
+        Wait for a classify job to complete by polling until it reaches a terminal state.
+
+        Args:
+            job_id: The ID of the classify job to wait for
+
+            organization_id: Optional organization ID
+
+            project_id: Optional project ID
+
+            polling_interval: Initial polling interval in seconds (default: 1.0)
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0)
+
+            timeout: Maximum time to wait in seconds (default: 2 hours)
+
+            backoff: Backoff strategy: "constant", "linear" (default), or "exponential"
+
+            verbose: Print progress indicators every 10 polls (default: False)
+
+            extra_headers: Send extra headers
+
+            extra_query: Add additional query parameters to the request
+
+            extra_body: Add additional JSON properties to the request
+
+        Returns:
+            The completed classify job
+
+        Raises:
+            PollingTimeoutError: If the job doesn't complete within the timeout period
+
+            PollingError: If the job fails
+
+        Example:
+            ```python
+            from llama_cloud import AsyncLlamaCloud
+
+            client = AsyncLlamaCloud(api_key="...")
+
+            job = await client.classify.create(file_input="file-abc123", configuration_id="cfg-...")
+            completed_job = await client.classify.wait_for_completion(job.id, verbose=True)
+            print(completed_job.result)
+            ```
+        """
+        if not job_id:
+            raise ValueError(f"Expected a non-empty value for `job_id` but received {job_id!r}")
+
+        async def get_status() -> ClassifyGetResponse:
+            return await self.get(
+                job_id,
+                organization_id=organization_id,
+                project_id=project_id,
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+            )
+
+        def is_complete(job: ClassifyGetResponse) -> bool:
+            return job.status == "COMPLETED"
+
+        def is_error(job: ClassifyGetResponse) -> bool:
+            return job.status == "FAILED"
+
+        def get_error_message(job: ClassifyGetResponse) -> str:
+            error_parts = [f"Job {job_id} failed with status: {job.status}"]
+            if job.error_message:
+                error_parts.append(f"Error: {job.error_message}")
+            return " | ".join(error_parts)
+
+        return await poll_until_complete_async(
+            get_status_fn=get_status,
+            is_complete_fn=is_complete,
+            is_error_fn=is_error,
+            get_error_message_fn=get_error_message,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=timeout,
+            backoff=backoff,
+            verbose=verbose,
+        )
+
+    async def run(
+        self,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        configuration: Optional[ClassifyConfigurationParam] | Omit = omit,
+        configuration_id: Optional[str] | Omit = omit,
+        file_id: Optional[str] | Omit = omit,
+        file_input: Optional[str] | Omit = omit,
+        parse_job_id: Optional[str] | Omit = omit,
+        transaction_id: Optional[str] | Omit = omit,
+        # Polling parameters
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        polling_timeout: float = DEFAULT_TIMEOUT,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ClassifyGetResponse:
+        """
+        Create a classify job, wait for it to complete, and return the result.
+
+        This is a convenience method that combines create() and wait_for_completion()
+        into a single call for the most common end-to-end workflow.
+
+        Args:
+            configuration: Inline classify configuration with rules.
+
+            configuration_id: Saved classify configuration ID (mutually exclusive with configuration).
+
+            file_input: File ID (`dfl-...`) or parse job ID (`pjb-...`) to classify.
+
+            transaction_id: Idempotency key scoped to the project.
+
+            polling_interval: Initial polling interval in seconds (default: 1.0).
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0).
+
+            polling_timeout: Maximum time to wait in seconds (default: 2 hours).
+
+            backoff: Backoff strategy: "constant", "linear" (default), or "exponential".
+
+            verbose: Print progress indicators every 10 polls (default: False).
+
+        Example:
+            ```python
+            result = await client.classify.run(
+                file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                configuration={"rules": [{"type": "invoice", "description": "..."}]},
+                verbose=True,
+            )
+            print(result.result)
+            ```
+        """
+        job = await self.create(
+            organization_id=organization_id,
+            project_id=project_id,
+            configuration=configuration,
+            configuration_id=configuration_id,
+            file_id=file_id,
+            file_input=file_input,
+            parse_job_id=parse_job_id,
+            transaction_id=transaction_id,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+            timeout=timeout,
+        )
+
+        return await self.wait_for_completion(
+            job.id,
+            organization_id=organization_id,
+            project_id=project_id,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=polling_timeout,
+            backoff=backoff,
+            verbose=verbose,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
         )
 
 

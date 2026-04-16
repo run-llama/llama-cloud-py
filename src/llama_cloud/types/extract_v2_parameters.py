@@ -35,9 +35,6 @@ class ExtractV2Parameters(BaseModel):
     returns one object per page, per_table_row returns one object per table row
     """
 
-    lang: Optional[str] = None
-    """ISO 639-1 language code for the document"""
-
     max_pages: Optional[int] = None
     """Maximum number of pages to process. Omit for no limit."""
 
@@ -48,7 +45,10 @@ class ExtractV2Parameters(BaseModel):
     """
 
     parse_tier: Optional[str] = None
-    """Parse tier to use before extraction (fast, cost_effective, or agentic)"""
+    """Parse tier to use before extraction.
+
+    Defaults to the extract tier if not specified.
+    """
 
     system_prompt: Optional[str] = None
     """Custom system prompt to guide extraction behavior"""

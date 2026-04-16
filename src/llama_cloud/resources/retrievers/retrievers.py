@@ -11,6 +11,7 @@ from ...types import (
     retriever_get_params,
     retriever_list_params,
     retriever_create_params,
+    retriever_delete_params,
     retriever_search_params,
     retriever_update_params,
     retriever_upsert_params,
@@ -130,6 +131,8 @@ class RetrieversResource(SyncAPIResource):
         retriever_id: str,
         *,
         pipelines: Optional[Iterable[RetrieverPipelineParam]],
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         name: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -166,7 +169,17 @@ class RetrieversResource(SyncAPIResource):
                 retriever_update_params.RetrieverUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    retriever_update_params.RetrieverUpdateParams,
+                ),
             ),
             cast_to=Retriever,
         )
@@ -219,6 +232,8 @@ class RetrieversResource(SyncAPIResource):
         self,
         retriever_id: str,
         *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -244,7 +259,17 @@ class RetrieversResource(SyncAPIResource):
         return self._delete(
             path_template("/api/v1/retrievers/{retriever_id}", retriever_id=retriever_id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    retriever_delete_params.RetrieverDeleteParams,
+                ),
             ),
             cast_to=NoneType,
         )
@@ -506,6 +531,8 @@ class AsyncRetrieversResource(AsyncAPIResource):
         retriever_id: str,
         *,
         pipelines: Optional[Iterable[RetrieverPipelineParam]],
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         name: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -542,7 +569,17 @@ class AsyncRetrieversResource(AsyncAPIResource):
                 retriever_update_params.RetrieverUpdateParams,
             ),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    retriever_update_params.RetrieverUpdateParams,
+                ),
             ),
             cast_to=Retriever,
         )
@@ -595,6 +632,8 @@ class AsyncRetrieversResource(AsyncAPIResource):
         self,
         retriever_id: str,
         *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -620,7 +659,17 @@ class AsyncRetrieversResource(AsyncAPIResource):
         return await self._delete(
             path_template("/api/v1/retrievers/{retriever_id}", retriever_id=retriever_id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    retriever_delete_params.RetrieverDeleteParams,
+                ),
             ),
             cast_to=NoneType,
         )

@@ -8,7 +8,7 @@ __all__ = ["SplitDocumentInputParam"]
 
 
 class SplitDocumentInputParam(TypedDict, total=False):
-    """Document input specification."""
+    """Document input specification for beta API."""
 
     type: Required[str]
     """Type of document input. Valid values are: file_id"""

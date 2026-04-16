@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Mapping, Optional, cast
+from typing import Dict, Union, Mapping, Optional, cast
 
 import httpx
 
@@ -64,6 +64,7 @@ class FilesResource(SyncAPIResource):
         project_id: Optional[str] | Omit = omit,
         body_directory_id: Optional[str] | Omit = omit,
         display_name: Optional[str] | Omit = omit,
+        metadata: Optional[Dict[str, Union[str, float, bool, None]]] | Omit = omit,
         unique_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -85,6 +86,8 @@ class FilesResource(SyncAPIResource):
           body_directory_id: Move file to a different directory.
 
           display_name: Updated display name.
+
+          metadata: User-defined metadata key-value pairs. Replaces the user metadata layer.
 
           unique_id: Updated unique identifier.
 
@@ -110,6 +113,7 @@ class FilesResource(SyncAPIResource):
                 {
                     "body_directory_id": body_directory_id,
                     "display_name": display_name,
+                    "metadata": metadata,
                     "unique_id": unique_id,
                 },
                 file_update_params.FileUpdateParams,
@@ -256,6 +260,7 @@ class FilesResource(SyncAPIResource):
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         display_name: Optional[str] | Omit = omit,
+        metadata: Optional[Dict[str, Union[str, float, bool, None]]] | Omit = omit,
         unique_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -274,6 +279,8 @@ class FilesResource(SyncAPIResource):
           file_id: File ID for the storage location (required).
 
           display_name: Display name for the file. If not provided, will use the file's name.
+
+          metadata: User-defined metadata key-value pairs to associate with the file.
 
           unique_id: Unique identifier for the file in the directory. If not provided, will use the
               file's external_file_id or name.
@@ -294,6 +301,7 @@ class FilesResource(SyncAPIResource):
                 {
                     "file_id": file_id,
                     "display_name": display_name,
+                    "metadata": metadata,
                     "unique_id": unique_id,
                 },
                 file_add_params.FileAddParams,
@@ -467,6 +475,7 @@ class AsyncFilesResource(AsyncAPIResource):
         project_id: Optional[str] | Omit = omit,
         body_directory_id: Optional[str] | Omit = omit,
         display_name: Optional[str] | Omit = omit,
+        metadata: Optional[Dict[str, Union[str, float, bool, None]]] | Omit = omit,
         unique_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -488,6 +497,8 @@ class AsyncFilesResource(AsyncAPIResource):
           body_directory_id: Move file to a different directory.
 
           display_name: Updated display name.
+
+          metadata: User-defined metadata key-value pairs. Replaces the user metadata layer.
 
           unique_id: Updated unique identifier.
 
@@ -513,6 +524,7 @@ class AsyncFilesResource(AsyncAPIResource):
                 {
                     "body_directory_id": body_directory_id,
                     "display_name": display_name,
+                    "metadata": metadata,
                     "unique_id": unique_id,
                 },
                 file_update_params.FileUpdateParams,
@@ -659,6 +671,7 @@ class AsyncFilesResource(AsyncAPIResource):
         organization_id: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
         display_name: Optional[str] | Omit = omit,
+        metadata: Optional[Dict[str, Union[str, float, bool, None]]] | Omit = omit,
         unique_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -677,6 +690,8 @@ class AsyncFilesResource(AsyncAPIResource):
           file_id: File ID for the storage location (required).
 
           display_name: Display name for the file. If not provided, will use the file's name.
+
+          metadata: User-defined metadata key-value pairs to associate with the file.
 
           unique_id: Unique identifier for the file in the directory. If not provided, will use the
               file's external_file_id or name.
@@ -697,6 +712,7 @@ class AsyncFilesResource(AsyncAPIResource):
                 {
                     "file_id": file_id,
                     "display_name": display_name,
+                    "metadata": metadata,
                     "unique_id": unique_id,
                 },
                 file_add_params.FileAddParams,

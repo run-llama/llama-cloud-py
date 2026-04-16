@@ -12,7 +12,7 @@ __all__ = ["SplitGetResponse"]
 
 
 class SplitGetResponse(BaseModel):
-    """A document split job."""
+    """Beta response — uses nested document_input object."""
 
     id: str
     """Unique identifier for the split job."""

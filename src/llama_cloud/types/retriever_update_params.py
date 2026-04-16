@@ -12,6 +12,10 @@ class RetrieverUpdateParams(TypedDict, total=False):
     pipelines: Required[Optional[Iterable["RetrieverPipelineParam"]]]
     """The pipelines this retriever uses."""
 
+    organization_id: Optional[str]
+
+    project_id: Optional[str]
+
     name: Optional[str]
     """A name for the retriever."""
 
