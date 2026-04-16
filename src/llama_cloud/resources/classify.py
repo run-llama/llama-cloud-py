@@ -357,6 +357,92 @@ class ClassifyResource(SyncAPIResource):
             verbose=verbose,
         )
 
+    def run(
+        self,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        configuration: Optional[ClassifyConfigurationParam] | Omit = omit,
+        configuration_id: Optional[str] | Omit = omit,
+        file_id: Optional[str] | Omit = omit,
+        file_input: Optional[str] | Omit = omit,
+        parse_job_id: Optional[str] | Omit = omit,
+        transaction_id: Optional[str] | Omit = omit,
+        # Polling parameters
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        polling_timeout: float = DEFAULT_TIMEOUT,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ClassifyGetResponse:
+        """
+        Create a classify job, wait for it to complete, and return the result.
+
+        This is a convenience method that combines create() and wait_for_completion()
+        into a single call for the most common end-to-end workflow.
+
+        Args:
+            configuration: Inline classify configuration with rules.
+
+            configuration_id: Saved classify configuration ID (mutually exclusive with configuration).
+
+            file_input: File ID (`dfl-...`) or parse job ID (`pjb-...`) to classify.
+
+            transaction_id: Idempotency key scoped to the project.
+
+            polling_interval: Initial polling interval in seconds (default: 1.0).
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0).
+
+            polling_timeout: Maximum time to wait in seconds (default: 2 hours).
+
+            backoff: Backoff strategy: "constant", "linear" (default), or "exponential".
+
+            verbose: Print progress indicators every 10 polls (default: False).
+
+        Example:
+            ```python
+            result = client.classify.run(
+                file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                configuration={"rules": [{"type": "invoice", "description": "..."}]},
+                verbose=True,
+            )
+            print(result.result)
+            ```
+        """
+        job = self.create(
+            organization_id=organization_id,
+            project_id=project_id,
+            configuration=configuration,
+            configuration_id=configuration_id,
+            file_id=file_id,
+            file_input=file_input,
+            parse_job_id=parse_job_id,
+            transaction_id=transaction_id,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+            timeout=timeout,
+        )
+
+        return self.wait_for_completion(
+            job.id,
+            organization_id=organization_id,
+            project_id=project_id,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=polling_timeout,
+            backoff=backoff,
+            verbose=verbose,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+        )
+
 
 class AsyncClassifyResource(AsyncAPIResource):
     @cached_property
@@ -678,6 +764,92 @@ class AsyncClassifyResource(AsyncAPIResource):
             timeout=timeout,
             backoff=backoff,
             verbose=verbose,
+        )
+
+    async def run(
+        self,
+        *,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        configuration: Optional[ClassifyConfigurationParam] | Omit = omit,
+        configuration_id: Optional[str] | Omit = omit,
+        file_id: Optional[str] | Omit = omit,
+        file_input: Optional[str] | Omit = omit,
+        parse_job_id: Optional[str] | Omit = omit,
+        transaction_id: Optional[str] | Omit = omit,
+        # Polling parameters
+        polling_interval: float = 1.0,
+        max_interval: float = 5.0,
+        polling_timeout: float = DEFAULT_TIMEOUT,
+        backoff: BackoffStrategy = "linear",
+        verbose: bool = False,
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ClassifyGetResponse:
+        """
+        Create a classify job, wait for it to complete, and return the result.
+
+        This is a convenience method that combines create() and wait_for_completion()
+        into a single call for the most common end-to-end workflow.
+
+        Args:
+            configuration: Inline classify configuration with rules.
+
+            configuration_id: Saved classify configuration ID (mutually exclusive with configuration).
+
+            file_input: File ID (`dfl-...`) or parse job ID (`pjb-...`) to classify.
+
+            transaction_id: Idempotency key scoped to the project.
+
+            polling_interval: Initial polling interval in seconds (default: 1.0).
+
+            max_interval: Maximum polling interval for backoff in seconds (default: 5.0).
+
+            polling_timeout: Maximum time to wait in seconds (default: 2 hours).
+
+            backoff: Backoff strategy: "constant", "linear" (default), or "exponential".
+
+            verbose: Print progress indicators every 10 polls (default: False).
+
+        Example:
+            ```python
+            result = await client.classify.run(
+                file_input="dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                configuration={"rules": [{"type": "invoice", "description": "..."}]},
+                verbose=True,
+            )
+            print(result.result)
+            ```
+        """
+        job = await self.create(
+            organization_id=organization_id,
+            project_id=project_id,
+            configuration=configuration,
+            configuration_id=configuration_id,
+            file_id=file_id,
+            file_input=file_input,
+            parse_job_id=parse_job_id,
+            transaction_id=transaction_id,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+            timeout=timeout,
+        )
+
+        return await self.wait_for_completion(
+            job.id,
+            organization_id=organization_id,
+            project_id=project_id,
+            polling_interval=polling_interval,
+            max_interval=max_interval,
+            timeout=polling_timeout,
+            backoff=backoff,
+            verbose=verbose,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
         )
 
 
