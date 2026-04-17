@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Dict, Optional
 from typing_extensions import Required, TypedDict
 
-__all__ = ["AgentDataAgentDataParams"]
+__all__ = ["AgentDataCreateParams"]
 
 
-class AgentDataAgentDataParams(TypedDict, total=False):
+class AgentDataCreateParams(TypedDict, total=False):
     data: Required[Dict[str, object]]
 
     deployment_name: Required[str]
