@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
+import warnings
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -19,11 +20,11 @@ from ..._response import (
 from ...pagination import SyncPaginatedCursorPost, AsyncPaginatedCursorPost
 from ...types.beta import (
     agent_data_get_params,
+    agent_data_create_params,
     agent_data_delete_params,
     agent_data_search_params,
     agent_data_update_params,
     agent_data_aggregate_params,
-    agent_data_agent_data_params,
     agent_data_delete_by_query_params,
 )
 from ..._base_client import AsyncPaginator, make_request_options
@@ -54,6 +55,69 @@ class AgentDataResource(SyncAPIResource):
         For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
         """
         return AgentDataResourceWithStreamingResponse(self)
+
+    def create(
+        self,
+        *,
+        data: Dict[str, object],
+        deployment_name: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        collection: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AgentData:
+        """
+        Create new agent data.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/api/v1/beta/agent-data",
+            body=maybe_transform(
+                {
+                    "data": data,
+                    "deployment_name": deployment_name,
+                    "collection": collection,
+                },
+                agent_data_create_params.AgentDataCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    agent_data_create_params.AgentDataCreateParams,
+                ),
+            ),
+            cast_to=AgentData,
+        )
+
+    def agent_data(self, **kwargs: Any) -> AgentData:
+        """Deprecated alias for :meth:`create`. Kept for backwards compatibility
+        with earlier SDK versions that named the create endpoint ``agent_data``."""
+        warnings.warn(
+            "beta.agent_data.agent_data() is deprecated; use beta.agent_data.create() instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return self.create(**kwargs)
 
     def update(
         self,
@@ -145,59 +209,6 @@ class AgentDataResource(SyncAPIResource):
                 ),
             ),
             cast_to=AgentDataDeleteResponse,
-        )
-
-    def agent_data(
-        self,
-        *,
-        data: Dict[str, object],
-        deployment_name: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        collection: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentData:
-        """
-        Create new agent data.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/api/v1/beta/agent-data",
-            body=maybe_transform(
-                {
-                    "data": data,
-                    "deployment_name": deployment_name,
-                    "collection": collection,
-                },
-                agent_data_agent_data_params.AgentDataAgentDataParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    agent_data_agent_data_params.AgentDataAgentDataParams,
-                ),
-            ),
-            cast_to=AgentData,
         )
 
     def aggregate(
@@ -504,6 +515,69 @@ class AsyncAgentDataResource(AsyncAPIResource):
         """
         return AsyncAgentDataResourceWithStreamingResponse(self)
 
+    async def create(
+        self,
+        *,
+        data: Dict[str, object],
+        deployment_name: str,
+        organization_id: Optional[str] | Omit = omit,
+        project_id: Optional[str] | Omit = omit,
+        collection: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AgentData:
+        """
+        Create new agent data.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/api/v1/beta/agent-data",
+            body=await async_maybe_transform(
+                {
+                    "data": data,
+                    "deployment_name": deployment_name,
+                    "collection": collection,
+                },
+                agent_data_create_params.AgentDataCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "organization_id": organization_id,
+                        "project_id": project_id,
+                    },
+                    agent_data_create_params.AgentDataCreateParams,
+                ),
+            ),
+            cast_to=AgentData,
+        )
+
+    async def agent_data(self, **kwargs: Any) -> AgentData:
+        """Deprecated alias for :meth:`create`. Kept for backwards compatibility
+        with earlier SDK versions that named the create endpoint ``agent_data``."""
+        warnings.warn(
+            "beta.agent_data.agent_data() is deprecated; use beta.agent_data.create() instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return await self.create(**kwargs)
+
     async def update(
         self,
         item_id: str,
@@ -594,59 +668,6 @@ class AsyncAgentDataResource(AsyncAPIResource):
                 ),
             ),
             cast_to=AgentDataDeleteResponse,
-        )
-
-    async def agent_data(
-        self,
-        *,
-        data: Dict[str, object],
-        deployment_name: str,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        collection: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentData:
-        """
-        Create new agent data.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/api/v1/beta/agent-data",
-            body=await async_maybe_transform(
-                {
-                    "data": data,
-                    "deployment_name": deployment_name,
-                    "collection": collection,
-                },
-                agent_data_agent_data_params.AgentDataAgentDataParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                    },
-                    agent_data_agent_data_params.AgentDataAgentDataParams,
-                ),
-            ),
-            cast_to=AgentData,
         )
 
     def aggregate(
@@ -937,14 +958,17 @@ class AgentDataResourceWithRawResponse:
     def __init__(self, agent_data: AgentDataResource) -> None:
         self._agent_data = agent_data
 
+        self.create = to_raw_response_wrapper(
+            agent_data.create,
+        )
+        self.agent_data = to_raw_response_wrapper(
+            agent_data.agent_data,
+        )
         self.update = to_raw_response_wrapper(
             agent_data.update,
         )
         self.delete = to_raw_response_wrapper(
             agent_data.delete,
-        )
-        self.agent_data = to_raw_response_wrapper(
-            agent_data.agent_data,
         )
         self.aggregate = to_raw_response_wrapper(
             agent_data.aggregate,
@@ -964,14 +988,17 @@ class AsyncAgentDataResourceWithRawResponse:
     def __init__(self, agent_data: AsyncAgentDataResource) -> None:
         self._agent_data = agent_data
 
+        self.create = async_to_raw_response_wrapper(
+            agent_data.create,
+        )
+        self.agent_data = async_to_raw_response_wrapper(
+            agent_data.agent_data,
+        )
         self.update = async_to_raw_response_wrapper(
             agent_data.update,
         )
         self.delete = async_to_raw_response_wrapper(
             agent_data.delete,
-        )
-        self.agent_data = async_to_raw_response_wrapper(
-            agent_data.agent_data,
         )
         self.aggregate = async_to_raw_response_wrapper(
             agent_data.aggregate,
@@ -991,14 +1018,17 @@ class AgentDataResourceWithStreamingResponse:
     def __init__(self, agent_data: AgentDataResource) -> None:
         self._agent_data = agent_data
 
+        self.create = to_streamed_response_wrapper(
+            agent_data.create,
+        )
+        self.agent_data = to_streamed_response_wrapper(
+            agent_data.agent_data,
+        )
         self.update = to_streamed_response_wrapper(
             agent_data.update,
         )
         self.delete = to_streamed_response_wrapper(
             agent_data.delete,
-        )
-        self.agent_data = to_streamed_response_wrapper(
-            agent_data.agent_data,
         )
         self.aggregate = to_streamed_response_wrapper(
             agent_data.aggregate,
@@ -1018,14 +1048,17 @@ class AsyncAgentDataResourceWithStreamingResponse:
     def __init__(self, agent_data: AsyncAgentDataResource) -> None:
         self._agent_data = agent_data
 
+        self.create = async_to_streamed_response_wrapper(
+            agent_data.create,
+        )
+        self.agent_data = async_to_streamed_response_wrapper(
+            agent_data.agent_data,
+        )
         self.update = async_to_streamed_response_wrapper(
             agent_data.update,
         )
         self.delete = async_to_streamed_response_wrapper(
             agent_data.delete,
-        )
-        self.agent_data = async_to_streamed_response_wrapper(
-            agent_data.agent_data,
         )
         self.aggregate = async_to_streamed_response_wrapper(
             agent_data.aggregate,

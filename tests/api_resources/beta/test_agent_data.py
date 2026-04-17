@@ -25,6 +25,55 @@ class TestAgentData:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    def test_method_create(self, client: LlamaCloud) -> None:
+        agent_data = client.beta.agent_data.create(
+            data={"foo": "bar"},
+            deployment_name="deployment_name",
+        )
+        assert_matches_type(AgentData, agent_data, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_create_with_all_params(self, client: LlamaCloud) -> None:
+        agent_data = client.beta.agent_data.create(
+            data={"foo": "bar"},
+            deployment_name="deployment_name",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            collection="collection",
+        )
+        assert_matches_type(AgentData, agent_data, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_create(self, client: LlamaCloud) -> None:
+        response = client.beta.agent_data.with_raw_response.create(
+            data={"foo": "bar"},
+            deployment_name="deployment_name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        agent_data = response.parse()
+        assert_matches_type(AgentData, agent_data, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_create(self, client: LlamaCloud) -> None:
+        with client.beta.agent_data.with_streaming_response.create(
+            data={"foo": "bar"},
+            deployment_name="deployment_name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            agent_data = response.parse()
+            assert_matches_type(AgentData, agent_data, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     def test_method_update(self, client: LlamaCloud) -> None:
         agent_data = client.beta.agent_data.update(
             item_id="item_id",
@@ -131,55 +180,6 @@ class TestAgentData:
             client.beta.agent_data.with_raw_response.delete(
                 item_id="",
             )
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_agent_data(self, client: LlamaCloud) -> None:
-        agent_data = client.beta.agent_data.agent_data(
-            data={"foo": "bar"},
-            deployment_name="deployment_name",
-        )
-        assert_matches_type(AgentData, agent_data, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_agent_data_with_all_params(self, client: LlamaCloud) -> None:
-        agent_data = client.beta.agent_data.agent_data(
-            data={"foo": "bar"},
-            deployment_name="deployment_name",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            collection="collection",
-        )
-        assert_matches_type(AgentData, agent_data, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_agent_data(self, client: LlamaCloud) -> None:
-        response = client.beta.agent_data.with_raw_response.agent_data(
-            data={"foo": "bar"},
-            deployment_name="deployment_name",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        agent_data = response.parse()
-        assert_matches_type(AgentData, agent_data, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_agent_data(self, client: LlamaCloud) -> None:
-        with client.beta.agent_data.with_streaming_response.agent_data(
-            data={"foo": "bar"},
-            deployment_name="deployment_name",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            agent_data = response.parse()
-            assert_matches_type(AgentData, agent_data, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -424,6 +424,55 @@ class TestAsyncAgentData:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    async def test_method_create(self, async_client: AsyncLlamaCloud) -> None:
+        agent_data = await async_client.beta.agent_data.create(
+            data={"foo": "bar"},
+            deployment_name="deployment_name",
+        )
+        assert_matches_type(AgentData, agent_data, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
+        agent_data = await async_client.beta.agent_data.create(
+            data={"foo": "bar"},
+            deployment_name="deployment_name",
+            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            collection="collection",
+        )
+        assert_matches_type(AgentData, agent_data, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_create(self, async_client: AsyncLlamaCloud) -> None:
+        response = await async_client.beta.agent_data.with_raw_response.create(
+            data={"foo": "bar"},
+            deployment_name="deployment_name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        agent_data = await response.parse()
+        assert_matches_type(AgentData, agent_data, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_create(self, async_client: AsyncLlamaCloud) -> None:
+        async with async_client.beta.agent_data.with_streaming_response.create(
+            data={"foo": "bar"},
+            deployment_name="deployment_name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            agent_data = await response.parse()
+            assert_matches_type(AgentData, agent_data, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     async def test_method_update(self, async_client: AsyncLlamaCloud) -> None:
         agent_data = await async_client.beta.agent_data.update(
             item_id="item_id",
@@ -530,55 +579,6 @@ class TestAsyncAgentData:
             await async_client.beta.agent_data.with_raw_response.delete(
                 item_id="",
             )
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_agent_data(self, async_client: AsyncLlamaCloud) -> None:
-        agent_data = await async_client.beta.agent_data.agent_data(
-            data={"foo": "bar"},
-            deployment_name="deployment_name",
-        )
-        assert_matches_type(AgentData, agent_data, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_agent_data_with_all_params(self, async_client: AsyncLlamaCloud) -> None:
-        agent_data = await async_client.beta.agent_data.agent_data(
-            data={"foo": "bar"},
-            deployment_name="deployment_name",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            collection="collection",
-        )
-        assert_matches_type(AgentData, agent_data, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_agent_data(self, async_client: AsyncLlamaCloud) -> None:
-        response = await async_client.beta.agent_data.with_raw_response.agent_data(
-            data={"foo": "bar"},
-            deployment_name="deployment_name",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        agent_data = await response.parse()
-        assert_matches_type(AgentData, agent_data, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_agent_data(self, async_client: AsyncLlamaCloud) -> None:
-        async with async_client.beta.agent_data.with_streaming_response.agent_data(
-            data={"foo": "bar"},
-            deployment_name="deployment_name",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            agent_data = await response.parse()
-            assert_matches_type(AgentData, agent_data, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize

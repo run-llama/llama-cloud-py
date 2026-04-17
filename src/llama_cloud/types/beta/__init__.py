@@ -35,6 +35,7 @@ from .directory_delete_params import DirectoryDeleteParams as DirectoryDeletePar
 from .directory_list_response import DirectoryListResponse as DirectoryListResponse
 from .directory_update_params import DirectoryUpdateParams as DirectoryUpdateParams
 from .sheet_delete_job_params import SheetDeleteJobParams as SheetDeleteJobParams
+from .agent_data_create_params import AgentDataCreateParams as AgentDataCreateParams
 from .agent_data_delete_params import AgentDataDeleteParams as AgentDataDeleteParams
 from .agent_data_search_params import AgentDataSearchParams as AgentDataSearchParams
 from .agent_data_update_params import AgentDataUpdateParams as AgentDataUpdateParams
@@ -45,7 +46,6 @@ from .agent_data_delete_response import AgentDataDeleteResponse as AgentDataDele
 from .split_document_input_param import SplitDocumentInputParam as SplitDocumentInputParam
 from .agent_data_aggregate_params import AgentDataAggregateParams as AgentDataAggregateParams
 from .sheets_parsing_config_param import SheetsParsingConfigParam as SheetsParsingConfigParam
-from .agent_data_agent_data_params import AgentDataAgentDataParams as AgentDataAgentDataParams
 from .agent_data_aggregate_response import AgentDataAggregateResponse as AgentDataAggregateResponse
 from .sheet_get_result_table_params import SheetGetResultTableParams as SheetGetResultTableParams
 from .agent_data_delete_by_query_params import AgentDataDeleteByQueryParams as AgentDataDeleteByQueryParams
