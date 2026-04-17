@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
+import warnings
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -107,6 +108,16 @@ class AgentDataResource(SyncAPIResource):
             ),
             cast_to=AgentData,
         )
+
+    def agent_data(self, **kwargs: Any) -> AgentData:
+        """Deprecated alias for :meth:`create`. Kept for backwards compatibility
+        with earlier SDK versions that named the create endpoint ``agent_data``."""
+        warnings.warn(
+            "beta.agent_data.agent_data() is deprecated; use beta.agent_data.create() instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return self.create(**kwargs)
 
     def update(
         self,
@@ -557,6 +568,16 @@ class AsyncAgentDataResource(AsyncAPIResource):
             cast_to=AgentData,
         )
 
+    async def agent_data(self, **kwargs: Any) -> AgentData:
+        """Deprecated alias for :meth:`create`. Kept for backwards compatibility
+        with earlier SDK versions that named the create endpoint ``agent_data``."""
+        warnings.warn(
+            "beta.agent_data.agent_data() is deprecated; use beta.agent_data.create() instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return await self.create(**kwargs)
+
     async def update(
         self,
         item_id: str,
@@ -940,6 +961,9 @@ class AgentDataResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             agent_data.create,
         )
+        self.agent_data = to_raw_response_wrapper(
+            agent_data.agent_data,
+        )
         self.update = to_raw_response_wrapper(
             agent_data.update,
         )
@@ -966,6 +990,9 @@ class AsyncAgentDataResourceWithRawResponse:
 
         self.create = async_to_raw_response_wrapper(
             agent_data.create,
+        )
+        self.agent_data = async_to_raw_response_wrapper(
+            agent_data.agent_data,
         )
         self.update = async_to_raw_response_wrapper(
             agent_data.update,
@@ -994,6 +1021,9 @@ class AgentDataResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             agent_data.create,
         )
+        self.agent_data = to_streamed_response_wrapper(
+            agent_data.agent_data,
+        )
         self.update = to_streamed_response_wrapper(
             agent_data.update,
         )
@@ -1020,6 +1050,9 @@ class AsyncAgentDataResourceWithStreamingResponse:
 
         self.create = async_to_streamed_response_wrapper(
             agent_data.create,
+        )
+        self.agent_data = async_to_streamed_response_wrapper(
+            agent_data.agent_data,
         )
         self.update = async_to_streamed_response_wrapper(
             agent_data.update,
