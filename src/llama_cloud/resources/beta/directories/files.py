@@ -6,8 +6,9 @@ from typing import Dict, Union, Mapping, Optional, cast
 
 import httpx
 
+from ...._files import deepcopy_with_paths
 from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, FileTypes, omit, not_given
-from ...._utils import extract_files, path_template, maybe_transform, deepcopy_minimal, async_maybe_transform
+from ...._utils import extract_files, path_template, maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
 from ...._response import (
@@ -412,13 +413,14 @@ class FilesResource(SyncAPIResource):
         """
         if not directory_id:
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
-        body = deepcopy_minimal(
+        body = deepcopy_with_paths(
             {
                 "upload_file": upload_file,
                 "display_name": display_name,
                 "external_file_id": external_file_id,
                 "unique_id": unique_id,
-            }
+            },
+            [["upload_file"]],
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["upload_file"]])
         # It should be noted that the actual Content-Type header that will be
@@ -823,13 +825,14 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         if not directory_id:
             raise ValueError(f"Expected a non-empty value for `directory_id` but received {directory_id!r}")
-        body = deepcopy_minimal(
+        body = deepcopy_with_paths(
             {
                 "upload_file": upload_file,
                 "display_name": display_name,
                 "external_file_id": external_file_id,
                 "unique_id": unique_id,
-            }
+            },
+            [["upload_file"]],
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["upload_file"]])
         # It should be noted that the actual Content-Type header that will be
