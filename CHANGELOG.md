@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.4.1 (2026-04-17)
+
+Full Changelog: [v2.4.0...v2.4.1](https://github.com/run-llama/llama-cloud-py/compare/v2.4.0...v2.4.1)
+
+### Bug Fixes
+
+* **api:** Also support agent data `.create` for consistency ([46656fa](https://github.com/run-llama/llama-cloud-py/commit/46656fa2fa257d8db3ce6aec7ff1ea174765055d))
+* **beta:** re-add agent_data() alias for backwards compat ([#84](https://github.com/run-llama/llama-cloud-py/issues/84)) ([ff0efb0](https://github.com/run-llama/llama-cloud-py/commit/ff0efb0d84b8281d2ea6d9255cc45c55f4ddfc58))
+
+
+### Performance Improvements
+
+* **client:** optimize file structure copying in multipart requests ([08182c5](https://github.com/run-llama/llama-cloud-py/commit/08182c581678d7a32412218edd315565c36a8eed))
+
 ## 2.4.0 (2026-04-16)
 
 Full Changelog: [v2.3.0...v2.4.0](https://github.com/run-llama/llama-cloud-py/compare/v2.3.0...v2.4.0)
