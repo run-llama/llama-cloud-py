@@ -27,7 +27,12 @@ class ExtractV2ParametersParam(TypedDict, total=False):
     """Include confidence scores in results"""
 
     extract_version: str
-    """Extract algorithm version. Use 'latest' or a date string."""
+    """Extract algorithm version.
+
+    Use 'latest' for the default pipeline, a date string (e.g. '2026-01-08'), or
+    'continuous' to opt into schema-guided splitting for documents with repeating
+    entities.
+    """
 
     extraction_target: Literal["per_doc", "per_page", "per_table_row"]
     """
