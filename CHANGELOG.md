@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.5.0 (2026-04-27)
+
+Full Changelog: [v2.4.1...v2.5.0](https://github.com/run-llama/llama-cloud-py/compare/v2.4.1...v2.5.0)
+
+### Features
+
+* **api:** api update ([d2b313a](https://github.com/run-llama/llama-cloud-py/commit/d2b313a1ccd57f269554bc5f2d7cd0446c927c63))
+* **api:** api update ([0dd4f7b](https://github.com/run-llama/llama-cloud-py/commit/0dd4f7b236035548861b68420b4d3b1706b55499))
+
+
+### Bug Fixes
+
+* use correct field name format for multipart file arrays ([57d63ed](https://github.com/run-llama/llama-cloud-py/commit/57d63ed2299665111219786135ac072f1e05c501))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([fc93614](https://github.com/run-llama/llama-cloud-py/commit/fc936145f7a89495fcb2fa6f9951c0a7e0ba0b08))
+
 ## 2.4.1 (2026-04-17)
 
 Full Changelog: [v2.4.0...v2.4.1](https://github.com/run-llama/llama-cloud-py/compare/v2.4.0...v2.4.1)
