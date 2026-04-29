@@ -1,4 +1,4 @@
-# Llama Cloud Python SDK
+# Llama Parse Python SDK
 
 [![PyPI version](https://img.shields.io/pypi/v/llama_cloud.svg?label=pypi%20(stable))](https://pypi.org/project/llama_cloud/)
 
