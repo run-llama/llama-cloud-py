@@ -29,9 +29,8 @@ class ExtractV2ParametersParam(TypedDict, total=False):
     extract_version: str
     """Extract algorithm version.
 
-    Use 'latest' for the default pipeline, a date string (e.g. '2026-01-08'), or
-    'continuous' to opt into schema-guided splitting for documents with repeating
-    entities.
+    Use 'latest' for the default pipeline or a date string (e.g. '2026-01-08') to
+    pin to a specific release.
     """
 
     extraction_target: Literal["per_doc", "per_page", "per_table_row"]
