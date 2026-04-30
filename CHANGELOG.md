@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.5.0 (2026-04-30)
+
+Full Changelog: [v2.4.1...v2.5.0](https://github.com/run-llama/llama-parse-py/compare/v2.4.1...v2.5.0)
+
+### Features
+
+* **api:** api update ([6a9cc96](https://github.com/run-llama/llama-parse-py/commit/6a9cc96e656984c84d5693a5d9800e1e2f9fbd53))
+* **api:** api update ([8ab8bb9](https://github.com/run-llama/llama-parse-py/commit/8ab8bb903a51f8fc5719454dbcaa16423fdbc362))
+
+
+### Chores
+
+* **internal:** reformat pyproject.toml ([d0ea3c0](https://github.com/run-llama/llama-parse-py/commit/d0ea3c05044133131c47025fc2a7cf0e659c1726))
+* sync repo ([50348db](https://github.com/run-llama/llama-parse-py/commit/50348db551d45f34efc8d71f77a7452b9d15815d))
+* update SDK settings ([06edb62](https://github.com/run-llama/llama-parse-py/commit/06edb6291c83a106f48c9ad82cad667baa611569))
+
 ## 2.4.1 (2026-04-17)
 
 Full Changelog: [v2.4.0...v2.4.1](https://github.com/run-llama/llama-cloud-py/compare/v2.4.0...v2.4.1)

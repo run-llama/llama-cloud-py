@@ -38,7 +38,7 @@ class ParsingResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/run-llama/llama-cloud-py#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/run-llama/llama-parse-py#accessing-raw-response-data-eg-headers
         """
         return ParsingResourceWithRawResponse(self)
 
@@ -47,7 +47,7 @@ class ParsingResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
+        For more information, see https://www.github.com/run-llama/llama-parse-py#with_streaming_response
         """
         return ParsingResourceWithStreamingResponse(self)
 
@@ -95,6 +95,10 @@ class ParsingResource(SyncAPIResource):
                 "2026-04-02",
                 "2026-04-06",
                 "2026-04-09",
+                "2026-04-14",
+                "2026-04-19",
+                "2026-04-22",
+                "2026-04-27",
                 "latest",
             ],
             str,
@@ -388,8 +392,9 @@ class ParsingResource(SyncAPIResource):
         Args:
           expand: Fields to include: text, markdown, items, metadata, job_metadata,
               text_content_metadata, markdown_content_metadata, items_content_metadata,
-              metadata_content_metadata, xlsx_content_metadata, output_pdf_content_metadata,
-              images_content_metadata. Metadata fields include presigned URLs.
+              metadata_content_metadata, raw_words_content_metadata, xlsx_content_metadata,
+              output_pdf_content_metadata, images_content_metadata. Metadata fields include
+              presigned URLs.
 
           image_filenames: Filter to specific image filenames (optional). Example: image_0.png,image_1.jpg
 
@@ -741,7 +746,7 @@ class AsyncParsingResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/run-llama/llama-cloud-py#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/run-llama/llama-parse-py#accessing-raw-response-data-eg-headers
         """
         return AsyncParsingResourceWithRawResponse(self)
 
@@ -750,7 +755,7 @@ class AsyncParsingResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/run-llama/llama-cloud-py#with_streaming_response
+        For more information, see https://www.github.com/run-llama/llama-parse-py#with_streaming_response
         """
         return AsyncParsingResourceWithStreamingResponse(self)
 
@@ -798,6 +803,10 @@ class AsyncParsingResource(AsyncAPIResource):
                 "2026-04-02",
                 "2026-04-06",
                 "2026-04-09",
+                "2026-04-14",
+                "2026-04-19",
+                "2026-04-22",
+                "2026-04-27",
                 "latest",
             ],
             str,
@@ -1091,8 +1100,9 @@ class AsyncParsingResource(AsyncAPIResource):
         Args:
           expand: Fields to include: text, markdown, items, metadata, job_metadata,
               text_content_metadata, markdown_content_metadata, items_content_metadata,
-              metadata_content_metadata, xlsx_content_metadata, output_pdf_content_metadata,
-              images_content_metadata. Metadata fields include presigned URLs.
+              metadata_content_metadata, raw_words_content_metadata, xlsx_content_metadata,
+              output_pdf_content_metadata, images_content_metadata. Metadata fields include
+              presigned URLs.
 
           image_filenames: Filter to specific image filenames (optional). Example: image_0.png,image_1.jpg
 
